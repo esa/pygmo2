@@ -148,6 +148,9 @@ endif()
 # python.
 include(YACMAPythonSetup)
 
+# Boost setup.
+include(PygmoFindBoost)
+
 # python version check.
 if(${PYTHON_VERSION_MAJOR} LESS 3 OR (${PYTHON_VERSION_MAJOR} EQUAL 3 AND ${PYTHON_VERSION_MINOR} LESS 4))
     message(FATAL_ERROR "Minimum supported python version is 3.4.")
@@ -157,4 +160,4 @@ endif()
 find_package(pybind11 REQUIRED)
 
 # Add the module directory.
-#add_subdirectory(obake)
+add_subdirectory(pygmo)
