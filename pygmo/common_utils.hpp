@@ -46,6 +46,23 @@ struct gil_thread_ensurer {
     PyGILState_STATE m_state;
 };
 
+// This RAII struct will unlock the GIL on construction,
+// and lock it again on destruction.
+//
+// See: https://docs.python.org/3/c-api/init.html
+struct gil_releaser {
+    gil_releaser();
+    ~gil_releaser();
+
+    // Make sure we don't accidentally try to copy/move it.
+    gil_releaser(const gil_releaser &) = delete;
+    gil_releaser(gil_releaser &&) = delete;
+    gil_releaser &operator=(const gil_releaser &) = delete;
+    gil_releaser &operator=(gil_releaser &&) = delete;
+
+    PyThreadState *m_thread_state;
+};
+
 // Check if 'o' has a callable attribute (i.e., a method) named 's'. If so, it will
 // return the attribute, otherwise it will return None.
 py::object callable_attribute(const py::object &, const char *);
@@ -58,6 +75,9 @@ std::string str(const py::object &);
 
 // Get the type of an object.
 py::object type(const py::object &);
+
+// Perform a deep copy of input object o.
+py::object deepcopy(const py::object &);
 
 } // namespace pygmo
 

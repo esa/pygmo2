@@ -12,7 +12,6 @@
 #include <memory>
 #include <string>
 #include <type_traits>
-#include <vector>
 
 #include <pybind11/pybind11.h>
 
@@ -20,7 +19,6 @@
 #include <pagmo/s11n.hpp>
 
 #include "common_base.hpp"
-#include "object_serialization.hpp"
 
 namespace pagmo
 {
@@ -51,19 +49,9 @@ struct isl_inner<py::object> final : isl_inner_base, pygmo::common_base {
     virtual std::string get_name() const override final;
     virtual std::string get_extra_info() const override final;
     template <typename Archive>
-    void save(Archive &ar, unsigned) const
-    {
-        ar << boost::serialization::base_object<isl_inner_base>(*this);
-        ar << pygmo::object_to_vchar(m_value);
-    }
+    void save(Archive &, unsigned) const;
     template <typename Archive>
-    void load(Archive &ar, unsigned)
-    {
-        ar >> boost::serialization::base_object<isl_inner_base>(*this);
-        std::vector<char> v;
-        ar >> v;
-        m_value = pygmo::vchar_to_object(v);
-    }
+    void load(Archive &, unsigned);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     py::object m_value;
 };
@@ -71,5 +59,8 @@ struct isl_inner<py::object> final : isl_inner_base, pygmo::common_base {
 } // namespace detail
 
 } // namespace pagmo
+
+// Register the isl_inner specialisation for py::object.
+PAGMO_S11N_ISLAND_EXPORT_KEY(pybind11::object)
 
 #endif

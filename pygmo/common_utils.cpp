@@ -44,6 +44,16 @@ gil_thread_ensurer::~gil_thread_ensurer()
     PyGILState_Release(m_state);
 }
 
+gil_releaser::gil_releaser()
+{
+    m_thread_state = PyEval_SaveThread();
+}
+
+gil_releaser::~gil_releaser()
+{
+    PyEval_RestoreThread(m_thread_state);
+}
+
 // Check if 'o' has a callable attribute (i.e., a method) named 's'. If so, it will
 // return the attribute, otherwise it will return None.
 py::object callable_attribute(const py::object &o, const char *s)
@@ -73,6 +83,12 @@ std::string str(const py::object &o)
 py::object type(const py::object &o)
 {
     return builtins().attr("type")(o);
+}
+
+// Perform a deep copy of input object o.
+py::object deepcopy(const py::object &o)
+{
+    return py::module::import("copy").attr("deepcopy")(o);
 }
 
 } // namespace pygmo

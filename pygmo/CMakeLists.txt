@@ -2,7 +2,7 @@
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_version.py.in" "${CMAKE_CURRENT_BINARY_DIR}/_version.py" @ONLY)
 
 # The list of pygmo's Python files.
-set(PYGMO_PYTHON_FILES __init__.py test.py)
+set(PYGMO_PYTHON_FILES __init__.py _check_deps.py test.py)
 
 # Copy the python files in the current binary dir,
 # so that we can import pygmo from the build dir.
@@ -19,6 +19,8 @@ YACMA_PYTHON_MODULE(core
     common_utils.cpp
     common_base.cpp
     object_serialization.cpp
+    island.cpp
+    handle_thread_py_exception.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
