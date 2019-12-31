@@ -9,9 +9,16 @@
 #ifndef PYGMO_COMMON_UTILS_HPP
 #define PYGMO_COMMON_UTILS_HPP
 
+#include <sstream>
 #include <string>
+#include <vector>
 
+#include <boost/numeric/conversion/cast.hpp>
+
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+
+#include <pagmo/types.hpp>
 
 namespace pygmo
 {
@@ -78,6 +85,61 @@ py::object type(const py::object &);
 
 // Perform a deep copy of input object o.
 py::object deepcopy(const py::object &);
+
+// repr() via ostream.
+template <typename T>
+inline std::string ostream_repr(const T &x)
+{
+    std::ostringstream oss;
+    oss << x;
+    return oss.str();
+}
+
+// Generic copy wrappers.
+template <typename T>
+inline T generic_copy_wrapper(const T &x)
+{
+    return x;
+}
+
+template <typename T>
+inline T generic_deepcopy_wrapper(const T &x, py::dict)
+{
+    return x;
+}
+
+// Convert an input 1D numpy array into a C++ vector.
+template <typename Vector, typename T, int ExtraFlags>
+inline Vector ndarr_to_vector(const py::array_t<T, ExtraFlags> &a)
+{
+    // Get a one-dimensional view on the array.
+    // If the array is not 1D, this will throw.
+    auto r = a.template unchecked<1>();
+
+    // Prepare the output vector with the
+    // correct size.
+    Vector retval(boost::numeric_cast<typename Vector::size_type>(r.shape(0)));
+
+    // Copy the values from a into retval.
+    for (py::ssize_t i = 0; i < r.shape(0); ++i) {
+        retval[static_cast<typename Vector::size_type>(i)] = r(i);
+    }
+
+    return retval;
+}
+
+// Convert a vector of something into a 1D numpy array.
+template <typename Array, typename T, typename Allocator>
+inline Array vector_to_ndarr(const std::vector<T, Allocator> &v)
+{
+    return Array(v.size(), v.data());
+}
+
+// Convert a numpy array into a sparsity pattern.
+pagmo::sparsity_pattern ndarr_to_sp(const py::array_t<pagmo::vector_double::size_type> &);
+
+// Convert a sparsity pattern into a numpy array.
+py::array_t<pagmo::vector_double::size_type> sp_to_ndarr(const pagmo::sparsity_pattern &);
 
 } // namespace pygmo
 

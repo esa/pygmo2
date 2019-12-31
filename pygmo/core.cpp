@@ -9,6 +9,7 @@
 #include <exception>
 #include <memory>
 
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
@@ -20,9 +21,12 @@
 #include <pagmo/islands/thread_island.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/threading.hpp>
+#include <pagmo/types.hpp>
 
 #include "common_utils.hpp"
+#include "docstrings.hpp"
 #include "island.hpp"
+#include "problem.hpp"
 
 namespace py = pybind11;
 namespace pg = pagmo;
@@ -71,6 +75,12 @@ PYBIND11_MODULE(core, m)
     // This function needs to be called before doing anything with threads.
     // https://docs.python.org/3/c-api/init.html
     PyEval_InitThreads();
+
+    // Disable automatic function signatures in the docs.
+    // NOTE: the 'options' object needs to stay alive
+    // throughout the whole definition of the module.
+    py::options options;
+    options.disable_function_signatures();
 
     // Expose some internal functions for testing.
     m.def("_callable", &pygmo::callable);
@@ -141,4 +151,135 @@ PYBIND11_MODULE(core, m)
     py::enum_<pg::migrant_handling>(m, "migrant_handling")
         .value("preserve", pg::migrant_handling::preserve)
         .value("evict", pg::migrant_handling::evict);
+
+    // Add the submodules.
+    auto problems_module = m.def_submodule("problems");
+    auto algorithms_module = m.def_submodule("algorithms");
+    auto islands_module = m.def_submodule("islands");
+    auto batch_evaluators_module = m.def_submodule("batch_evaluators");
+    auto topologies_module = m.def_submodule("topologies");
+    auto r_policies_module = m.def_submodule("r_policies");
+    auto s_policies_module = m.def_submodule("s_policies");
+
+    // Problem class.
+    py::class_<pg::problem> problem_class(m, "problem", pygmo::problem_docstring().c_str());
+    problem_class
+        // Def ctor.
+        .def(py::init<>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::problem>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::problem>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>)
+        // Problem methods.
+        .def(
+            "fitness",
+            [](const pg::problem &p, const py::array_t<double> &dv) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    p.fitness(pygmo::ndarr_to_vector<pg::vector_double>(dv)));
+            },
+            pygmo::problem_fitness_docstring().c_str(), py::arg("dv"))
+        .def(
+            "get_bounds",
+            [](const pg::problem &p) {
+                return py::make_tuple(pygmo::vector_to_ndarr<py::array_t<double>>(p.get_lb()),
+                                      pygmo::vector_to_ndarr<py::array_t<double>>(p.get_ub()));
+            },
+            pygmo::problem_get_bounds_docstring().c_str())
+        .def(
+            "get_lb", [](const pagmo::problem &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_lb()); },
+            pygmo::problem_get_lb_docstring().c_str())
+        .def(
+            "get_ub", [](const pagmo::problem &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_ub()); },
+            pygmo::problem_get_ub_docstring().c_str())
+        .def(
+            "batch_fitness",
+            [](const pagmo::problem &p, const py::array_t<double> &dvs) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    p.batch_fitness(pygmo::ndarr_to_vector<pg::vector_double>(dvs)));
+            },
+            pygmo::problem_batch_fitness_docstring().c_str(), py::arg("dvs"))
+        .def("has_batch_fitness", &pg::problem::has_batch_fitness, pygmo::problem_has_batch_fitness_docstring().c_str())
+        .def(
+            "gradient",
+            [](const pagmo::problem &p, const py::array_t<double> &dv) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    p.gradient(pygmo::ndarr_to_vector<pg::vector_double>(dv)));
+            },
+            pygmo::problem_gradient_docstring().c_str(), py::arg("dv"))
+        .def("has_gradient", &pg::problem::has_gradient, pygmo::problem_has_gradient_docstring().c_str())
+        .def(
+            "gradient_sparsity", [](const pagmo::problem &p) { return pygmo::sp_to_ndarr(p.gradient_sparsity()); },
+            pygmo::problem_gradient_sparsity_docstring().c_str())
+        .def("has_gradient_sparsity", &pg::problem::has_gradient_sparsity,
+             pygmo::problem_has_gradient_sparsity_docstring().c_str())
+        .def(
+            "hessians",
+            [](const pagmo::problem &p, const py::array_t<double> &dv) -> py::list {
+                py::list retval;
+                for (const auto &v : p.hessians(pygmo::ndarr_to_vector<pg::vector_double>(dv))) {
+                    retval.append(pygmo::vector_to_ndarr<py::array_t<double>>(v));
+                }
+                return retval;
+            },
+            pygmo::problem_hessians_docstring().c_str(), py::arg("dv"))
+        .def("has_hessians", &pg::problem::has_hessians, pygmo::problem_has_hessians_docstring().c_str())
+        .def(
+            "hessians_sparsity",
+            [](const pagmo::problem &p) -> py::list {
+                py::list retval;
+                for (const auto &sp : p.hessians_sparsity()) {
+                    retval.append(pygmo::sp_to_ndarr(sp));
+                }
+                return retval;
+            },
+            pygmo::problem_hessians_sparsity_docstring().c_str())
+        .def("has_hessians_sparsity", &pg::problem::has_hessians_sparsity,
+             pygmo::problem_has_hessians_sparsity_docstring().c_str())
+        .def("get_nobj", &pg::problem::get_nobj, pygmo::problem_get_nobj_docstring().c_str())
+        .def("get_nx", &pg::problem::get_nx, pygmo::problem_get_nx_docstring().c_str())
+        .def("get_nix", &pg::problem::get_nix, pygmo::problem_get_nix_docstring().c_str())
+        .def("get_ncx", &pg::problem::get_ncx, pygmo::problem_get_ncx_docstring().c_str())
+        .def("get_nf", &pg::problem::get_nf, pygmo::problem_get_nf_docstring().c_str())
+        .def("get_nec", &pg::problem::get_nec, pygmo::problem_get_nec_docstring().c_str())
+        .def("get_nic", &pg::problem::get_nic, pygmo::problem_get_nic_docstring().c_str())
+        .def("get_nc", &pg::problem::get_nc, pygmo::problem_get_nc_docstring().c_str())
+        .def("get_fevals", &pg::problem::get_fevals, pygmo::problem_get_fevals_docstring().c_str())
+        .def("increment_fevals", &pg::problem::increment_fevals, pygmo::problem_increment_fevals_docstring().c_str(),
+             py::arg("n"))
+        .def("get_gevals", &pg::problem::get_gevals, pygmo::problem_get_gevals_docstring().c_str())
+        .def("get_hevals", &pg::problem::get_hevals, pygmo::problem_get_hevals_docstring().c_str())
+        .def("set_seed", &pg::problem::set_seed, pygmo::problem_set_seed_docstring().c_str(), py::arg("seed"))
+        .def("has_set_seed", &pg::problem::has_set_seed, pygmo::problem_has_set_seed_docstring().c_str())
+        .def("is_stochastic", &pg::problem::is_stochastic,
+             "is_stochastic()\n\nAlias for :func:`~pygmo.problem.has_set_seed()`.\n")
+        .def(
+            "feasibility_x",
+            [](const pg::problem &p, const py::array_t<double> &x) {
+                return p.feasibility_x(pygmo::ndarr_to_vector<pg::vector_double>(x));
+            },
+            pygmo::problem_feasibility_x_docstring().c_str(), py::arg("x"))
+        .def(
+            "feasibility_f",
+            [](const pg::problem &p, const py::array_t<double> &f) {
+                return p.feasibility_f(pygmo::ndarr_to_vector<pg::vector_double>(f));
+            },
+            pygmo::problem_feasibility_f_docstring().c_str(), py::arg("f"))
+        .def("get_name", &pg::problem::get_name, pygmo::problem_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::problem::get_extra_info, pygmo::problem_get_extra_info_docstring().c_str())
+        .def("get_thread_safety", &pg::problem::get_thread_safety, pygmo::problem_get_thread_safety_docstring().c_str())
+        .def_property(
+            "c_tol",
+            [](const pg::problem &prob) { return pygmo::vector_to_ndarr<py::array_t<double>>(prob.get_c_tol()); },
+            [](pg::problem &prob, const py::object &c_tol) {
+                try {
+                    prob.set_c_tol(py::cast<double>(c_tol));
+                } catch (const py::cast_error &) {
+                    prob.set_c_tol(pygmo::ndarr_to_vector<pg::vector_double>(py::cast<py::array_t<double>>(c_tol)));
+                }
+            },
+            pygmo::problem_c_tol_docstring().c_str());
+
+    // Finalize.
+    problem_class.def(py::init<const py::object &>());
 }

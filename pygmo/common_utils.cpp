@@ -6,7 +6,10 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <initializer_list>
 #include <string>
+
+#include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/pybind11.h>
 
@@ -89,6 +92,47 @@ py::object type(const py::object &o)
 py::object deepcopy(const py::object &o)
 {
     return py::module::import("copy").attr("deepcopy")(o);
+}
+
+// Convert a numpy array into a sparsity pattern.
+pagmo::sparsity_pattern ndarr_to_sp(const py::array_t<pagmo::vector_double::size_type> &a)
+{
+    // Get a two-dimensional view on the array.
+    // If the array is not 2D, this will throw.
+    auto r = a.template unchecked<2>();
+
+    if (r.shape(1) != 2) {
+        py_throw(PyExc_ValueError, ("when converting a numpy array into a sparsity pattern, the number of columns in "
+                                    "the array must be 2, but it is "
+                                    + std::to_string(r.shape(1)) + " instead")
+                                       .c_str());
+    }
+
+    // Prepare the retval.
+    pagmo::sparsity_pattern retval(boost::numeric_cast<pagmo::sparsity_pattern::size_type>(r.shape(0)));
+
+    for (py::ssize_t i = 0; i < r.shape(0); ++i) {
+        retval[static_cast<pagmo::sparsity_pattern::size_type>(i)].first = r(i, 0);
+        retval[static_cast<pagmo::sparsity_pattern::size_type>(i)].second = r(i, 1);
+    }
+
+    return retval;
+}
+
+// Convert a sparsity pattern into a numpy array.
+py::array_t<pagmo::vector_double::size_type> sp_to_ndarr(const pagmo::sparsity_pattern &sp)
+{
+    // Create the output array, of shape n x 2.
+    py::array_t<pagmo::vector_double::size_type> retval({boost::numeric_cast<py::ssize_t>(sp.size()), py::ssize_t(2)});
+
+    // Get a mutable view into it and copy the data from sp.
+    auto r = retval.mutable_unchecked<2>();
+    for (decltype(sp.size()) i = 0; i < sp.size(); ++i) {
+        r(static_cast<py::ssize_t>(i), 0) = sp[i].first;
+        r(static_cast<py::ssize_t>(i), 1) = sp[i].second;
+    }
+
+    return retval;
 }
 
 } // namespace pygmo

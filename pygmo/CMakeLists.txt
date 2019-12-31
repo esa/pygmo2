@@ -21,6 +21,8 @@ YACMA_PYTHON_MODULE(core
     object_serialization.cpp
     island.cpp
     handle_thread_py_exception.cpp
+    docstrings.cpp
+    problem.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
