@@ -6,16 +6,21 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <string>
 #include <utility>
 
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
+#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/problem.hpp>
+#include <pagmo/problems/decompose.hpp>
 #include <pagmo/problems/hock_schittkowsky_71.hpp>
 #include <pagmo/problems/null_problem.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
+#include "common_utils.hpp"
 #include "docstrings.hpp"
 #include "expose_problems.hpp"
 
@@ -103,6 +108,31 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                             "See :cpp:class:`pagmo::hock_schittkowsky_71`.\n\n");
     hs71.def("best_known", &best_known_wrapper<pagmo::hock_schittkowsky_71>,
              problem_get_best_docstring("Hock-Schittkowsky 71").c_str());
+
+    // Decompose meta-problem.
+    auto decompose_ = expose_problem<pagmo::decompose>(m, prob, p_module, "decompose", decompose_docstring().c_str());
+    decompose_
+        // NOTE: An __init__ wrapper on the Python side will take care of cting a pagmo::problem from the input UDP,
+        // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
+        .def(py::init([](const pagmo::problem &p, const py::array_t<double> &weight, const py::array_t<double> &z,
+                         const std::string &method, bool adapt_ideal) {
+            return pagmo::detail::make_unique<pagmo::decompose>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(weight),
+                                                                pygmo::ndarr_to_vector<pagmo::vector_double>(z), method,
+                                                                adapt_ideal);
+        }))
+        .def(
+            "original_fitness",
+            [](const pagmo::decompose &p, const py::array_t<double> &x) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    p.original_fitness(pygmo::ndarr_to_vector<pagmo::vector_double>(x)));
+            },
+            decompose_original_fitness_docstring().c_str(), py::arg("x"))
+        .def_property_readonly(
+            "z", [](const pagmo::decompose &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_z()); },
+            decompose_z_docstring().c_str())
+        .def_property_readonly(
+            "inner_problem", [](pagmo::decompose &udp) -> pagmo::problem & { return udp.get_inner_problem(); },
+            py::return_value_policy::reference_internal, generic_udp_inner_problem_docstring().c_str());
 }
 
 } // namespace pygmo

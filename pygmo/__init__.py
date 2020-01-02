@@ -57,6 +57,58 @@ def _translate_init(self, prob=None, translation=[0.]):
 
 setattr(translate, "__init__", _translate_init)
 
+# Override of the decompose meta-problem constructor.
+__original_decompose_init = decompose.__init__
+
+# NOTE: the idea of having the translate init here instead of exposed from C++ is to allow the use
+# of the syntax decompose(udp, ..., ) for all udps
+
+
+def _decompose_init(self, prob=None, weight=[0.5, 0.5], z=[0., 0.], method='weighted', adapt_ideal=False):
+    """
+    Args:
+        prob: a user-defined problem (either Python or C++), or an instance of :class:`~pygmo.problem`
+            (if *prob* is :data:`None`, a :class:`~pygmo.null_problem` will be used in its stead)
+        weight (array-like object): the vector of weights :math:`\\boldsymbol \lambda`
+        z (array-like object): the reference point :math:`\mathbf z^*`
+        method (str): a string containing the decomposition method chosen
+        adapt_ideal (bool): when :data:`True`, the reference point is adapted at each fitness evaluation
+            to be the ideal point
+
+    Raises:
+        ValueError: if either:
+
+           * *prob* is single objective or constrained,
+           * *method* is not one of [``'weighted'``, ``'tchebycheff'``, ``'bi'``],
+           * *weight* is not of size :math:`n`,
+           * *z* is not of size :math:`n`
+           * *weight* is not such that :math:`\\lambda_i > 0, \\forall i=1..n`,
+           * *weight* is not such that :math:`\\sum_i \\lambda_i = 1`
+
+        unspecified: any exception thrown by:
+
+           * the constructor of :class:`pygmo.problem`,
+           * the constructor of the underlying C++ class,
+           * failures at the intersection between C++ and Python (e.g., type conversion errors, mismatched function
+             signatures, etc.)
+
+    """
+    if prob is None:
+        # Use the null problem for default init.
+        prob = null_problem(nobj=2)
+    if type(prob) == problem:
+        # If prob is a pygmo problem, we will pass it as-is to the
+        # original init.
+        prob_arg = prob
+    else:
+        # Otherwise, we attempt to create a problem from it. This will
+        # work if prob is an exposed C++ problem or a Python UDP.
+        prob_arg = problem(prob)
+    __original_decompose_init(self, prob_arg, weight, z, method, adapt_ideal)
+
+
+setattr(decompose, "__init__", _decompose_init)
+
 
 def set_serialization_backend(name):
     """Set pygmo's serialization backend.

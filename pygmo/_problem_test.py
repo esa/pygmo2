@@ -529,7 +529,7 @@ class problem_test_case(_ut.TestCase):
 
             def fitness(self, a):
                 return [42, 43]
-        self.assertRaises(OverflowError, lambda: problem(p()))
+        self.assertRaises(RuntimeError, lambda: problem(p()))
         # Inconsistent nobj.
 
         class p(object):
@@ -712,7 +712,7 @@ class problem_test_case(_ut.TestCase):
 
             def fitness(self, a):
                 return [42]
-        self.assertRaises(OverflowError, lambda: problem(p()))
+        self.assertRaises(RuntimeError, lambda: problem(p()))
 
         class p(object):
 
@@ -737,7 +737,7 @@ class problem_test_case(_ut.TestCase):
 
             def fitness(self, a):
                 return [42]
-        self.assertRaises(OverflowError, lambda: problem(p()))
+        self.assertRaises(RuntimeError, lambda: problem(p()))
 
         class p(object):
 
@@ -970,7 +970,7 @@ class problem_test_case(_ut.TestCase):
 
     def run_gradient_sparsity_tests(self):
         from .core import problem
-        from numpy import array, ndarray
+        from numpy import array, ndarray, empty
 
         class p(object):
 
@@ -981,37 +981,7 @@ class problem_test_case(_ut.TestCase):
                 return [42]
 
             def gradient_sparsity(self):
-                return ()
-
-        self.assert_(problem(p()).has_gradient_sparsity())
-        self.assert_(isinstance(problem(p()).gradient_sparsity(), ndarray))
-        self.assert_(problem(p()).gradient_sparsity().shape == (0, 2))
-
-        class p(object):
-
-            def get_bounds(self):
-                return ([0, 0], [1, 1])
-
-            def fitness(self, a):
-                return [42]
-
-            def gradient_sparsity(self):
-                return []
-
-        self.assert_(problem(p()).has_gradient_sparsity())
-        self.assert_(isinstance(problem(p()).gradient_sparsity(), ndarray))
-        self.assert_(problem(p()).gradient_sparsity().shape == (0, 2))
-
-        class p(object):
-
-            def get_bounds(self):
-                return ([0, 0], [1, 1])
-
-            def fitness(self, a):
-                return [42]
-
-            def gradient_sparsity(self):
-                return {}
+                return empty((0,2), dtype=int)
 
         self.assert_(problem(p()).has_gradient_sparsity())
         self.assert_(isinstance(problem(p()).gradient_sparsity(), ndarray))
@@ -1066,7 +1036,7 @@ class problem_test_case(_ut.TestCase):
             def gradient_sparsity(self):
                 return [[0, 0], (0,)]
 
-        self.assertRaises(ValueError, lambda: problem(p()))
+        self.assertRaises(RuntimeError, lambda: problem(p()))
 
         class p(object):
 
@@ -1161,7 +1131,7 @@ class problem_test_case(_ut.TestCase):
             def gradient_sparsity(self):
                 return [[[0], 0], [0, 1]]
 
-        self.assertRaises(TypeError, lambda: problem(p()))
+        self.assertRaises(RuntimeError, lambda: problem(p()))
 
         class p(object):
 
@@ -1174,7 +1144,7 @@ class problem_test_case(_ut.TestCase):
             def gradient_sparsity(self):
                 return array([[0, 0], [0, -1]], dtype='int32')
 
-        self.assertRaises(TypeError, lambda: problem(p()))
+        self.assertRaises(ValueError, lambda: problem(p()))
 
         class p(object):
 
@@ -1203,9 +1173,13 @@ class problem_test_case(_ut.TestCase):
                 return [42]
 
             def gradient_sparsity(self):
-                return array([[0, 0], [0, 1.]])
+                return array([[0, 0], [0, 1.2]])
 
-        self.assertRaises(TypeError, lambda: problem(p()))
+        self.assert_(problem(p()).has_gradient_sparsity())
+        self.assert_(isinstance(problem(p()).gradient_sparsity(), ndarray))
+        self.assert_(problem(p()).gradient_sparsity().shape == (2, 2))
+        self.assert_((problem(p()).gradient_sparsity()
+                      == array([[0, 0], [0, 1]])).all())
 
         class p(object):
             counter = 0
@@ -1318,11 +1292,8 @@ class problem_test_case(_ut.TestCase):
             def hessians(self, a):
                 return [0]
 
-        # Rasies AttributeError because we are trying to iterate over
-        # the element of the returned hessians, which, in this case, is
-        # an int.
         self.assertRaises(
-            AttributeError, lambda: problem(p()).hessians([1, 2]))
+            ValueError, lambda: problem(p()).hessians([1, 2]))
 
         class p(object):
 
@@ -1478,7 +1449,7 @@ class problem_test_case(_ut.TestCase):
 
     def run_hessians_sparsity_tests(self):
         from .core import problem
-        from numpy import array, ndarray
+        from numpy import array, ndarray, empty
 
         class p(object):
 
@@ -1489,35 +1460,7 @@ class problem_test_case(_ut.TestCase):
                 return [42]
 
             def hessians_sparsity(self):
-                return ([],)
-
-        self.assert_(problem(p()).has_hessians_sparsity())
-        self.assert_(isinstance(problem(p()).hessians_sparsity(), list))
-
-        class p(object):
-
-            def get_bounds(self):
-                return ([0, 0], [1, 1])
-
-            def fitness(self, a):
-                return [42]
-
-            def hessians_sparsity(self):
-                return ([],)
-
-        self.assert_(problem(p()).has_hessians_sparsity())
-        self.assert_(isinstance(problem(p()).hessians_sparsity(), list))
-
-        class p(object):
-
-            def get_bounds(self):
-                return ([0, 0], [1, 1])
-
-            def fitness(self, a):
-                return [42]
-
-            def hessians_sparsity(self):
-                return {()}
+                return (empty((0,2)),)
 
         self.assert_(problem(p()).has_hessians_sparsity())
         self.assert_(isinstance(problem(p()).hessians_sparsity(), list))
@@ -1669,7 +1612,7 @@ class problem_test_case(_ut.TestCase):
             def hessians_sparsity(self):
                 return [[[[0], 0], [0, 1]]]
 
-        self.assertRaises(TypeError, lambda: problem(p()))
+        self.assertRaises(ValueError, lambda: problem(p()))
 
         class p(object):
 
@@ -1682,7 +1625,7 @@ class problem_test_case(_ut.TestCase):
             def hessians_sparsity(self):
                 return [array([[0, 0], [0, -1]], dtype='int32')]
 
-        self.assertRaises(TypeError, lambda: problem(p()))
+        self.assertRaises(ValueError, lambda: problem(p()))
 
         class p(object):
 
@@ -1702,19 +1645,6 @@ class problem_test_case(_ut.TestCase):
         self.assert_(problem(p()).hessians_sparsity()[0].shape == (2, 2))
         self.assert_((problem(p()).hessians_sparsity()[0]
                       == array([[0, 0], [1, 1]])).all())
-
-        class p(object):
-
-            def get_bounds(self):
-                return ([0, 0], [1, 1])
-
-            def fitness(self, a):
-                return [42]
-
-            def hessians_sparsity(self):
-                return [array([[0, 0], [0, 1.]])]
-
-        self.assertRaises(TypeError, lambda: problem(p()))
 
         class p(object):
 
@@ -1854,7 +1784,7 @@ class problem_test_case(_ut.TestCase):
         self.assert_(problem(p()).has_set_seed())
         problem(p()).set_seed(0)
         problem(p()).set_seed(87)
-        self.assertRaises(OverflowError, lambda: problem(p()).set_seed(-1))
+        self.assertRaises(TypeError, lambda: problem(p()).set_seed(-1))
 
     def run_feas_tests(self):
         from .core import problem
