@@ -20,6 +20,7 @@
 #include <pagmo/island.hpp>
 #include <pagmo/islands/thread_island.hpp>
 #include <pagmo/population.hpp>
+#include <pagmo/rng.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
@@ -90,6 +91,11 @@ PYBIND11_MODULE(core, m)
     m.def("_type", &pygmo::type);
     m.def("_builtins", &pygmo::builtins);
     m.def("_deepcopy", &pygmo::deepcopy);
+
+    // Global random number generator
+    m.def(
+        "set_global_rng_seed", [](unsigned seed) { pg::random_device::set_seed(seed); },
+        pygmo::set_global_rng_seed_docstring().c_str(), py::arg("seed"));
 
     // Override the default implementation of the island factory.
     pg::detail::island_factory
@@ -172,6 +178,7 @@ PYBIND11_MODULE(core, m)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::problem>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>)
+        .def(py::pickle(&pygmo::problem_pickle_getstate, &pygmo::problem_pickle_setstate))
         // UDP extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::problem>)
         // Problem methods.
@@ -284,7 +291,8 @@ PYBIND11_MODULE(core, m)
             pygmo::problem_c_tol_docstring().c_str());
 
     pygmo::expose_problems_0(m, problem_class, problems_module);
+    pygmo::expose_problems_1(m, problem_class, problems_module);
 
     // Finalize.
-    problem_class.def(py::init<const py::object &>());
+    problem_class.def(py::init<const py::object &>(), py::arg("udp"));
 }

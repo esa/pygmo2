@@ -23,7 +23,7 @@ namespace py = pybind11;
 
 // Split problem exposition functions.
 void expose_problems_0(py::module &, py::class_<pagmo::problem> &, py::module &);
-// void expose_problems_1();
+void expose_problems_1(py::module &, py::class_<pagmo::problem> &, py::module &);
 
 // C++ UDP exposition function.
 template <typename Prob>

@@ -8,11 +8,13 @@
 
 #include <iterator>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
 
 #include <boost/iterator/transform_iterator.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -365,3 +367,53 @@ void prob_inner<py::object>::load(Archive &ar, unsigned)
 } // namespace pagmo
 
 PAGMO_S11N_PROBLEM_IMPLEMENT(pybind11::object)
+
+namespace pygmo
+{
+
+namespace py = pybind11;
+
+// Serialization support for the problem class.
+py::tuple problem_pickle_getstate(const pagmo::problem &p)
+{
+    // The idea here is that first we extract a char array
+    // into which problem has been serialized, then we turn
+    // this object into a Python bytes object and return that.
+    std::ostringstream oss;
+    {
+        boost::archive::binary_oarchive oarchive(oss);
+        oarchive << p;
+    }
+    auto s = oss.str();
+    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
+}
+
+pagmo::problem problem_pickle_setstate(py::tuple state)
+{
+    // Similarly, first we extract a bytes object from the Python state,
+    // and then we build a C++ string from it. The string is then used
+    // to deserialized the object.
+    if (py::len_hint(state) != 1) {
+        pygmo::py_throw(PyExc_ValueError, ("the state tuple passed for problem deserialization "
+                                           "must have 1 element, but instead it has "
+                                           + std::to_string(py::len_hint(state)) + " element(s)")
+                                              .c_str());
+    }
+
+    auto ptr = PyBytes_AsString(py::object(state[0]).ptr());
+    if (!ptr) {
+        pygmo::py_throw(PyExc_TypeError, "a bytes object is needed to deserialize a problem");
+    }
+
+    std::istringstream iss;
+    iss.str(std::string(ptr, ptr + py::len_hint(state[0])));
+    pagmo::problem p;
+    {
+        boost::archive::binary_iarchive iarchive(iss);
+        iarchive >> p;
+    }
+
+    return p;
+}
+
+} // namespace pygmo
