@@ -141,6 +141,32 @@ pagmo::sparsity_pattern ndarr_to_sp(const py::array_t<pagmo::vector_double::size
 // Convert a sparsity pattern into a numpy array.
 py::array_t<pagmo::vector_double::size_type> sp_to_ndarr(const pagmo::sparsity_pattern &);
 
+// Generic extract() wrappers.
+template <typename C, typename T>
+inline T *generic_cpp_extract(C &c, const T &)
+{
+    return c.template extract<T>();
+}
+
+template <typename C>
+inline py::object generic_py_extract(C &c, const py::object &t)
+{
+    auto ptr = c.template extract<py::object>();
+    if (ptr && (t.is(type(*ptr)) || t.is(builtins().attr("object")))) {
+        // c contains a user-defined pythonic entity and either:
+        // - the type passed in by the user is the exact type of the user-defined
+        //   entity, or
+        // - the user supplied as t the builtin 'object' type (which we use as a
+        //   wildcard for any Python type).
+        // Let's return the extracted object.
+        return *ptr;
+    }
+
+    // Either the user-defined entity is not pythonic, or the user specified the
+    // wrong type. Return None.
+    return py::none();
+}
+
 } // namespace pygmo
 
 #endif

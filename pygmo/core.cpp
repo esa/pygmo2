@@ -25,6 +25,7 @@
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
+#include "expose_problems.hpp"
 #include "island.hpp"
 #include "problem.hpp"
 
@@ -171,6 +172,8 @@ PYBIND11_MODULE(core, m)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::problem>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>)
+        // UDP extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::problem>)
         // Problem methods.
         .def(
             "fitness",
@@ -279,6 +282,8 @@ PYBIND11_MODULE(core, m)
                 }
             },
             pygmo::problem_c_tol_docstring().c_str());
+
+    pygmo::expose_problems_0(m, problem_class, problems_module);
 
     // Finalize.
     problem_class.def(py::init<const py::object &>());

@@ -8,3 +8,5 @@
 
 from ._check_deps import *
 from .core import *
+# Patch the problem class.
+from . import _patch_problem
