@@ -27,6 +27,7 @@
 #include "algorithm.hpp"
 #include "common_utils.hpp"
 #include "docstrings.hpp"
+#include "expose_algorithms.hpp"
 #include "expose_problems.hpp"
 #include "island.hpp"
 #include "problem.hpp"
