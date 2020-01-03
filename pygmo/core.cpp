@@ -479,5 +479,26 @@ PYBIND11_MODULE(core, m)
     py::class_<pg::bfe> bfe_class(m, "bfe", pygmo::bfe_docstring().c_str());
     bfe_class
         // Def ctor.
-        .def(py::init<>());
+        .def(py::init<>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::bfe>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::bfe>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::bfe>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::bfe_pickle_getstate, &pygmo::bfe_pickle_setstate))
+        // UDBFE extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::bfe>)
+        // Bfe methods.
+        .def("_call_impl",
+             [](const pg::bfe &b, const pg::problem &prob, const py::array_t<double> &dvs) {
+                 return pygmo::vector_to_ndarr<py::array_t<double>>(
+                     b(prob, pygmo::ndarr_to_vector<pg::vector_double>(dvs)));
+             })
+        .def("get_name", &pg::bfe::get_name, pygmo::bfe_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::bfe::get_extra_info, pygmo::bfe_get_extra_info_docstring().c_str())
+        .def("get_thread_safety", &pg::bfe::get_thread_safety, pygmo::bfe_get_thread_safety_docstring().c_str());
+
+    // Finalize.
+    bfe_class.def(py::init<const py::object &>(), py::arg("udbfe"));
 }
