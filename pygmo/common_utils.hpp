@@ -9,6 +9,7 @@
 #ifndef PYGMO_COMMON_UTILS_HPP
 #define PYGMO_COMMON_UTILS_HPP
 
+#include <initializer_list>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -165,6 +166,32 @@ inline py::object generic_py_extract(C &c, const py::object &t)
     // Either the user-defined entity is not pythonic, or the user specified the
     // wrong type. Return None.
     return py::none();
+}
+
+// Convert a vector of vectors into a 2D numpy array.
+template <typename Array, typename T, typename A1, typename A2>
+inline Array vvector_to_ndarr(const std::vector<std::vector<T, A2>, A1> &v)
+{
+    // The dimensions of the array to be created.
+    const auto nrows = v.size();
+    const auto ncols = nrows ? v[0].size() : 0u;
+
+    // Create the output array.
+    Array retval({boost::numeric_cast<py::ssize_t>(nrows), boost::numeric_cast<py::ssize_t>(ncols)});
+
+    // Get a mutable view into it and copy the data from sp.
+    auto r = retval.template mutable_unchecked<2>();
+    for (decltype(v.size()) i = 0; i < nrows; ++i) {
+        if (v[i].size() != ncols) {
+            py_throw(PyExc_ValueError, "cannot convert a vector of vectors to a NumPy 2D array "
+                                       "if the vector instances don't have all the same size");
+        }
+        for (decltype(v[i].size()) j = 0; j < ncols; ++j) {
+            r(static_cast<py::ssize_t>(i), static_cast<py::ssize_t>(j)) = v[i][j];
+        }
+    }
+
+    return retval;
 }
 
 } // namespace pygmo

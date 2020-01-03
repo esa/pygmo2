@@ -300,19 +300,18 @@ PYBIND11_MODULE(core, m)
                 return pygmo::vector_to_ndarr<py::array_t<unsigned long long>>(pop.get_ID());
             },
             pygmo::population_get_ID_docstring().c_str())
-        .def("get_seed", &pg::population::get_seed, pygmo::population_get_seed_docstring().c_str());
-#if 0
-    pygmo::add_property(pop_class, "champion_x",
-                        lcast([](const population &pop) { return pygmo::vector_to_ndarr(pop.champion_x()); }),
-                        pygmo::population_champion_x_docstring().c_str());
-    pygmo::add_property(pop_class, "champion_f",
-                        lcast([](const population &pop) { return pygmo::vector_to_ndarr(pop.champion_f()); }),
-                        pygmo::population_champion_f_docstring().c_str());
-    pygmo::add_property(pop_class, "problem",
-                        bp::make_function(lcast([](population &pop) -> problem & { return pop.get_problem(); }),
-                                          bp::return_internal_reference<>()),
-                        pygmo::population_problem_docstring().c_str());
-#endif
+        .def("get_seed", &pg::population::get_seed, pygmo::population_get_seed_docstring().c_str())
+        .def_property_readonly(
+            "champion_x",
+            [](const pg::population &pop) { return pygmo::vector_to_ndarr<py::array_t<double>>(pop.champion_x()); },
+            pygmo::population_champion_x_docstring().c_str())
+        .def_property_readonly(
+            "champion_f",
+            [](const pg::population &pop) { return pygmo::vector_to_ndarr<py::array_t<double>>(pop.champion_f()); },
+            pygmo::population_champion_f_docstring().c_str())
+        .def_property_readonly(
+            "problem", [](pg::population &pop) -> pg::problem & { return pop.get_problem(); },
+            py::return_value_policy::reference_internal, pygmo::population_problem_docstring().c_str());
 
     // Problem class.
     py::class_<pg::problem> problem_class(m, "problem", pygmo::problem_docstring().c_str());
