@@ -474,4 +474,10 @@ PYBIND11_MODULE(core, m)
 
     // Finalize.
     algorithm_class.def(py::init<const py::object &>(), py::arg("uda"));
+
+    // bfe class.
+    py::class_<pg::bfe> bfe_class(m, "bfe", pygmo::bfe_docstring().c_str());
+    bfe_class
+        // Def ctor.
+        .def(py::init<>());
 }
