@@ -6,8 +6,8 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#ifndef PYGMO_ALGORITHM_HPP
-#define PYGMO_ALGORITHM_HPP
+#ifndef PYGMO_BFE_HPP
+#define PYGMO_BFE_HPP
 
 #include <memory>
 #include <string>
@@ -15,10 +15,11 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/algorithm.hpp>
-#include <pagmo/population.hpp>
+#include <pagmo/bfe.hpp>
+#include <pagmo/problem.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
+#include <pagmo/types.hpp>
 
 #include "common_base.hpp"
 
@@ -30,31 +31,27 @@ namespace detail
 
 namespace py = pybind11;
 
-// Disable the static UDA checks for py::object.
+// Disable the static UDBFE checks for py::object.
 template <>
-struct disable_uda_checks<py::object> : std::true_type {
+struct disable_udbfe_checks<py::object> : std::true_type {
 };
 
 template <>
-struct algo_inner<py::object> final : algo_inner_base, pygmo::common_base {
+struct bfe_inner<py::object> final : bfe_inner_base, pygmo::common_base {
     // Just need the def ctor, delete everything else.
-    algo_inner() = default;
-    algo_inner(const algo_inner &) = delete;
-    algo_inner(algo_inner &&) = delete;
-    algo_inner &operator=(const algo_inner &) = delete;
-    algo_inner &operator=(algo_inner &&) = delete;
-    explicit algo_inner(const py::object &);
-    virtual std::unique_ptr<algo_inner_base> clone() const override final;
+    bfe_inner() = default;
+    bfe_inner(const bfe_inner &) = delete;
+    bfe_inner(bfe_inner &&) = delete;
+    bfe_inner &operator=(const bfe_inner &) = delete;
+    bfe_inner &operator=(bfe_inner &&) = delete;
+    explicit bfe_inner(const py::object &);
+    virtual std::unique_ptr<bfe_inner_base> clone() const override final;
     // Mandatory methods.
-    virtual population evolve(const population &) const override final;
+    virtual vector_double operator()(const problem &, const vector_double &) const override final;
     // Optional methods.
-    virtual void set_seed(unsigned) override final;
-    virtual bool has_set_seed() const override final;
     virtual thread_safety get_thread_safety() const override final;
     virtual std::string get_name() const override final;
     virtual std::string get_extra_info() const override final;
-    virtual void set_verbosity(unsigned) override final;
-    virtual bool has_set_verbosity() const override final;
     template <typename Archive>
     void save(Archive &, unsigned) const;
     template <typename Archive>
@@ -67,16 +64,16 @@ struct algo_inner<py::object> final : algo_inner_base, pygmo::common_base {
 
 } // namespace pagmo
 
-// Register the algo_inner specialisation for py::object.
-PAGMO_S11N_ALGORITHM_EXPORT_KEY(pybind11::object)
+// Register the bfe_inner specialisation for bp::object.
+PAGMO_S11N_BFE_EXPORT_KEY(pybind11::object)
 
 namespace pygmo
 {
 
 namespace py = pybind11;
 
-py::tuple algorithm_pickle_getstate(const pagmo::algorithm &);
-pagmo::algorithm algorithm_pickle_setstate(py::tuple);
+py::tuple bfe_pickle_getstate(const pagmo::bfe &);
+pagmo::bfe bfe_pickle_setstate(py::tuple);
 
 } // namespace pygmo
 

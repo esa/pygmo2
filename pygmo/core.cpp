@@ -31,6 +31,7 @@
 #include <pagmo/types.hpp>
 
 #include "algorithm.hpp"
+#include "bfe.hpp"
 #include "common_utils.hpp"
 #include "docstrings.hpp"
 #include "expose_algorithms.hpp"
