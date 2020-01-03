@@ -472,6 +472,9 @@ PYBIND11_MODULE(core, m)
         .def("get_thread_safety", &pg::algorithm::get_thread_safety,
              pygmo::algorithm_get_thread_safety_docstring().c_str());
 
+    pygmo::expose_algorithms_0(m, algorithm_class, algorithms_module);
+    pygmo::expose_algorithms_1(m, algorithm_class, algorithms_module);
+
     // Finalize.
     algorithm_class.def(py::init<const py::object &>(), py::arg("uda"));
 

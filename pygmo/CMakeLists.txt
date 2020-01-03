@@ -28,6 +28,7 @@ YACMA_PYTHON_MODULE(core
     algorithm.cpp
     bfe.cpp
     expose_algorithms_0.cpp
+    expose_algorithms_1.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)

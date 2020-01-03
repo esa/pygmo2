@@ -49,6 +49,23 @@ inline py::class_<Algo> expose_algorithm(py::module &m, py::class_<pagmo::algori
     return c;
 }
 
+// Utils to expose algo log.
+template <typename Algo>
+inline py::list generic_log_getter(const Algo &a)
+{
+    py::list retval;
+    for (const auto &t : a.get_log()) {
+        retval.append(t);
+    }
+    return retval;
+}
+
+template <typename Algo>
+inline void expose_algo_log(py::class_<Algo> &algo_class, const char *doc)
+{
+    algo_class.def("get_log", &generic_log_getter<Algo>, doc);
+}
+
 } // namespace pygmo
 
 #endif
