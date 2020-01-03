@@ -80,7 +80,7 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     virtual std::vector<sparsity_pattern> hessians_sparsity() const override final;
     virtual void set_seed(unsigned) override final;
     virtual bool has_set_seed() const override final;
-    virtual pagmo::thread_safety get_thread_safety() const override final;
+    virtual thread_safety get_thread_safety() const override final;
     template <typename Archive>
     void save(Archive &, unsigned) const;
     template <typename Archive>

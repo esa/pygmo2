@@ -93,9 +93,9 @@ bool algo_inner<py::object>::has_set_seed() const
     return py::cast<bool>(hss());
 }
 
-pagmo::thread_safety algo_inner<py::object>::get_thread_safety() const
+thread_safety algo_inner<py::object>::get_thread_safety() const
 {
-    return pagmo::thread_safety::none;
+    return thread_safety::none;
 }
 
 std::string algo_inner<py::object>::get_name() const

@@ -341,9 +341,9 @@ bool prob_inner<py::object>::has_set_seed() const
 }
 
 // Hard code no thread safety for python problems.
-pagmo::thread_safety prob_inner<py::object>::get_thread_safety() const
+thread_safety prob_inner<py::object>::get_thread_safety() const
 {
-    return pagmo::thread_safety::none;
+    return thread_safety::none;
 }
 
 template <typename Archive>
