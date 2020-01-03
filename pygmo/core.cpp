@@ -24,6 +24,7 @@
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
+#include "algorithm.hpp"
 #include "common_utils.hpp"
 #include "docstrings.hpp"
 #include "expose_problems.hpp"
@@ -178,6 +179,7 @@ PYBIND11_MODULE(core, m)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::problem>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>)
+        // Pickle support.
         .def(py::pickle(&pygmo::problem_pickle_getstate, &pygmo::problem_pickle_setstate))
         // UDP extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::problem>)
@@ -295,4 +297,36 @@ PYBIND11_MODULE(core, m)
 
     // Finalize.
     problem_class.def(py::init<const py::object &>(), py::arg("udp"));
+
+    // Algorithm class.
+    py::class_<pg::algorithm> algorithm_class(m, "algorithm", pygmo::algorithm_docstring().c_str());
+    algorithm_class
+        // Def ctor.
+        .def(py::init<>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::algorithm>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::algorithm>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::algorithm>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::algorithm_pickle_getstate, &pygmo::algorithm_pickle_setstate))
+        // UDA extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::algorithm>)
+        // Algorithm methods.
+        .def("evolve", &pg::algorithm::evolve, pygmo::algorithm_evolve_docstring().c_str(), py::arg("pop"))
+        .def("set_seed", &pg::algorithm::set_seed, pygmo::algorithm_set_seed_docstring().c_str(), py::arg("seed"))
+        .def("has_set_seed", &pg::algorithm::has_set_seed, pygmo::algorithm_has_set_seed_docstring().c_str())
+        .def("set_verbosity", &pg::algorithm::set_verbosity, pygmo::algorithm_set_verbosity_docstring().c_str(),
+             py::arg("level"))
+        .def("has_set_verbosity", &pg::algorithm::has_set_verbosity,
+             pygmo::algorithm_has_set_verbosity_docstring().c_str())
+        .def("is_stochastic", &pg::algorithm::is_stochastic,
+             "is_stochastic()\n\nAlias for :func:`~pygmo.algorithm.has_set_seed()`.\n")
+        .def("get_name", &pg::algorithm::get_name, pygmo::algorithm_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::algorithm::get_extra_info, pygmo::algorithm_get_extra_info_docstring().c_str())
+        .def("get_thread_safety", &pg::algorithm::get_thread_safety,
+             pygmo::algorithm_get_thread_safety_docstring().c_str());
+
+    // Finalize.
+    algorithm_class.def(py::init<const py::object &>(), py::arg("uda"));
 }

@@ -377,7 +377,7 @@ namespace py = pybind11;
 py::tuple problem_pickle_getstate(const pagmo::problem &p)
 {
     // The idea here is that first we extract a char array
-    // into which problem has been serialized, then we turn
+    // into which p has been serialized, then we turn
     // this object into a Python bytes object and return that.
     std::ostringstream oss;
     {

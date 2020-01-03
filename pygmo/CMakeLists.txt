@@ -25,6 +25,7 @@ YACMA_PYTHON_MODULE(core
     problem.cpp
     expose_problems_0.cpp
     expose_problems_1.cpp
+    algorithm.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
