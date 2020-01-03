@@ -8,12 +8,17 @@
 
 #include <exception>
 #include <memory>
+#include <sstream>
+#include <string>
+
+#include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
 #include <pagmo/archipelago.hpp>
+#include <pagmo/bfe.hpp>
 #include <pagmo/detail/gte_getter.hpp>
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/exceptions.hpp>
@@ -21,6 +26,7 @@
 #include <pagmo/islands/thread_island.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/rng.hpp>
+#include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
@@ -67,6 +73,43 @@ struct py_wait_locks {
     gil_thread_ensurer gte;
     gil_releaser gr;
 };
+
+// Serialization helpers for population.
+py::tuple population_pickle_getstate(const pg::population &pop)
+{
+    std::ostringstream oss;
+    {
+        boost::archive::binary_oarchive oarchive(oss);
+        oarchive << pop;
+    }
+    auto s = oss.str();
+    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
+}
+
+pg::population population_pickle_setstate(py::tuple state)
+{
+    if (py::len_hint(state) != 1) {
+        py_throw(PyExc_ValueError, ("the state tuple passed for population deserialization "
+                                    "must have 1 element, but instead it has "
+                                    + std::to_string(py::len_hint(state)) + " element(s)")
+                                       .c_str());
+    }
+
+    auto ptr = PyBytes_AsString(py::object(state[0]).ptr());
+    if (!ptr) {
+        py_throw(PyExc_TypeError, "a bytes object is needed to deserialize a population");
+    }
+
+    std::istringstream iss;
+    iss.str(std::string(ptr, ptr + py::len_hint(state[0])));
+    pagmo::population pop;
+    {
+        boost::archive::binary_iarchive iarchive(iss);
+        iarchive >> pop;
+    }
+
+    return pop;
+}
 
 } // namespace
 
@@ -169,6 +212,107 @@ PYBIND11_MODULE(core, m)
     auto topologies_module = m.def_submodule("topologies");
     auto r_policies_module = m.def_submodule("r_policies");
     auto s_policies_module = m.def_submodule("s_policies");
+
+    // Population class.
+    py::class_<pg::population> pop_class(m, "population", pygmo::population_docstring().c_str());
+    pop_class
+        // Def ctor.
+        .def(py::init<>())
+        // Ctors from problem.
+        // NOTE: we expose only the ctors from pagmo::problem, not from C++ or Python UDPs. An __init__ wrapper
+        // on the Python side will take care of cting a pagmo::problem from the input UDP, and then invoke this ctor.
+        // This way we avoid having to expose a different ctor for every exposed C++ prob. Same idea with
+        // the bfe argument.
+        .def(py::init<const pg::problem &, pg::population::size_type, unsigned>())
+        .def(py::init<const pg::problem &, const pg::bfe &, pg::population::size_type, unsigned>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::population>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::population>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::population>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::detail::population_pickle_getstate, &pygmo::detail::population_pickle_setstate))
+        .def(
+            "push_back",
+            [](pg::population &pop, const py::array_t<double> &x, const py::object &f) {
+                if (f.is_none()) {
+                    pop.push_back(pygmo::ndarr_to_vector<pg::vector_double>(x));
+                } else {
+                    pop.push_back(pygmo::ndarr_to_vector<pg::vector_double>(x),
+                                  pygmo::ndarr_to_vector<pg::vector_double>(py::cast<py::array_t<double>>(f)));
+                }
+            },
+            pygmo::population_push_back_docstring().c_str(), py::arg("x"), py::arg("f") = py::none())
+        .def(
+            "random_decision_vector",
+            [](const pg::population &pop) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(pop.random_decision_vector());
+            },
+            pygmo::population_random_decision_vector_docstring().c_str())
+        .def(
+            "best_idx",
+            [](const pg::population &pop, const py::array_t<double> &tol) {
+                return pop.best_idx(pygmo::ndarr_to_vector<pg::vector_double>(tol));
+            },
+            py::arg("tol"))
+        .def(
+            "best_idx", [](const pg::population &pop, double tol) { return pop.best_idx(tol); }, py::arg("tol"))
+        .def(
+            "best_idx", [](const pg::population &pop) { return pop.best_idx(); },
+            pygmo::population_best_idx_docstring().c_str())
+        .def(
+            "worst_idx",
+            [](const pg::population &pop, const py::array_t<double> &tol) {
+                return pop.worst_idx(pygmo::ndarr_to_vector<pg::vector_double>(tol));
+            },
+            py::arg("tol"))
+        .def(
+            "worst_idx", [](const pg::population &pop, double tol) { return pop.worst_idx(tol); }, py::arg("tol"))
+        .def(
+            "worst_idx", [](const pg::population &pop) { return pop.worst_idx(); },
+            pygmo::population_worst_idx_docstring().c_str())
+        .def("__len__", &pg::population::size)
+        .def(
+            "set_xf",
+            [](pg::population &pop, pg::population::size_type i, const py::array_t<double> &x,
+               const py::array_t<double> &f) {
+                pop.set_xf(i, pygmo::ndarr_to_vector<pg::vector_double>(x),
+                           pygmo::ndarr_to_vector<pg::vector_double>(f));
+            },
+            pygmo::population_set_xf_docstring().c_str())
+        .def(
+            "set_x",
+            [](pg::population &pop, pg::population::size_type i, const py::array_t<double> &x) {
+                pop.set_x(i, pygmo::ndarr_to_vector<pg::vector_double>(x));
+            },
+            pygmo::population_set_x_docstring().c_str())
+        .def(
+            "get_f",
+            [](const pg::population &pop) { return pygmo::vvector_to_ndarr<py::array_t<double>>(pop.get_f()); },
+            pygmo::population_get_f_docstring().c_str())
+        .def(
+            "get_x",
+            [](const pg::population &pop) { return pygmo::vvector_to_ndarr<py::array_t<double>>(pop.get_x()); },
+            pygmo::population_get_x_docstring().c_str())
+        .def(
+            "get_ID",
+            [](const pg::population &pop) {
+                return pygmo::vector_to_ndarr<py::array_t<unsigned long long>>(pop.get_ID());
+            },
+            pygmo::population_get_ID_docstring().c_str())
+        .def("get_seed", &pg::population::get_seed, pygmo::population_get_seed_docstring().c_str());
+#if 0
+    pygmo::add_property(pop_class, "champion_x",
+                        lcast([](const population &pop) { return pygmo::vector_to_ndarr(pop.champion_x()); }),
+                        pygmo::population_champion_x_docstring().c_str());
+    pygmo::add_property(pop_class, "champion_f",
+                        lcast([](const population &pop) { return pygmo::vector_to_ndarr(pop.champion_f()); }),
+                        pygmo::population_champion_f_docstring().c_str());
+    pygmo::add_property(pop_class, "problem",
+                        bp::make_function(lcast([](population &pop) -> problem & { return pop.get_problem(); }),
+                                          bp::return_internal_reference<>()),
+                        pygmo::population_problem_docstring().c_str());
+#endif
 
     // Problem class.
     py::class_<pg::problem> problem_class(m, "problem", pygmo::problem_docstring().c_str());
