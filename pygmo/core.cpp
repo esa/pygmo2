@@ -88,10 +88,10 @@ py::tuple population_pickle_getstate(const pg::population &pop)
 
 pg::population population_pickle_setstate(py::tuple state)
 {
-    if (py::len_hint(state) != 1) {
+    if (py::len(state) != 1) {
         py_throw(PyExc_ValueError, ("the state tuple passed for population deserialization "
                                     "must have 1 element, but instead it has "
-                                    + std::to_string(py::len_hint(state)) + " element(s)")
+                                    + std::to_string(py::len(state)) + " element(s)")
                                        .c_str());
     }
 
@@ -101,7 +101,7 @@ pg::population population_pickle_setstate(py::tuple state)
     }
 
     std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len_hint(state[0])));
+    iss.str(std::string(ptr, ptr + py::len(state[0])));
     pagmo::population pop;
     {
         boost::archive::binary_iarchive iarchive(iss);

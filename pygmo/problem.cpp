@@ -79,10 +79,10 @@ std::pair<vector_double, vector_double> prob_inner<py::object>::get_bounds() con
 {
     auto tup = py::cast<py::tuple>(m_value.attr("get_bounds")());
     // Check the tuple size.
-    if (py::len_hint(tup) != 2) {
+    if (py::len(tup) != 2) {
         pygmo::py_throw(PyExc_ValueError, ("the bounds of the problem must be returned as a tuple of 2 elements, but "
                                            "the detected tuple size is "
-                                           + std::to_string(py::len_hint(tup)))
+                                           + std::to_string(py::len(tup)))
                                               .c_str());
     }
 
@@ -393,10 +393,10 @@ pagmo::problem problem_pickle_setstate(py::tuple state)
     // Similarly, first we extract a bytes object from the Python state,
     // and then we build a C++ string from it. The string is then used
     // to deserialized the object.
-    if (py::len_hint(state) != 1) {
+    if (py::len(state) != 1) {
         pygmo::py_throw(PyExc_ValueError, ("the state tuple passed for problem deserialization "
                                            "must have 1 element, but instead it has "
-                                           + std::to_string(py::len_hint(state)) + " element(s)")
+                                           + std::to_string(py::len(state)) + " element(s)")
                                               .c_str());
     }
 
@@ -406,7 +406,7 @@ pagmo::problem problem_pickle_setstate(py::tuple state)
     }
 
     std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len_hint(state[0])));
+    iss.str(std::string(ptr, ptr + py::len(state[0])));
     pagmo::problem p;
     {
         boost::archive::binary_iarchive iarchive(iss);

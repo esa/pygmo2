@@ -34,7 +34,7 @@ std::vector<char> object_to_vchar(const py::object &o)
     }
 
     // NOTE: this will be the length of the bytes object *without* the terminator.
-    const auto size = py::len_hint(tmp);
+    const auto size = py::len(tmp);
 
     // NOTE: we store as char here because that's what is returned by the CPython function.
     // From Python it seems like these are unsigned chars, but this should not concern us.

@@ -182,10 +182,10 @@ pagmo::algorithm algorithm_pickle_setstate(py::tuple state)
     // Similarly, first we extract a bytes object from the Python state,
     // and then we build a C++ string from it. The string is then used
     // to deserialized the object.
-    if (py::len_hint(state) != 1) {
+    if (py::len(state) != 1) {
         pygmo::py_throw(PyExc_ValueError, ("the state tuple passed for algorithm deserialization "
                                            "must have 1 element, but instead it has "
-                                           + std::to_string(py::len_hint(state)) + " element(s)")
+                                           + std::to_string(py::len(state)) + " element(s)")
                                               .c_str());
     }
 
@@ -195,7 +195,7 @@ pagmo::algorithm algorithm_pickle_setstate(py::tuple state)
     }
 
     std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len_hint(state[0])));
+    iss.str(std::string(ptr, ptr + py::len(state[0])));
     pagmo::algorithm a;
     {
         boost::archive::binary_iarchive iarchive(iss);

@@ -77,11 +77,11 @@ void isl_inner<py::object>::run_evolve(island &isl) const
                                               + pygmo::str(pygmo::type(ret)) + "' instead")
                                                  .c_str());
         }
-        if (py::len_hint(ret_tup) != 2) {
+        if (py::len(ret_tup) != 2) {
             pygmo::py_throw(PyExc_ValueError,
                             ("the tuple returned by the 'run_evolve()' method of a user-defined island "
                              "must have 2 elements, but instead it has "
-                             + std::to_string(py::len_hint(ret_tup)) + " element(s)")
+                             + std::to_string(py::len(ret_tup)) + " element(s)")
                                 .c_str());
         }
 
