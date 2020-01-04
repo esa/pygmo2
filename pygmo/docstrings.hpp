@@ -313,6 +313,11 @@ std::string s_policy_get_extra_info_docstring();
 // udsp.
 std::string select_best_docstring();
 
+// not_population_based.
+std::string bls_selection_docstring(const std::string &);
+std::string bls_replacement_docstring(const std::string &);
+std::string bls_set_random_sr_seed_docstring(const std::string &);
+
 } // namespace pygmo
 
 #endif

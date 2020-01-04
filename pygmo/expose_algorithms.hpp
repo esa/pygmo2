@@ -9,11 +9,17 @@
 #ifndef PYGMO_EXPOSE_ALGORITHMS_HPP
 #define PYGMO_EXPOSE_ALGORITHMS_HPP
 
+#include <string>
+
+#include <boost/any.hpp>
+
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
+#include <pagmo/population.hpp>
 
 #include "common_utils.hpp"
+#include "docstrings.hpp"
 
 namespace pygmo
 {
@@ -64,6 +70,67 @@ template <typename Algo>
 inline void expose_algo_log(py::class_<Algo> &algo_class, const char *doc)
 {
     algo_class.def("get_log", &generic_log_getter<Algo>, doc);
+}
+
+// Helper for the exposition of algorithms
+// inheriting from not_population_based.
+template <typename T>
+inline void expose_not_population_based(py::class_<T> &c, const std::string &algo_name)
+{
+    // Selection/replacement.
+    c.def_property(
+        "selection",
+        [](const T &n) -> py::object {
+            auto s = n.get_selection();
+            if (boost::any_cast<std::string>(&s)) {
+                return py::str(boost::any_cast<std::string>(s));
+            }
+            return py::cast(boost::any_cast<pagmo::population::size_type>(s));
+        },
+        [](T &n, const py::object &o) {
+            try {
+                n.set_selection(py::cast<std::string>(o));
+                return;
+            } catch (const py::cast_error &) {
+            }
+            try {
+                n.set_selection(py::cast<pagmo::population::size_type>(o));
+                return;
+            } catch (const py::cast_error &) {
+            }
+            py_throw(PyExc_TypeError,
+                     ("cannot convert the input object '" + str(o) + "' of type '" + str(type(o))
+                      + "' to either a selection policy (one of ['best', 'worst', 'random']) or an individual index")
+                         .c_str());
+        },
+        bls_selection_docstring(algo_name).c_str());
+    c.def_property(
+        "replacement",
+        [](const T &n) -> py::object {
+            auto s = n.get_replacement();
+            if (boost::any_cast<std::string>(&s)) {
+                return py::str(boost::any_cast<std::string>(s));
+            }
+            return py::cast(boost::any_cast<pagmo::population::size_type>(s));
+        },
+        [](T &n, const py::object &o) {
+            try {
+                n.set_replacement(py::cast<std::string>(o));
+                return;
+            } catch (const py::cast_error &) {
+            }
+            try {
+                n.set_replacement(py::cast<pagmo::population::size_type>(o));
+                return;
+            } catch (const py::cast_error &) {
+            }
+            py_throw(PyExc_TypeError,
+                     ("cannot convert the input object '" + str(o) + "' of type '" + str(type(o))
+                      + "' to either a replacement policy (one of ['best', 'worst', 'random']) or an individual index")
+                         .c_str());
+        },
+        bls_replacement_docstring(algo_name).c_str());
+    c.def("set_random_sr_seed", &T::set_random_sr_seed, bls_set_random_sr_seed_docstring(algo_name).c_str());
 }
 
 } // namespace pygmo

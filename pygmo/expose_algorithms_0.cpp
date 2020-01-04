@@ -6,12 +6,18 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
+#include <pagmo/algorithms/compass_search.hpp>
 #include <pagmo/algorithms/de.hpp>
+#include <pagmo/algorithms/mbh.hpp>
+#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
+#include <pagmo/rng.hpp>
 #include <pagmo/threading.hpp>
+#include <pagmo/types.hpp>
 
 #include "docstrings.hpp"
 #include "expose_algorithms.hpp"
@@ -82,32 +88,43 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     expose_algo_log(de_, de_get_log_docstring().c_str());
     de_.def("get_seed", &pagmo::de::get_seed, generic_uda_get_seed_docstring().c_str());
 
-#if 0
- // MBH meta-algo.
-    auto mbh_ = expose_algorithm_pygmo<mbh>("mbh", mbh_docstring().c_str());
-    mbh_.def("__init__", bp::make_constructor(
-                             lcast([](const algorithm &a, unsigned stop, const bp::object &perturb, unsigned seed) {
-                                 return ::new pagmo::mbh(a, stop, obj_to_vector<vector_double>(perturb), seed);
-                             }),
-                             bp::default_call_policies()));
-    mbh_.def("__init__", bp::make_constructor(lcast([](const algorithm &a, unsigned stop, const bp::object &perturb) {
-                                                  return ::new pagmo::mbh(a, stop,
-                                                                          obj_to_vector<vector_double>(perturb),
-                                                                          pagmo::random_device::next());
-                                              }),
-                                              bp::default_call_policies()));
-    mbh_.def("get_seed", &mbh::get_seed, mbh_get_seed_docstring().c_str());
-    mbh_.def("get_verbosity", &mbh::get_verbosity, mbh_get_verbosity_docstring().c_str());
-    mbh_.def("set_perturb", lcast([](mbh &a, const bp::object &o) { a.set_perturb(obj_to_vector<vector_double>(o)); }),
-             mbh_set_perturb_docstring().c_str(), (bp::arg("perturb")));
+    // MBH meta-algo.
+    auto mbh_ = expose_algorithm<pagmo::mbh>(m, algo, a_module, "mbh", mbh_docstring().c_str());
+    mbh_.def(py::init([](const pagmo::algorithm &a, unsigned stop, const py::array_t<double> &perturb, unsigned seed) {
+        return pagmo::detail::make_unique<pagmo::mbh>(a, stop, ndarr_to_vector<pagmo::vector_double>(perturb), seed);
+    }));
+    mbh_.def(py::init([](const pagmo::algorithm &a, unsigned stop, const py::array_t<double> &perturb) {
+        return pagmo::detail::make_unique<pagmo::mbh>(a, stop, ndarr_to_vector<pagmo::vector_double>(perturb),
+                                                      pagmo::random_device::next());
+    }));
+    mbh_.def("get_seed", &pagmo::mbh::get_seed, mbh_get_seed_docstring().c_str());
+    mbh_.def("get_verbosity", &pagmo::mbh::get_verbosity, mbh_get_verbosity_docstring().c_str());
+    mbh_.def(
+        "set_perturb",
+        [](pagmo::mbh &a, const py::array_t<double> &o) { a.set_perturb(ndarr_to_vector<pagmo::vector_double>(o)); },
+        mbh_set_perturb_docstring().c_str(), py::arg("perturb"));
     expose_algo_log(mbh_, mbh_get_log_docstring().c_str());
-    mbh_.def("get_perturb", lcast([](const mbh &a) { return vector_to_ndarr(a.get_perturb()); }),
-             mbh_get_perturb_docstring().c_str());
-    add_property(mbh_, "inner_algorithm",
-                 bp::make_function(lcast([](mbh &uda) -> algorithm & { return uda.get_inner_algorithm(); }),
-                                   bp::return_internal_reference<>()),
-                 generic_uda_inner_algorithm_docstring().c_str());
+    mbh_.def(
+        "get_perturb", [](const pagmo::mbh &a) { return vector_to_ndarr<py::array_t<double>>(a.get_perturb()); },
+        mbh_get_perturb_docstring().c_str());
+    mbh_.def_property_readonly(
+        "inner_algorithm", [](pagmo::mbh &uda) -> pagmo::algorithm & { return uda.get_inner_algorithm(); },
+        py::return_value_policy::reference_internal, generic_uda_inner_algorithm_docstring().c_str());
 
+    // Compass search.
+    auto compass_search_ = expose_algorithm<pagmo::compass_search>(m, algo, a_module, "compass_search",
+                                                                   compass_search_docstring().c_str());
+    compass_search_.def(py::init<unsigned, double, double, double>(), py::arg("max_fevals") = 1u,
+                        py::arg("start_range") = .1, py::arg("stop_range") = .01, py::arg("reduction_coeff") = .5);
+    expose_algo_log(compass_search_, compass_search_get_log_docstring().c_str());
+    compass_search_.def("get_max_fevals", &pagmo::compass_search::get_max_fevals);
+    compass_search_.def("get_start_range", &pagmo::compass_search::get_start_range);
+    compass_search_.def("get_stop_range", &pagmo::compass_search::get_stop_range);
+    compass_search_.def("get_reduction_coeff", &pagmo::compass_search::get_reduction_coeff);
+    compass_search_.def("get_verbosity", &pagmo::compass_search::get_verbosity);
+    expose_not_population_based(compass_search_, "compass_search");
+
+#if 0
     // cstrs_self_adaptive meta-algo.
     auto cstrs_sa
         = expose_algorithm_pygmo<cstrs_self_adaptive>("cstrs_self_adaptive", cstrs_self_adaptive_docstring().c_str());
@@ -136,18 +153,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     bee_colony_.def("get_seed", &bee_colony::get_seed, generic_uda_get_seed_docstring().c_str());
 
 
-    // COMPASS SEARCH
-    auto compass_search_ = expose_algorithm_pygmo<compass_search>("compass_search", compass_search_docstring().c_str());
-    compass_search_.def(
-        bp::init<unsigned, double, double, double>((bp::arg("max_fevals") = 1u, bp::arg("start_range") = .1,
-                                                    bp::arg("stop_range") = .01, bp::arg("reduction_coeff") = .5)));
-    expose_algo_log(compass_search_, compass_search_get_log_docstring().c_str());
-    compass_search_.def("get_max_fevals", &compass_search::get_max_fevals);
-    compass_search_.def("get_start_range", &compass_search::get_start_range);
-    compass_search_.def("get_stop_range", &compass_search::get_stop_range);
-    compass_search_.def("get_reduction_coeff", &compass_search::get_reduction_coeff);
-    compass_search_.def("get_verbosity", &compass_search::get_verbosity);
-    expose_not_population_based(compass_search_, "compass_search");
+
     // DE-1220
     auto de1220_ = expose_algorithm_pygmo<de1220>("de1220", de1220_docstring().c_str());
     // Helper to get the list of default allowed variants for de1220.

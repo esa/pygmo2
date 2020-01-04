@@ -327,6 +327,100 @@ class population_test_case(_ut.TestCase):
         self.assertEqual(repr(pop), repr(p))
 
 
+class mbh_test_case(_ut.TestCase):
+    """Test case for the mbh meta-algorithm
+
+    """
+
+    def runTest(self):
+        from . import mbh, de, compass_search, algorithm, thread_safety as ts, null_algorithm
+        from numpy import array
+
+        class algo(object):
+
+            def evolve(pop):
+                return pop
+
+        # Def ctor.
+        a = mbh()
+        self.assertFalse(a.inner_algorithm.extract(compass_search) is None)
+        self.assertTrue(a.inner_algorithm.is_(compass_search))
+        self.assertTrue(a.inner_algorithm.extract(de) is None)
+        self.assertFalse(a.inner_algorithm.is_(de))
+        self.assertEqual(a.get_log(), [])
+        self.assertTrue(all(a.get_perturb() == array([0.01])))
+        seed = a.get_seed()
+        self.assertEqual(a.get_verbosity(), 0)
+        a.set_perturb([.2])
+        self.assertTrue(all(a.get_perturb() == array([0.2])))
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(
+            compass_search) is not None)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(de) is None)
+        self.assertTrue(str(seed) in str(al))
+        al.set_verbosity(4)
+        self.assertEqual(al.extract(mbh).get_verbosity(), 4)
+
+        # From C++ algo.
+        seed = 123321
+        a = mbh(algo=de(), stop=5, perturb=.4)
+        a = mbh(stop=5, perturb=(.4, .2), algo=de())
+        a = mbh(algo=de(), stop=5, seed=seed, perturb=(.4, .2))
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertFalse(a.inner_algorithm.extract(de) is None)
+        self.assertTrue(a.inner_algorithm.is_(de))
+        self.assertEqual(a.get_log(), [])
+        self.assertTrue(all(a.get_perturb() == array([.4, .2])))
+        self.assertEqual(a.get_seed(), seed)
+        self.assertEqual(a.get_verbosity(), 0)
+        a.set_perturb([.2])
+        self.assertTrue(all(a.get_perturb() == array([0.2])))
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(
+            compass_search) is None)
+        self.assertTrue(al.extract(
+            mbh).inner_algorithm.extract(de) is not None)
+        self.assertTrue(str(seed) in str(al))
+        al.set_verbosity(4)
+        self.assertEqual(al.extract(mbh).get_verbosity(), 4)
+
+        # From Python algo.
+        class algo(object):
+
+            def evolve(self, pop):
+                return pop
+
+        seed = 123321
+        a = mbh(algo=algo(), stop=5, perturb=.4)
+        a = mbh(stop=5, perturb=(.4, .2), algo=algo())
+        a = mbh(algo=algo(), stop=5, seed=seed, perturb=(.4, .2))
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertFalse(a.inner_algorithm.extract(algo) is None)
+        self.assertTrue(a.inner_algorithm.is_(algo))
+        self.assertEqual(a.get_log(), [])
+        self.assertTrue(all(a.get_perturb() == array([.4, .2])))
+        self.assertEqual(a.get_seed(), seed)
+        self.assertEqual(a.get_verbosity(), 0)
+        a.set_perturb([.2])
+        self.assertTrue(all(a.get_perturb() == array([0.2])))
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.none)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(
+            compass_search) is None)
+        self.assertTrue(al.extract(
+            mbh).inner_algorithm.extract(algo) is not None)
+        self.assertTrue(str(seed) in str(al))
+        al.set_verbosity(4)
+        self.assertEqual(al.extract(mbh).get_verbosity(), 4)
+
+        # Construction from algorithm is allowed.
+        mbh(algorithm(null_algorithm()), stop=5, perturb=.4)
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -337,7 +431,7 @@ def run_test_suite(level=0):
 
     """
     #from . import _problem_test, _algorithm_test, _island_test, _topology_test, _r_policy_test, _s_policy_test, _bfe_test, set_global_rng_seed
-    from . import _problem_test, set_global_rng_seed
+    from . import _problem_test, set_global_rng_seed, _algorithm_test
 
     # Make test runs deterministic.
     # NOTE: we'll need to place the async/migration tests at the end, so that at
@@ -348,6 +442,8 @@ def run_test_suite(level=0):
     suite = _ut.TestLoader().loadTestsFromTestCase(core_test_case)
     suite.addTest(_problem_test.problem_test_case())
     suite.addTest(population_test_case())
+    suite.addTest(_algorithm_test.algorithm_test_case())
+    suite.addTest(mbh_test_case())
 
     test_result = _ut.TextTestRunner(verbosity=2).run(suite)
 

@@ -293,6 +293,54 @@ def _island_init(self, **kwargs):
 setattr(island, "__init__", _island_init)
 
 
+# Override of the mbh meta-algorithm constructor.
+__original_mbh_init = mbh.__init__
+# NOTE: the idea of having the mbh init here instead of exposed from C++ is to allow the use
+# of the syntax mbh(uda, ...) for all udas
+
+
+def _mbh_init(self, algo=None, stop=5, perturb=1e-2, seed=None):
+    """
+    Args:
+        algo: an :class:`~pygmo.algorithm` or a user-defined algorithm, either C++ or Python (if
+              *algo* is :data:`None`, a :class:`~pygmo.compass_search` algorithm will be used in its stead)
+        stop (int): consecutive runs of the inner algorithm that need to result in no improvement for
+             :class:`~pygmo.mbh` to stop
+        perturb (float or array-like object): the perturbation to be applied to each component
+        seed (int): seed used by the internal random number generator (if *seed* is :data:`None`, a
+             randomly-generated value will be used in its stead)
+
+    Raises:
+        ValueError: if *perturb* (or one of its components, if *perturb* is an array) is not in the
+             (0,1] range
+        unspecified: any exception thrown by the constructor of :class:`pygmo.algorithm`, or by
+             failures at the intersection between C++ and Python (e.g., type conversion errors, mismatched function
+             signatures, etc.)
+
+    """
+    import numbers
+    if algo is None:
+        # Use the compass search algo for default init.
+        algo = compass_search()
+    if type(algo) == algorithm:
+        # If algo is a pygmo algorithm, we will pass it as-is to the
+        # original init.
+        algo_arg = algo
+    else:
+        # Otherwise, we attempt to create an algorithm from it. This will
+        # work if algo is an exposed C++ algorithm or a Python UDA.
+        algo_arg = algorithm(algo)
+    if isinstance(perturb, numbers.Number):
+        perturb = [perturb]
+    if seed is None:
+        __original_mbh_init(self, algo_arg, stop, perturb)
+    else:
+        __original_mbh_init(self, algo_arg, stop, perturb, seed)
+
+
+setattr(mbh, "__init__", _mbh_init)
+
+
 def set_serialization_backend(name):
     """Set pygmo's serialization backend.
 
