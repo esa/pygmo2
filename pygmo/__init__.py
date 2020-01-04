@@ -12,7 +12,7 @@ from ._version import __version__
 # We import the sub-modules into the root namespace
 from .core import *
 #from .plotting import *
-#from ._py_islands import *
+from ._py_islands import *
 #from ._py_problems import *
 from ._py_bfes import *
 # Patch the problem class.
@@ -26,14 +26,15 @@ from . import _patch_bfe
 import cloudpickle as _cloudpickle
 # Explicitly import the test submodule
 from . import test
+import atexit as _atexit
 
 
 # We move into the problems, algorithms, etc. namespaces
 # all the pure python UDAs, UDPs and UDIs.
-# for _item in dir(_py_islands):
-#     if not _item.startswith("_"):
-#         setattr(islands, _item, getattr(_py_islands, _item))
-# del _py_islands
+for _item in dir(_py_islands):
+    if not _item.startswith("_"):
+        setattr(islands, _item, getattr(_py_islands, _item))
+del _py_islands
 
 # for _item in dir(_py_problems):
 #     if not _item.startswith("_"):
@@ -204,6 +205,94 @@ def _population_init(self, prob=None, size=0, b=None, seed=None):
 setattr(population, "__init__", _population_init)
 
 
+# Override of the island constructor.
+__original_island_init = island.__init__
+
+
+def _island_init(self, **kwargs):
+    """
+    Keyword Args:
+        udi: a user-defined island, either Python or C++
+        algo: a user-defined algorithm (either Python or C++), or an instance of :class:`~pygmo.algorithm`
+        pop (:class:`~pygmo.population`): a population
+        prob: a user-defined problem (either Python or C++), or an instance of :class:`~pygmo.problem`
+        b: a user-defined batch fitness evaluator (either Python or C++), or an instance of :class:`~pygmo.bfe`
+        size (:class:`int`): the number of individuals
+        r_pol: a user-defined replacement policy (either Python or C++), or an instance of :class:`~pygmo.r_policy`
+        s_pol: a user-defined selection policy (either Python or C++), or an instance of :class:`~pygmo.s_policy`
+        seed (:class:`int`): the random seed (if not specified, it will be randomly-generated)
+
+    Raises:
+        KeyError: if the set of keyword arguments is invalid
+        unspecified: any exception thrown by the invoked C++ constructors,
+          the deep copy of the UDI, the constructors of :class:`~pygmo.algorithm` and :class:`~pygmo.population`,
+          failures at the intersection between C++ and Python (e.g., type conversion errors, mismatched function
+          signatures, etc.)
+
+    """
+    if len(kwargs) == 0:
+        # Default constructor.
+        __original_island_init(self)
+        return
+
+    # If we are not dealing with a def ctor, we always need the algo argument.
+    if not 'algo' in kwargs:
+        raise KeyError(
+            "the mandatory 'algo' parameter is missing from the list of arguments "
+            "of the island constructor")
+    algo = kwargs.pop('algo')
+    algo = algo if type(algo) == algorithm else algorithm(algo)
+
+    # Population setup. We either need an input pop, or the prob and size,
+    # plus optionally seed and b.
+    if 'pop' in kwargs and ('prob' in kwargs or 'size' in kwargs or 'seed' in kwargs or 'b' in kwargs):
+        raise KeyError(
+            "if the 'pop' argument is provided, the 'prob', 'size', 'seed' and 'b' "
+            "arguments must not be provided")
+    elif 'pop' in kwargs:
+        pop = kwargs.pop('pop')
+    elif 'prob' in kwargs and 'size' in kwargs:
+        pop = population(prob=kwargs.pop('prob'),
+                         size=kwargs.pop('size'), seed=kwargs.pop('seed') if 'seed' in kwargs else None,
+                         b=kwargs.pop('b') if 'b' in kwargs else None)
+    else:
+        raise KeyError(
+            "unable to construct a population from the arguments of "
+            "the island constructor: you must either pass a population "
+            "('pop') or a set of arguments that can be used to build one "
+            "('prob', 'size' and, optionally, 'seed' and 'b')")
+
+    # UDI, if any.
+    if 'udi' in kwargs:
+        args = [kwargs.pop('udi'), algo, pop]
+    else:
+        args = [algo, pop]
+
+    # Replace/selection policies, if any.
+    if 'r_pol' in kwargs:
+        r_pol = kwargs.pop('r_pol')
+        r_pol = r_pol if type(r_pol) == r_policy else r_policy(r_pol)
+        args.append(r_pol)
+    else:
+        args.append(r_policy())
+
+    if 's_pol' in kwargs:
+        s_pol = kwargs.pop('s_pol')
+        s_pol = s_pol if type(s_pol) == s_policy else s_policy(s_pol)
+        args.append(s_pol)
+    else:
+        args.append(s_policy())
+
+    if len(kwargs) != 0:
+        raise KeyError(
+            'unrecognised keyword arguments: {}'.format(list(kwargs.keys())))
+
+    __original_island_init(self, *args)
+
+
+setattr(island, "__init__", _island_init)
+
+
 def set_serialization_backend(name):
     """Set pygmo's serialization backend.
 
@@ -272,3 +361,13 @@ def get_serialization_backend():
 
     """
     return _serialization_backend
+
+
+def _cleanup():
+    mp_island.shutdown_pool()
+    mp_bfe.shutdown_pool()
+    ipyparallel_island.shutdown_view()
+    ipyparallel_bfe.shutdown_view()
+
+
+_atexit.register(_cleanup)

@@ -13,6 +13,7 @@ set(PYGMO_PYTHON_FILES
     _patch_island.py
     _py_bfes.py
     _mp_utils.py
+    _py_islands.py
 )
 
 # Copy the python files in the current binary dir,
@@ -41,6 +42,7 @@ YACMA_PYTHON_MODULE(core
     expose_algorithms_0.cpp
     expose_algorithms_1.cpp
     expose_bfes.cpp
+    expose_islands.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)

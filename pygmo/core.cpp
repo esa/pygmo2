@@ -10,6 +10,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include <boost/numeric/conversion/cast.hpp>
 
@@ -28,8 +29,10 @@
 #include <pagmo/island.hpp>
 #include <pagmo/islands/thread_island.hpp>
 #include <pagmo/population.hpp>
+#include <pagmo/r_policy.hpp>
 #include <pagmo/rng.hpp>
 #include <pagmo/s11n.hpp>
+#include <pagmo/s_policy.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
@@ -39,8 +42,10 @@
 #include "docstrings.hpp"
 #include "expose_algorithms.hpp"
 #include "expose_bfes.hpp"
+#include "expose_islands.hpp"
 #include "expose_problems.hpp"
 #include "island.hpp"
+#include "object_serialization.hpp"
 #include "problem.hpp"
 
 namespace py = pybind11;
@@ -107,13 +112,36 @@ pg::population population_pickle_setstate(py::tuple state)
 
     std::istringstream iss;
     iss.str(std::string(ptr, ptr + py::len(state[0])));
-    pagmo::population pop;
+    pg::population pop;
     {
         boost::archive::binary_iarchive iarchive(iss);
         iarchive >> pop;
     }
 
     return pop;
+}
+
+// Test that the serialization of pybind11 objects works as expected.
+// The object returned by this function should be identical to the input
+// object.
+py::object test_object_serialization(const py::object &o)
+{
+    std::ostringstream oss;
+    {
+        boost::archive::binary_oarchive oarchive(oss);
+        oarchive << object_to_vchar(o);
+    }
+    const std::string tmp_str = oss.str();
+    std::istringstream iss;
+    iss.str(tmp_str);
+    py::object retval;
+    {
+        boost::archive::binary_iarchive iarchive(iss);
+        std::vector<char> tmp;
+        iarchive >> tmp;
+        retval = vchar_to_object(tmp);
+    }
+    return retval;
 }
 
 } // namespace
@@ -141,6 +169,7 @@ PYBIND11_MODULE(core, m)
     m.def("_type", &pygmo::type);
     m.def("_builtins", &pygmo::builtins);
     m.def("_deepcopy", &pygmo::deepcopy);
+    m.def("_test_object_serialization", &pygmo::detail::test_object_serialization);
 
     // The random_device_next() helper.
     m.def("_random_device_next", []() { return pg::random_device::next(); });
@@ -381,14 +410,14 @@ PYBIND11_MODULE(core, m)
             },
             pygmo::problem_get_bounds_docstring().c_str())
         .def(
-            "get_lb", [](const pagmo::problem &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_lb()); },
+            "get_lb", [](const pg::problem &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_lb()); },
             pygmo::problem_get_lb_docstring().c_str())
         .def(
-            "get_ub", [](const pagmo::problem &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_ub()); },
+            "get_ub", [](const pg::problem &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_ub()); },
             pygmo::problem_get_ub_docstring().c_str())
         .def(
             "batch_fitness",
-            [](const pagmo::problem &p, const py::array_t<double> &dvs) {
+            [](const pg::problem &p, const py::array_t<double> &dvs) {
                 return pygmo::vector_to_ndarr<py::array_t<double>>(
                     p.batch_fitness(pygmo::ndarr_to_vector<pg::vector_double>(dvs)));
             },
@@ -396,20 +425,20 @@ PYBIND11_MODULE(core, m)
         .def("has_batch_fitness", &pg::problem::has_batch_fitness, pygmo::problem_has_batch_fitness_docstring().c_str())
         .def(
             "gradient",
-            [](const pagmo::problem &p, const py::array_t<double> &dv) {
+            [](const pg::problem &p, const py::array_t<double> &dv) {
                 return pygmo::vector_to_ndarr<py::array_t<double>>(
                     p.gradient(pygmo::ndarr_to_vector<pg::vector_double>(dv)));
             },
             pygmo::problem_gradient_docstring().c_str(), py::arg("dv"))
         .def("has_gradient", &pg::problem::has_gradient, pygmo::problem_has_gradient_docstring().c_str())
         .def(
-            "gradient_sparsity", [](const pagmo::problem &p) { return pygmo::sp_to_ndarr(p.gradient_sparsity()); },
+            "gradient_sparsity", [](const pg::problem &p) { return pygmo::sp_to_ndarr(p.gradient_sparsity()); },
             pygmo::problem_gradient_sparsity_docstring().c_str())
         .def("has_gradient_sparsity", &pg::problem::has_gradient_sparsity,
              pygmo::problem_has_gradient_sparsity_docstring().c_str())
         .def(
             "hessians",
-            [](const pagmo::problem &p, const py::array_t<double> &dv) -> py::list {
+            [](const pg::problem &p, const py::array_t<double> &dv) -> py::list {
                 py::list retval;
                 for (const auto &v : p.hessians(pygmo::ndarr_to_vector<pg::vector_double>(dv))) {
                     retval.append(pygmo::vector_to_ndarr<py::array_t<double>>(v));
@@ -420,7 +449,7 @@ PYBIND11_MODULE(core, m)
         .def("has_hessians", &pg::problem::has_hessians, pygmo::problem_has_hessians_docstring().c_str())
         .def(
             "hessians_sparsity",
-            [](const pagmo::problem &p) -> py::list {
+            [](const pg::problem &p) -> py::list {
                 py::list retval;
                 for (const auto &sp : p.hessians_sparsity()) {
                     retval.append(pygmo::sp_to_ndarr(sp));
@@ -546,4 +575,44 @@ PYBIND11_MODULE(core, m)
 
     // Finalize.
     bfe_class.def(py::init<const py::object &>(), py::arg("udbfe"));
+
+    // Island class.
+    py::class_<pg::island> island_class(m, "island", pygmo::island_docstring().c_str());
+    island_class
+        // Def ctor.
+        .def(py::init<>())
+        // Ctor from algo, pop, and policies.
+        .def(py::init<const pg::algorithm &, const pg::population &, const pg::r_policy &, const pg::s_policy &>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::island>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::island>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::island>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::island_pickle_getstate, &pygmo::island_pickle_setstate))
+        // UDI extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::island>)
+        .def(
+            "evolve", [](pg::island &isl, unsigned n) { isl.evolve(n); }, pygmo::island_evolve_docstring().c_str(),
+            py::arg("n") = 1u)
+        .def("wait", &pg::island::wait, pygmo::island_wait_docstring().c_str())
+        .def("wait_check", &pg::island::wait_check, pygmo::island_wait_check_docstring().c_str())
+        .def("get_population", &pg::island::get_population, pygmo::island_get_population_docstring().c_str())
+        .def("get_algorithm", &pg::island::get_algorithm, pygmo::island_get_algorithm_docstring().c_str())
+        .def("set_population", &pg::island::set_population, pygmo::island_set_population_docstring().c_str(),
+             py::arg("pop"))
+        .def("set_algorithm", &pg::island::set_algorithm, pygmo::island_set_algorithm_docstring().c_str(),
+             py::arg("algo"))
+        .def("get_name", &pg::island::get_name, pygmo::island_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::island::get_extra_info, pygmo::island_get_extra_info_docstring().c_str())
+        .def("get_r_policy", &pg::island::get_r_policy, pygmo::island_get_r_policy_docstring().c_str())
+        .def("get_s_policy", &pg::island::get_s_policy, pygmo::island_get_s_policy_docstring().c_str())
+        .def_property_readonly("status", &pg::island::status, pygmo::island_status_docstring().c_str());
+
+    // Expose the C++ islands.
+    pygmo::expose_islands(m, island_class, islands_module);
+
+    // Finalize.
+    island_class.def(py::init<const py::object &, const pg::algorithm &, const pg::population &, const pg::r_policy &,
+                              const pg::s_policy &>());
 }
