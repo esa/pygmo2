@@ -431,7 +431,7 @@ def run_test_suite(level=0):
 
     """
     #from . import _problem_test, _algorithm_test, _island_test, _topology_test, _r_policy_test, _s_policy_test, _bfe_test, set_global_rng_seed
-    from . import _problem_test, set_global_rng_seed, _algorithm_test
+    from . import _problem_test, set_global_rng_seed, _algorithm_test, _bfe_test
 
     # Make test runs deterministic.
     # NOTE: we'll need to place the async/migration tests at the end, so that at
@@ -440,6 +440,12 @@ def run_test_suite(level=0):
 
     retval = 0
     suite = _ut.TestLoader().loadTestsFromTestCase(core_test_case)
+    suite.addTest(_bfe_test.bfe_test_case())
+    suite.addTest(_bfe_test.thread_bfe_test_case())
+    suite.addTest(_bfe_test.member_bfe_test_case())
+    suite.addTest(_bfe_test.mp_bfe_test_case())
+    suite.addTest(_bfe_test.ipyparallel_bfe_test_case())
+    suite.addTest(_bfe_test.default_bfe_test_case())
     suite.addTest(_problem_test.problem_test_case())
     suite.addTest(population_test_case())
     suite.addTest(_algorithm_test.algorithm_test_case())

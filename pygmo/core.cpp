@@ -35,6 +35,7 @@
 #include <pagmo/s_policy.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
+#include <pagmo/utils/generic.hpp>
 
 #include "algorithm.hpp"
 #include "bfe.hpp"
@@ -274,6 +275,26 @@ PYBIND11_MODULE(core, m)
     py::enum_<pg::migrant_handling>(m, "migrant_handling")
         .value("preserve", pg::migrant_handling::preserve)
         .value("evict", pg::migrant_handling::evict);
+
+    // Generic utilities
+    m.def(
+        "random_decision_vector",
+        [](const pg::problem &p) -> py::array_t<double> {
+            using reng_t = pg::detail::random_engine_type;
+            reng_t tmp_rng(static_cast<reng_t::result_type>(pg::random_device::next()));
+            auto retval = pagmo::random_decision_vector(p, tmp_rng);
+            return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
+        },
+        pygmo::random_decision_vector_docstring().c_str(), py::arg("prob"));
+    m.def(
+        "batch_random_decision_vector",
+        [](const pg::problem &p, pg::vector_double::size_type n) -> py::array_t<double> {
+            using reng_t = pg::detail::random_engine_type;
+            reng_t tmp_rng(static_cast<reng_t::result_type>(pg::random_device::next()));
+            auto retval = pagmo::batch_random_decision_vector(p, n, tmp_rng);
+            return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
+        },
+        pygmo::batch_random_decision_vector_docstring().c_str(), py::arg("prob"), py::arg("n"));
 
     // Add the submodules.
     auto problems_module = m.def_submodule("problems");

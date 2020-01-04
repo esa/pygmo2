@@ -15,6 +15,7 @@ set(PYGMO_PYTHON_FILES
     _mp_utils.py
     _py_islands.py
     _algorithm_test.py
+    _bfe_test.py
 )
 
 # Copy the python files in the current binary dir,
