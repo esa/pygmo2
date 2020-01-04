@@ -182,7 +182,7 @@ pagmo::island island_pickle_setstate(py::tuple state)
                                               .c_str());
     }
 
-    auto ptr = PyBytes_AsString(py::object(state[0]).ptr());
+    auto ptr = PyBytes_AsString(state[0].ptr());
     if (!ptr) {
         pygmo::py_throw(PyExc_TypeError, "a bytes object is needed to deserialize an island");
     }

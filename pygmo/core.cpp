@@ -44,9 +44,11 @@
 #include "expose_bfes.hpp"
 #include "expose_islands.hpp"
 #include "expose_problems.hpp"
+#include "expose_r_policies.hpp"
 #include "island.hpp"
 #include "object_serialization.hpp"
 #include "problem.hpp"
+#include "r_policy.hpp"
 
 namespace py = pybind11;
 namespace pg = pagmo;
@@ -105,7 +107,7 @@ pg::population population_pickle_setstate(py::tuple state)
                                        .c_str());
     }
 
-    auto ptr = PyBytes_AsString(py::object(state[0]).ptr());
+    auto ptr = PyBytes_AsString(state[0].ptr());
     if (!ptr) {
         py_throw(PyExc_TypeError, "a bytes object is needed to deserialize a population");
     }
@@ -615,4 +617,40 @@ PYBIND11_MODULE(core, m)
     // Finalize.
     island_class.def(py::init<const py::object &, const pg::algorithm &, const pg::population &, const pg::r_policy &,
                               const pg::s_policy &>());
+
+    // Replacement policy class.
+    py::class_<pg::r_policy> r_policy_class(m, "r_policy", pygmo::r_policy_docstring().c_str());
+    r_policy_class
+        // Def ctor.
+        .def(py::init<>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::r_policy>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::r_policy>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::r_policy>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::r_policy_pickle_getstate, &pygmo::r_policy_pickle_setstate))
+        // UDRP extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::r_policy>)
+        // r_policy methods.
+        .def(
+            "replace",
+            [](const pg::r_policy &r, const py::iterable &inds, const pg::vector_double::size_type &nx,
+               const pg::vector_double::size_type &nix, const pg::vector_double::size_type &nobj,
+               const pg::vector_double::size_type &nec, const pg::vector_double::size_type &nic,
+               const py::array_t<double> &tol, const py::iterable &mig) {
+                return pygmo::inds_to_tuple(r.replace(pygmo::iterable_to_inds(inds), nx, nix, nobj, nec, nic,
+                                                      pygmo::ndarr_to_vector<pg::vector_double>(tol),
+                                                      pygmo::iterable_to_inds(mig)));
+            },
+            pygmo::r_policy_replace_docstring().c_str(), py::arg("inds"), py::arg("nx"), py::arg("nix"),
+            py::arg("nobj"), py::arg("nec"), py::arg("nic"), py::arg("tol"), py::arg("mig"))
+        .def("get_name", &pg::r_policy::get_name, pygmo::r_policy_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::r_policy::get_extra_info, pygmo::r_policy_get_extra_info_docstring().c_str());
+
+    // Expose the C++ replacement policies.
+    pygmo::expose_r_policies(m, r_policy_class, r_policies_module);
+
+    // Finalize.
+    r_policy_class.def(py::init<const py::object &>(), py::arg("udrp"));
 }

@@ -194,6 +194,40 @@ inline Array vvector_to_ndarr(const std::vector<std::vector<T, A2>, A1> &v)
     return retval;
 }
 
+// Convert an input 2D numpy array into a vector of vectors.
+template <typename Vector, typename T, int ExtraFlags>
+inline Vector ndarr_to_vvector(const py::array_t<T, ExtraFlags> &a)
+{
+    // Get a 2D view on the array.
+    // If the array is not 2D, this will throw.
+    auto r = a.template unchecked<2>();
+
+    // Prepare the output vector with the
+    // correct size.
+    Vector retval(boost::numeric_cast<typename Vector::size_type>(r.shape(0)));
+
+    // Copy the values from a into retval.
+    for (py::ssize_t i = 0; i < r.shape(0); ++i) {
+        retval[static_cast<decltype(retval.size())>(i)].resize(
+            boost::numeric_cast<decltype(retval[i].size())>(r.shape(1)));
+
+        for (py::ssize_t j = 0; j < r.shape(1); ++j) {
+            retval[static_cast<decltype(retval.size())>(i)][static_cast<decltype(retval[i].size())>(j)] = r(i, j);
+        }
+    }
+
+    return retval;
+}
+
+// Convert an individuals_group_t into a Python tuple of:
+// - 1D integral array of IDs,
+// - 2D float array of dvs,
+// - 2D float array of fvs.
+py::tuple inds_to_tuple(const pagmo::individuals_group_t &);
+
+// Convert a Python iterable into an individuals_group_t.
+pagmo::individuals_group_t iterable_to_inds(const py::iterable &);
+
 } // namespace pygmo
 
 #endif

@@ -43,6 +43,8 @@ YACMA_PYTHON_MODULE(core
     expose_algorithms_1.cpp
     expose_bfes.cpp
     expose_islands.cpp
+    r_policy.cpp
+    expose_r_policies.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)

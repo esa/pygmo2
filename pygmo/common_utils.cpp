@@ -7,11 +7,18 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #include <initializer_list>
+#include <iterator>
 #include <string>
+#include <tuple>
+#include <utility>
+#include <vector>
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+
+#include <pagmo/types.hpp>
 
 #include "common_utils.hpp"
 
@@ -133,6 +140,65 @@ py::array_t<pagmo::vector_double::size_type> sp_to_ndarr(const pagmo::sparsity_p
     }
 
     return retval;
+}
+
+// Convert an individuals_group_t into a Python tuple of:
+// - 1D integral array of IDs,
+// - 2D float array of dvs,
+// - 2D float array of fvs.
+py::tuple inds_to_tuple(const pagmo::individuals_group_t &inds)
+{
+    // Do the IDs.
+    auto ID_arr = vector_to_ndarr<py::array_t<unsigned long long>>(std::get<0>(inds));
+
+    // Decision vectors.
+    auto dv_arr = vvector_to_ndarr<py::array_t<double>>(std::get<1>(inds));
+
+    // Fitness vectors.
+    auto fv_arr = vvector_to_ndarr<py::array_t<double>>(std::get<2>(inds));
+
+    return py::make_tuple(std::move(ID_arr), std::move(dv_arr), std::move(fv_arr));
+}
+
+// Convert a Python iterable into an individuals_group_t.
+pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
+{
+    auto begin = std::begin(o);
+    const auto end = std::end(o);
+
+    if (begin == end) {
+        // Empty iteratable.
+        py_throw(PyExc_ValueError, "cannot convert an empty iteratable into a pagmo::individuals_group_t");
+    }
+
+    // Try fetching the IDs.
+    auto ID_vec = ndarr_to_vector<std::vector<unsigned long long>>(py::cast<py::array_t<unsigned long long>>(*begin));
+
+    if (++begin == end) {
+        // Iteratable with only 1 element.
+        py_throw(PyExc_ValueError, "cannot convert an iteratable with only 1 element into a "
+                                   "pagmo::individuals_group_t (exactly 3 elements are needed)");
+    }
+
+    // Try fetching the decision vectors.
+    auto dvs_vec = ndarr_to_vvector<std::vector<pagmo::vector_double>>(py::cast<py::array_t<double>>(*begin));
+
+    if (++begin == end) {
+        // Iteratable with only 2 elements.
+        py_throw(PyExc_ValueError, "cannot convert an iteratable with only 2 elements into a "
+                                   "pagmo::individuals_group_t (exactly 3 elements are needed)");
+    }
+
+    // Try fetching the fitness vectors.
+    auto fvs_vec = ndarr_to_vvector<std::vector<pagmo::vector_double>>(py::cast<py::array_t<double>>(*begin));
+
+    if (++begin != end) {
+        // Iteratable with too many elements.
+        py_throw(PyExc_ValueError, "cannot convert an iteratable with more than 3 elements into a "
+                                   "pagmo::individuals_group_t (exactly 3 elements are needed)");
+    }
+
+    return pagmo::individuals_group_t(std::move(ID_vec), std::move(dvs_vec), std::move(fvs_vec));
 }
 
 } // namespace pygmo
