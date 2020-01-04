@@ -981,7 +981,7 @@ class problem_test_case(_ut.TestCase):
                 return [42]
 
             def gradient_sparsity(self):
-                return empty((0,2), dtype=int)
+                return empty((0, 2), dtype=int)
 
         self.assert_(problem(p()).has_gradient_sparsity())
         self.assert_(isinstance(problem(p()).gradient_sparsity(), ndarray))
@@ -1460,7 +1460,7 @@ class problem_test_case(_ut.TestCase):
                 return [42]
 
             def hessians_sparsity(self):
-                return (empty((0,2)),)
+                return (empty((0, 2)),)
 
         self.assert_(problem(p()).has_hessians_sparsity())
         self.assert_(isinstance(problem(p()).hessians_sparsity(), list))

@@ -7,7 +7,14 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from ._check_deps import *
+# Version setup.
+from ._version import __version__
+# We import the sub-modules into the root namespace
 from .core import *
+#from .plotting import *
+#from ._py_islands import *
+#from ._py_problems import *
+from ._py_bfes import *
 # Patch the problem class.
 from . import _patch_problem
 # Patch the algorithm class.
@@ -19,6 +26,26 @@ from . import _patch_bfe
 import cloudpickle as _cloudpickle
 # Explicitly import the test submodule
 from . import test
+
+
+# We move into the problems, algorithms, etc. namespaces
+# all the pure python UDAs, UDPs and UDIs.
+# for _item in dir(_py_islands):
+#     if not _item.startswith("_"):
+#         setattr(islands, _item, getattr(_py_islands, _item))
+# del _py_islands
+
+# for _item in dir(_py_problems):
+#     if not _item.startswith("_"):
+#         setattr(problems, _item, getattr(_py_problems, _item))
+# del _py_problems
+
+for _item in dir(_py_bfes):
+    if not _item.startswith("_"):
+        setattr(batch_evaluators, _item, getattr(_py_bfes, _item))
+del _py_bfes
+
+del _item
 
 # Machinery for the setup of the serialization backend.
 _serialization_backend = _cloudpickle

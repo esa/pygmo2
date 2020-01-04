@@ -9,6 +9,236 @@
 import unittest as _ut
 
 
+class _prob(object):
+
+    def get_bounds(self):
+        return ([0, 0], [1, 1])
+
+    def fitness(self, a):
+        return [42]
+
+
+class population_test_case(_ut.TestCase):
+    """Test case for the population class.
+
+    """
+
+    def runTest(self):
+        self.run_init_test()
+        self.run_best_worst_idx_test()
+        self.run_champion_test()
+        self.run_getters_test()
+        self.run_problem_test()
+        self.run_push_back_test()
+        self.run_random_dv_test()
+        self.run_set_x_xf_test()
+        self.run_pickle_test()
+
+    def run_init_test(self):
+        from .core import population, null_problem, rosenbrock, problem, bfe, default_bfe, thread_bfe
+        pop = population()
+        self.assertTrue(len(pop) == 0)
+        self.assertTrue(pop.problem.extract(null_problem) is not None)
+        self.assertTrue(pop.problem.extract(rosenbrock) is None)
+        pop.get_seed()
+        pop = population(rosenbrock())
+        self.assertTrue(len(pop) == 0)
+        self.assertTrue(pop.problem.extract(null_problem) is None)
+        self.assertTrue(pop.problem.extract(rosenbrock) is not None)
+        pop.get_seed()
+        pop = population(seed=42, size=5, prob=problem(rosenbrock()))
+        self.assertTrue(len(pop) == 5)
+        self.assertTrue(pop.problem.extract(null_problem) is None)
+        self.assertTrue(pop.problem.extract(rosenbrock) is not None)
+        self.assertEqual(pop.get_seed(), 42)
+
+        # Tests with a bfe argument.
+        p = problem(rosenbrock())
+        pop = population(prob=p, size=20, b=bfe(default_bfe()))
+        for x, f in zip(pop.get_x(), pop.get_f()):
+            self.assertEqual(p.fitness(x), f)
+
+        # Pass in explicit UDBFE.
+        pop = population(prob=p, size=20, b=thread_bfe())
+        for x, f in zip(pop.get_x(), pop.get_f()):
+            self.assertEqual(p.fitness(x), f)
+
+        # Pythonic problem.
+        class p(object):
+
+            def get_bounds(self):
+                return ([0, 0], [1, 1])
+
+            def fitness(self, a):
+                return [42]
+
+        p = problem(p())
+        pop = population(prob=p, size=20, b=bfe(default_bfe()))
+        for x, f in zip(pop.get_x(), pop.get_f()):
+            self.assertEqual(p.fitness(x), f)
+
+        # Pythonic problem with batch_fitness method.
+        class p(object):
+
+            def get_bounds(self):
+                return ([0], [1])
+
+            def fitness(self, a):
+                return [42]
+
+            def batch_fitness(self, dvs):
+                return [43] * len(dvs)
+
+        p = problem(p())
+        pop = population(prob=p, size=20, b=bfe(default_bfe()))
+        for f in pop.get_f():
+            self.assertEqual(f, 43)
+
+    def run_best_worst_idx_test(self):
+        from .core import population, rosenbrock, zdt
+        pop = population(rosenbrock(), size=10)
+        self.assertTrue(pop.best_idx() < 10)
+        self.assertTrue(pop.best_idx(0.001) < 10)
+        self.assertTrue(pop.best_idx(tol=0.001) < 10)
+        self.assertTrue(pop.best_idx(tol=[0.001, 0.001]) < 10)
+        self.assertTrue(pop.worst_idx() < 10)
+        self.assertTrue(pop.worst_idx(0.001) < 10)
+        self.assertTrue(pop.worst_idx(tol=0.001) < 10)
+        self.assertTrue(pop.worst_idx(tol=[0.001, 0.001]) < 10)
+        pop = population(zdt(param=10), size=10)
+        self.assertRaises(ValueError, lambda: pop.best_idx())
+        self.assertRaises(ValueError, lambda: pop.worst_idx())
+
+    def run_champion_test(self):
+        from .core import population, null_problem, problem, zdt
+        from numpy import array
+        udp = null_problem()
+        prob = problem(udp)
+        pop = population(prob)
+        self.assertEqual(len(pop.champion_f), 0)
+        self.assertEqual(len(pop.champion_x), 0)
+        pop.push_back([1.])
+        self.assertEqual(pop.champion_f[0], 0.)
+        self.assertEqual(pop.champion_x[0], 1.)
+        pop = population(zdt(param=10))
+        self.assertRaises(ValueError, lambda: pop.champion_x)
+        self.assertRaises(ValueError, lambda: pop.champion_f)
+
+    def run_getters_test(self):
+        from .core import population
+        from numpy import ndarray
+        pop = population(size=100, seed=123)
+        self.assertEqual(len(pop.get_ID()), 100)
+        self.assertTrue(isinstance(pop.get_ID(), ndarray))
+        self.assertEqual(len(pop.get_f()), 100)
+        self.assertTrue(isinstance(pop.get_f(), ndarray))
+        self.assertEqual(pop.get_f().shape, (100, 1))
+        self.assertEqual(len(pop.get_x()), 100)
+        self.assertTrue(isinstance(pop.get_x(), ndarray))
+        self.assertEqual(pop.get_x().shape, (100, 1))
+        self.assertEqual(pop.get_seed(), 123)
+
+    def run_problem_test(self):
+        from .core import population, rosenbrock, null_problem, problem, zdt
+        import sys
+        pop = population(size=10)
+        rc = sys.getrefcount(pop)
+        prob = pop.problem
+        self.assertTrue(sys.getrefcount(pop) == rc + 1)
+        del prob
+        self.assertTrue(sys.getrefcount(pop) == rc)
+        self.assertTrue(pop.problem.extract(null_problem) is not None)
+        self.assertTrue(pop.problem.extract(rosenbrock) is None)
+        pop = population(rosenbrock(), size=10)
+        self.assertTrue(pop.problem.extract(null_problem) is None)
+        self.assertTrue(pop.problem.extract(rosenbrock) is not None)
+
+        def prob_setter():
+            pop.problem = problem(zdt(param=10))
+        self.assertRaises(AttributeError, prob_setter)
+
+    def run_push_back_test(self):
+        from .core import population, rosenbrock
+        from numpy import array
+        pop = population(rosenbrock(), size=5)
+        self.assertEqual(len(pop), 5)
+        self.assertEqual(pop.problem.get_fevals(), 5)
+        pop.push_back(x=[.1, .1])
+        self.assertEqual(len(pop), 6)
+        self.assertEqual(pop.problem.get_fevals(), 6)
+        pop.push_back(x=[.1, .1], f=array([1]))
+        self.assertEqual(len(pop), 7)
+        self.assertEqual(pop.problem.get_fevals(), 6)
+        pop.push_back(x=[.1, .1], f=array([0.0]))
+        self.assertEqual(len(pop), 8)
+        self.assertEqual(pop.problem.get_fevals(), 6)
+        self.assertEqual(pop.best_idx(), 7)
+        pop.push_back(x=[.1, .1], f=None)
+        self.assertEqual(len(pop), 9)
+        self.assertEqual(pop.problem.get_fevals(), 7)
+        self.assertEqual(pop.best_idx(), 7)
+        # Test bogus x, f dimensions.
+        pop = population(rosenbrock(5), size=5)
+        self.assertRaises(ValueError, lambda: pop.push_back([]))
+        self.assertRaises(ValueError, lambda: pop.push_back([], []))
+        self.assertRaises(ValueError, lambda: pop.push_back([1] * 5, []))
+        self.assertRaises(ValueError, lambda: pop.push_back([1] * 5, [1, 2]))
+
+    def run_random_dv_test(self):
+        from .core import population, rosenbrock
+        from numpy import ndarray
+        pop = population(rosenbrock())
+        self.assertTrue(isinstance(pop.random_decision_vector(), ndarray))
+        self.assertTrue(pop.random_decision_vector().shape == (2,))
+        self.assertTrue(pop.random_decision_vector()[0] >= -5)
+        self.assertTrue(pop.random_decision_vector()[0] <= 10)
+        self.assertTrue(pop.random_decision_vector()[1] >= -5)
+        self.assertTrue(pop.random_decision_vector()[1] <= 10)
+
+    def run_set_x_xf_test(self):
+        from .core import population, rosenbrock
+        from numpy import array
+        pop = population(rosenbrock())
+        self.assertRaises(ValueError, lambda: pop.set_x(0, [1, 1]))
+        self.assertRaises(ValueError, lambda: pop.set_xf(0, (1, 1), [1]))
+        pop = population(rosenbrock(), size=10)
+        self.assertRaises(ValueError, lambda: pop.set_x(0, array([1, 1, 1])))
+        self.assertRaises(ValueError, lambda: pop.set_xf(0, [1, 1], [1, 1]))
+        self.assertRaises(ValueError, lambda: pop.set_xf(
+            0, array([1, 1, 1]), [1, 1]))
+        pop.set_x(0, array([1.1, 1.1]))
+        self.assertTrue(all(pop.get_x()[0] == array([1.1, 1.1])))
+        self.assertTrue(
+            all(pop.get_f()[0] == pop.problem.fitness(array([1.1, 1.1]))))
+        pop.set_x(4, array([1.1, 1.1]))
+        self.assertTrue(all(pop.get_x()[4] == array([1.1, 1.1])))
+        self.assertTrue(
+            all(pop.get_f()[4] == pop.problem.fitness(array([1.1, 1.1]))))
+        pop.set_xf(5, array([1.1, 1.1]), [1.25])
+        self.assertTrue(all(pop.get_x()[5] == array([1.1, 1.1])))
+        self.assertTrue(all(pop.get_f()[5] == array([1.25])))
+        pop.set_xf(6, array([1.1, 1.1]), [0.])
+        self.assertTrue(all(pop.get_x()[6] == array([1.1, 1.1])))
+        self.assertTrue(all(pop.get_f()[6] == array([0])))
+        self.assertEqual(pop.best_idx(), 6)
+
+    def run_pickle_test(self):
+        from .core import population, rosenbrock, translate
+        from pickle import dumps, loads
+        pop = population(rosenbrock(), size=12, seed=42)
+        p = loads(dumps(pop))
+        self.assertEqual(repr(pop), repr(p))
+        pop = population(translate(rosenbrock(2), 2 * [.1]), size=12, seed=42)
+        p = loads(dumps(pop))
+        self.assertEqual(repr(pop), repr(p))
+        pop = population(_prob(), size=12, seed=42)
+        p = loads(dumps(pop))
+        self.assertEqual(repr(pop), repr(p))
+        pop = population(translate(_prob(), 2 * [.1]), size=12, seed=42)
+        p = loads(dumps(pop))
+        self.assertEqual(repr(pop), repr(p))
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -28,6 +258,7 @@ def run_test_suite(level=0):
 
     retval = 0
     suite = _ut.TestLoader().loadTestsFromTestCase(_problem_test.problem_test_case)
+    suite.addTest(population_test_case())
 
     test_result = _ut.TextTestRunner(verbosity=2).run(suite)
 

@@ -18,6 +18,9 @@
 
 #include <pagmo/algorithm.hpp>
 #include <pagmo/archipelago.hpp>
+#include <pagmo/batch_evaluators/default_bfe.hpp>
+#include <pagmo/batch_evaluators/member_bfe.hpp>
+#include <pagmo/batch_evaluators/thread_bfe.hpp>
 #include <pagmo/bfe.hpp>
 #include <pagmo/detail/gte_getter.hpp>
 #include <pagmo/detail/make_unique.hpp>
@@ -139,6 +142,9 @@ PYBIND11_MODULE(core, m)
     m.def("_builtins", &pygmo::builtins);
     m.def("_deepcopy", &pygmo::deepcopy);
 
+    // The random_device_next() helper.
+    m.def("_random_device_next", []() { return pg::random_device::next(); });
+
     // Global random number generator
     m.def(
         "set_global_rng_seed", [](unsigned seed) { pg::random_device::set_seed(seed); },
@@ -163,6 +169,36 @@ PYBIND11_MODULE(core, m)
                   ptr = pg::detail::make_unique<pg::detail::isl_inner<py::object>>(py_island());
               }
           };
+
+    // Override the default implementation of default_bfe.
+    pg::detail::default_bfe_impl = [](const pg::problem &p, const pg::vector_double &dvs) -> pg::vector_double {
+        // The member function batch_fitness() of p, if present, has priority.
+        if (p.has_batch_fitness()) {
+            return pg::member_bfe{}(p, dvs);
+        }
+
+        // Otherwise, we run the generic thread-based bfe, if the problem
+        // is thread-safe enough.
+        if (p.get_thread_safety() >= pg::thread_safety::basic) {
+            return pg::thread_bfe{}(p, dvs);
+        }
+
+        // NOTE: in this last bit of the implementation we need to call
+        // into the Python interpreter. In order to ensure that default_bfe
+        // still works also from a C++ thread of which Python knows nothing about,
+        // we will be using a thread ensurer, so that the thread safety
+        // guarantee provided by default_bfe is still respected.
+        // NOTE: the original default_bfe code is thread safe in the sense that the
+        // code directly implemented within that class is thread safe. Invoking the call
+        // operator of default_bfe might still end up being thread unsafe if p
+        // itself is thread unsafe (the same happens, e.g., in a thread-safe algorithm
+        // which uses a thread-unsafe problem in its evolve()).
+        pygmo::gil_thread_ensurer gte;
+        // Otherwise, we go for the multiprocessing bfe.
+        return pygmo::ndarr_to_vector<pg::vector_double>(
+            py::cast<py::array_t<double>>(py::module::import("pygmo").attr("mp_bfe")().attr("__call__")(
+                p, pygmo::vector_to_ndarr<py::array_t<double>>(dvs))));
+    };
 
     // Override the default RAII waiter. We need to use shared_ptr because we don't want to move/copy/destroy
     // the locks when invoking this from island::wait(), we need to instaniate exactly 1 py_wait_lock and have it
