@@ -45,10 +45,12 @@
 #include "expose_islands.hpp"
 #include "expose_problems.hpp"
 #include "expose_r_policies.hpp"
+#include "expose_s_policies.hpp"
 #include "island.hpp"
 #include "object_serialization.hpp"
 #include "problem.hpp"
 #include "r_policy.hpp"
+#include "s_policy.hpp"
 
 namespace py = pybind11;
 namespace pg = pagmo;
@@ -653,4 +655,39 @@ PYBIND11_MODULE(core, m)
 
     // Finalize.
     r_policy_class.def(py::init<const py::object &>(), py::arg("udrp"));
+
+    // Selection policy class.
+    py::class_<pg::s_policy> s_policy_class(m, "s_policy", pygmo::s_policy_docstring().c_str());
+    s_policy_class
+        // Def ctor.
+        .def(py::init<>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::s_policy>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::s_policy>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::s_policy>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::s_policy_pickle_getstate, &pygmo::s_policy_pickle_setstate))
+        // UDSP extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::s_policy>)
+        // s_policy methods.
+        .def(
+            "select",
+            [](const pg::s_policy &s, const py::iterable &inds, const pg::vector_double::size_type &nx,
+               const pg::vector_double::size_type &nix, const pg::vector_double::size_type &nobj,
+               const pg::vector_double::size_type &nec, const pg::vector_double::size_type &nic,
+               const py::array_t<double> &tol) {
+                return pygmo::inds_to_tuple(s.select(pygmo::iterable_to_inds(inds), nx, nix, nobj, nec, nic,
+                                                     pygmo::ndarr_to_vector<pg::vector_double>(tol)));
+            },
+            pygmo::s_policy_select_docstring().c_str(), py::arg("inds"), py::arg("nx"), py::arg("nix"), py::arg("nobj"),
+            py::arg("nec"), py::arg("nic"), py::arg("tol"))
+        .def("get_name", &pg::s_policy::get_name, pygmo::s_policy_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::s_policy::get_extra_info, pygmo::s_policy_get_extra_info_docstring().c_str());
+
+    // Expose the C++ selection policies.
+    pygmo::expose_s_policies(m, s_policy_class, s_policies_module);
+
+    // Finalize.
+    s_policy_class.def(py::init<const py::object &>(), py::arg("udsp"));
 }
