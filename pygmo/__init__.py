@@ -10,6 +10,12 @@ from ._check_deps import *
 from .core import *
 # Patch the problem class.
 from . import _patch_problem
+# Patch the algorithm class.
+from . import _patch_algorithm
+# Patch the bfe class.
+from . import _patch_bfe
+# Patch the island class.
+# from . import _patch_island
 import cloudpickle as _cloudpickle
 # Explicitly import the test submodule
 from . import test
@@ -108,6 +114,67 @@ def _decompose_init(self, prob=None, weight=[0.5, 0.5], z=[0., 0.], method='weig
 
 
 setattr(decompose, "__init__", _decompose_init)
+
+
+# Override of the population constructor.
+__original_population_init = population.__init__
+
+
+def _population_init(self, prob=None, size=0, b=None, seed=None):
+    # NOTE: the idea of having the pop init here instead of exposed from C++ is that like this we don't need
+    # to expose a new pop ctor each time we expose a new problem: in this method we will use the problem ctor
+    # from a C++ problem, and on the C++ exposition side we need only to
+    # expose the ctor of pop from pagmo::problem.
+    """
+    Args:
+        prob: a user-defined problem (either Python or C++), or an instance of :class:`~pygmo.problem`
+             (if *prob* is :data:`None`, a default-constructed :class:`~pygmo.problem` will be used
+             in its stead)
+        size (:class:`int`): the number of individuals
+        b: a user-defined batch fitness evaluator (either Python or C++), or an instance of :class:`~pygmo.bfe`
+             (if *b* is :data:`None`, the evaluation of the population's individuals will be performed
+             in sequential mode)
+        seed (:class:`int`): the random seed (if *seed* is :data:`None`, a randomly-generated value will be used
+             in its stead)
+
+    Raises:
+        TypeError: if *size* is not an :class:`int` or *seed* is not :data:`None` and not an :class:`int`
+        OverflowError:  is *size* or *seed* are negative
+        unspecified: any exception thrown by the invoked C++ constructors, by the constructor of
+            :class:`~pygmo.problem`, or the constructor of :class:`~pygmo.bfe`, or by failures at
+            the intersection between C++ and
+            Python (e.g., type conversion errors, mismatched function signatures, etc.)
+
+    """
+    from .core import _random_device_next
+    # Check input params.
+    if not isinstance(size, int):
+        raise TypeError("the 'size' parameter must be an integer")
+    if not seed is None and not isinstance(seed, int):
+        raise TypeError("the 'seed' parameter must be None or an integer")
+    if prob is None:
+        # Problem not specified, def-construct it.
+        prob = problem()
+    elif type(prob) != problem:
+        # If prob is not a problem, we attempt to create a problem from it. This will
+        # work if prob is an exposed C++ problem or a Python UDP.
+        prob = problem(prob)
+
+    if seed is None:
+        # Seed not specified, randomly generate it
+        # with the global pagmo rng.
+        seed = _random_device_next()
+
+    if b is None:
+        # No bfe specified, init in sequential mode.
+        __original_population_init(self, prob, size, seed)
+    else:
+        # A bfe was specified. Same as above with the problem.
+        __original_population_init(self, prob, b if type(
+            b) == bfe else bfe(b), size, seed)
+
+
+setattr(population, "__init__", _population_init)
 
 
 def set_serialization_backend(name):

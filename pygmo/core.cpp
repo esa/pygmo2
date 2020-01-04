@@ -35,6 +35,7 @@
 #include "common_utils.hpp"
 #include "docstrings.hpp"
 #include "expose_algorithms.hpp"
+#include "expose_bfes.hpp"
 #include "expose_problems.hpp"
 #include "island.hpp"
 #include "problem.hpp"
@@ -437,6 +438,7 @@ PYBIND11_MODULE(core, m)
             },
             pygmo::problem_c_tol_docstring().c_str());
 
+    // Expose the C++ problems.
     pygmo::expose_problems_0(m, problem_class, problems_module);
     pygmo::expose_problems_1(m, problem_class, problems_module);
 
@@ -472,6 +474,7 @@ PYBIND11_MODULE(core, m)
         .def("get_thread_safety", &pg::algorithm::get_thread_safety,
              pygmo::algorithm_get_thread_safety_docstring().c_str());
 
+    // Expose the C++ algos.
     pygmo::expose_algorithms_0(m, algorithm_class, algorithms_module);
     pygmo::expose_algorithms_1(m, algorithm_class, algorithms_module);
 
@@ -501,6 +504,9 @@ PYBIND11_MODULE(core, m)
         .def("get_name", &pg::bfe::get_name, pygmo::bfe_get_name_docstring().c_str())
         .def("get_extra_info", &pg::bfe::get_extra_info, pygmo::bfe_get_extra_info_docstring().c_str())
         .def("get_thread_safety", &pg::bfe::get_thread_safety, pygmo::bfe_get_thread_safety_docstring().c_str());
+
+    // Expose the C++ bfes.
+    pygmo::expose_bfes(m, bfe_class, batch_evaluators_module);
 
     // Finalize.
     bfe_class.def(py::init<const py::object &>(), py::arg("udbfe"));
