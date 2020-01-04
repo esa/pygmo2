@@ -77,8 +77,9 @@ r_pol_inner<py::object>::replace(const individuals_group_t &inds, const vector_d
     std::string r_pol_name;
     try {
         r_pol_name = get_name();
-    } catch (const py::error_already_set &) {
-        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic replacement policy. The error is:\n");
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic replacement policy. The error is:\n",
+                                          eas);
     }
 
     try {
@@ -88,9 +89,10 @@ r_pol_inner<py::object>::replace(const individuals_group_t &inds, const vector_d
 
         // Convert back to C++ form and return.
         return pygmo::iterable_to_inds(o);
-    } catch (const py::error_already_set &) {
+    } catch (const py::error_already_set &eas) {
         pygmo::handle_thread_py_exception("The replace() method of a pythonic replacement policy of type '" + r_pol_name
-                                          + "' raised an error:\n");
+                                              + "' raised an error:\n",
+                                          eas);
     }
 }
 

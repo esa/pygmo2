@@ -11,10 +11,14 @@
 
 #include <string>
 
+#include <pybind11/pybind11.h>
+
 namespace pygmo
 {
 
-[[noreturn]] void handle_thread_py_exception(const std::string &);
+namespace py = pybind11;
+
+[[noreturn]] void handle_thread_py_exception(const std::string &, const py::error_already_set &);
 
 } // namespace pygmo
 

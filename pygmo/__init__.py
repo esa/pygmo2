@@ -22,7 +22,10 @@ from . import _patch_algorithm
 # Patch the bfe class.
 from . import _patch_bfe
 # Patch the island class.
-# from . import _patch_island
+from . import _patch_island
+# Patch the policies.
+from . import _patch_r_policy
+from . import _patch_s_policy
 import cloudpickle as _cloudpickle
 # Explicitly import the test submodule
 from . import test

@@ -77,8 +77,9 @@ individuals_group_t s_pol_inner<py::object>::select(const individuals_group_t &i
     std::string s_pol_name;
     try {
         s_pol_name = get_name();
-    } catch (const py::error_already_set &) {
-        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic selection policy. The error is:\n");
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic selection policy. The error is:\n",
+                                          eas);
     }
 
     try {
@@ -88,9 +89,9 @@ individuals_group_t s_pol_inner<py::object>::select(const individuals_group_t &i
 
         // Convert back to C++ form and return.
         return pygmo::iterable_to_inds(o);
-    } catch (const py::error_already_set &) {
-        pygmo::handle_thread_py_exception("The select() method of a pythonic selection policy of type '" + s_pol_name
-                                          + "' raised an error:\n");
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception(
+            "The select() method of a pythonic selection policy of type '" + s_pol_name + "' raised an error:\n", eas);
     }
 }
 

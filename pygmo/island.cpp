@@ -64,8 +64,8 @@ void isl_inner<py::object>::run_evolve(island &isl) const
     std::string isl_name;
     try {
         isl_name = get_name();
-    } catch (const py::error_already_set &) {
-        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic island. The error is:\n");
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic island. The error is:\n", eas);
     }
 
     try {
@@ -112,9 +112,9 @@ void isl_inner<py::object>::run_evolve(island &isl) const
 
         isl.set_algorithm(ret_algo);
         isl.set_population(ret_pop);
-    } catch (const py::error_already_set &) {
-        pygmo::handle_thread_py_exception("The asynchronous evolution of a pythonic island of type '" + isl_name
-                                          + "' raised an error:\n");
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception(
+            "The asynchronous evolution of a pythonic island of type '" + isl_name + "' raised an error:\n", eas);
     }
 }
 
