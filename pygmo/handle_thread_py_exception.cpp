@@ -23,8 +23,8 @@ namespace py = pybind11;
 // Helper to handle Python exceptions thrown in a separate thread of execution not managed
 // by Python. In such cases we want to capture the exception, reset the Python error flag,
 // and repackage the error message as a C++ exception.
-// NOTE: it looks like pybind11 already resets the Python error flag by the time
-// error_already_set is raised (contrary to Boost.Python). Thus, perhaps this function
+// NOTE: it looks like pybind11 already resets the Python error flag in the ctor of
+// error_already_set (contrary to Boost.Python). Thus, perhaps this function
 // is not really needed any more. Keep it in mind for the future.
 void handle_thread_py_exception(const std::string &err, const py::error_already_set &eas)
 {
