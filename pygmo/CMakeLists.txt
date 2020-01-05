@@ -52,6 +52,7 @@ YACMA_PYTHON_MODULE(core
     expose_r_policies.cpp
     s_policy.cpp
     expose_s_policies.cpp
+    topology.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)

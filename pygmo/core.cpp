@@ -52,6 +52,7 @@
 #include "problem.hpp"
 #include "r_policy.hpp"
 #include "s_policy.hpp"
+#include "topology.hpp"
 
 namespace py = pybind11;
 namespace pg = pagmo;
