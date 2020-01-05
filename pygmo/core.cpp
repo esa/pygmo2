@@ -6,6 +6,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <cstddef>
 #include <exception>
 #include <memory>
 #include <sstream>
@@ -34,6 +35,7 @@
 #include <pagmo/s11n.hpp>
 #include <pagmo/s_policy.hpp>
 #include <pagmo/threading.hpp>
+#include <pagmo/topology.hpp>
 #include <pagmo/types.hpp>
 #include <pagmo/utils/generic.hpp>
 
@@ -712,4 +714,33 @@ PYBIND11_MODULE(core, m)
 
     // Finalize.
     s_policy_class.def(py::init<const py::object &>(), py::arg("udsp"));
+
+    // Topology class.
+    py::class_<pg::topology> topology_class(m, "topology", pygmo::topology_docstring().c_str());
+    topology_class
+        // Def ctor.
+        .def(py::init<>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::topology>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::topology>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::topology>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::topology_pickle_getstate, &pygmo::topology_pickle_setstate))
+        // UDT extraction.
+        .def("_py_extract", &pygmo::generic_py_extract<pg::topology>)
+        // Topology methods.
+        .def(
+            "get_connections",
+            [](const pg::topology &t, std::size_t n) -> py::tuple {
+                auto ret = t.get_connections(n);
+                return py::make_tuple(pygmo::vector_to_ndarr<py::array_t<std::size_t>>(ret.first),
+                                      pygmo::vector_to_ndarr<py::array_t<double>>(ret.second));
+            },
+            pygmo::topology_get_connections_docstring().c_str(), py::arg("n"))
+        .def(
+            "push_back", [](pg::topology &t, unsigned n) { t.push_back(n); },
+            pygmo::topology_push_back_docstring().c_str(), py::arg("n") = std::size_t(1))
+        .def("get_name", &pg::topology::get_name, pygmo::topology_get_name_docstring().c_str())
+        .def("get_extra_info", &pg::topology::get_extra_info, pygmo::topology_get_extra_info_docstring().c_str());
 }
