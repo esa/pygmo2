@@ -23,7 +23,7 @@ namespace py = pybind11;
 // Selection policies exposition function.
 void expose_s_policies(py::module &, py::class_<pagmo::s_policy> &, py::module &);
 
-// C++ UDRP exposition function.
+// C++ UDSP exposition function.
 template <typename SPol>
 inline py::class_<SPol> expose_s_policy(py::module &m, py::class_<pagmo::s_policy> &s_pol, py::module &s_module,
                                         const char *name, const char *descr)
@@ -37,7 +37,7 @@ inline py::class_<SPol> expose_s_policy(py::module &m, py::class_<pagmo::s_polic
     c.attr("_pygmo_cpp_s_policy") = true;
 
     // Expose the s_policy constructor from SPol.
-    s_pol.def(py::init<const SPol &>(), py::arg("udrp"));
+    s_pol.def(py::init<const SPol &>(), py::arg("udsp"));
 
     // Expose extract.
     s_pol.def("_cpp_extract", &generic_cpp_extract<pagmo::s_policy, SPol>, py::return_value_policy::reference_internal);

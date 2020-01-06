@@ -421,6 +421,271 @@ class mbh_test_case(_ut.TestCase):
         mbh(algorithm(null_algorithm()), stop=5, perturb=.4)
 
 
+class fair_replace_test_case(_ut.TestCase):
+    """Test case for the fair replace UDRP
+
+    """
+
+    def runTest(self):
+        from .core import fair_replace, r_policy
+        udrp = fair_replace()
+        r_pol = r_policy(udrp=udrp)
+        self.assertEqual(r_pol.get_name(), "Fair replace")
+        self.assertTrue("Absolute migration rate: 1" in repr(r_pol))
+        r_pol = r_policy(udrp=fair_replace(rate=0))
+        self.assertTrue("Absolute migration rate: 0" in repr(r_pol))
+        r_pol = r_policy(udrp=fair_replace(2))
+        self.assertTrue("Absolute migration rate: 2" in repr(r_pol))
+        r_pol = r_policy(udrp=fair_replace(rate=.5))
+        self.assertTrue("Fractional migration rate: 0.5" in repr(r_pol))
+
+        with self.assertRaises(ValueError) as cm:
+            r_policy(udrp=fair_replace(-1.2))
+        err = cm.exception
+        self.assertTrue(
+            "Invalid fractional migration rate " in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            r_policy(udrp=fair_replace(rate="dsadasdas"))
+        err = cm.exception
+        self.assertTrue(
+            "the migration rate must be an integral or floating-point value" in str(err))
+
+
+class select_best_test_case(_ut.TestCase):
+    """Test case for the select best UDSP
+
+    """
+
+    def runTest(self):
+        from .core import select_best, s_policy
+        udsp = select_best()
+        s_pol = s_policy(udsp=udsp)
+        self.assertEqual(s_pol.get_name(), "Select best")
+        self.assertTrue("Absolute migration rate: 1" in repr(s_pol))
+        s_pol = s_policy(udsp=select_best(rate=0))
+        self.assertTrue("Absolute migration rate: 0" in repr(s_pol))
+        s_pol = s_policy(udsp=select_best(2))
+        self.assertTrue("Absolute migration rate: 2" in repr(s_pol))
+        s_pol = s_policy(udsp=select_best(rate=.5))
+        self.assertTrue("Fractional migration rate: 0.5" in repr(s_pol))
+
+        with self.assertRaises(ValueError) as cm:
+            s_policy(udsp=select_best(-1.2))
+        err = cm.exception
+        self.assertTrue(
+            "Invalid fractional migration rate " in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            s_policy(udsp=select_best(rate="dsadasdas"))
+        err = cm.exception
+        self.assertTrue(
+            "the migration rate must be an integral or floating-point value" in str(err))
+
+
+class unconnected_test_case(_ut.TestCase):
+    """Test case for the unconnected UDT
+
+    """
+
+    def runTest(self):
+        from .core import unconnected, topology
+        udt = unconnected()
+        topo = topology(udt=udt)
+        self.assertTrue(len(topo.get_connections(100)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(100)[1]) == 0)
+        topo.push_back()
+        topo.push_back()
+        topo.push_back()
+        self.assertTrue(len(topo.get_connections(100)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(100)[1]) == 0)
+        self.assertEqual(topo.get_name(), "Unconnected")
+
+
+class ring_test_case(_ut.TestCase):
+    """Test case for the ring UDT
+
+    """
+
+    def runTest(self):
+        from .core import ring, topology
+
+        udt = ring()
+        self.assertTrue(udt.num_vertices() == 0)
+        self.assertTrue(udt.get_weight() == 1.)
+
+        udt = ring(w=.5)
+        self.assertTrue(udt.num_vertices() == 0)
+        self.assertTrue(udt.get_weight() == .5)
+
+        udt = ring(n=10, w=.1)
+        self.assertTrue(udt.num_vertices() == 10)
+        self.assertTrue(udt.get_weight() == .1)
+
+        with self.assertRaises(ValueError) as cm:
+            ring(n=10, w=2.)
+        err = cm.exception
+        self.assertTrue(
+            "invalid weight for the edge of a topology: the value " in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            ring(n=-10, w=.5)
+
+        udt = ring(n=5)
+        self.assertTrue(udt.are_adjacent(4, 0))
+        self.assertTrue(udt.are_adjacent(0, 4))
+        self.assertTrue(not udt.are_adjacent(4, 1))
+        self.assertTrue(not udt.are_adjacent(1, 4))
+        udt.add_edge(1, 4)
+        self.assertTrue(not udt.are_adjacent(4, 1))
+        self.assertTrue(udt.are_adjacent(1, 4))
+        udt.remove_edge(1, 4)
+        self.assertTrue(not udt.are_adjacent(1, 4))
+        udt.add_vertex()
+        self.assertTrue(not udt.are_adjacent(5, 1))
+        self.assertTrue(not udt.are_adjacent(1, 5))
+        self.assertEqual(udt.num_vertices(), 6)
+        udt.set_weight(0, 4, .5)
+        self.assertTrue("0.5" in repr(topology(udt)))
+        udt.set_all_weights(0.25)
+        self.assertTrue("0.25" in repr(topology(udt)))
+        self.assertEqual(topology(udt).get_name(), "Ring")
+
+        with self.assertRaises(ValueError) as cm:
+            udt.are_adjacent(100, 101)
+        err = cm.exception
+        self.assertTrue(
+            "invalid vertex index in a BGL topology: the index is 100, but the number of vertices is only 6" in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            udt.are_adjacent(-1, -1)
+
+        with self.assertRaises(ValueError) as cm:
+            udt.add_edge(100, 101)
+        err = cm.exception
+        self.assertTrue(
+            "invalid vertex index in a BGL topology: the index is 100, but the number of vertices is only 6" in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            udt.add_edge(-1, -1)
+
+        with self.assertRaises(ValueError) as cm:
+            udt.add_edge(1, 4, -1.)
+
+        with self.assertRaises(ValueError) as cm:
+            udt.remove_edge(100, 101)
+        err = cm.exception
+        self.assertTrue(
+            "invalid vertex index in a BGL topology: the index is 100, but the number of vertices is only 6" in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            udt.remove_edge(-1, -1)
+
+        with self.assertRaises(ValueError) as cm:
+            udt.set_weight(100, 101, .5)
+        err = cm.exception
+        self.assertTrue(
+            "invalid vertex index in a BGL topology: the index is 100, but the number of vertices is only 6" in str(err))
+
+        with self.assertRaises(TypeError) as cm:
+            udt.set_weight(-1, -1, .5)
+
+        with self.assertRaises(ValueError) as cm:
+            udt.set_weight(2, 3, -.5)
+
+        with self.assertRaises(ValueError) as cm:
+            udt.set_all_weights(-.5)
+
+        topo = topology(udt=ring(3))
+        self.assertTrue(len(topo.get_connections(0)[0]) == 2)
+        self.assertTrue(len(topo.get_connections(0)[1]) == 2)
+        topo.push_back()
+        topo.push_back()
+        topo.push_back()
+        self.assertTrue(len(topo.get_connections(3)[0]) == 2)
+        self.assertTrue(len(topo.get_connections(3)[1]) == 2)
+        self.assertEqual(topo.get_name(), "Ring")
+
+
+class fully_connected_test_case(_ut.TestCase):
+    """Test case for the fully_connected UDT
+
+    """
+
+    def runTest(self):
+        from .core import fully_connected, topology
+
+        udt = fully_connected()
+        self.assertEqual(udt.num_vertices(), 0)
+        self.assertEqual(udt.get_weight(), 1.)
+
+        udt = fully_connected(w=.5)
+        self.assertEqual(udt.num_vertices(), 0)
+        self.assertEqual(udt.get_weight(), .5)
+
+        udt = fully_connected(w=.5, n=10)
+        self.assertEqual(udt.num_vertices(), 10)
+        self.assertEqual(udt.get_weight(), .5)
+
+        topo = topology(udt=fully_connected(10))
+        self.assertTrue(len(topo.get_connections(1)[0]) == 9)
+        self.assertTrue(len(topo.get_connections(1)[1]) == 9)
+        topo.push_back()
+        topo.push_back()
+        topo.push_back()
+        self.assertTrue(len(topo.get_connections(5)[0]) == 12)
+        self.assertTrue(len(topo.get_connections(5)[1]) == 12)
+        self.assertEqual(topo.get_name(), "Fully connected")
+
+
+class thread_island_torture_test_case(_ut.TestCase):
+    """Stress test for thread_island
+
+    """
+
+    def runTest(self):
+        from .core import thread_island, population, algorithm, island
+        from . import evolve_status
+
+        pop = population(prob=_prob(), size=5)
+        algo = algorithm()
+        udi = thread_island()
+
+        for i in range(50):
+            l = []
+            for _ in range(100):
+                l.append(island(udi=udi, pop=pop, algo=algo))
+                l[-1].evolve()
+                l[-1].get_algorithm()
+                l[-1].get_population()
+
+            for i in l:
+                i.get_algorithm()
+                i.get_population()
+                i.wait()
+                self.assertTrue(i.status == evolve_status.idle_error)
+
+        class my_algo(object):
+            def evolve(self, pop):
+                return pop
+
+        algo = algorithm(my_algo())
+
+        for i in range(50):
+            l = []
+            for _ in range(100):
+                l.append(island(udi=udi, pop=pop, algo=algo))
+                l[-1].evolve()
+                l[-1].get_algorithm()
+                l[-1].get_population()
+
+            for i in l:
+                i.get_algorithm()
+                i.get_population()
+                i.wait()
+                self.assertTrue(i.status == evolve_status.idle_error)
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -431,7 +696,7 @@ def run_test_suite(level=0):
 
     """
     #from . import _problem_test, _algorithm_test, _island_test, _topology_test, _r_policy_test, _s_policy_test, _bfe_test, set_global_rng_seed
-    from . import _problem_test, set_global_rng_seed, _algorithm_test, _bfe_test, _island_test
+    from . import _problem_test, set_global_rng_seed, _algorithm_test, _bfe_test, _island_test, _topology_test, _r_policy_test, _s_policy_test
 
     # Make test runs deterministic.
     # NOTE: we'll need to place the async/migration tests at the end, so that at
@@ -451,6 +716,16 @@ def run_test_suite(level=0):
     suite.addTest(_problem_test.problem_test_case())
     suite.addTest(population_test_case())
     suite.addTest(_algorithm_test.algorithm_test_case())
+    suite.addTest(_s_policy_test.s_policy_test_case())
+    suite.addTest(_r_policy_test.r_policy_test_case())
+    suite.addTest(_topology_test.topology_test_case())
+    suite.addTest(fair_replace_test_case())
+    suite.addTest(select_best_test_case())
+    suite.addTest(unconnected_test_case())
+    suite.addTest(ring_test_case())
+    suite.addTest(fully_connected_test_case())
+    suite.addTest(thread_island_torture_test_case())
+
     suite.addTest(mbh_test_case())
 
     test_result = _ut.TextTestRunner(verbosity=2).run(suite)

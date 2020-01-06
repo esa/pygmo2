@@ -49,6 +49,7 @@
 #include "expose_problems.hpp"
 #include "expose_r_policies.hpp"
 #include "expose_s_policies.hpp"
+#include "expose_topologies.hpp"
 #include "island.hpp"
 #include "object_serialization.hpp"
 #include "problem.hpp"
@@ -743,4 +744,10 @@ PYBIND11_MODULE(core, m)
             pygmo::topology_push_back_docstring().c_str(), py::arg("n") = std::size_t(1))
         .def("get_name", &pg::topology::get_name, pygmo::topology_get_name_docstring().c_str())
         .def("get_extra_info", &pg::topology::get_extra_info, pygmo::topology_get_extra_info_docstring().c_str());
+
+    // Expose the C++ topologies.
+    pygmo::expose_topologies(m, topology_class, topologies_module);
+
+    // Finalize.
+    topology_class.def(py::init<const py::object &>(), py::arg("udt"));
 }

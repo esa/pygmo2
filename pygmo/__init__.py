@@ -26,6 +26,8 @@ from . import _patch_island
 # Patch the policies.
 from . import _patch_r_policy
 from . import _patch_s_policy
+# Patch the topology.
+from . import _patch_topology
 import cloudpickle as _cloudpickle
 # Explicitly import the test submodule
 from . import test

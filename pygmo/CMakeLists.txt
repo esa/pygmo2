@@ -19,6 +19,10 @@ set(PYGMO_PYTHON_FILES
     _island_test.py
     _patch_r_policy.py
     _patch_s_policy.py
+    _patch_topology.py
+    _s_policy_test.py
+    _r_policy_test.py
+    _topology_test.py
 )
 
 # Copy the python files in the current binary dir,
@@ -53,6 +57,7 @@ YACMA_PYTHON_MODULE(core
     s_policy.cpp
     expose_s_policies.cpp
     topology.cpp
+    expose_topologies.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
