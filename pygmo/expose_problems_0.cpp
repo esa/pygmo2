@@ -14,6 +14,7 @@
 
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/problem.hpp>
+#include <pagmo/problems/ackley.hpp>
 #include <pagmo/problems/decompose.hpp>
 #include <pagmo/problems/hock_schittkowsky_71.hpp>
 #include <pagmo/problems/inventory.hpp>
@@ -144,13 +145,14 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     inv.def(py::init<unsigned, unsigned, unsigned>(), py::arg("weeks") = 4u, py::arg("sample_size") = 10u,
             py::arg("seed"));
 
-#if 0
-// Ackley.
-    auto ack = expose_problem_pygmo<ackley>("ackley", "__init__(dim = 1)\n\nThe Ackley problem.\n\n"
-                                                      "See :cpp:class:`pagmo::ackley`.\n\n");
-    ack.def(bp::init<unsigned>((bp::arg("dim"))));
-    ack.def("best_known", &best_known_wrapper<ackley>, problem_get_best_docstring("Ackley").c_str());
+    // Ackley.
+    auto ack = expose_problem<pagmo::ackley>(m, prob, p_module, "ackley",
+                                             "__init__(dim = 1)\n\nThe Ackley problem.\n\n"
+                                             "See :cpp:class:`pagmo::ackley`.\n\n");
+    ack.def(py::init<unsigned>(), py::arg("dim"));
+    ack.def("best_known", &best_known_wrapper<pagmo::ackley>, problem_get_best_docstring("Ackley").c_str());
 
+#if 0
     // Griewank.
     auto griew = expose_problem_pygmo<griewank>("griewank", "__init__(dim = 1)\n\nThe Griewank problem.\n\n"
                                                             "See :cpp:class:`pagmo::griewank`.\n\n");

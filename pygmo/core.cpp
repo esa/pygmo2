@@ -8,9 +8,11 @@
 
 #include <cstddef>
 #include <exception>
+#include <limits>
 #include <memory>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include <boost/numeric/conversion/cast.hpp>
@@ -130,6 +132,43 @@ pg::population population_pickle_setstate(py::tuple state)
     return pop;
 }
 
+// Serialization helpers for archi.
+py::tuple archipelago_pickle_getstate(const pg::archipelago &archi)
+{
+    std::ostringstream oss;
+    {
+        boost::archive::binary_oarchive oarchive(oss);
+        oarchive << archi;
+    }
+    auto s = oss.str();
+    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
+}
+
+pg::archipelago archipelago_pickle_setstate(py::tuple state)
+{
+    if (py::len(state) != 1) {
+        py_throw(PyExc_ValueError, ("the state tuple passed for archipelago deserialization "
+                                    "must have 1 element, but instead it has "
+                                    + std::to_string(py::len(state)) + " element(s)")
+                                       .c_str());
+    }
+
+    auto ptr = PyBytes_AsString(state[0].ptr());
+    if (!ptr) {
+        py_throw(PyExc_TypeError, "a bytes object is needed to deserialize an archipelago");
+    }
+
+    std::istringstream iss;
+    iss.str(std::string(ptr, ptr + py::len(state[0])));
+    pg::archipelago archi;
+    {
+        boost::archive::binary_iarchive iarchive(iss);
+        iarchive >> archi;
+    }
+
+    return archi;
+}
+
 // Test that the serialization of pybind11 objects works as expected.
 // The object returned by this function should be identical to the input
 // object.
@@ -179,6 +218,10 @@ PYBIND11_MODULE(core, m)
     m.def("_builtins", &pygmo::builtins);
     m.def("_deepcopy", &pygmo::deepcopy);
     m.def("_test_object_serialization", &pygmo::detail::test_object_serialization);
+    m.def("_max_unsigned", []() {
+        // Small helper function to get the max value of unsigned.
+        return std::numeric_limits<unsigned>::max();
+    });
 
     // The random_device_next() helper.
     m.def("_random_device_next", []() { return pg::random_device::next(); });
@@ -408,6 +451,92 @@ PYBIND11_MODULE(core, m)
         .def_property_readonly(
             "problem", [](pg::population &pop) -> pg::problem & { return pop.get_problem(); },
             py::return_value_policy::reference_internal, pygmo::population_problem_docstring().c_str());
+
+    // Archi.
+    py::class_<pg::archipelago> archi_class(m, "archipelago", pygmo::archipelago_docstring().c_str());
+    archi_class
+        // Def ctor.
+        .def(py::init<>())
+        .def(py::init<const pg::topology &>())
+        // repr().
+        .def("__repr__", &pygmo::ostream_repr<pg::archipelago>)
+        // Copy and deepcopy.
+        .def("__copy__", &pygmo::generic_copy_wrapper<pg::archipelago>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::archipelago>)
+        // Pickle support.
+        .def(py::pickle(&pygmo::detail::archipelago_pickle_getstate, &pygmo::detail::archipelago_pickle_setstate))
+        // Size.
+        .def("__len__", &pg::archipelago::size)
+        .def(
+            "evolve", [](pg::archipelago &archi, unsigned n) { archi.evolve(n); },
+            pygmo::archipelago_evolve_docstring().c_str(), py::arg("n") = 1u)
+        .def("wait", &pg::archipelago::wait, pygmo::archipelago_wait_docstring().c_str())
+        .def("wait_check", &pg::archipelago::wait_check, pygmo::archipelago_wait_check_docstring().c_str())
+        .def(
+            "__getitem__",
+            [](pg::archipelago &archi, pg::archipelago::size_type n) -> pg::island & { return archi[n]; },
+            pygmo::archipelago_getitem_docstring().c_str(), py::return_value_policy::reference_internal)
+        // NOTE: docs for push_back() are in the Python reimplementation.
+        .def("_push_back", [](pg::archipelago &archi, const pg::island &isl) { archi.push_back(isl); })
+        // Champions.
+        .def(
+            "get_champions_f",
+            [](const pg::archipelago &archi) -> py::list {
+                py::list retval;
+                auto fs = archi.get_champions_f();
+                for (const auto &f : fs) {
+                    retval.append(pygmo::vector_to_ndarr<py::array_t<double>>(f));
+                }
+                return retval;
+            },
+            pygmo::archipelago_get_champions_f_docstring().c_str())
+        .def(
+            "get_champions_x",
+            [](const pg::archipelago &archi) -> py::list {
+                py::list retval;
+                auto xs = archi.get_champions_x();
+                for (const auto &x : xs) {
+                    retval.append(pygmo::vector_to_ndarr<py::array_t<double>>(x));
+                }
+                return retval;
+            },
+            pygmo::archipelago_get_champions_x_docstring().c_str())
+        .def(
+            "get_migrants_db",
+            [](const pg::archipelago &archi) -> py::list {
+                py::list retval;
+                const auto tmp = archi.get_migrants_db();
+                for (const auto &ig : tmp) {
+                    retval.append(pygmo::inds_to_tuple(ig));
+                }
+                return retval;
+            },
+            pygmo::archipelago_get_migrants_db_docstring().c_str())
+        .def(
+            "get_migration_log",
+            [](const pg::archipelago &archi) -> py::list {
+                py::list retval;
+                const auto tmp = archi.get_migration_log();
+                for (const auto &le : tmp) {
+                    retval.append(py::make_tuple(std::get<0>(le), std::get<1>(le),
+                                                 pygmo::vector_to_ndarr<py::array_t<double>>(std::get<2>(le)),
+                                                 pygmo::vector_to_ndarr<py::array_t<double>>(std::get<3>(le)),
+                                                 std::get<4>(le), std::get<5>(le)));
+                }
+                return retval;
+            },
+            pygmo::archipelago_get_migration_log_docstring().c_str())
+        .def("get_topology", &pg::archipelago::get_topology, pygmo::archipelago_get_topology_docstring().c_str())
+        .def("_set_topology", &pg::archipelago::set_topology)
+        .def("set_migration_type", &pg::archipelago::set_migration_type,
+             pygmo::archipelago_set_migration_type_docstring().c_str(), py::arg("mt"))
+        .def("set_migrant_handling", &pg::archipelago::set_migrant_handling,
+             pygmo::archipelago_set_migrant_handling_docstring().c_str(), py::arg("mh"))
+        .def("get_migration_type", &pg::archipelago::get_migration_type,
+             pygmo::archipelago_get_migration_type_docstring().c_str())
+        .def("get_migrant_handling", &pg::archipelago::get_migrant_handling,
+             pygmo::archipelago_get_migrant_handling_docstring().c_str())
+        .def_property_readonly("status", &pg::archipelago::status, pygmo::archipelago_status_docstring().c_str());
 
     // Problem class.
     py::class_<pg::problem> problem_class(m, "problem", pygmo::problem_docstring().c_str());

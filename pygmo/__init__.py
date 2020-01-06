@@ -346,6 +346,222 @@ def _mbh_init(self, algo=None, stop=5, perturb=1e-2, seed=None):
 setattr(mbh, "__init__", _mbh_init)
 
 
+# Override of the archi constructor.
+__original_archi_init = archipelago.__init__
+
+
+def _archi_init(self, n=0, t=topology(), **kwargs):
+    """__init__(self, n=0, t=topology(), **kwargs)
+
+    The constructor will initialise an archipelago with a topology *t* and
+    *n* islands built from *kwargs*.
+    The keyword arguments accept the same format as explained in the constructor of
+    :class:`~pygmo.island`, with the following differences:
+
+    * *size* is replaced by *pop_size*, for clarity,
+    * the *seed* argument, if present, is used to initialise a random number generator
+      that, in turn, is used to generate random seeds for each island population. In other
+      words, the *seed* argument allows to generate randomly (but deterministically)
+      the seeds of the populations in the archipelago. If *seed* is not provided, the seeds
+      of the populations will be random and non-deterministic.
+
+    This class is the Python counterpart of the C++ class :cpp:class:`pagmo::archipelago`.
+
+    Args:
+        n (:class:`int`): the number of islands in the archipelago
+        t: a user-defined topology (either Python or C++), or an instance of :class:`~pygmo.topology`
+
+    Keyword Args:
+        udi: a user-defined island, either Python or C++
+        algo: a user-defined algorithm (either Python or C++), or an instance of :class:`~pygmo.algorithm`
+        pop (:class:`~pygmo.population`): a population
+        prob: a user-defined problem (either Python or C++), or an instance of :class:`~pygmo.problem`
+        b: a user-defined batch fitness evaluator (either Python or C++), or an instance of :class:`~pygmo.bfe`
+        pop_size (:class:`int`): the number of individuals for each island
+        r_pol: a user-defined replacement policy (either Python or C++), or an instance of :class:`~pygmo.r_policy`
+        s_pol: a user-defined selection policy (either Python or C++), or an instance of :class:`~pygmo.s_policy`
+        seed (:class:`int`): the random seed
+
+    Raises:
+        TypeError: if *n* is not an integral type
+        ValueError: if *n* is negative
+        unspecified: any exception thrown by the constructor of :class:`~pygmo.island`,
+          by the underlying C++ constructor, :func:`~pygmo.archipelago.push_back()` or
+          by the public interface of :class:`~pygmo.topology`
+
+    Examples:
+        >>> from pygmo import *
+        >>> archi = archipelago(n = 16, algo = de(), prob = rosenbrock(10), pop_size = 20, seed = 32)
+        >>> archi.evolve()
+        >>> archi #doctest: +SKIP
+        Number of islands: 16
+        Status: busy
+        <BLANKLINE>
+        Islands summaries:
+        <BLANKLINE>
+                #   Type           Algo                    Prob                                  Size  Status
+                -----------------------------------------------------------------------------------------------
+                0   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                1   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                2   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                3   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                4   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    busy
+                5   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                6   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    busy
+                7   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    busy
+                8   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                9   Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                10  Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                11  Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                12  Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+                13  Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    busy
+                14  Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    busy
+                15  Thread island  Differential Evolution  Multidimensional Rosenbrock Function  20    idle
+        <BLANKLINE>
+        >>> archi.wait()
+        >>> res = archi.get_champions_f()
+        >>> res #doctest: +SKIP
+        [array([ 125441.77328885]),
+        array([ 144025.63904164]),
+        array([ 25387.38989711]),
+        array([ 56029.44160232]),
+        array([ 47760.99082202]),
+        array([ 118552.94891993]),
+        array([ 118405.29575447]),
+        array([ 101866.81846325]),
+        array([ 166106.12039851]),
+        array([ 167408.00058506]),
+        array([ 148815.47953885]),
+        array([ 165186.74476375]),
+        array([ 326615.28881936]),
+        array([ 167301.16445135]),
+        array([ 166871.42760503]),
+        array([ 75133.38815736])]
+
+
+    """
+    # Check n.
+    if not isinstance(n, int):
+        raise TypeError("the 'n' parameter must be an integer")
+    if n < 0:
+        raise ValueError(
+            "the 'n' parameter must be non-negative, but it is {} instead".format(n))
+
+    # Replace the 'pop_size' kw arg with just 'size', for later use in the
+    # island ctor.
+
+    if 'size' in kwargs:
+        raise KeyError(
+            "the 'size' argument cannot appear among the named arguments of the archipelago constructor")
+
+    if 'pop_size' in kwargs:
+        # Extract 'pop_size', replace with just 'size'.
+        ps_val = kwargs.pop('pop_size')
+        kwargs['size'] = ps_val
+
+    # Call the original init, which constructs an empty archi from a topology.
+    t = t if type(t) == topology else topology(t)
+    __original_archi_init(self, t)
+
+    if 'seed' in kwargs:
+        # Special handling of the 'seed' argument.
+        from random import Random
+        from .core import _max_unsigned
+        # Create a random engine with own state.
+        RND = Random()
+        # Get the seed from kwargs.
+        seed = kwargs.pop('seed')
+        if not isinstance(seed, int):
+            raise TypeError("the 'seed' parameter must be an integer")
+        # Seed the rng.
+        RND.seed(seed)
+        u_max = _max_unsigned()
+        # Push back the islands with different seed.
+        for _ in range(n):
+            kwargs['seed'] = RND.randint(0, u_max)
+            self.push_back(**kwargs)
+
+    else:
+        # Push back islands.
+        for _ in range(n):
+            self.push_back(**kwargs)
+
+
+setattr(archipelago, "__init__", _archi_init)
+
+
+def _archi_push_back(self, *args, **kwargs):
+    """Add an island.
+
+    This method will construct an island from the supplied arguments and add it to the archipelago.
+    Islands are added at the end of the archipelago (that is, the new island will have an index
+    equal to the size of the archipelago before the call to this method). :func:`pygmo.topology.push_back()`
+    will also be called on the :class:`~pygmo.topology` associated to this archipelago, so that
+    the addition of a new island to the archipelago is mirrored by the addition of a new vertex
+    to the topology.
+
+    This method accepts either a single positional argument, or a set of
+    keyword arguments:
+
+    * if no positional arguments are provided, then the keyword arguments will
+      be used to construct a :class:`~pygmo.island` which will then be added
+      to the archipelago; otherwise,
+    * if a single positional argument is provided and no keyword arguments are
+      provided, then the positional argument is interpreted as an :class:`~pygmo.island`
+      object to be added to the archipelago.
+
+    Any other combination of positional/keyword arguments will result in an error.
+
+    Raises:
+        ValueError: if, when using positional arguments, there are more than 1 positional arguments,
+          or if keyword arguments are also used at the same time
+        TypeError: if, when using a single positional argument, the type of that argument
+          is not :class:`~pygmo.island`
+        unspecified: any exception thrown by the constructor of :class:`~pygmo.island`,
+          :func:`pygmo.topology.push_back()` or by the underlying C++ method
+
+    """
+    from . import island
+
+    if len(args) == 0:
+        self._push_back(island(**kwargs))
+    else:
+        if len(args) != 1:
+            raise ValueError(
+                "{} positional arguments were provided, but this method accepts only a single positional argument".format(len(args)))
+        if len(kwargs) != 0:
+            raise ValueError(
+                "if a positional argument is passed to this method, then no keyword arguments must be passed, but {} keyword arguments were passed instead".format(len(kwargs)))
+        if type(args[0]) != island:
+            raise TypeError(
+                "the positional argument passed to this method must be an island, but the type of the argument is '{}' instead".format(type(args[0])))
+        self._push_back(args[0])
+
+
+setattr(archipelago, "push_back", _archi_push_back)
+
+
+def _archi_set_topology(self, t):
+    """This method will wait for any ongoing evolution in the archipelago to finish,
+    and it will then set the topology of the archipelago to *t*.
+
+    Note that it is the user's responsibility to ensure that the new topology is
+    consistent with the archipelago's properties.
+
+    Args:
+        t: a user-defined topology (either Python or C++), or an instance of :class:`~pygmo.topology`
+
+    Raises:
+        unspecified: any exception thrown by copying the topology
+
+    """
+    t = t if type(t) == topology else topology(t)
+    self._set_topology(t)
+
+
+setattr(archipelago, "set_topology", _archi_set_topology)
+
+
 def set_serialization_backend(name):
     """Set pygmo's serialization backend.
 
