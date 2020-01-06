@@ -40,6 +40,13 @@
 #include <pagmo/topology.hpp>
 #include <pagmo/types.hpp>
 #include <pagmo/utils/generic.hpp>
+#include <pagmo/utils/hv_algos/hv_bf_approx.hpp>
+#include <pagmo/utils/hv_algos/hv_bf_fpras.hpp>
+#include <pagmo/utils/hv_algos/hv_hv2d.hpp>
+#include <pagmo/utils/hv_algos/hv_hv3d.hpp>
+#include <pagmo/utils/hv_algos/hv_hvwfg.hpp>
+#include <pagmo/utils/hypervolume.hpp>
+#include <pagmo/utils/multi_objective.hpp>
 
 #include "algorithm.hpp"
 #include "bfe.hpp"
@@ -329,7 +336,7 @@ PYBIND11_MODULE(core, m)
         [](const pg::problem &p) -> py::array_t<double> {
             using reng_t = pg::detail::random_engine_type;
             reng_t tmp_rng(static_cast<reng_t::result_type>(pg::random_device::next()));
-            auto retval = pagmo::random_decision_vector(p, tmp_rng);
+            auto retval = pg::random_decision_vector(p, tmp_rng);
             return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
         },
         pygmo::random_decision_vector_docstring().c_str(), py::arg("prob"));
@@ -338,10 +345,198 @@ PYBIND11_MODULE(core, m)
         [](const pg::problem &p, pg::vector_double::size_type n) -> py::array_t<double> {
             using reng_t = pg::detail::random_engine_type;
             reng_t tmp_rng(static_cast<reng_t::result_type>(pg::random_device::next()));
-            auto retval = pagmo::batch_random_decision_vector(p, n, tmp_rng);
+            auto retval = pg::batch_random_decision_vector(p, n, tmp_rng);
             return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
         },
         pygmo::batch_random_decision_vector_docstring().c_str(), py::arg("prob"), py::arg("n"));
+
+    // Hypervolume class
+    py::class_<pg::hypervolume> hv_class(m, "hypervolume", "Hypervolume Class");
+    hv_class
+        .def(py::init([](const py::array_t<double> &points) {
+                 return pg::detail::make_unique<pg::hypervolume>(
+                     pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(points), true);
+             }),
+             py::arg("points"), pygmo::hv_init2_docstring().c_str())
+        .def(py::init([](const pg::population &pop) { return pg::detail::make_unique<pg::hypervolume>(pop, true); }),
+             py::arg("pop"), pygmo::hv_init1_docstring().c_str())
+        .def(
+            "compute",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point) {
+                return hv.compute(pygmo::ndarr_to_vector<pg::vector_double>(r_point));
+            },
+            py::arg("ref_point"))
+        .def(
+            "compute",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point, pg::hv_algorithm &hv_algo) {
+                return hv.compute(pygmo::ndarr_to_vector<pg::vector_double>(r_point), hv_algo);
+            },
+            pygmo::hv_compute_docstring().c_str(), py::arg("ref_point"), py::arg("hv_algo"))
+        .def(
+            "exclusive",
+            [](const pg::hypervolume &hv, unsigned p_idx, const py::array_t<double> &r_point) {
+                return hv.exclusive(p_idx, pygmo::ndarr_to_vector<pg::vector_double>(r_point));
+            },
+            py::arg("idx"), py::arg("ref_point"))
+        .def(
+            "exclusive",
+            [](const pg::hypervolume &hv, unsigned p_idx, const py::array_t<double> &r_point,
+               pg::hv_algorithm &hv_algo) {
+                return hv.exclusive(p_idx, pygmo::ndarr_to_vector<pg::vector_double>(r_point), hv_algo);
+            },
+            pygmo::hv_exclusive_docstring().c_str(), py::arg("idx"), py::arg("ref_point"), py::arg("hv_algo"))
+        .def(
+            "least_contributor",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point) {
+                return hv.least_contributor(pygmo::ndarr_to_vector<pg::vector_double>(r_point));
+            },
+            py::arg("ref_point"))
+        .def(
+            "least_contributor",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point, pg::hv_algorithm &hv_algo) {
+                return hv.least_contributor(pygmo::ndarr_to_vector<pg::vector_double>(r_point), hv_algo);
+            },
+            pygmo::hv_least_contributor_docstring().c_str(), py::arg("ref_point"), py::arg("hv_algo"))
+        .def(
+            "greatest_contributor",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point) {
+                return hv.greatest_contributor(pygmo::ndarr_to_vector<pg::vector_double>(r_point));
+            },
+            py::arg("ref_point"))
+        .def(
+            "greatest_contributor",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point, pg::hv_algorithm &hv_algo) {
+                return hv.greatest_contributor(pygmo::ndarr_to_vector<pg::vector_double>(r_point), hv_algo);
+            },
+            pygmo::hv_greatest_contributor_docstring().c_str(), py::arg("ref_point"), py::arg("hv_algo"))
+        .def(
+            "contributions",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    hv.contributions(pygmo::ndarr_to_vector<pg::vector_double>(r_point)));
+            },
+            py::arg("ref_point"))
+        .def(
+            "contributions",
+            [](const pg::hypervolume &hv, const py::array_t<double> &r_point, pg::hv_algorithm &hv_algo) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    hv.contributions(pygmo::ndarr_to_vector<pg::vector_double>(r_point), hv_algo));
+            },
+            pygmo::hv_contributions_docstring().c_str(), py::arg("ref_point"), py::arg("hv_algo"))
+        .def("get_points",
+             [](const pg::hypervolume &hv) { return pygmo::vvector_to_ndarr<py::array_t<double>>(hv.get_points()); })
+        .def(
+            "refpoint",
+            [](const pg::hypervolume &hv, double offset) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(hv.refpoint(offset));
+            },
+            pygmo::hv_refpoint_docstring().c_str(), py::arg("offset") = 0)
+        .def_property("copy_points", &pg::hypervolume::get_copy_points, &pg::hypervolume::set_copy_points);
+
+    // Hypervolume algorithms
+    py::class_<pg::hv_algorithm> hv_algorithm_class(m, "_hv_algorithm");
+    hv_algorithm_class.def("get_name", &pg::hv_algorithm::get_name);
+
+    py::class_<pg::hvwfg, pg::hv_algorithm> hvwfg_class(m, "hvwfg", pygmo::hvwfg_docstring().c_str());
+    hvwfg_class.def(py::init<unsigned>(), py::arg("stop_dimension") = 2);
+
+    py::class_<pg::bf_approx, pg::hv_algorithm> bf_approx_class(m, "bf_approx", pygmo::bf_approx_docstring().c_str());
+    bf_approx_class
+        .def(py::init<bool, unsigned, double, double, double, double, double, double>(), py::arg("use_exact") = true,
+             py::arg("trivial_subcase_size") = 1u, py::arg("eps") = 1e-2, py::arg("delta") = 1e-6,
+             py::arg("delta_multiplier") = 0.775, py::arg("alpha") = 0.2, py::arg("initial_delta_coeff") = 0.1,
+             py::arg("gamma") = 0.25)
+        .def(py::init<bool, unsigned, double, double, double, double, double, double, unsigned>(),
+             py::arg("use_exact") = true, py::arg("trivial_subcase_size") = 1u, py::arg("eps") = 1e-2,
+             py::arg("delta") = 1e-6, py::arg("delta_multiplier") = 0.775, py::arg("alpha") = 0.2,
+             py::arg("initial_delta_coeff") = 0.1, py::arg("gamma") = 0.25, py::arg("seed"));
+
+    py::class_<pg::bf_fpras, pg::hv_algorithm> bf_fpras_class(m, "bf_fpras", pygmo::bf_fpras_docstring().c_str());
+    bf_fpras_class.def(py::init<double, double>(), py::arg("eps") = 1e-2, py::arg("delta") = 1e-2)
+        .def(py::init<double, double, unsigned>(), py::arg("eps") = 1e-2, py::arg("delta") = 1e-2, py::arg("seed"));
+
+    py::class_<pg::hv2d, pg::hv_algorithm> hv2d_class(m, "hv2d", pygmo::hv2d_docstring().c_str());
+    hv2d_class.def(py::init<>());
+
+    py::class_<pg::hv3d, pg::hv_algorithm> hv3d_class(m, "hv3d", pygmo::hv3d_docstring().c_str());
+    hv3d_class.def(py::init<>());
+
+    // Multi-objective utilities
+    m.def(
+        "fast_non_dominated_sorting",
+        [](const py::array_t<double> &x) -> py::tuple {
+            auto fnds = pg::fast_non_dominated_sorting(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(x));
+            // the non-dominated fronts
+            py::list ndf_py;
+            for (const auto &front : std::get<0>(fnds)) {
+                ndf_py.append(pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(front));
+            }
+            // the domination list
+            py::list dl_py;
+            for (const auto &item : std::get<1>(fnds)) {
+                dl_py.append(pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(item));
+            }
+            return py::make_tuple(ndf_py, dl_py, pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(std::get<2>(fnds)),
+                                  pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(std::get<3>(fnds)));
+        },
+        pygmo::fast_non_dominated_sorting_docstring().c_str(), py::arg("points"));
+    m.def(
+        "pareto_dominance",
+        [](const py::array_t<double> &obj1, const py::array_t<double> &obj2) {
+            return pg::pareto_dominance(pygmo::ndarr_to_vector<pg::vector_double>(obj1),
+                                        pygmo::ndarr_to_vector<pg::vector_double>(obj2));
+        },
+        pygmo::pareto_dominance_docstring().c_str(), py::arg("obj1"), py::arg("obj2"));
+#if 0
+    bp::def("non_dominated_front_2d", lcast([](const bp::object &points) {
+                return pygmo::vector_to_ndarr(
+                    non_dominated_front_2d(pygmo::obj_to_vvector<std::vector<vector_double>>(points)));
+            }),
+            pygmo::non_dominated_front_2d_docstring().c_str(), bp::arg("points"));
+    bp::def("crowding_distance", lcast([](const bp::object &points) {
+                return pygmo::vector_to_ndarr(
+                    crowding_distance(pygmo::obj_to_vvector<std::vector<vector_double>>(points)));
+            }),
+            pygmo::crowding_distance_docstring().c_str(), bp::arg("points"));
+    bp::def("sort_population_mo", lcast([](const bp::object &input_f) {
+                return pygmo::vector_to_ndarr(
+                    sort_population_mo(pygmo::obj_to_vvector<std::vector<vector_double>>(input_f)));
+            }),
+            pygmo::sort_population_mo_docstring().c_str(), bp::arg("points"));
+    bp::def("select_best_N_mo", lcast([](const bp::object &input_f, unsigned N) {
+                return pygmo::vector_to_ndarr(
+                    select_best_N_mo(pygmo::obj_to_vvector<std::vector<vector_double>>(input_f), N));
+            }),
+            pygmo::select_best_N_mo_docstring().c_str(), (bp::arg("points"), bp::arg("N")));
+    bp::def(
+        "decomposition_weights",
+        lcast([](vector_double::size_type n_f, vector_double::size_type n_w, const std::string &method, unsigned seed) {
+            using reng_t = pagmo::detail::random_engine_type;
+            reng_t tmp_rng(static_cast<reng_t::result_type>(seed));
+            return pygmo::vvector_to_ndarr(decomposition_weights(n_f, n_w, method, tmp_rng));
+        }),
+        pygmo::decomposition_weights_docstring().c_str(),
+        (bp::arg("n_f"), bp::arg("n_w"), bp::arg("method"), bp::arg("seed")));
+
+    bp::def("decompose_objectives",
+            lcast([](const bp::object &objs, const bp::object &weights, const bp::object &ref_point,
+                     const std::string &method) {
+                return pygmo::vector_to_ndarr(decompose_objectives(
+                    pygmo::obj_to_vector<vector_double>(objs), pygmo::obj_to_vector<vector_double>(weights),
+                    pygmo::obj_to_vector<vector_double>(ref_point), method));
+            }),
+            pygmo::decompose_objectives_docstring().c_str(),
+            (bp::arg("objs"), bp::arg("weights"), bp::arg("ref_point"), bp::arg("method")));
+
+    bp::def("nadir", lcast([](const bp::object &p) {
+                return pygmo::vector_to_ndarr(pagmo::nadir(pygmo::obj_to_vvector<std::vector<vector_double>>(p)));
+            }),
+            pygmo::nadir_docstring().c_str(), bp::arg("points"));
+    bp::def("ideal", lcast([](const bp::object &p) {
+                return pygmo::vector_to_ndarr(pagmo::ideal(pygmo::obj_to_vvector<std::vector<vector_double>>(p)));
+            }),
+            pygmo::ideal_docstring().c_str(), bp::arg("points"));
+#endif
 
     // Add the submodules.
     auto problems_module = m.def_submodule("problems");

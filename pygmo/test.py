@@ -1534,6 +1534,54 @@ class null_problem_test_case(_ut.TestCase):
         self.assertTrue(problem(np(23)).get_nobj() == 23)
 
 
+class hypervolume_test_case(_ut.TestCase):
+    """Test case for the hypervolume utilities
+
+    """
+
+    def runTest(self):
+        from .core import hypervolume, hv2d, hv3d, hvwfg, bf_fpras, bf_approx
+        from .core import population, zdt
+        import numpy as np
+        pop = population(prob=zdt(prob_id=1, param=10), size=20)
+        hv1 = hypervolume(pop=pop)
+        hv2 = hypervolume(points=[[0, 0], [-1, 1], [-2, 2]])
+        hv2.copy_points = True
+        points = hv2.get_points()
+        res0 = hv2.compute([3, 3])
+
+        algo1 = hv2d()
+        algo2 = hvwfg()
+        algo3 = bf_fpras()
+        algo4 = bf_approx()
+
+        res = hv2.compute(ref_point=[3, 3], hv_algo=algo1)
+        res = hv2.exclusive(idx=0, ref_point=[3, 3], hv_algo=algo1)
+        res = hv2.least_contributor(ref_point=[3, 3], hv_algo=algo1)
+        res = hv2.greatest_contributor(ref_point=[3, 3], hv_algo=algo1)
+        res = hv2.contributions(ref_point=[3, 3], hv_algo=algo1)
+        res = hv2.compute(ref_point=[3, 3], hv_algo=algo2)
+        res = hv2.exclusive(idx=0, ref_point=[3, 3], hv_algo=algo2)
+        res = hv2.least_contributor(ref_point=[3, 3], hv_algo=algo2)
+        res = hv2.greatest_contributor(ref_point=[3, 3], hv_algo=algo2)
+        res = hv2.contributions(ref_point=[3, 3], hv_algo=algo2)
+        res = hv2.compute(ref_point=[3, 3], hv_algo=algo3)
+
+        res = hv2.least_contributor(ref_point=[3, 3], hv_algo=algo4)
+        res = hv2.greatest_contributor(ref_point=[3, 3], hv_algo=algo4)
+
+        res = hv2.compute(ref_point=[3, 3])
+        res = hv2.exclusive(idx=0, ref_point=[3, 3])
+        res = hv2.least_contributor(ref_point=[3, 3])
+        res = hv2.greatest_contributor(ref_point=[3, 3])
+        res = hv2.contributions(ref_point=[3, 3])
+
+        self.assertTrue((hv2.refpoint(offset=0) ==
+                         np.array([0., 2.])).all() == True)
+        self.assertTrue((hv2.refpoint(offset=.1) ==
+                         np.array([0.1, 2.1])).all() == True)
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -1592,7 +1640,7 @@ def run_test_suite(level=0):
     suite.addTest(ihs_test_case())
     suite.addTest(population_test_case())
     suite.addTest(null_problem_test_case())
-    # suite.addTest(hypervolume_test_case())
+    suite.addTest(hypervolume_test_case())
     # suite.addTest(mo_utils_test_case())
     # suite.addTest(con_utils_test_case())
     # suite.addTest(global_rng_test_case())
