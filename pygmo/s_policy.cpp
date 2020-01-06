@@ -22,7 +22,6 @@
 #include <pagmo/types.hpp>
 
 #include "common_utils.hpp"
-#include "handle_thread_py_exception.hpp"
 #include "object_serialization.hpp"
 #include "s_policy.hpp"
 
@@ -72,27 +71,14 @@ individuals_group_t s_pol_inner<py::object>::select(const individuals_group_t &i
     // doing anything with the interpreter (including the throws in the checks below).
     pygmo::gil_thread_ensurer gte;
 
-    // NOTE: every time we call into the Python interpreter from a separate thread, we need to
-    // handle Python exceptions in a special way.
-    std::string s_pol_name;
-    try {
-        s_pol_name = get_name();
-    } catch (const py::error_already_set &eas) {
-        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic selection policy. The error is:\n",
-                                          eas);
-    }
+    auto s_pol_name = get_name();
 
-    try {
-        // Fetch the new individuals in Python form.
-        auto o = m_value.attr("select")(pygmo::inds_to_tuple(inds), nx, nix, nobj, nec, nic,
-                                        pygmo::vector_to_ndarr<py::array_t<double>>(tol));
+    // Fetch the new individuals in Python form.
+    auto o = m_value.attr("select")(pygmo::inds_to_tuple(inds), nx, nix, nobj, nec, nic,
+                                    pygmo::vector_to_ndarr<py::array_t<double>>(tol));
 
-        // Convert back to C++ form and return.
-        return pygmo::iterable_to_inds(o);
-    } catch (const py::error_already_set &eas) {
-        pygmo::handle_thread_py_exception(
-            "The select() method of a pythonic selection policy of type '" + s_pol_name + "' raised an error:\n", eas);
-    }
+    // Convert back to C++ form and return.
+    return pygmo::iterable_to_inds(o);
 }
 
 std::string s_pol_inner<py::object>::get_name() const

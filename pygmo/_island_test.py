@@ -156,7 +156,7 @@ class island_test_case(_ut.TestCase):
         isl = island(prob=rosenbrock(), udi=_udi_03(),
                      size=11, algo=de(), seed=15)
         isl.evolve()
-        with self.assertRaises(RuntimeError) as cm:
+        with self.assertRaises(ValueError) as cm:
             isl.wait_check()
         err = cm.exception
         self.assertTrue(
