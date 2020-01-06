@@ -584,7 +584,7 @@ class mp_island_test_case(_ut.TestCase):
             isl.evolve()
             isl.wait()
             self.assertTrue("**error occurred**" in repr(isl))
-            self.assertRaises(RuntimeError, lambda: isl.wait_check())
+            self.assertRaises(ValueError, lambda: isl.wait_check())
 
 
 class ipyparallel_island_test_case(_ut.TestCase):
@@ -609,6 +609,7 @@ class ipyparallel_island_test_case(_ut.TestCase):
         from . import ipyparallel_island
         from copy import copy, deepcopy
         from pickle import dumps, loads
+        import ipyparallel
 
         ipyparallel_island.shutdown_view()
         ipyparallel_island.shutdown_view()
@@ -686,4 +687,5 @@ class ipyparallel_island_test_case(_ut.TestCase):
             isl.evolve()
             isl.wait()
             self.assertTrue("**error occurred**" in repr(isl))
-            self.assertRaises(RuntimeError, lambda: isl.wait_check())
+            self.assertRaises(ipyparallel.error.RemoteError,
+                              lambda: isl.wait_check())

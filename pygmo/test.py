@@ -1300,9 +1300,6 @@ def run_test_suite(level=0):
     suite.addTest(_bfe_test.default_bfe_test_case())
     suite.addTest(archipelago_test_case(level))
     suite.addTest(_island_test.island_test_case())
-    suite.addTest(_problem_test.problem_test_case())
-    suite.addTest(population_test_case())
-    suite.addTest(_algorithm_test.algorithm_test_case())
     suite.addTest(_s_policy_test.s_policy_test_case())
     suite.addTest(_r_policy_test.r_policy_test_case())
     suite.addTest(_topology_test.topology_test_case())
@@ -1312,6 +1309,10 @@ def run_test_suite(level=0):
     suite.addTest(ring_test_case())
     suite.addTest(fully_connected_test_case())
     suite.addTest(thread_island_torture_test_case())
+    suite.addTest(_problem_test.problem_test_case())
+    suite.addTest(_algorithm_test.algorithm_test_case())
+    suite.addTest(_island_test.mp_island_test_case(level))
+    suite.addTest(_island_test.ipyparallel_island_test_case(level))
 
     suite.addTest(mbh_test_case())
 
