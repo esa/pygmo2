@@ -12,6 +12,7 @@
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
+#include <pagmo/problems/golomb_ruler.hpp>
 #include <pagmo/problems/rosenbrock.hpp>
 #include <pagmo/problems/schwefel.hpp>
 #include <pagmo/problems/translate.hpp>
@@ -69,6 +70,12 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
         "p_distance", [](const pagmo::zdt &z, const pagmo::population &pop) { return z.p_distance(pop); },
         zdt_p_distance_docstring().c_str());
 
+    // Golomb Ruler
+    auto gr = expose_problem<pagmo::golomb_ruler>(m, prob, p_module, "golomb_ruler",
+                                                  "__init__(order, upper_bound)\n\nThe Golomb Ruler Problem.\n\n"
+                                                  "See :cpp:class:`pagmo::golomb_ruler`.\n\n");
+    gr.def(py::init<unsigned, unsigned>(), py::arg("order"), py::arg("upper_bound"));
+
 #if 0
     // Exposition of C++ problems.
 
@@ -81,13 +88,6 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                               "See :cpp:class:`pagmo::rastrigin`.\n\n");
     rastr.def(bp::init<unsigned>((bp::arg("dim") = 1)));
     rastr.def("best_known", &best_known_wrapper<rastrigin>, problem_get_best_docstring("Rastrigin").c_str());
-
-
-    // Golomb Ruler
-    auto gr = expose_problem_pygmo<golomb_ruler>("golomb_ruler",
-                                                 "__init__(order, upper_bound)\n\nThe Golomb Ruler Problem.\n\n"
-                                                 "See :cpp:class:`pagmo::golomb_ruler`.\n\n");
-    gr.def(bp::init<unsigned, unsigned>((bp::arg("order"), bp::arg("upper_bound"))));
 
 #if defined(PAGMO_ENABLE_CEC2013)
     // See the explanation in pagmo/config.hpp.

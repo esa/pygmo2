@@ -6,19 +6,27 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <string>
+#include <tuple>
+#include <vector>
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
+#include <pagmo/algorithms/bee_colony.hpp>
 #include <pagmo/algorithms/compass_search.hpp>
 #include <pagmo/algorithms/de.hpp>
+#include <pagmo/algorithms/de1220.hpp>
 #include <pagmo/algorithms/mbh.hpp>
+#include <pagmo/algorithms/moead.hpp>
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/rng.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
+#include "common_utils.hpp"
 #include "docstrings.hpp"
 #include "expose_algorithms.hpp"
 
@@ -124,6 +132,69 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     compass_search_.def("get_verbosity", &pagmo::compass_search::get_verbosity);
     expose_not_population_based(compass_search_, "compass_search");
 
+    // DE-1220
+    auto de1220_ = expose_algorithm<pagmo::de1220>(m, algo, a_module, "de1220", de1220_docstring().c_str());
+    // Helper to get the list of default allowed variants for de1220.
+    auto de1220_allowed_variants = []() -> py::list {
+        py::list retval;
+        for (const auto &n : pagmo::de1220_statics<void>::allowed_variants) {
+            retval.append(n);
+        }
+        return retval;
+    };
+    de1220_.def(
+        py::init([](unsigned gen, const py::array_t<unsigned> &allowed_variants, unsigned variant_adptv, double ftol,
+                    double xtol, bool memory) {
+            return pagmo::detail::make_unique<pagmo::de1220>(
+                gen, ndarr_to_vector<std::vector<unsigned>>(allowed_variants), variant_adptv, ftol, xtol, memory);
+        }),
+        py::arg("gen") = 1u, py::arg("allowed_variants") = de1220_allowed_variants(), py::arg("variant_adptv") = 1u,
+        py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false);
+    de1220_.def(
+        py::init([](unsigned gen, const py::array_t<unsigned> &allowed_variants, unsigned variant_adptv, double ftol,
+                    double xtol, bool memory, unsigned seed) {
+            return pagmo::detail::make_unique<pagmo::de1220>(
+                gen, ndarr_to_vector<std::vector<unsigned>>(allowed_variants), variant_adptv, ftol, xtol, memory, seed);
+        }),
+        py::arg("gen") = 1u, py::arg("allowed_variants") = de1220_allowed_variants(), py::arg("variant_adptv") = 1u,
+        py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false, py::arg("seed"));
+    expose_algo_log(de1220_, de1220_get_log_docstring().c_str());
+    de1220_.def("get_seed", &pagmo::de1220::get_seed, generic_uda_get_seed_docstring().c_str());
+
+    // ARTIFICIAL BEE COLONY
+    auto bee_colony_
+        = expose_algorithm<pagmo::bee_colony>(m, algo, a_module, "bee_colony", bee_colony_docstring().c_str());
+    bee_colony_.def(py::init<unsigned, unsigned>(), py::arg("gen") = 1u, py::arg("limit") = 1u);
+    bee_colony_.def(py::init<unsigned, unsigned, unsigned>(), py::arg("gen") = 1u, py::arg("limit") = 20u,
+                    py::arg("seed"));
+    expose_algo_log(bee_colony_, bee_colony_get_log_docstring().c_str());
+    bee_colony_.def("get_seed", &pagmo::bee_colony::get_seed, generic_uda_get_seed_docstring().c_str());
+
+    // MOEA/D - DE
+    auto moead_ = expose_algorithm<pagmo::moead>(m, algo, a_module, "moead", moead_docstring().c_str());
+    moead_.def(py::init<unsigned, std::string, std::string, unsigned, double, double, double, double, unsigned, bool>(),
+               py::arg("gen") = 1u, py::arg("weight_generation") = "grid", py::arg("decomposition") = "tchebycheff",
+               py::arg("neighbours") = 20u, py::arg("CR") = 1., py::arg("F") = 0.5, py::arg("eta_m") = 20,
+               py::arg("realb") = 0.9, py::arg("limit") = 2u, py::arg("preserve_diversity") = true);
+    moead_.def(py::init<unsigned, std::string, std::string, unsigned, double, double, double, double, unsigned, bool,
+                        unsigned>(),
+               py::arg("gen") = 1u, py::arg("weight_generation") = "grid", py::arg("decomposition") = "tchebycheff",
+               py::arg("neighbours") = 20u, py::arg("CR") = 1., py::arg("F") = 0.5, py::arg("eta_m") = 20,
+               py::arg("realb") = 0.9, py::arg("limit") = 2u, py::arg("preserve_diversity") = true, py::arg("seed"));
+    // moead needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
+    moead_.def(
+        "get_log",
+        [](const pagmo::moead &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<3>(t))));
+            }
+            return retval;
+        },
+        moead_get_log_docstring().c_str());
+    moead_.def("get_seed", &pagmo::moead::get_seed, generic_uda_get_seed_docstring().c_str());
+
 #if 0
     // cstrs_self_adaptive meta-algo.
     auto cstrs_sa
@@ -144,99 +215,33 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                           bp::return_internal_reference<>()),
         generic_uda_inner_algorithm_docstring().c_str());
 
-    // ARTIFICIAL BEE COLONY
-    auto bee_colony_ = expose_algorithm_pygmo<bee_colony>("bee_colony", bee_colony_docstring().c_str());
-    bee_colony_.def(bp::init<unsigned, unsigned>((bp::arg("gen") = 1u, bp::arg("limit") = 1u)));
-    bee_colony_.def(
-        bp::init<unsigned, unsigned, unsigned>((bp::arg("gen") = 1u, bp::arg("limit") = 20u, bp::arg("seed"))));
-    expose_algo_log(bee_colony_, bee_colony_get_log_docstring().c_str());
-    bee_colony_.def("get_seed", &bee_colony::get_seed, generic_uda_get_seed_docstring().c_str());
-
-
-
-    // DE-1220
-    auto de1220_ = expose_algorithm_pygmo<de1220>("de1220", de1220_docstring().c_str());
-    // Helper to get the list of default allowed variants for de1220.
-    auto de1220_allowed_variants = []() -> bp::list {
-        bp::list retval;
-        for (const auto &n : de1220_statics<void>::allowed_variants) {
-            retval.append(n);
-        }
-        return retval;
-    };
-    de1220_.def("__init__",
-                bp::make_constructor(lcast([](unsigned gen, const bp::object &allowed_variants, unsigned variant_adptv,
-                                              double ftol, double xtol, bool memory) -> de1220 * {
-                                         auto av = obj_to_vector<std::vector<unsigned>>(allowed_variants);
-                                         return ::new de1220(gen, av, variant_adptv, ftol, xtol, memory);
-                                     }),
-                                     bp::default_call_policies(),
-                                     (bp::arg("gen") = 1u, bp::arg("allowed_variants") = de1220_allowed_variants(),
-                                      bp::arg("variant_adptv") = 1u, bp::arg("ftol") = 1e-6, bp::arg("xtol") = 1e-6,
-                                      bp::arg("memory") = false)));
-    de1220_.def("__init__",
-                bp::make_constructor(lcast([](unsigned gen, const bp::object &allowed_variants, unsigned variant_adptv,
-                                              double ftol, double xtol, bool memory, unsigned seed) -> de1220 * {
-                                         auto av = obj_to_vector<std::vector<unsigned>>(allowed_variants);
-                                         return ::new de1220(gen, av, variant_adptv, ftol, xtol, memory, seed);
-                                     }),
-                                     bp::default_call_policies(),
-                                     (bp::arg("gen") = 1u, bp::arg("allowed_variants") = de1220_allowed_variants(),
-                                      bp::arg("variant_adptv") = 1u, bp::arg("ftol") = 1e-6, bp::arg("xtol") = 1e-6,
-                                      bp::arg("memory") = false, bp::arg("seed"))));
-    expose_algo_log(de1220_, de1220_get_log_docstring().c_str());
-    de1220_.def("get_seed", &de1220::get_seed, generic_uda_get_seed_docstring().c_str());
-
 #if defined(PAGMO_WITH_EIGEN3)
     // CMA-ES
     auto cmaes_ = expose_algorithm_pygmo<cmaes>("cmaes", cmaes_docstring().c_str());
     cmaes_.def(bp::init<unsigned, double, double, double, double, double, double, double, bool, bool>(
-        (bp::arg("gen") = 1u, bp::arg("cc") = -1., bp::arg("cs") = -1., bp::arg("c1") = -1., bp::arg("cmu") = -1.,
-         bp::arg("sigma0") = 0.5, bp::arg("ftol") = 1e-6, bp::arg("xtol") = 1e-6, bp::arg("memory") = false,
-         bp::arg("force_bounds") = false)));
+        (py::arg("gen") = 1u, py::arg("cc") = -1., py::arg("cs") = -1., py::arg("c1") = -1., py::arg("cmu") = -1.,
+         py::arg("sigma0") = 0.5, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+         py::arg("force_bounds") = false)));
     cmaes_.def(bp::init<unsigned, double, double, double, double, double, double, double, bool, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("cc") = -1., bp::arg("cs") = -1., bp::arg("c1") = -1., bp::arg("cmu") = -1.,
-         bp::arg("sigma0") = 0.5, bp::arg("ftol") = 1e-6, bp::arg("xtol") = 1e-6, bp::arg("memory") = false,
-         bp::arg("force_bounds") = false, bp::arg("seed"))));
+        (py::arg("gen") = 1u, py::arg("cc") = -1., py::arg("cs") = -1., py::arg("c1") = -1., py::arg("cmu") = -1.,
+         py::arg("sigma0") = 0.5, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+         py::arg("force_bounds") = false, py::arg("seed"))));
     expose_algo_log(cmaes_, cmaes_get_log_docstring().c_str());
     cmaes_.def("get_seed", &cmaes::get_seed, generic_uda_get_seed_docstring().c_str());
 
     // xNES
     auto xnes_ = expose_algorithm_pygmo<xnes>("xnes", xnes_docstring().c_str());
     xnes_.def(bp::init<unsigned, double, double, double, double, double, double, bool, bool>(
-        (bp::arg("gen") = 1u, bp::arg("eta_mu") = -1., bp::arg("eta_sigma") = -1., bp::arg("eta_b") = -1.,
-         bp::arg("sigma0") = -1, bp::arg("ftol") = 1e-6, bp::arg("xtol") = 1e-6, bp::arg("memory") = false,
-         bp::arg("force_bounds") = false)));
+        (py::arg("gen") = 1u, py::arg("eta_mu") = -1., py::arg("eta_sigma") = -1., py::arg("eta_b") = -1.,
+         py::arg("sigma0") = -1, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+         py::arg("force_bounds") = false)));
     xnes_.def(bp::init<unsigned, double, double, double, double, double, double, bool, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("eta_mu") = -1., bp::arg("eta_sigma") = -1., bp::arg("eta_b") = -1.,
-         bp::arg("sigma0") = -1, bp::arg("ftol") = 1e-6, bp::arg("xtol") = 1e-6, bp::arg("memory") = false,
-         bp::arg("force_bounds") = false, bp::arg("seed"))));
+        (py::arg("gen") = 1u, py::arg("eta_mu") = -1., py::arg("eta_sigma") = -1., py::arg("eta_b") = -1.,
+         py::arg("sigma0") = -1, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+         py::arg("force_bounds") = false, py::arg("seed"))));
     expose_algo_log(xnes_, xnes_get_log_docstring().c_str());
     xnes_.def("get_seed", &xnes::get_seed, generic_uda_get_seed_docstring().c_str());
 #endif
-
-    // MOEA/D - DE
-    auto moead_ = expose_algorithm_pygmo<moead>("moead", moead_docstring().c_str());
-    moead_.def(bp::init<unsigned, std::string, std::string, unsigned, double, double, double, double, unsigned, bool>(
-        (bp::arg("gen") = 1u, bp::arg("weight_generation") = "grid", bp::arg("decomposition") = "tchebycheff",
-         bp::arg("neighbours") = 20u, bp::arg("CR") = 1., bp::arg("F") = 0.5, bp::arg("eta_m") = 20,
-         bp::arg("realb") = 0.9, bp::arg("limit") = 2u, bp::arg("preserve_diversity") = true)));
-    moead_.def(bp::init<unsigned, std::string, std::string, unsigned, double, double, double, double, unsigned, bool,
-                        unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("weight_generation") = "grid", bp::arg("decomposition") = "tchebycheff",
-         bp::arg("neighbours") = 20u, bp::arg("CR") = 1., bp::arg("F") = 0.5, bp::arg("eta_m") = 20,
-         bp::arg("realb") = 0.9, bp::arg("limit") = 2u, bp::arg("preserve_diversity") = true, bp::arg("seed"))));
-    // moead needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    moead_.def("get_log", lcast([](const moead &a) -> bp::list {
-                   bp::list retval;
-                   for (const auto &t : a.get_log()) {
-                       retval.append(bp::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
-                                                    vector_to_ndarr(std::get<3>(t))));
-                   }
-                   return retval;
-               }),
-               moead_get_log_docstring().c_str());
-    moead_.def("get_seed", &moead::get_seed, generic_uda_get_seed_docstring().c_str());
 
 #if defined(PAGMO_WITH_IPOPT)
     // Ipopt.
@@ -248,7 +253,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     // Options management.
     // String opts.
     ipopt_.def("set_string_option", &ipopt::set_string_option, ipopt_set_string_option_docstring().c_str(),
-               (bp::arg("name"), bp::arg("value")));
+               (py::arg("name"), py::arg("value")));
     ipopt_.def("set_string_options", lcast([](ipopt &ip, const bp::dict &d) {
                    std::map<std::string, std::string> m;
                    bp::stl_input_iterator<std::string> begin(d), end;
@@ -257,7 +262,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                    }
                    ip.set_string_options(m);
                }),
-               ipopt_set_string_options_docstring().c_str(), bp::arg("opts"));
+               ipopt_set_string_options_docstring().c_str(), py::arg("opts"));
     ipopt_.def("get_string_options", lcast([](const ipopt &ip) -> bp::dict {
                    const auto opts = ip.get_string_options();
                    bp::dict retval;
@@ -270,7 +275,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     ipopt_.def("reset_string_options", &ipopt::reset_string_options, ipopt_reset_string_options_docstring().c_str());
     // Integer options.
     ipopt_.def("set_integer_option", &ipopt::set_integer_option, ipopt_set_integer_option_docstring().c_str(),
-               (bp::arg("name"), bp::arg("value")));
+               (py::arg("name"), py::arg("value")));
     ipopt_.def("set_integer_options", lcast([](ipopt &ip, const bp::dict &d) {
                    std::map<std::string, Ipopt::Index> m;
                    bp::stl_input_iterator<std::string> begin(d), end;
@@ -279,7 +284,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                    }
                    ip.set_integer_options(m);
                }),
-               ipopt_set_integer_options_docstring().c_str(), bp::arg("opts"));
+               ipopt_set_integer_options_docstring().c_str(), py::arg("opts"));
     ipopt_.def("get_integer_options", lcast([](const ipopt &ip) -> bp::dict {
                    const auto opts = ip.get_integer_options();
                    bp::dict retval;
@@ -292,7 +297,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     ipopt_.def("reset_integer_options", &ipopt::reset_integer_options, ipopt_reset_integer_options_docstring().c_str());
     // Numeric options.
     ipopt_.def("set_numeric_option", &ipopt::set_numeric_option, ipopt_set_numeric_option_docstring().c_str(),
-               (bp::arg("name"), bp::arg("value")));
+               (py::arg("name"), py::arg("value")));
     ipopt_.def("set_numeric_options", lcast([](ipopt &ip, const bp::dict &d) {
                    std::map<std::string, double> m;
                    bp::stl_input_iterator<std::string> begin(d), end;
@@ -301,7 +306,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                    }
                    ip.set_numeric_options(m);
                }),
-               ipopt_set_numeric_options_docstring().c_str(), bp::arg("opts"));
+               ipopt_set_numeric_options_docstring().c_str(), py::arg("opts"));
     ipopt_.def("get_numeric_options", lcast([](const ipopt &ip) -> bp::dict {
                    const auto opts = ip.get_numeric_options();
                    bp::dict retval;

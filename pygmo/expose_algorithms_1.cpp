@@ -6,11 +6,25 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <string>
+#include <tuple>
+
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
+#include <pagmo/algorithms/gaco.hpp>
+#include <pagmo/algorithms/gwo.hpp>
+#include <pagmo/algorithms/ihs.hpp>
+#include <pagmo/algorithms/nsga2.hpp>
 #include <pagmo/algorithms/null_algorithm.hpp>
+#include <pagmo/algorithms/pso.hpp>
+#include <pagmo/algorithms/pso_gen.hpp>
+#include <pagmo/algorithms/sea.hpp>
+#include <pagmo/algorithms/sga.hpp>
+#include <pagmo/algorithms/simulated_annealing.hpp>
 
+#include "common_utils.hpp"
 #include "docstrings.hpp"
 #include "expose_algorithms.hpp"
 
@@ -25,153 +39,159 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     auto na = expose_algorithm<pagmo::null_algorithm>(m, algo, a_module, "null_algorithm",
                                                       null_algorithm_docstring().c_str());
 
-#if 0
-    // PSO
-    auto pso_ = expose_algorithm_pygmo<pso>("pso", pso_docstring().c_str());
-    pso_.def(bp::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool>(
-        (bp::arg("gen") = 1u, bp::arg("omega") = 0.7298, bp::arg("eta1") = 2.05, bp::arg("eta2") = 2.05,
-         bp::arg("max_vel") = 0.5, bp::arg("variant") = 5u, bp::arg("neighb_type") = 2u, bp::arg("neighb_param") = 4u,
-         bp::arg("memory") = false)));
-    pso_.def(bp::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("omega") = 0.7298, bp::arg("eta1") = 2.05, bp::arg("eta2") = 2.05,
-         bp::arg("max_vel") = 0.5, bp::arg("variant") = 5u, bp::arg("neighb_type") = 2u, bp::arg("neighb_param") = 4u,
-         bp::arg("memory") = false, bp::arg("seed"))));
-    expose_algo_log(pso_, pso_get_log_docstring().c_str());
-    pso_.def("get_seed", &pso::get_seed, generic_uda_get_seed_docstring().c_str());
+    // NSGA2
+    auto nsga2_ = expose_algorithm<pagmo::nsga2>(m, algo, a_module, "nsga2", nsga2_docstring().c_str());
+    nsga2_.def(py::init<unsigned, double, double, double, double>(), py::arg("gen") = 1u, py::arg("cr") = 0.95,
+               py::arg("eta_c") = 10., py::arg("m") = 0.01, py::arg("eta_m") = 50.);
+    nsga2_.def(py::init<unsigned, double, double, double, double, unsigned>(), py::arg("gen") = 1u,
+               py::arg("cr") = 0.95, py::arg("eta_c") = 10., py::arg("m") = 0.01, py::arg("eta_m") = 50.,
+               py::arg("seed"));
+    // nsga2 needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
+    nsga2_.def(
+        "get_log",
+        [](const pagmo::nsga2 &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<2>(t))));
+            }
+            return retval;
+        },
+        nsga2_get_log_docstring().c_str());
 
-    // PSO (generational)
-    auto pso_gen_ = expose_algorithm_pygmo<pso_gen>("pso_gen", pso_gen_docstring().c_str());
-    pso_gen_.def(bp::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool>(
-        (bp::arg("gen") = 1u, bp::arg("omega") = 0.7298, bp::arg("eta1") = 2.05, bp::arg("eta2") = 2.05,
-         bp::arg("max_vel") = 0.5, bp::arg("variant") = 5u, bp::arg("neighb_type") = 2u, bp::arg("neighb_param") = 4u,
-         bp::arg("memory") = false)));
-    pso_gen_.def(bp::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("omega") = 0.7298, bp::arg("eta1") = 2.05, bp::arg("eta2") = 2.05,
-         bp::arg("max_vel") = 0.5, bp::arg("variant") = 5u, bp::arg("neighb_type") = 2u, bp::arg("neighb_param") = 4u,
-         bp::arg("memory") = false, bp::arg("seed"))));
-    expose_algo_log(pso_gen_, pso_gen_get_log_docstring().c_str());
-    pso_gen_.def("get_seed", &pso_gen::get_seed, generic_uda_get_seed_docstring().c_str());
-    pso_gen_.def("set_bfe", &pso_gen::set_bfe, pso_gen_set_bfe_docstring().c_str(), bp::arg("b"));
+    nsga2_.def("get_seed", &pagmo::nsga2::get_seed, generic_uda_get_seed_docstring().c_str());
+    nsga2_.def("set_bfe", &pagmo::nsga2::set_bfe, nsga2_set_bfe_docstring().c_str(), py::arg("b"));
+
+    // GACO
+    auto gaco_ = expose_algorithm<pagmo::gaco>(m, algo, a_module, "gaco", gaco_docstring().c_str());
+    gaco_.def(
+        py::init<unsigned, unsigned, double, double, double, unsigned, unsigned, unsigned, unsigned, double, bool>(),
+        py::arg("gen") = 100u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("oracle") = 0., py::arg("acc") = 0.01,
+        py::arg("threshold") = 1u, py::arg("n_gen_mark") = 7u, py::arg("impstop") = 100000u,
+        py::arg("evalstop") = 100000u, py::arg("focus") = 0., py::arg("memory") = false);
+    gaco_.def(py::init<unsigned, unsigned, double, double, double, unsigned, unsigned, unsigned, unsigned, double, bool,
+                       unsigned>(),
+              py::arg("gen") = 100u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("oracle") = 0.,
+              py::arg("acc") = 0.01, py::arg("threshold") = 1u, py::arg("n_gen_mark") = 7u,
+              py::arg("impstop") = 100000u, py::arg("evalstop") = 100000u, py::arg("focus") = 0.,
+              py::arg("memory") = false, py::arg("seed"));
+    expose_algo_log(gaco_, gaco_get_log_docstring().c_str());
+    gaco_.def("get_seed", &pagmo::gaco::get_seed, generic_uda_get_seed_docstring().c_str());
+    gaco_.def("set_bfe", &pagmo::gaco::set_bfe, gaco_set_bfe_docstring().c_str(), py::arg("b"));
+
+    // GWO
+    auto gwo_ = expose_algorithm<pagmo::gwo>(m, algo, a_module, "gwo", gwo_docstring().c_str());
+    gwo_.def(py::init<unsigned>(), py::arg("gen") = 1u);
+    gwo_.def(py::init<unsigned, unsigned>(), py::arg("gen") = 1u, py::arg("seed"));
+    expose_algo_log(gwo_, gwo_get_log_docstring().c_str());
+    gwo_.def("get_seed", &pagmo::gwo::get_seed, generic_uda_get_seed_docstring().c_str());
 
     // SEA
-    auto sea_ = expose_algorithm_pygmo<sea>("sea", sea_docstring().c_str());
-    sea_.def(bp::init<unsigned>((bp::arg("gen") = 1u)));
-    sea_.def(bp::init<unsigned, unsigned>((bp::arg("gen") = 1u, bp::arg("seed"))));
+    auto sea_ = expose_algorithm<pagmo::sea>(m, algo, a_module, "sea", sea_docstring().c_str());
+    sea_.def(py::init<unsigned>(), py::arg("gen") = 1u);
+    sea_.def(py::init<unsigned, unsigned>(), py::arg("gen") = 1u, py::arg("seed"));
     expose_algo_log(sea_, sea_get_log_docstring().c_str());
-    sea_.def("get_seed", &sea::get_seed, generic_uda_get_seed_docstring().c_str());
+    sea_.def("get_seed", &pagmo::sea::get_seed, generic_uda_get_seed_docstring().c_str());
 
-    // IHS
-    auto ihs_ = expose_algorithm_pygmo<ihs>("ihs", ihs_docstring().c_str());
-    ihs_.def(bp::init<unsigned, double, double, double, double, double>(
-        (bp::arg("gen") = 1u, bp::arg("phmcr") = 0.85, bp::arg("ppar_min") = 0.35, bp::arg("ppar_max") = 0.99,
-         bp::arg("bw_min") = 1E-5, bp::arg("bw_max") = 1.)));
-    ihs_.def(bp::init<unsigned, double, double, double, double, double, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("phmcr") = 0.85, bp::arg("ppar_min") = 0.35, bp::arg("ppar_max") = 0.99,
-         bp::arg("bw_min") = 1E-5, bp::arg("bw_max") = 1., bp::arg("seed"))));
-    // ihs needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    ihs_.def("get_log", lcast([](const ihs &a) -> bp::list {
-                 bp::list retval;
-                 for (const auto &t : a.get_log()) {
-                     retval.append(bp::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t), std::get<3>(t),
-                                                  std::get<4>(t), std::get<5>(t), std::get<6>(t),
-                                                  vector_to_ndarr(std::get<7>(t))));
-                 }
-                 return retval;
-             }),
-             ihs_get_log_docstring().c_str());
-    ihs_.def("get_seed", &ihs::get_seed, generic_uda_get_seed_docstring().c_str());
+    // PSO
+    auto pso_ = expose_algorithm<pagmo::pso>(m, algo, a_module, "pso", pso_docstring().c_str());
+    pso_.def(py::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool>(),
+             py::arg("gen") = 1u, py::arg("omega") = 0.7298, py::arg("eta1") = 2.05, py::arg("eta2") = 2.05,
+             py::arg("max_vel") = 0.5, py::arg("variant") = 5u, py::arg("neighb_type") = 2u,
+             py::arg("neighb_param") = 4u, py::arg("memory") = false);
+    pso_.def(py::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool, unsigned>(),
+             py::arg("gen") = 1u, py::arg("omega") = 0.7298, py::arg("eta1") = 2.05, py::arg("eta2") = 2.05,
+             py::arg("max_vel") = 0.5, py::arg("variant") = 5u, py::arg("neighb_type") = 2u,
+             py::arg("neighb_param") = 4u, py::arg("memory") = false, py::arg("seed"));
+    expose_algo_log(pso_, pso_get_log_docstring().c_str());
+    pso_.def("get_seed", &pagmo::pso::get_seed, generic_uda_get_seed_docstring().c_str());
 
-    // SGA
-    auto sga_ = expose_algorithm_pygmo<sga>("sga", sga_docstring().c_str());
-    sga_.def(bp::init<unsigned, double, double, double, double, unsigned, std::string, std::string, std::string>(
-        (bp::arg("gen") = 1u, bp::arg("cr") = 0.9, bp::arg("eta_c") = 1., bp::arg("m") = 0.02, bp::arg("param_m") = 1.,
-         bp::arg("param_s") = 2u, bp::arg("crossover") = "exponential", bp::arg("mutation") = "polynomial",
-         bp::arg("selection") = "tournament")));
-    sga_.def(
-        bp::init<unsigned, double, double, double, double, unsigned, std::string, std::string, std::string, unsigned>(
-            (bp::arg("gen") = 1u, bp::arg("cr") = 0.9, bp::arg("eta_c") = 1., bp::arg("m") = 0.02,
-             bp::arg("param_m") = 1., bp::arg("param_s") = 2u, bp::arg("crossover") = "exponential",
-             bp::arg("mutation") = "polynomial", bp::arg("selection") = "tournament", bp::arg("seed"))));
-    expose_algo_log(sga_, sga_get_log_docstring().c_str());
-    sga_.def("get_seed", &sga::get_seed, generic_uda_get_seed_docstring().c_str());
+    // PSO (generational)
+    auto pso_gen_ = expose_algorithm<pagmo::pso_gen>(m, algo, a_module, "pso_gen", pso_gen_docstring().c_str());
+    pso_gen_.def(py::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool>(),
+                 py::arg("gen") = 1u, py::arg("omega") = 0.7298, py::arg("eta1") = 2.05, py::arg("eta2") = 2.05,
+                 py::arg("max_vel") = 0.5, py::arg("variant") = 5u, py::arg("neighb_type") = 2u,
+                 py::arg("neighb_param") = 4u, py::arg("memory") = false);
+    pso_gen_.def(py::init<unsigned, double, double, double, double, unsigned, unsigned, unsigned, bool, unsigned>(),
+                 py::arg("gen") = 1u, py::arg("omega") = 0.7298, py::arg("eta1") = 2.05, py::arg("eta2") = 2.05,
+                 py::arg("max_vel") = 0.5, py::arg("variant") = 5u, py::arg("neighb_type") = 2u,
+                 py::arg("neighb_param") = 4u, py::arg("memory") = false, py::arg("seed"));
+    expose_algo_log(pso_gen_, pso_gen_get_log_docstring().c_str());
+    pso_gen_.def("get_seed", &pagmo::pso_gen::get_seed, generic_uda_get_seed_docstring().c_str());
+    pso_gen_.def("set_bfe", &pagmo::pso_gen::set_bfe, pso_gen_set_bfe_docstring().c_str(), py::arg("b"));
 
     // SIMULATED ANNEALING
-    auto simulated_annealing_
-        = expose_algorithm_pygmo<simulated_annealing>("simulated_annealing", simulated_annealing_docstring().c_str());
-    simulated_annealing_.def(bp::init<double, double, unsigned, unsigned, unsigned, double>(
-        (bp::arg("Ts") = 10., bp::arg("Tf") = 0.1, bp::arg("n_T_adj") = 10u, bp::arg("n_range_adj") = 1u,
-         bp::arg("bin_size") = 20u, bp::arg("start_range") = 1.)));
-    simulated_annealing_.def(bp::init<double, double, unsigned, unsigned, unsigned, double, unsigned>(
-        (bp::arg("Ts") = 10., bp::arg("Tf") = 0.1, bp::arg("n_T_adj") = 10u, bp::arg("n_range_adj") = 10u,
-         bp::arg("bin_size") = 10u, bp::arg("start_range") = 1., bp::arg("seed"))));
+    auto simulated_annealing_ = expose_algorithm<pagmo::simulated_annealing>(m, algo, a_module, "simulated_annealing",
+                                                                             simulated_annealing_docstring().c_str());
+    simulated_annealing_.def(py::init<double, double, unsigned, unsigned, unsigned, double>(), py::arg("Ts") = 10.,
+                             py::arg("Tf") = 0.1, py::arg("n_T_adj") = 10u, py::arg("n_range_adj") = 1u,
+                             py::arg("bin_size") = 20u, py::arg("start_range") = 1.);
+    simulated_annealing_.def(py::init<double, double, unsigned, unsigned, unsigned, double, unsigned>(),
+                             py::arg("Ts") = 10., py::arg("Tf") = 0.1, py::arg("n_T_adj") = 10u,
+                             py::arg("n_range_adj") = 10u, py::arg("bin_size") = 10u, py::arg("start_range") = 1.,
+                             py::arg("seed"));
     expose_algo_log(simulated_annealing_, simulated_annealing_get_log_docstring().c_str());
-    simulated_annealing_.def("get_seed", &simulated_annealing::get_seed, generic_uda_get_seed_docstring().c_str());
+    simulated_annealing_.def("get_seed", &pagmo::simulated_annealing::get_seed,
+                             generic_uda_get_seed_docstring().c_str());
     expose_not_population_based(simulated_annealing_, "simulated_annealing");
 
+    // SGA
+    auto sga_ = expose_algorithm<pagmo::sga>(m, algo, a_module, "sga", sga_docstring().c_str());
+    sga_.def(py::init<unsigned, double, double, double, double, unsigned, std::string, std::string, std::string>(),
+             py::arg("gen") = 1u, py::arg("cr") = 0.9, py::arg("eta_c") = 1., py::arg("m") = 0.02,
+             py::arg("param_m") = 1., py::arg("param_s") = 2u, py::arg("crossover") = "exponential",
+             py::arg("mutation") = "polynomial", py::arg("selection") = "tournament");
+    sga_.def(
+        py::init<unsigned, double, double, double, double, unsigned, std::string, std::string, std::string, unsigned>(),
+        py::arg("gen") = 1u, py::arg("cr") = 0.9, py::arg("eta_c") = 1., py::arg("m") = 0.02, py::arg("param_m") = 1.,
+        py::arg("param_s") = 2u, py::arg("crossover") = "exponential", py::arg("mutation") = "polynomial",
+        py::arg("selection") = "tournament", py::arg("seed"));
+    expose_algo_log(sga_, sga_get_log_docstring().c_str());
+    sga_.def("get_seed", &pagmo::sga::get_seed, generic_uda_get_seed_docstring().c_str());
+
+    // IHS
+    auto ihs_ = expose_algorithm<pagmo::ihs>(m, algo, a_module, "ihs", ihs_docstring().c_str());
+    ihs_.def(py::init<unsigned, double, double, double, double, double>(), py::arg("gen") = 1u, py::arg("phmcr") = 0.85,
+             py::arg("ppar_min") = 0.35, py::arg("ppar_max") = 0.99, py::arg("bw_min") = 1E-5, py::arg("bw_max") = 1.);
+    ihs_.def(py::init<unsigned, double, double, double, double, double, unsigned>(), py::arg("gen") = 1u,
+             py::arg("phmcr") = 0.85, py::arg("ppar_min") = 0.35, py::arg("ppar_max") = 0.99, py::arg("bw_min") = 1E-5,
+             py::arg("bw_max") = 1., py::arg("seed"));
+    // ihs needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
+    ihs_.def(
+        "get_log",
+        [](const pagmo::ihs &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t), std::get<3>(t),
+                                             std::get<4>(t), std::get<5>(t), std::get<6>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<7>(t))));
+            }
+            return retval;
+        },
+        ihs_get_log_docstring().c_str());
+    ihs_.def("get_seed", &pagmo::ihs::get_seed, generic_uda_get_seed_docstring().c_str());
+
+#if 0
     // SADE
     auto sade_ = expose_algorithm_pygmo<sade>("sade", sade_docstring().c_str());
     sade_.def(bp::init<unsigned, unsigned, unsigned, double, double, bool>(
-        (bp::arg("gen") = 1u, bp::arg("variant") = 2u, bp::arg("variant_adptv") = 1u, bp::arg("ftol") = 1e-6,
-         bp::arg("xtol") = 1e-6, bp::arg("memory") = false)));
+        (py::arg("gen") = 1u, py::arg("variant") = 2u, py::arg("variant_adptv") = 1u, py::arg("ftol") = 1e-6,
+         py::arg("xtol") = 1e-6, py::arg("memory") = false)));
     sade_.def(bp::init<unsigned, unsigned, unsigned, double, double, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("variant") = 2u, bp::arg("variant_adptv") = 1u, bp::arg("ftol") = 1e-6,
-         bp::arg("xtol") = 1e-6, bp::arg("memory") = false, bp::arg("seed"))));
+        (py::arg("gen") = 1u, py::arg("variant") = 2u, py::arg("variant_adptv") = 1u, py::arg("ftol") = 1e-6,
+         py::arg("xtol") = 1e-6, py::arg("memory") = false, py::arg("seed"))));
     expose_algo_log(sade_, sade_get_log_docstring().c_str());
     sade_.def("get_seed", &sade::get_seed, generic_uda_get_seed_docstring().c_str());
-
-    // NSGA2
-    auto nsga2_ = expose_algorithm_pygmo<nsga2>("nsga2", nsga2_docstring().c_str());
-    nsga2_.def(bp::init<unsigned, double, double, double, double>((bp::arg("gen") = 1u, bp::arg("cr") = 0.95,
-                                                                   bp::arg("eta_c") = 10., bp::arg("m") = 0.01,
-                                                                   bp::arg("eta_m") = 50.)));
-    nsga2_.def(bp::init<unsigned, double, double, double, double, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("cr") = 0.95, bp::arg("eta_c") = 10., bp::arg("m") = 0.01, bp::arg("eta_m") = 50.,
-         bp::arg("seed"))));
-    // nsga2 needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    nsga2_.def("get_log", lcast([](const nsga2 &a) -> bp::list {
-                   bp::list retval;
-                   for (const auto &t : a.get_log()) {
-                       retval.append(bp::make_tuple(std::get<0>(t), std::get<1>(t), vector_to_ndarr(std::get<2>(t))));
-                   }
-                   return retval;
-               }),
-               nsga2_get_log_docstring().c_str());
-
-    nsga2_.def("get_seed", &nsga2::get_seed, generic_uda_get_seed_docstring().c_str());
-    nsga2_.def("set_bfe", &nsga2::set_bfe, nsga2_set_bfe_docstring().c_str(), bp::arg("b"));
-
-    // GACO
-    auto gaco_ = expose_algorithm_pygmo<gaco>("gaco", gaco_docstring().c_str());
-    gaco_.def(
-        bp::init<unsigned, unsigned, double, double, double, unsigned, unsigned, unsigned, unsigned, double, bool>(
-            (bp::arg("gen") = 100u, bp::arg("ker") = 63u, bp::arg("q") = 1.0, bp::arg("oracle") = 0.,
-             bp::arg("acc") = 0.01, bp::arg("threshold") = 1u, bp::arg("n_gen_mark") = 7u, bp::arg("impstop") = 100000u,
-             bp::arg("evalstop") = 100000u, bp::arg("focus") = 0., bp::arg("memory") = false)));
-    gaco_.def(bp::init<unsigned, unsigned, double, double, double, unsigned, unsigned, unsigned, unsigned, double, bool,
-                       unsigned>(
-        (bp::arg("gen") = 100u, bp::arg("ker") = 63u, bp::arg("q") = 1.0, bp::arg("oracle") = 0., bp::arg("acc") = 0.01,
-         bp::arg("threshold") = 1u, bp::arg("n_gen_mark") = 7u, bp::arg("impstop") = 100000u,
-         bp::arg("evalstop") = 100000u, bp::arg("focus") = 0., bp::arg("memory") = false, bp::arg("seed"))));
-    expose_algo_log(gaco_, gaco_get_log_docstring().c_str());
-    gaco_.def("get_seed", &gaco::get_seed, generic_uda_get_seed_docstring().c_str());
-    gaco_.def("set_bfe", &gaco::set_bfe, gaco_set_bfe_docstring().c_str(), bp::arg("b"));
-
-    // GWO
-    auto gwo_ = expose_algorithm_pygmo<gwo>("gwo", gwo_docstring().c_str());
-    gwo_.def(bp::init<unsigned>((bp::arg("gen") = 1u)));
-    gwo_.def(bp::init<unsigned, unsigned>((bp::arg("gen") = 1u, bp::arg("seed"))));
-    expose_algo_log(gwo_, gwo_get_log_docstring().c_str());
-    gwo_.def("get_seed", &gwo::get_seed, generic_uda_get_seed_docstring().c_str());
 
     // MACO
     auto maco_ = expose_algorithm_pygmo<maco>("maco", maco_docstring().c_str());
     maco_.def(bp::init<unsigned, unsigned, double, unsigned, unsigned, unsigned, double, bool>(
-        (bp::arg("gen") = 1u, bp::arg("ker") = 63u, bp::arg("q") = 1.0, bp::arg("threshold") = 1u,
-         bp::arg("n_gen_mark") = 7u, bp::arg("evalstop") = 100000u, bp::arg("focus") = 0., bp::arg("memory") = false)));
+        (py::arg("gen") = 1u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("threshold") = 1u,
+         py::arg("n_gen_mark") = 7u, py::arg("evalstop") = 100000u, py::arg("focus") = 0., py::arg("memory") = false)));
     maco_.def(bp::init<unsigned, unsigned, double, unsigned, unsigned, unsigned, double, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("ker") = 63u, bp::arg("q") = 1.0, bp::arg("threshold") = 1u,
-         bp::arg("n_gen_mark") = 7u, bp::arg("evalstop") = 100000u, bp::arg("focus") = 0., bp::arg("memory") = false,
-         bp::arg("seed"))));
+        (py::arg("gen") = 1u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("threshold") = 1u,
+         py::arg("n_gen_mark") = 7u, py::arg("evalstop") = 100000u, py::arg("focus") = 0., py::arg("memory") = false,
+         py::arg("seed"))));
     // maco needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
     maco_.def("get_log", lcast([](const maco &a) -> bp::list {
                   bp::list retval;
@@ -183,18 +203,18 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
               maco_get_log_docstring().c_str());
 
     maco_.def("get_seed", &maco::get_seed, generic_uda_get_seed_docstring().c_str());
-    maco_.def("set_bfe", &maco::set_bfe, maco_set_bfe_docstring().c_str(), bp::arg("b"));
+    maco_.def("set_bfe", &maco::set_bfe, maco_set_bfe_docstring().c_str(), py::arg("b"));
 
     // NSPSO
     auto nspso_ = expose_algorithm_pygmo<nspso>("nspso", nspso_docstring().c_str());
     nspso_.def(bp::init<unsigned, double, double, double, double, double, unsigned, std::string, bool>(
-        (bp::arg("gen") = 1u, bp::arg("omega") = 0.6, bp::arg("c1") = 0.01, bp::arg("c2") = 0.5, bp::arg("chi") = 0.5,
-         bp::arg("v_coeff") = 0.5, bp::arg("leader_selection_range") = 2u,
-         bp::arg("diversity_mechanism") = "crowding distance", bp::arg("memory") = false)));
+        (py::arg("gen") = 1u, py::arg("omega") = 0.6, py::arg("c1") = 0.01, py::arg("c2") = 0.5, py::arg("chi") = 0.5,
+         py::arg("v_coeff") = 0.5, py::arg("leader_selection_range") = 2u,
+         py::arg("diversity_mechanism") = "crowding distance", py::arg("memory") = false)));
     nspso_.def(bp::init<unsigned, double, double, double, double, double, unsigned, std::string, bool, unsigned>(
-        (bp::arg("gen") = 1u, bp::arg("omega") = 0.6, bp::arg("c1") = 0.01, bp::arg("c2") = 0.5, bp::arg("chi") = 0.5,
-         bp::arg("v_coeff") = 0.5, bp::arg("leader_selection_range") = 2u,
-         bp::arg("diversity_mechanism") = "crowding distance", bp::arg("memory") = false, bp::arg("seed"))));
+        (py::arg("gen") = 1u, py::arg("omega") = 0.6, py::arg("c1") = 0.01, py::arg("c2") = 0.5, py::arg("chi") = 0.5,
+         py::arg("v_coeff") = 0.5, py::arg("leader_selection_range") = 2u,
+         py::arg("diversity_mechanism") = "crowding distance", py::arg("memory") = false, py::arg("seed"))));
     // nspso needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
     nspso_.def("get_log", lcast([](const nspso &a) -> bp::list {
                    bp::list retval;
@@ -206,12 +226,12 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                nspso_get_log_docstring().c_str());
 
     nspso_.def("get_seed", &nspso::get_seed, generic_uda_get_seed_docstring().c_str());
-    nspso_.def("set_bfe", &nspso::set_bfe, nspso_set_bfe_docstring().c_str(), bp::arg("b"));
+    nspso_.def("set_bfe", &nspso::set_bfe, nspso_set_bfe_docstring().c_str(), py::arg("b"));
 
 #if defined(PAGMO_WITH_NLOPT)
     // NLopt.
     auto nlopt_ = expose_algorithm_pygmo<nlopt>("nlopt", nlopt_docstring().c_str());
-    nlopt_.def(bp::init<const std::string &>((bp::arg("solver"))));
+    nlopt_.def(bp::init<const std::string &>((py::arg("solver"))));
     // Properties for the stopping criteria.
     add_property(nlopt_, "stopval", &nlopt::get_stopval, &nlopt::set_stopval, nlopt_stopval_docstring().c_str());
     add_property(nlopt_, "ftol_rel", &nlopt::get_ftol_rel, &nlopt::set_ftol_rel, nlopt_ftol_rel_docstring().c_str());

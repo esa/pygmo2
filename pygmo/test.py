@@ -1273,6 +1273,267 @@ class archipelago_test_case(_ut.TestCase):
         archi.wait_check()
 
 
+class golomb_ruler_test_case(_ut.TestCase):
+    """Test case for the Golomb ruler UDP
+
+    """
+
+    def runTest(self):
+        from .core import golomb_ruler
+        udp = golomb_ruler(4, 10)
+        udp = golomb_ruler(order=4, upper_bound=10)
+
+
+class lennard_jones_test_case(_ut.TestCase):
+    """Test case for the Lennard-Jones UDP
+
+    """
+
+    def runTest(self):
+        from .core import lennard_jones
+        udp = lennard_jones()
+        udp = lennard_jones(3)
+        udp = lennard_jones(atoms=3)
+
+
+class de_test_case(_ut.TestCase):
+    """Test case for the UDA de
+
+    """
+
+    def runTest(self):
+        from .core import de
+        uda = de()
+        uda = de(gen=10000, F=0.5, CR=0.3, variant=9, ftol=1e-3, xtol=1e-2)
+        uda = de(gen=10000, F=0.5, CR=0.3, variant=9,
+                 ftol=1e-3, xtol=1e-2, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
+class nsga2_test_case(_ut.TestCase):
+    """Test case for the UDA nsga2
+
+    """
+
+    def runTest(self):
+        from .core import nsga2, algorithm
+        from pickle import loads, dumps
+        uda = nsga2()
+        uda = nsga2(gen=10, cr=0.94, eta_c=9., m=0.05, eta_m=10., seed=0)
+        self.assertEqual(uda.get_seed(), 0)
+        a = algorithm(uda)
+        self.assertEqual(str(a), str(loads(dumps(a))))
+        log = uda.get_log()
+
+
+class gaco_test_case(_ut.TestCase):
+    """Test case for the UDA gaco
+
+    """
+
+    def runTest(self):
+        from .core import gaco, algorithm, bfe
+        from pickle import loads, dumps
+        uda = gaco()
+        uda = gaco(gen=1000, seed=5)
+        self.assertEqual(uda.get_seed(), 5)
+        a = algorithm(uda)
+        self.assertEqual(str(a), str(loads(dumps(a))))
+        log = uda.get_log()
+        uda.set_bfe(b=bfe())
+        uda.set_bfe(bfe())
+
+
+class gwo_test_case(_ut.TestCase):
+    """Test case for the UDA gwo
+
+    """
+
+    def runTest(self):
+        from .core import gwo, algorithm
+        from pickle import loads, dumps
+        uda = gwo()
+        uda = gwo(gen=1000, seed=5)
+        self.assertEqual(uda.get_seed(), 5)
+        a = algorithm(uda)
+        self.assertEqual(str(a), str(loads(dumps(a))))
+        log = uda.get_log()
+
+
+class de1220_test_case(_ut.TestCase):
+    """Test case for the UDA de1220
+
+    """
+
+    def runTest(self):
+        from .core import de1220, algorithm
+        from pickle import loads, dumps
+        uda = de1220()
+        uda = de1220(gen=1000, seed=5)
+        self.assertEqual(uda.get_seed(), 5)
+        a = algorithm(uda)
+        self.assertEqual(str(a), str(loads(dumps(a))))
+        log = uda.get_log()
+
+
+class sea_test_case(_ut.TestCase):
+    """Test case for the UDA sea
+
+    """
+
+    def runTest(self):
+        from .core import sea
+        uda = sea()
+        uda = sea(gen=10000)
+        uda = sea(gen=10000, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
+class pso_gen_test_case(_ut.TestCase):
+    """Test case for the UDA pso_gen
+
+    """
+
+    def runTest(self):
+        from .core import pso_gen, bfe
+        uda = pso_gen()
+        uda = pso_gen(gen=1, omega=0.7298, eta1=2.05, eta2=2.05, max_vel=0.5,
+                      variant=5, neighb_type=2, neighb_param=4, memory=False)
+        uda = pso_gen(gen=1, omega=0.7298, eta1=2.05, eta2=2.05, max_vel=0.5,
+                      variant=5, neighb_type=2, neighb_param=4, memory=False, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+        uda.set_bfe(b=bfe())
+        uda.set_bfe(bfe())
+
+
+class pso_test_case(_ut.TestCase):
+    """Test case for the UDA pso
+
+    """
+
+    def runTest(self):
+        from .core import pso
+        uda = pso()
+        uda = pso(gen=1, omega=0.7298, eta1=2.05, eta2=2.05, max_vel=0.5,
+                  variant=5, neighb_type=2, neighb_param=4, memory=False)
+        uda = pso(gen=1, omega=0.7298, eta1=2.05, eta2=2.05, max_vel=0.5,
+                  variant=5, neighb_type=2, neighb_param=4, memory=False, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
+class bee_colony_test_case(_ut.TestCase):
+    """Test case for the UDA bee_colony
+
+    """
+
+    def runTest(self):
+        from .core import bee_colony
+        uda = bee_colony()
+        uda = bee_colony(gen=1, limit=10)
+        uda = bee_colony(gen=1, limit=10, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
+class compass_search_test_case(_ut.TestCase):
+    """Test case for the UDA compass search
+
+    """
+
+    def runTest(self):
+        from .core import compass_search
+        uda = compass_search()
+        uda = compass_search(max_fevals=1, start_range=.1,
+                             stop_range=.01, reduction_coeff=.5)
+        log = uda.get_log()
+
+
+class sa_test_case(_ut.TestCase):
+    """Test case for the UDA simulated annealing
+
+    """
+
+    def runTest(self):
+        from .core import simulated_annealing
+        uda = simulated_annealing()
+        uda = simulated_annealing(
+            Ts=10., Tf=.1, n_T_adj=10, n_range_adj=10, bin_size=10, start_range=1.)
+        uda = simulated_annealing(
+            Ts=10., Tf=.1, n_T_adj=10, n_range_adj=10, bin_size=10, start_range=1., seed=32)
+        log = uda.get_log()
+        self.assertEqual(uda.get_seed(), 32)
+        seed = uda.get_seed()
+
+
+class moead_test_case(_ut.TestCase):
+    """Test case for the UDA moead
+
+    """
+
+    def runTest(self):
+        from .core import moead
+        uda = moead()
+        uda = moead(gen=1, weight_generation="grid", decomposition="tchebycheff",
+                    neighbours=20, CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True)
+        uda = moead(gen=1, weight_generation="grid", decomposition="tchebycheff", neighbours=20,
+                    CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
+class sga_test_case(_ut.TestCase):
+    """Test case for the UDA sga
+
+    """
+
+    def runTest(self):
+        from .core import sga
+        uda = sga()
+        uda = sga(gen=1, cr=.90, eta_c=1., m=0.02, param_m=1., param_s=2, crossover="exponential",
+                  mutation="polynomial", selection="tournament")
+        uda = sga(gen=1, cr=.90, eta_c=1., m=0.02, param_m=1., param_s=2, crossover="exponential",
+                  mutation="polynomial", selection="tournament", seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        seed = uda.get_seed()
+
+
+class ihs_test_case(_ut.TestCase):
+    """Test case for the UDA ihs
+
+    """
+
+    def runTest(self):
+        from .core import ihs
+        uda = ihs()
+        uda = ihs(gen=1, phmcr=0.85, ppar_min=0.35,
+                  ppar_max=0.99, bw_min=1e-5, bw_max=1.)
+        uda = ihs(gen=1, phmcr=0.85, ppar_min=0.35,
+                  ppar_max=0.99, bw_min=1e-5, bw_max=1., seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        seed = uda.get_seed()
+
+
+class null_problem_test_case(_ut.TestCase):
+    """Test case for the null problem
+
+    """
+
+    def runTest(self):
+        from .core import null_problem as np, problem
+        n = np()
+        n = np(1)
+        n = np(nobj=2)
+        n = np(nobj=2, nec=2)
+        n = np(nobj=2, nec=2, nic=2)
+        self.assertRaises(ValueError, lambda: np(0))
+        self.assertTrue(problem(np()).get_nobj() == 1)
+        self.assertTrue(problem(np(23)).get_nobj() == 23)
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -1313,8 +1574,67 @@ def run_test_suite(level=0):
     suite.addTest(_algorithm_test.algorithm_test_case())
     suite.addTest(_island_test.mp_island_test_case(level))
     suite.addTest(_island_test.ipyparallel_island_test_case(level))
-
-    suite.addTest(mbh_test_case())
+    suite.addTest(golomb_ruler_test_case())
+    suite.addTest(lennard_jones_test_case())
+    suite.addTest(de_test_case())
+    suite.addTest(nsga2_test_case())
+    suite.addTest(gaco_test_case())
+    suite.addTest(gwo_test_case())
+    suite.addTest(de1220_test_case())
+    suite.addTest(sea_test_case())
+    suite.addTest(pso_test_case())
+    suite.addTest(pso_gen_test_case())
+    suite.addTest(bee_colony_test_case())
+    suite.addTest(compass_search_test_case())
+    suite.addTest(sa_test_case())
+    suite.addTest(moead_test_case())
+    suite.addTest(sga_test_case())
+    suite.addTest(ihs_test_case())
+    suite.addTest(population_test_case())
+    suite.addTest(null_problem_test_case())
+    # suite.addTest(hypervolume_test_case())
+    # suite.addTest(mo_utils_test_case())
+    # suite.addTest(con_utils_test_case())
+    # suite.addTest(global_rng_test_case())
+    # suite.addTest(estimate_sparsity_test_case())
+    # suite.addTest(estimate_gradient_test_case())
+    # suite.addTest(random_decision_vector_test_case())
+    # suite.addTest(batch_random_decision_vector_test_case())
+    # try:
+    #     from .core import cmaes
+    #     suite.addTest(cmaes_test_case())
+    # except ImportError:
+    #     pass
+    # try:
+    #     from .core import xnes
+    #     suite.addTest(xnes_test_case())
+    # except ImportError:
+    #     pass
+    # suite.addTest(dtlz_test_case())
+    # suite.addTest(cec2006_test_case())
+    # suite.addTest(cec2009_test_case())
+    # suite.addTest(cec2013_test_case())
+    # suite.addTest(cec2014_test_case())
+    # suite.addTest(luksan_vlcek1_test_case())
+    # suite.addTest(minlp_rastrigin_test_case())
+    # suite.addTest(rastrigin_test_case())
+    # suite.addTest(translate_test_case())
+    # suite.addTest(decompose_test_case())
+    # suite.addTest(unconstrain_test_case())
+    # suite.addTest(mbh_test_case())
+    # suite.addTest(cstrs_self_adaptive_test_case())
+    # suite.addTest(decorator_problem_test_case())
+    # suite.addTest(wfg_test_case())
+    # try:
+    #     from .core import nlopt
+    #     suite.addTest(nlopt_test_case())
+    # except ImportError:
+    #     pass
+    # try:
+    #     from .core import ipopt
+    #     suite.addTest(ipopt_test_case())
+    # except ImportError:
+    #     pass
 
     test_result = _ut.TextTestRunner(verbosity=2).run(suite)
 
