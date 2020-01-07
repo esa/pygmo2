@@ -21,9 +21,6 @@ conda create -q -p $deps_dir -y
 source activate $deps_dir
 conda install $conda_pkgs -y
 
-# Start ipcluster.
-ipcluster start --daemonize=True;
-
 # Install pagmo.
 git clone https://github.com/esa/pagmo2.git
 cd pagmo2
@@ -42,6 +39,11 @@ cd build
 cmake ../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir
 make -j2 install VERBOSE=1
 cd
+
+# Start ipcluster.
+ipcluster start --daemonize=True;
+sleep 20
+
 python -c "import pygmo; pygmo.test.run_test_suite(1)"
 
 set +e
