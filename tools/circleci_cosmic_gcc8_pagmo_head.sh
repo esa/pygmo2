@@ -44,7 +44,9 @@ cd
 ipcluster start --daemonize=True;
 sleep 20
 
-python -c "import pygmo; pygmo.test.run_test_suite(1)"
+python -c "import pygmo; pygmo.test.run_test_suite(0)"
+
+ipcluster stop
 
 set +e
 set +x
