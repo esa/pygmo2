@@ -23,6 +23,7 @@
 #include <pagmo/problems/schwefel.hpp>
 #include <pagmo/problems/translate.hpp>
 #include <pagmo/problems/unconstrain.hpp>
+#include <pagmo/problems/wfg.hpp>
 #include <pagmo/problems/zdt.hpp>
 #include <pagmo/types.hpp>
 
@@ -124,12 +125,11 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
             "inner_problem", [](pagmo::unconstrain &udp) -> pagmo::problem & { return udp.get_inner_problem(); },
             py::return_value_policy::reference_internal, generic_udp_inner_problem_docstring().c_str());
 
-#if 0
     // WFG.
-    auto wfg_p = expose_problem_pygmo<wfg>("wfg", wfg_docstring().c_str());
-    wfg_p.def(bp::init<unsigned, vector_double::size_type, vector_double::size_type, vector_double::size_type>(
-        (py::arg("prob_id") = 1u, py::arg("dim_dvs") = 5u, py::arg("dim_obj") = 3u, py::arg("dim_k") = 4u)));
-#endif
+    auto wfg_p = expose_problem<pagmo::wfg>(m, prob, p_module, "wfg", wfg_docstring().c_str());
+    wfg_p.def(py::init<unsigned, pagmo::vector_double::size_type, pagmo::vector_double::size_type,
+                       pagmo::vector_double::size_type>(),
+              py::arg("prob_id") = 1u, py::arg("dim_dvs") = 5u, py::arg("dim_obj") = 3u, py::arg("dim_k") = 4u);
 }
 
 } // namespace pygmo

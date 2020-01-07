@@ -23,6 +23,7 @@ set(PYGMO_PYTHON_FILES
     _s_policy_test.py
     _r_policy_test.py
     _topology_test.py
+    _py_problems.py
 )
 
 # Copy the python files in the current binary dir,

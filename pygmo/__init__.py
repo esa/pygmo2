@@ -13,7 +13,7 @@ from ._version import __version__
 from .core import *
 #from .plotting import *
 from ._py_islands import *
-#from ._py_problems import *
+from ._py_problems import *
 from ._py_bfes import *
 # Patch the problem class.
 from . import _patch_problem

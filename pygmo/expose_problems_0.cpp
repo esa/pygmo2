@@ -21,6 +21,7 @@
 #include <pagmo/problems/cec2009.hpp>
 #include <pagmo/problems/decompose.hpp>
 #include <pagmo/problems/dtlz.hpp>
+#include <pagmo/problems/griewank.hpp>
 #include <pagmo/problems/hock_schittkowsky_71.hpp>
 #include <pagmo/problems/inventory.hpp>
 #include <pagmo/problems/lennard_jones.hpp>
@@ -195,35 +196,12 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     cec2014_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
 #endif
 
-#if 0
     // Griewank.
-    auto griew = expose_problem_pygmo<griewank>("griewank", "__init__(dim = 1)\n\nThe Griewank problem.\n\n"
-                                                            "See :cpp:class:`pagmo::griewank`.\n\n");
-    griew.def(bp::init<unsigned>((py::arg("dim"))));
-    griew.def("best_known", &best_known_wrapper<griewank>, problem_get_best_docstring("Griewank").c_str());
-
-    // Decompose meta-problem.
-    auto decompose_ = expose_problem_pygmo<decompose>("decompose", decompose_docstring().c_str());
-    // NOTE: An __init__ wrapper on the Python side will take care of cting a pagmo::problem from the input UDP,
-    // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
-    decompose_.def("__init__", bp::make_constructor(
-                                   lcast([](const problem &p, const bp::object &weight, const bp::object &z,
-                                            const std::string &method, bool adapt_ideal) {
-                                       return ::new decompose(p, obj_to_vector<vector_double>(weight),
-                                                              obj_to_vector<vector_double>(z), method, adapt_ideal);
-                                   }),
-                                   bp::default_call_policies()));
-    decompose_.def("original_fitness", lcast([](const decompose &p, const bp::object &x) {
-                       return vector_to_ndarr(p.original_fitness(obj_to_vector<vector_double>(x)));
-                   }),
-                   decompose_original_fitness_docstring().c_str(), (py::arg("x")));
-    add_property(decompose_, "z", lcast([](const decompose &p) { return vector_to_ndarr(p.get_z()); }),
-                 decompose_z_docstring().c_str());
-    add_property(decompose_, "inner_problem",
-                 bp::make_function(lcast([](decompose &udp) -> problem & { return udp.get_inner_problem(); }),
-                                   bp::return_internal_reference<>()),
-                 generic_udp_inner_problem_docstring().c_str());
-#endif
+    auto griew = expose_problem<pagmo::griewank>(m, prob, p_module, "griewank",
+                                                 "__init__(dim = 1)\n\nThe Griewank problem.\n\n"
+                                                 "See :cpp:class:`pagmo::griewank`.\n\n");
+    griew.def(py::init<unsigned>(), py::arg("dim"));
+    griew.def("best_known", &best_known_wrapper<pagmo::griewank>, problem_get_best_docstring("Griewank").c_str());
 }
 
 } // namespace pygmo
