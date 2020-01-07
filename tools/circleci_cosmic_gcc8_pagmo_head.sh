@@ -16,7 +16,7 @@ export PATH="$HOME/miniconda/bin:$PATH"
 export PATH="$deps_dir/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
-conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle dill numba pip pybind11 ipyparallel"
+conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle dill numba pip pybind11"
 conda create -q -p $deps_dir -y
 source activate $deps_dir
 conda install $conda_pkgs -y
@@ -35,18 +35,13 @@ cd ..
 mkdir build
 cd build
 
-# GCC build with address sanitizer.
+# Build pygmo.
 cmake ../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DCMAKE_CXX_STANDARD=17
 make -j2 install VERBOSE=1
 cd
 
-# Start ipcluster.
-ipcluster  start --debug --n=1 &
-sleep 20
-
+# Run the test suite.
 python -c "import pygmo; pygmo.test.run_test_suite(1)"
-
-ipcluster stop
 
 set +e
 set +x
