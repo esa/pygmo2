@@ -6,18 +6,29 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <string>
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
+#include <pagmo/config.hpp>
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/golomb_ruler.hpp>
+#include <pagmo/problems/luksan_vlcek1.hpp>
+#include <pagmo/problems/minlp_rastrigin.hpp>
+#include <pagmo/problems/rastrigin.hpp>
 #include <pagmo/problems/rosenbrock.hpp>
 #include <pagmo/problems/schwefel.hpp>
 #include <pagmo/problems/translate.hpp>
+#include <pagmo/problems/unconstrain.hpp>
 #include <pagmo/problems/zdt.hpp>
 #include <pagmo/types.hpp>
+
+#if defined(PAGMO_ENABLE_CEC2013)
+#include <pagmo/problems/cec2013.hpp>
+#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -76,46 +87,48 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                   "See :cpp:class:`pagmo::golomb_ruler`.\n\n");
     gr.def(py::init<unsigned, unsigned>(), py::arg("order"), py::arg("upper_bound"));
 
-#if 0
-    // Exposition of C++ problems.
-
-    // MINLP-Rastrigin.
-    auto minlp_rastr = expose_problem_pygmo<minlp_rastrigin>("minlp_rastrigin", minlp_rastrigin_docstring().c_str());
-    minlp_rastr.def(bp::init<unsigned, unsigned>((bp::arg("dim_c") = 1u, bp::arg("dim_i") = 1u)));
-
-    // Rastrigin.
-    auto rastr = expose_problem_pygmo<rastrigin>("rastrigin", "__init__(dim = 1)\n\nThe Rastrigin problem.\n\n"
-                                                              "See :cpp:class:`pagmo::rastrigin`.\n\n");
-    rastr.def(bp::init<unsigned>((bp::arg("dim") = 1)));
-    rastr.def("best_known", &best_known_wrapper<rastrigin>, problem_get_best_docstring("Rastrigin").c_str());
-
 #if defined(PAGMO_ENABLE_CEC2013)
     // See the explanation in pagmo/config.hpp.
-    auto cec2013_ = expose_problem_pygmo<cec2013>("cec2013", cec2013_docstring().c_str());
-    cec2013_.def(bp::init<unsigned, unsigned>((bp::arg("prob_id") = 1, bp::arg("dim") = 2)));
+    auto cec2013_ = expose_problem<pagmo::cec2013>(m, prob, p_module, "cec2013", cec2013_docstring().c_str());
+    cec2013_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
 #endif
 
     // Luksan Vlcek 1
-    auto lv_ = expose_problem_pygmo<luksan_vlcek1>("luksan_vlcek1", luksan_vlcek1_docstring().c_str());
-    lv_.def(bp::init<unsigned>(bp::arg("dim")));
+    auto lv_
+        = expose_problem<pagmo::luksan_vlcek1>(m, prob, p_module, "luksan_vlcek1", luksan_vlcek1_docstring().c_str());
+    lv_.def(py::init<unsigned>(), py::arg("dim"));
+
+    // MINLP-Rastrigin.
+    auto minlp_rastr = expose_problem<pagmo::minlp_rastrigin>(m, prob, p_module, "minlp_rastrigin",
+                                                              minlp_rastrigin_docstring().c_str());
+    minlp_rastr.def(py::init<unsigned, unsigned>(), py::arg("dim_c") = 1u, py::arg("dim_i") = 1u);
+
+    // Rastrigin.
+    auto rastr = expose_problem<pagmo::rastrigin>(m, prob, p_module, "rastrigin",
+                                                  "__init__(dim = 1)\n\nThe Rastrigin problem.\n\n"
+                                                  "See :cpp:class:`pagmo::rastrigin`.\n\n");
+    rastr.def(py::init<unsigned>(), py::arg("dim") = 1);
+    rastr.def("best_known", &best_known_wrapper<pagmo::rastrigin>, problem_get_best_docstring("Rastrigin").c_str());
 
     // Unconstrain meta-problem.
-    auto unconstrain_ = expose_problem_pygmo<unconstrain>("unconstrain", unconstrain_docstring().c_str());
+    auto unconstrain_
+        = expose_problem<pagmo::unconstrain>(m, prob, p_module, "unconstrain", unconstrain_docstring().c_str());
     // NOTE: An __init__ wrapper on the Python side will take care of cting a pagmo::problem from the input UDP,
     // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
-    unconstrain_.def("__init__", bp::make_constructor(
-                                     lcast([](const problem &p, const std::string &method, const bp::object &weights) {
-                                         return ::new unconstrain(p, method, obj_to_vector<vector_double>(weights));
-                                     }),
-                                     bp::default_call_policies()));
-    add_property(unconstrain_, "inner_problem",
-                 bp::make_function(lcast([](unconstrain &udp) -> problem & { return udp.get_inner_problem(); }),
-                                   bp::return_internal_reference<>()),
-                 generic_udp_inner_problem_docstring().c_str());
+    unconstrain_
+        .def(py::init([](const pagmo::problem &p, const std::string &method, const py::array_t<double> &weights) {
+            return pagmo::detail::make_unique<pagmo::unconstrain>(p, method,
+                                                                  ndarr_to_vector<pagmo::vector_double>(weights));
+        }))
+        .def_property_readonly(
+            "inner_problem", [](pagmo::unconstrain &udp) -> pagmo::problem & { return udp.get_inner_problem(); },
+            py::return_value_policy::reference_internal, generic_udp_inner_problem_docstring().c_str());
+
+#if 0
     // WFG.
     auto wfg_p = expose_problem_pygmo<wfg>("wfg", wfg_docstring().c_str());
     wfg_p.def(bp::init<unsigned, vector_double::size_type, vector_double::size_type, vector_double::size_type>(
-        (bp::arg("prob_id") = 1u, bp::arg("dim_dvs") = 5u, bp::arg("dim_obj") = 3u, bp::arg("dim_k") = 4u)));
+        (py::arg("prob_id") = 1u, py::arg("dim_dvs") = 5u, py::arg("dim_obj") = 3u, py::arg("dim_k") = 4u)));
 #endif
 }
 

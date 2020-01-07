@@ -12,10 +12,13 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
+#include <pagmo/config.hpp>
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/ackley.hpp>
+#include <pagmo/problems/cec2006.hpp>
+#include <pagmo/problems/cec2009.hpp>
 #include <pagmo/problems/decompose.hpp>
 #include <pagmo/problems/dtlz.hpp>
 #include <pagmo/problems/hock_schittkowsky_71.hpp>
@@ -24,6 +27,10 @@
 #include <pagmo/problems/null_problem.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
+
+#if defined(PAGMO_ENABLE_CEC2014)
+#include <pagmo/problems/cec2014.hpp>
+#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -172,28 +179,28 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
         "p_distance", [](const pagmo::dtlz &z, const pagmo::population &pop) { return z.p_distance(pop); },
         dtlz_p_distance_docstring().c_str());
 
+    // CEC 2006
+    auto cec2006_ = expose_problem<pagmo::cec2006>(m, prob, p_module, "cec2006", cec2006_docstring().c_str());
+    cec2006_.def(py::init<unsigned>(), py::arg("prob_id"));
+    cec2006_.def("best_known", &best_known_wrapper<pagmo::cec2006>, problem_get_best_docstring("CEC 2006").c_str());
+
+    // CEC 2009
+    auto cec2009_ = expose_problem<pagmo::cec2009>(m, prob, p_module, "cec2009", cec2009_docstring().c_str());
+    cec2009_.def(py::init<unsigned, bool, unsigned>(), py::arg("prob_id") = 1u, py::arg("is_constrained") = false,
+                 py::arg("dim") = 30u);
+
+#if defined(PAGMO_ENABLE_CEC2014)
+    // See the explanation in pagmo/config.hpp.
+    auto cec2014_ = expose_problem<pagmo::cec2014>(m, prob, p_module, "cec2014", cec2014_docstring().c_str());
+    cec2014_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
+#endif
+
 #if 0
     // Griewank.
     auto griew = expose_problem_pygmo<griewank>("griewank", "__init__(dim = 1)\n\nThe Griewank problem.\n\n"
                                                             "See :cpp:class:`pagmo::griewank`.\n\n");
     griew.def(bp::init<unsigned>((py::arg("dim"))));
     griew.def("best_known", &best_known_wrapper<griewank>, problem_get_best_docstring("Griewank").c_str());
-
-#if defined(PAGMO_ENABLE_CEC2014)
-    // See the explanation in pagmo/config.hpp.
-    auto cec2014_ = expose_problem_pygmo<cec2014>("cec2014", cec2014_docstring().c_str());
-    cec2014_.def(bp::init<unsigned, unsigned>((py::arg("prob_id") = 1, py::arg("dim") = 2)));
-#endif
-
-    // CEC 2006
-    auto cec2006_ = expose_problem_pygmo<cec2006>("cec2006", cec2006_docstring().c_str());
-    cec2006_.def(bp::init<unsigned>((py::arg("prob_id"))));
-    cec2006_.def("best_known", &best_known_wrapper<cec2006>, problem_get_best_docstring("CEC 2006").c_str());
-
-    // CEC 2009
-    auto cec2009_ = expose_problem_pygmo<cec2009>("cec2009", cec2009_docstring().c_str());
-    cec2009_.def(bp::init<unsigned, bool, unsigned>(
-        (py::arg("prob_id") = 1u, py::arg("is_constrained") = false, py::arg("dim") = 30u)));
 
     // Decompose meta-problem.
     auto decompose_ = expose_problem_pygmo<decompose>("decompose", decompose_docstring().c_str());

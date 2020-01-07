@@ -1635,7 +1635,7 @@ class global_rng_test_case(_ut.TestCase):
 
 
 class estimate_sparsity_test_case(_ut.TestCase):
-    """Test case for the hypervolume utilities
+    """Test case for the sparsity estimation utilities
 
     """
 
@@ -1652,7 +1652,7 @@ class estimate_sparsity_test_case(_ut.TestCase):
 
 
 class estimate_gradient_test_case(_ut.TestCase):
-    """Test case for the hypervolume utilities
+    """Test case for the gradient estimation utilities
 
     """
 
@@ -1802,6 +1802,474 @@ class batch_random_decision_vector_test_case(_ut.TestCase):
             ValueError, lambda: brdv(problem(prob([0, -1E100], [1, 1E100], 1)), 1))
 
 
+class cmaes_test_case(_ut.TestCase):
+    """Test case for the UDA cmaes
+
+    """
+
+    def runTest(self):
+        from .core import cmaes
+        uda = cmaes()
+        uda = cmaes(gen=1, cc=-1, cs=-1, c1=-1, cmu=-1,
+                    sigma0=0.5, ftol=1e-6, xtol=1e-6, memory=False, force_bounds=False)
+        uda = cmaes(gen=1, cc=-1, cs=-1, c1=-1, cmu=-1, sigma0=0.5,
+                    ftol=1e-6, xtol=1e-6, memory=False, force_bounds=False, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        seed = uda.get_seed()
+
+
+class xnes_test_case(_ut.TestCase):
+    """Test case for the UDA xnes
+
+    """
+
+    def runTest(self):
+        from .core import xnes
+        uda = xnes()
+        uda = xnes(gen=1, eta_mu=-1, eta_sigma=-1, eta_b=-1,
+                   sigma0=-1, ftol=1e-6, xtol=1e-6, memory=False, force_bounds=False)
+        uda = xnes(gen=1, eta_mu=-1, eta_sigma=-1, eta_b=-1, sigma0=-1,
+                   ftol=1e-6, xtol=1e-6, memory=False, force_bounds=False, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        seed = uda.get_seed()
+
+
+class dtlz_test_case(_ut.TestCase):
+    """Test case for the UDP dtlz
+
+    """
+
+    def runTest(self):
+        from .core import dtlz, population
+        udp = dtlz(prob_id=3, dim=9, fdim=3, alpha=5)
+        udp.p_distance([0.2] * 9)
+        udp.p_distance(population(udp, 20))
+
+
+class cec2006_test_case(_ut.TestCase):
+    """Test case for the UDP cec2006
+
+    """
+
+    def runTest(self):
+        from .core import cec2006, population
+        udp = cec2006(prob_id=3)
+        best = udp.best_known
+
+
+class cec2009_test_case(_ut.TestCase):
+    """Test case for the UDP cec2009
+
+    """
+
+    def runTest(self):
+        from .core import cec2009, population
+        udp = cec2009(prob_id=3, is_constrained=True, dim=15)
+
+
+class cec2013_test_case(_ut.TestCase):
+    """Test case for the UDP cec2013
+
+    """
+
+    def runTest(self):
+        try:
+            # NOTE: cec2013 is not always present (see MSVC issue).
+            from .core import cec2013, population
+        except ImportError:
+            return
+        udp = cec2013(prob_id=3, dim=10)
+
+
+class cec2014_test_case(_ut.TestCase):
+    """Test case for the UDP cec2014
+
+    """
+
+    def runTest(self):
+        try:
+            # NOTE: cec2014 is not always present (see MSVC issue).
+            from .core import cec2014, population
+        except ImportError:
+            return
+        udp = cec2014(prob_id=3, dim=10)
+
+
+class luksan_vlcek1_test_case(_ut.TestCase):
+    """Test case for the UDP Luksan Vlcek 1
+
+    """
+
+    def runTest(self):
+        from .core import luksan_vlcek1, population
+        udp = luksan_vlcek1(dim=3)
+
+
+class minlp_rastrigin_test_case(_ut.TestCase):
+    """Test case for the MINLP Rastrigin
+
+    """
+
+    def runTest(self):
+        from .core import minlp_rastrigin, problem, population
+        udp = minlp_rastrigin(dim_c=2, dim_i=3)
+        prob = problem(udp)
+        self.assertTrue(prob.get_nx() == 5)
+        self.assertTrue(prob.get_nix() == 3)
+        self.assertTrue(prob.get_ncx() == 2)
+        pop = population(udp, 1)
+        self.assertTrue(int(pop.get_x()[0][-1]) == pop.get_x()[0][-1])
+        self.assertTrue(int(pop.get_x()[0][-2]) == pop.get_x()[0][-2])
+        self.assertTrue(int(pop.get_x()[0][-3]) == pop.get_x()[0][-3])
+        self.assertTrue(int(pop.get_x()[0][0]) != pop.get_x()[0][0])
+        self.assertTrue(int(pop.get_x()[0][1]) != pop.get_x()[0][1])
+
+
+class rastrigin_test_case(_ut.TestCase):
+    """Test case for the Rastrigin function
+
+    """
+
+    def runTest(self):
+        from .core import rastrigin, problem, population
+        from pickle import loads, dumps
+        udp = rastrigin(dim=5)
+        prob = problem(udp)
+        self.assertTrue(prob.get_nx() == 5)
+        self.assertTrue(prob.get_nix() == 0)
+        self.assertTrue(prob.get_ncx() == 5)
+        pop = population(udp, 1)
+        self.assertEqual(str(pop), str(loads(dumps(pop))))
+
+
+class translate_test_case(_ut.TestCase):
+    """Test case for the translate meta-problem
+
+    """
+
+    def runTest(self):
+        from .core import problem, rosenbrock, translate, null_problem, decompose
+        from numpy import array
+
+        t = translate()
+        self.assertFalse(t.inner_problem.extract(null_problem) is None)
+        self.assertTrue(all(t.translation == array([0.])))
+        t = translate(prob=rosenbrock(), translation=[1, 2])
+        self.assertFalse(t.inner_problem.extract(rosenbrock) is None)
+        self.assertTrue(all(t.translation == array([1., 2.])))
+        t = translate(rosenbrock(), [1, 2])
+        self.assertTrue(problem(t).is_(translate))
+        self.assertFalse(problem(t).extract(translate) is None)
+        self.assertTrue(t.inner_problem.is_(rosenbrock))
+        self.assertFalse(t.inner_problem.extract(rosenbrock) is None)
+        self.assertTrue(all(t.translation == array([1., 2.])))
+        t = translate(translation=[1, 2], prob=rosenbrock())
+        self.assertFalse(t.inner_problem.extract(rosenbrock) is None)
+        self.assertTrue(all(t.translation == array([1., 2.])))
+
+        # Nested translation.
+        t = translate(translate(rosenbrock(), [1, 2]), [1, 2])
+        self.assertTrue(t.inner_problem.is_(translate))
+        self.assertFalse(t.inner_problem.extract(translate) is None)
+        self.assertFalse(t.inner_problem.extract(
+            translate).inner_problem.extract(rosenbrock) is None)
+
+        class p(object):
+
+            def get_bounds(self):
+                return ([0, 0], [1, 1])
+
+            def fitness(self, a):
+                return [42]
+
+        t = translate(p(), [-1, -1])
+        self.assertFalse(t.inner_problem.extract(p) is None)
+        self.assertTrue(all(t.translation == array([-1., -1.])))
+        t = translate(translation=[-1, -1], prob=p())
+        self.assertTrue(t.inner_problem.is_(p))
+        self.assertFalse(t.inner_problem.extract(p) is None)
+        self.assertTrue(all(t.translation == array([-1., -1.])))
+
+        # Verify construction from problem is allowed.
+        translate(problem(null_problem()), [0.])
+
+        # Verify translation of decompose.
+        t = translate(decompose(null_problem(2), [0.2, 0.8], [0., 0.]), [0.])
+        self.assertTrue(t.inner_problem.is_(decompose))
+        self.assertFalse(t.inner_problem.extract(decompose) is None)
+        self.assertFalse(t.inner_problem.extract(
+            decompose).inner_problem.extract(null_problem) is None)
+
+
+class decompose_test_case(_ut.TestCase):
+    """Test case for the decompose meta-problem
+
+    """
+
+    def runTest(self):
+        from .core import zdt, decompose, null_problem, problem, translate
+        from numpy import array
+
+        d = decompose()
+        self.assertFalse(d.inner_problem.extract(null_problem) is None)
+        self.assertTrue(all(d.z == array([0., 0.])))
+        d = decompose(zdt(1, 2), [0.5, 0.5], [0.1, 0.1], "weighted", False)
+        self.assertTrue(problem(d).is_(decompose))
+        self.assertFalse(problem(d).extract(decompose) is None)
+        self.assertTrue(d.inner_problem.is_(zdt))
+        self.assertFalse(d.inner_problem.extract(zdt) is None)
+        self.assertTrue(all(d.z == array([0.1, 0.1])))
+        self.assertTrue(all(d.original_fitness(
+            [1., 1.]) == problem(zdt(1, 2)).fitness([1., 1.])))
+        f = problem(zdt(1, 2)).fitness([1., 1.])
+
+        class p(object):
+
+            def get_bounds(self):
+                return ([0, 0], [1, 1])
+
+            def fitness(self, a):
+                return [42, 43]
+
+            def get_nobj(self):
+                return 2
+
+        d = decompose(p(), [0.5, 0.5], [0.1, 0.1], "weighted", False)
+        self.assertTrue(d.inner_problem.is_(p))
+        self.assertFalse(d.inner_problem.extract(p) is None)
+        self.assertTrue(all(d.z == array([0.1, 0.1])))
+        self.assertTrue(all(d.original_fitness([1., 1.]) == array([42, 43])))
+
+        # Verify construction from problem is allowed.
+        decompose(problem(null_problem(2)), [0.2, 0.8], [0., 0.])
+
+        # Verify decomposition of translate.
+        t = decompose(translate(null_problem(2), [0.]), [0.2, 0.8], [0., 0.])
+        self.assertTrue(t.inner_problem.is_(translate))
+        self.assertFalse(t.inner_problem.extract(translate) is None)
+        self.assertFalse(t.inner_problem.extract(
+            translate).inner_problem.extract(null_problem) is None)
+
+
+class unconstrain_test_case(_ut.TestCase):
+    """Test case for the unconstrain meta-problem
+
+    """
+
+    def runTest(self):
+        from .core import hock_schittkowsky_71, unconstrain, null_problem, problem, translate
+        from numpy import array
+
+        d = unconstrain()
+        self.assertFalse(d.inner_problem.extract(null_problem) is None)
+        d = unconstrain(prob=hock_schittkowsky_71(),
+                        method="weighted", weights=[1., 1.])
+        self.assertTrue(problem(d).is_(unconstrain))
+        self.assertFalse(problem(d).extract(unconstrain) is None)
+        self.assertTrue(d.inner_problem.is_(hock_schittkowsky_71))
+        self.assertFalse(d.inner_problem.extract(hock_schittkowsky_71) is None)
+
+        class p(object):
+
+            def get_bounds(self):
+                return ([0, 0], [1, 1])
+
+            def fitness(self, a):
+                return [42, 43]
+
+            def get_nobj(self):
+                return 2
+
+            def get_nic(self):
+                return 2
+
+            def get_nec(self):
+                return 2
+
+        d = unconstrain(p(), "kuri")
+        self.assertTrue(d.inner_problem.is_(p))
+        self.assertFalse(d.inner_problem.extract(p) is None)
+
+        # Verify construction from problem is allowed.
+        unconstrain(problem(null_problem(2, 2, 2)), "kuri")
+
+        # Verify chaining of metas
+        t = unconstrain(translate(null_problem(
+            2, 2, 2), [0.]), "death penalty")
+        self.assertTrue(t.inner_problem.is_(translate))
+        self.assertFalse(t.inner_problem.extract(translate) is None)
+        self.assertFalse(t.inner_problem.extract(
+            translate).inner_problem.extract(null_problem) is None)
+
+
+class mbh_test_case(_ut.TestCase):
+    """Test case for the mbh meta-algorithm
+
+    """
+
+    def runTest(self):
+        from . import mbh, de, compass_search, algorithm, thread_safety as ts, null_algorithm
+        from numpy import array
+
+        class algo(object):
+
+            def evolve(pop):
+                return pop
+
+        # Def ctor.
+        a = mbh()
+        self.assertFalse(a.inner_algorithm.extract(compass_search) is None)
+        self.assertTrue(a.inner_algorithm.is_(compass_search))
+        self.assertTrue(a.inner_algorithm.extract(de) is None)
+        self.assertFalse(a.inner_algorithm.is_(de))
+        self.assertEqual(a.get_log(), [])
+        self.assertTrue(all(a.get_perturb() == array([0.01])))
+        seed = a.get_seed()
+        self.assertEqual(a.get_verbosity(), 0)
+        a.set_perturb([.2])
+        self.assertTrue(all(a.get_perturb() == array([0.2])))
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(
+            compass_search) is not None)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(de) is None)
+        self.assertTrue(str(seed) in str(al))
+        al.set_verbosity(4)
+        self.assertEqual(al.extract(mbh).get_verbosity(), 4)
+
+        # From C++ algo.
+        seed = 123321
+        a = mbh(algo=de(), stop=5, perturb=.4)
+        a = mbh(stop=5, perturb=(.4, .2), algo=de())
+        a = mbh(algo=de(), stop=5, seed=seed, perturb=(.4, .2))
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertFalse(a.inner_algorithm.extract(de) is None)
+        self.assertTrue(a.inner_algorithm.is_(de))
+        self.assertEqual(a.get_log(), [])
+        self.assertTrue(all(a.get_perturb() == array([.4, .2])))
+        self.assertEqual(a.get_seed(), seed)
+        self.assertEqual(a.get_verbosity(), 0)
+        a.set_perturb([.2])
+        self.assertTrue(all(a.get_perturb() == array([0.2])))
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(
+            compass_search) is None)
+        self.assertTrue(al.extract(
+            mbh).inner_algorithm.extract(de) is not None)
+        self.assertTrue(str(seed) in str(al))
+        al.set_verbosity(4)
+        self.assertEqual(al.extract(mbh).get_verbosity(), 4)
+
+        # From Python algo.
+        class algo(object):
+
+            def evolve(self, pop):
+                return pop
+
+        seed = 123321
+        a = mbh(algo=algo(), stop=5, perturb=.4)
+        a = mbh(stop=5, perturb=(.4, .2), algo=algo())
+        a = mbh(algo=algo(), stop=5, seed=seed, perturb=(.4, .2))
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertFalse(a.inner_algorithm.extract(algo) is None)
+        self.assertTrue(a.inner_algorithm.is_(algo))
+        self.assertEqual(a.get_log(), [])
+        self.assertTrue(all(a.get_perturb() == array([.4, .2])))
+        self.assertEqual(a.get_seed(), seed)
+        self.assertEqual(a.get_verbosity(), 0)
+        a.set_perturb([.2])
+        self.assertTrue(all(a.get_perturb() == array([0.2])))
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.none)
+        self.assertTrue(al.extract(mbh).inner_algorithm.extract(
+            compass_search) is None)
+        self.assertTrue(al.extract(
+            mbh).inner_algorithm.extract(algo) is not None)
+        self.assertTrue(str(seed) in str(al))
+        al.set_verbosity(4)
+        self.assertEqual(al.extract(mbh).get_verbosity(), 4)
+
+        # Construction from algorithm is allowed.
+        mbh(algorithm(null_algorithm()), stop=5, perturb=.4)
+
+
+class cstrs_self_adaptive_test_case(_ut.TestCase):
+    """Test case for the cstrs_self_adaptive meta-algorithm
+
+    """
+
+    def runTest(self):
+        from . import cstrs_self_adaptive, de, compass_search, algorithm, thread_safety as ts, null_algorithm
+        from numpy import array
+
+        class algo(object):
+
+            def evolve(pop):
+                return pop
+
+        # Def ctor.
+        a = cstrs_self_adaptive()
+        self.assertFalse(a.inner_algorithm.extract(de) is None)
+        self.assertTrue(a.inner_algorithm.is_(de))
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertEqual(a.get_log(), [])
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(cstrs_self_adaptive).inner_algorithm.extract(
+            de) is not None)
+        self.assertTrue(al.extract(cstrs_self_adaptive).inner_algorithm.extract(
+            compass_search) is None)
+        al.set_verbosity(4)
+
+        # From C++ algo.
+        seed = 123321
+        a = cstrs_self_adaptive(algo=de())
+        a = cstrs_self_adaptive(algo=de(), iters=1500)
+        a = cstrs_self_adaptive(seed=32, algo=de(), iters=12)
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertFalse(a.inner_algorithm.extract(de) is None)
+        self.assertTrue(a.inner_algorithm.is_(de))
+        self.assertEqual(a.get_log(), [])
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(cstrs_self_adaptive).inner_algorithm.extract(
+            compass_search) is None)
+        self.assertTrue(al.extract(
+            cstrs_self_adaptive).inner_algorithm.extract(de) is not None)
+        al.set_verbosity(4)
+
+        # From Python algo.
+        class algo(object):
+
+            def evolve(self, pop):
+                return pop
+
+        seed = 123321
+        a = cstrs_self_adaptive(algo=de())
+        a = cstrs_self_adaptive(algo=de(), iters=1500)
+        a = cstrs_self_adaptive(seed=32, algo=de(), iters=12)
+        self.assertTrue(a.inner_algorithm.extract(compass_search) is None)
+        self.assertFalse(a.inner_algorithm.is_(compass_search))
+        self.assertFalse(a.inner_algorithm.extract(de) is None)
+        self.assertTrue(a.inner_algorithm.is_(de))
+        self.assertEqual(a.get_log(), [])
+        al = algorithm(a)
+        self.assertTrue(al.get_thread_safety() == ts.basic)
+        self.assertTrue(al.extract(cstrs_self_adaptive).inner_algorithm.extract(
+            compass_search) is None)
+        self.assertTrue(al.extract(
+            cstrs_self_adaptive).inner_algorithm.extract(de) is not None)
+        al.set_verbosity(4)
+
+        # Construction from algorithm is allowed.
+        cstrs_self_adaptive(algo=algorithm(null_algorithm()), seed=5, iters=4)
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -1867,29 +2335,29 @@ def run_test_suite(level=0):
     suite.addTest(estimate_gradient_test_case())
     suite.addTest(random_decision_vector_test_case())
     suite.addTest(batch_random_decision_vector_test_case())
-    # try:
-    #     from .core import cmaes
-    #     suite.addTest(cmaes_test_case())
-    # except ImportError:
-    #     pass
-    # try:
-    #     from .core import xnes
-    #     suite.addTest(xnes_test_case())
-    # except ImportError:
-    #     pass
-    # suite.addTest(dtlz_test_case())
-    # suite.addTest(cec2006_test_case())
-    # suite.addTest(cec2009_test_case())
-    # suite.addTest(cec2013_test_case())
-    # suite.addTest(cec2014_test_case())
-    # suite.addTest(luksan_vlcek1_test_case())
-    # suite.addTest(minlp_rastrigin_test_case())
-    # suite.addTest(rastrigin_test_case())
-    # suite.addTest(translate_test_case())
-    # suite.addTest(decompose_test_case())
-    # suite.addTest(unconstrain_test_case())
-    # suite.addTest(mbh_test_case())
-    # suite.addTest(cstrs_self_adaptive_test_case())
+    try:
+        from .core import cmaes
+        suite.addTest(cmaes_test_case())
+    except ImportError:
+        pass
+    try:
+        from .core import xnes
+        suite.addTest(xnes_test_case())
+    except ImportError:
+        pass
+    suite.addTest(dtlz_test_case())
+    suite.addTest(cec2006_test_case())
+    suite.addTest(cec2009_test_case())
+    suite.addTest(cec2013_test_case())
+    suite.addTest(cec2014_test_case())
+    suite.addTest(luksan_vlcek1_test_case())
+    suite.addTest(minlp_rastrigin_test_case())
+    suite.addTest(rastrigin_test_case())
+    suite.addTest(translate_test_case())
+    suite.addTest(decompose_test_case())
+    suite.addTest(unconstrain_test_case())
+    suite.addTest(mbh_test_case())
+    suite.addTest(cstrs_self_adaptive_test_case())
     # suite.addTest(decorator_problem_test_case())
     # suite.addTest(wfg_test_case())
     # try:

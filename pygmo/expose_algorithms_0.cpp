@@ -16,15 +16,22 @@
 #include <pagmo/algorithm.hpp>
 #include <pagmo/algorithms/bee_colony.hpp>
 #include <pagmo/algorithms/compass_search.hpp>
+#include <pagmo/algorithms/cstrs_self_adaptive.hpp>
 #include <pagmo/algorithms/de.hpp>
 #include <pagmo/algorithms/de1220.hpp>
 #include <pagmo/algorithms/mbh.hpp>
 #include <pagmo/algorithms/moead.hpp>
+#include <pagmo/config.hpp>
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/rng.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
+
+#if defined(PAGMO_WITH_EIGEN3)
+#include <pagmo/algorithms/cmaes.hpp>
+#include <pagmo/algorithms/xnes.hpp>
+#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -195,54 +202,50 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         moead_get_log_docstring().c_str());
     moead_.def("get_seed", &pagmo::moead::get_seed, generic_uda_get_seed_docstring().c_str());
 
-#if 0
-    // cstrs_self_adaptive meta-algo.
-    auto cstrs_sa
-        = expose_algorithm_pygmo<cstrs_self_adaptive>("cstrs_self_adaptive", cstrs_self_adaptive_docstring().c_str());
-    cstrs_sa.def("__init__", bp::make_constructor(lcast([](unsigned iters, const algorithm &a, unsigned seed) {
-                                                      return ::new pagmo::cstrs_self_adaptive(iters, a, seed);
-                                                  }),
-                                                  bp::default_call_policies()));
-    cstrs_sa.def("__init__", bp::make_constructor(lcast([](unsigned iters, const algorithm &a) {
-                                                      return ::new pagmo::cstrs_self_adaptive(
-                                                          iters, a, pagmo::random_device::next());
-                                                  }),
-                                                  bp::default_call_policies()));
-    expose_algo_log(cstrs_sa, cstrs_self_adaptive_get_log_docstring().c_str());
-    add_property(
-        cstrs_sa, "inner_algorithm",
-        bp::make_function(lcast([](cstrs_self_adaptive &uda) -> algorithm & { return uda.get_inner_algorithm(); }),
-                          bp::return_internal_reference<>()),
-        generic_uda_inner_algorithm_docstring().c_str());
-
 #if defined(PAGMO_WITH_EIGEN3)
     // CMA-ES
-    auto cmaes_ = expose_algorithm_pygmo<cmaes>("cmaes", cmaes_docstring().c_str());
-    cmaes_.def(bp::init<unsigned, double, double, double, double, double, double, double, bool, bool>(
-        (py::arg("gen") = 1u, py::arg("cc") = -1., py::arg("cs") = -1., py::arg("c1") = -1., py::arg("cmu") = -1.,
-         py::arg("sigma0") = 0.5, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
-         py::arg("force_bounds") = false)));
-    cmaes_.def(bp::init<unsigned, double, double, double, double, double, double, double, bool, bool, unsigned>(
-        (py::arg("gen") = 1u, py::arg("cc") = -1., py::arg("cs") = -1., py::arg("c1") = -1., py::arg("cmu") = -1.,
-         py::arg("sigma0") = 0.5, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
-         py::arg("force_bounds") = false, py::arg("seed"))));
+    auto cmaes_ = expose_algorithm<pagmo::cmaes>(m, algo, a_module, "cmaes", cmaes_docstring().c_str());
+    cmaes_.def(py::init<unsigned, double, double, double, double, double, double, double, bool, bool>(),
+               py::arg("gen") = 1u, py::arg("cc") = -1., py::arg("cs") = -1., py::arg("c1") = -1., py::arg("cmu") = -1.,
+               py::arg("sigma0") = 0.5, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+               py::arg("force_bounds") = false);
+    cmaes_.def(py::init<unsigned, double, double, double, double, double, double, double, bool, bool, unsigned>(),
+               py::arg("gen") = 1u, py::arg("cc") = -1., py::arg("cs") = -1., py::arg("c1") = -1., py::arg("cmu") = -1.,
+               py::arg("sigma0") = 0.5, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+               py::arg("force_bounds") = false, py::arg("seed"));
     expose_algo_log(cmaes_, cmaes_get_log_docstring().c_str());
-    cmaes_.def("get_seed", &cmaes::get_seed, generic_uda_get_seed_docstring().c_str());
+    cmaes_.def("get_seed", &pagmo::cmaes::get_seed, generic_uda_get_seed_docstring().c_str());
 
     // xNES
-    auto xnes_ = expose_algorithm_pygmo<xnes>("xnes", xnes_docstring().c_str());
-    xnes_.def(bp::init<unsigned, double, double, double, double, double, double, bool, bool>(
-        (py::arg("gen") = 1u, py::arg("eta_mu") = -1., py::arg("eta_sigma") = -1., py::arg("eta_b") = -1.,
-         py::arg("sigma0") = -1, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
-         py::arg("force_bounds") = false)));
-    xnes_.def(bp::init<unsigned, double, double, double, double, double, double, bool, bool, unsigned>(
-        (py::arg("gen") = 1u, py::arg("eta_mu") = -1., py::arg("eta_sigma") = -1., py::arg("eta_b") = -1.,
-         py::arg("sigma0") = -1, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
-         py::arg("force_bounds") = false, py::arg("seed"))));
+    auto xnes_ = expose_algorithm<pagmo::xnes>(m, algo, a_module, "xnes", xnes_docstring().c_str());
+    xnes_.def(py::init<unsigned, double, double, double, double, double, double, bool, bool>(), py::arg("gen") = 1u,
+              py::arg("eta_mu") = -1., py::arg("eta_sigma") = -1., py::arg("eta_b") = -1., py::arg("sigma0") = -1,
+              py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+              py::arg("force_bounds") = false);
+    xnes_.def(py::init<unsigned, double, double, double, double, double, double, bool, bool, unsigned>(),
+              py::arg("gen") = 1u, py::arg("eta_mu") = -1., py::arg("eta_sigma") = -1., py::arg("eta_b") = -1.,
+              py::arg("sigma0") = -1, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false,
+              py::arg("force_bounds") = false, py::arg("seed"));
     expose_algo_log(xnes_, xnes_get_log_docstring().c_str());
-    xnes_.def("get_seed", &xnes::get_seed, generic_uda_get_seed_docstring().c_str());
+    xnes_.def("get_seed", &pagmo::xnes::get_seed, generic_uda_get_seed_docstring().c_str());
 #endif
 
+    // cstrs_self_adaptive meta-algo.
+    auto cstrs_sa = expose_algorithm<pagmo::cstrs_self_adaptive>(m, algo, a_module, "cstrs_self_adaptive",
+                                                                 cstrs_self_adaptive_docstring().c_str());
+    cstrs_sa.def(py::init([](unsigned iters, const pagmo::algorithm &a, unsigned seed) {
+        return pagmo::detail::make_unique<pagmo::cstrs_self_adaptive>(iters, a, seed);
+    }));
+    cstrs_sa.def(py::init([](unsigned iters, const pagmo::algorithm &a) {
+        return pagmo::detail::make_unique<pagmo::cstrs_self_adaptive>(iters, a, pagmo::random_device::next());
+    }));
+    expose_algo_log(cstrs_sa, cstrs_self_adaptive_get_log_docstring().c_str());
+    cstrs_sa.def_property_readonly(
+        "inner_algorithm",
+        [](pagmo::cstrs_self_adaptive &uda) -> pagmo::algorithm & { return uda.get_inner_algorithm(); },
+        py::return_value_policy::reference_internal, generic_uda_inner_algorithm_docstring().c_str());
+
+#if 0
 #if defined(PAGMO_WITH_IPOPT)
     // Ipopt.
     auto ipopt_ = expose_algorithm_pygmo<ipopt>("ipopt", ipopt_docstring().c_str());

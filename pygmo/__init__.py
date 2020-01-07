@@ -148,6 +148,93 @@ def _decompose_init(self, prob=None, weight=[0.5, 0.5], z=[0., 0.], method='weig
 
 setattr(decompose, "__init__", _decompose_init)
 
+# Override of the unconstrain meta-problem constructor.
+__original_unconstrain_init = unconstrain.__init__
+
+# NOTE: the idea of having the unconstrain init here instead of exposed from C++ is to allow the use
+# of the syntax unconstrain(udp, ... ) for all udps
+
+
+def _unconstrain_init(self, prob=None, method="death penalty", weights=[]):
+    """
+    Args:
+        prob: a :class:`~pygmo.problem` or a user-defined problem, either C++ or Python (if
+              *prob* is :data:`None`, a :class:`~pygmo.null_problem` will be used in its stead)
+        method (str): a string containing the unconstrain method chosen, one of [``'death penalty'``, ``'kuri'``, ``'weighted'``, ``'ignore_c'``, ``'ignore_o'``]
+        weights (array-like object): the vector of weights to be used if the method chosen is ``'weighted'``
+
+    Raises:
+        ValueError: if either:
+
+           * *prob* is unconstrained,
+           * *method* is not one of [``'death penalty'``, ``'kuri'``, ``'weighted'``, ``'ignore_c'``, ``'ignore_o'``],
+           * *weight* is not of the same size as the problem constraints (if the method ``'weighted'`` is selected), or not empty otherwise.
+
+        unspecified: any exception thrown by:
+
+           * the constructor of :class:`pygmo.problem`,
+           * the constructor of the underlying C++ class,
+           * failures at the intersection between C++ and Python (e.g., type conversion errors, mismatched function
+             signatures, etc.)
+
+    """
+    if prob is None:
+        # Use the null problem for default init.
+        prob = null_problem(nobj=2, nec=3, nic=4)
+    if type(prob) == problem:
+        # If prob is a pygmo problem, we will pass it as-is to the
+        # original init.
+        prob_arg = prob
+    else:
+        # Otherwise, we attempt to create a problem from it. This will
+        # work if prob is an exposed C++ problem or a Python UDP.
+        prob_arg = problem(prob)
+    __original_unconstrain_init(self, prob_arg, method, weights)
+
+
+setattr(unconstrain, "__init__", _unconstrain_init)
+
+# Override of the cstrs_self_adaptive meta-algorithm constructor.
+__original_cstrs_self_adaptive_init = cstrs_self_adaptive.__init__
+# NOTE: the idea of having the cstrs_self_adaptive init here instead of exposed from C++ is to allow the use
+# of the syntax cstrs_self_adaptive(uda, ...) for all udas
+
+
+def _cstrs_self_adaptive_init(self, iters=1, algo=None, seed=None):
+    """
+    Args:
+        iter (int): number of iterations (i.e., calls to the inner algorithm evolve)
+        algo: an :class:`~pygmo.algorithm` or a user-defined algorithm, either C++ or Python (if
+             *algo* is :data:`None`, a :class:`~pygmo.de` algorithm will be used in its stead)
+        seed (int): seed used by the internal random number generator (if *seed* is :data:`None`, a
+             randomly-generated value will be used in its stead)
+
+    Raises:
+        ValueError: if *iters* is negative or greater than an implementation-defined value
+        unspecified: any exception thrown by the constructor of :class:`pygmo.algorithm`, or by
+             failures at the intersection between C++ and Python (e.g., type conversion errors, mismatched function
+             signatures, etc.)
+
+    """
+    if algo is None:
+        # Use the null problem for default init.
+        algo = de()
+    if type(algo) == algorithm:
+        # If algo is a pygmo algorithm, we will pass it as-is to the
+        # original init.
+        algo_arg = algo
+    else:
+        # Otherwise, we attempt to create an algorithm from it. This will
+        # work if algo is an exposed C++ algorithm or a Python UDA.
+        algo_arg = algorithm(algo)
+    if seed is None:
+        __original_cstrs_self_adaptive_init(self, iters, algo_arg)
+    else:
+        __original_cstrs_self_adaptive_init(self, iters, algo_arg, seed)
+
+
+setattr(cstrs_self_adaptive, "__init__", _cstrs_self_adaptive_init)
+
 
 # Override of the population constructor.
 __original_population_init = population.__init__
