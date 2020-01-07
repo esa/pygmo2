@@ -100,12 +100,15 @@ endif()
 # Setup the installation path.
 set(PYGMO_INSTALL_PATH "${YACMA_PYTHON_MODULES_INSTALL_PATH}/pygmo")
 
+# Add submodules directories
+add_subdirectory(plotting)
+
 # Install the core module.
 install(TARGETS core
     RUNTIME DESTINATION ${PYGMO_INSTALL_PATH}
     LIBRARY DESTINATION ${PYGMO_INSTALL_PATH}
 )
 
-# Add the Python files.
+# Install the Python files.
 install(FILES ${PYGMO_PYTHON_FILES} "${CMAKE_CURRENT_BINARY_DIR}/_version.py"
     DESTINATION ${PYGMO_INSTALL_PATH})

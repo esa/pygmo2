@@ -11,7 +11,7 @@ from ._check_deps import *
 from ._version import __version__
 # We import the sub-modules into the root namespace
 from .core import *
-#from .plotting import *
+from .plotting import *
 from ._py_islands import *
 from ._py_problems import *
 from ._py_bfes import *
