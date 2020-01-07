@@ -41,10 +41,10 @@ make -j2 install VERBOSE=1
 cd
 
 # Start ipcluster.
-ipcluster  start --debug --n=2 &
+ipcluster  start --debug --n=2 --daemonize=True
 sleep 20
 
-python -c "import pygmo; pygmo.test.run_test_suite(0)"
+python -c "import pygmo; pygmo.test.run_test_suite(1)"
 
 ipcluster stop
 

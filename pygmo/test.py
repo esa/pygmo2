@@ -1182,7 +1182,7 @@ class archipelago_test_case(_ut.TestCase):
         archi.wait_check()
 
         # python prob
-        archi2 = archipelago(n=100, algo=de(
+        archi2 = archipelago(n=1000, algo=de(
             10), prob=_quick_prob(), pop_size=10, seed=32)
         archi2.evolve()
         archi2.wait_check()
@@ -1190,8 +1190,8 @@ class archipelago_test_case(_ut.TestCase):
         # python prob with exceptions (will throw in osx as too many threads
         # will be opened)
         def _():
-            archi3 = archipelago(n=100, algo=simulated_annealing(
-                10, 1, 50), prob=_raise_exception(throw_at=101), pop_size=1, seed=32)
+            archi3 = archipelago(n=1000, algo=simulated_annealing(
+                10, 1, 50), prob=_raise_exception(throw_at=1001), pop_size=1, seed=32)
             archi3.evolve()
             archi3.wait_check()
 
