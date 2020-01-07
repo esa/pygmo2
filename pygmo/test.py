@@ -871,49 +871,72 @@ class archipelago_test_case(_ut.TestCase):
                         pop_size=10, udi=mp_island(), seed=5)
         print(46)
         self.assertTrue(a.get_topology().is_(unconnected))
+        print(47)
         self.assertTrue(
             all([isl.get_r_policy().is_(fair_replace) for isl in a]))
+        print(48)
         self.assertTrue(
             all([isl.get_s_policy().is_(select_best) for isl in a]))
+        print(49)
 
         a = archipelago(5, t=topology(ring()), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5)
+        print(50)
         self.assertTrue(a.get_topology().is_(ring))
 
+        print(51)
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5)
+        print(52)
         self.assertTrue(a.get_topology().is_(ring))
+        print(53)
 
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5, r_pol=r_policy())
+        print(54)
         self.assertTrue(
             all([isl.get_r_policy().is_(fair_replace) for isl in a]))
+        print(56)
         self.assertTrue(
             all([isl.get_s_policy().is_(select_best) for isl in a]))
+        print(57)
 
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5, r_pol=r_policy(), s_pol=s_policy())
+        print(58)
         self.assertTrue(
             all([isl.get_r_policy().is_(fair_replace) for isl in a]))
+        print(59)
         self.assertTrue(
             all([isl.get_s_policy().is_(select_best) for isl in a]))
+        print(60)
 
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5, r_pol=_r_pol(), s_pol=_s_pol())
+        print(61)
         self.assertTrue(all([isl.get_r_policy().is_(_r_pol) for isl in a]))
+        print(62)
         self.assertTrue(all([isl.get_s_policy().is_(_s_pol) for isl in a]))
+        print(63)
 
         # Ctors with bfe.
+        print(64)
         p = problem(rosenbrock())
+        print(65)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=bfe(default_bfe()))
+        print(66)
         for isl in a:
+            print("67 of {}".format(len(a)))
             for x, f in zip(isl.get_population().get_x(), isl.get_population().get_f()):
                 self.assertEqual(p.fitness(x), f)
 
+        print(68)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=thread_bfe())
+        print(69)
         for isl in a:
+            print("70 of {}".format(len(a)))
             for x, f in zip(isl.get_population().get_x(), isl.get_population().get_f()):
                 self.assertEqual(p.fitness(x), f)
 
@@ -926,10 +949,14 @@ class archipelago_test_case(_ut.TestCase):
             def fitness(self, a):
                 return [42]
 
+        print(71)
         p = problem(p())
+        print(72)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=bfe(default_bfe()))
+        print(73)
         for isl in a:
+            print("74 of {}".format(len(a)))
             for x, f in zip(isl.get_population().get_x(), isl.get_population().get_f()):
                 self.assertEqual(p.fitness(x), f)
 
@@ -945,10 +972,14 @@ class archipelago_test_case(_ut.TestCase):
             def batch_fitness(self, dvs):
                 return [43] * len(dvs)
 
+        print(75)
         p = problem(p())
+        print(76)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=bfe(default_bfe()))
+        print(77)
         for isl in a:
+            print("78 of {}".format(len(a)))
             for f in isl.get_population().get_f():
                 self.assertEqual(f, 43)
 
