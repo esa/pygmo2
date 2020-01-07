@@ -13,9 +13,11 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/detail/make_unique.hpp>
+#include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/ackley.hpp>
 #include <pagmo/problems/decompose.hpp>
+#include <pagmo/problems/dtlz.hpp>
 #include <pagmo/problems/hock_schittkowsky_71.hpp>
 #include <pagmo/problems/inventory.hpp>
 #include <pagmo/problems/lennard_jones.hpp>
@@ -159,36 +161,39 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                    "See :cpp:class:`pagmo::lennard_jones`.\n\n");
     lj.def(py::init<unsigned>(), py::arg("atoms") = 3u);
 
+    // DTLZ.
+    auto dtlz_p = expose_problem<pagmo::dtlz>(m, prob, p_module, "dtlz", dtlz_docstring().c_str());
+    dtlz_p.def(py::init<unsigned, unsigned, unsigned, unsigned>(), py::arg("prob_id") = 1u, py::arg("dim") = 5u,
+               py::arg("fdim") = 3u, py::arg("alpha") = 100u);
+    dtlz_p.def("p_distance", [](const pagmo::dtlz &z, const py::array_t<double> &x) {
+        return z.p_distance(ndarr_to_vector<pagmo::vector_double>(x));
+    });
+    dtlz_p.def(
+        "p_distance", [](const pagmo::dtlz &z, const pagmo::population &pop) { return z.p_distance(pop); },
+        dtlz_p_distance_docstring().c_str());
+
 #if 0
     // Griewank.
     auto griew = expose_problem_pygmo<griewank>("griewank", "__init__(dim = 1)\n\nThe Griewank problem.\n\n"
                                                             "See :cpp:class:`pagmo::griewank`.\n\n");
-    griew.def(bp::init<unsigned>((bp::arg("dim"))));
+    griew.def(bp::init<unsigned>((py::arg("dim"))));
     griew.def("best_known", &best_known_wrapper<griewank>, problem_get_best_docstring("Griewank").c_str());
 
-    // DTLZ.
-    auto dtlz_p = expose_problem_pygmo<dtlz>("dtlz", dtlz_docstring().c_str());
-    dtlz_p.def(bp::init<unsigned, unsigned, unsigned, unsigned>(
-        (bp::arg("prob_id") = 1u, bp::arg("dim") = 5u, bp::arg("fdim") = 3u, bp::arg("alpha") = 100u)));
-    dtlz_p.def("p_distance",
-               lcast([](const dtlz &z, const bp::object &x) { return z.p_distance(obj_to_vector<vector_double>(x)); }));
-    dtlz_p.def("p_distance", lcast([](const dtlz &z, const population &pop) { return z.p_distance(pop); }),
-               dtlz_p_distance_docstring().c_str());
 #if defined(PAGMO_ENABLE_CEC2014)
     // See the explanation in pagmo/config.hpp.
     auto cec2014_ = expose_problem_pygmo<cec2014>("cec2014", cec2014_docstring().c_str());
-    cec2014_.def(bp::init<unsigned, unsigned>((bp::arg("prob_id") = 1, bp::arg("dim") = 2)));
+    cec2014_.def(bp::init<unsigned, unsigned>((py::arg("prob_id") = 1, py::arg("dim") = 2)));
 #endif
 
     // CEC 2006
     auto cec2006_ = expose_problem_pygmo<cec2006>("cec2006", cec2006_docstring().c_str());
-    cec2006_.def(bp::init<unsigned>((bp::arg("prob_id"))));
+    cec2006_.def(bp::init<unsigned>((py::arg("prob_id"))));
     cec2006_.def("best_known", &best_known_wrapper<cec2006>, problem_get_best_docstring("CEC 2006").c_str());
 
     // CEC 2009
     auto cec2009_ = expose_problem_pygmo<cec2009>("cec2009", cec2009_docstring().c_str());
     cec2009_.def(bp::init<unsigned, bool, unsigned>(
-        (bp::arg("prob_id") = 1u, bp::arg("is_constrained") = false, bp::arg("dim") = 30u)));
+        (py::arg("prob_id") = 1u, py::arg("is_constrained") = false, py::arg("dim") = 30u)));
 
     // Decompose meta-problem.
     auto decompose_ = expose_problem_pygmo<decompose>("decompose", decompose_docstring().c_str());
@@ -204,7 +209,7 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     decompose_.def("original_fitness", lcast([](const decompose &p, const bp::object &x) {
                        return vector_to_ndarr(p.original_fitness(obj_to_vector<vector_double>(x)));
                    }),
-                   decompose_original_fitness_docstring().c_str(), (bp::arg("x")));
+                   decompose_original_fitness_docstring().c_str(), (py::arg("x")));
     add_property(decompose_, "z", lcast([](const decompose &p) { return vector_to_ndarr(p.get_z()); }),
                  decompose_z_docstring().c_str());
     add_property(decompose_, "inner_problem",

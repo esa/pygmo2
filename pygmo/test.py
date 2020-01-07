@@ -1582,6 +1582,30 @@ class hypervolume_test_case(_ut.TestCase):
                          np.array([0.1, 2.1])).all() == True)
 
 
+class mo_utils_test_case(_ut.TestCase):
+    """Test case for the multi-objective utilities (only the interface is tested)
+
+    """
+
+    def runTest(self):
+        from .core import fast_non_dominated_sorting, pareto_dominance, non_dominated_front_2d, crowding_distance, sort_population_mo, select_best_N_mo, decompose_objectives, decomposition_weights, nadir, ideal, population, dtlz
+        ndf, dl, dc, ndr = fast_non_dominated_sorting(
+            points=[[0, 1], [-1, 3], [2.3, -0.2], [1.1, -0.12], [1.1, 2.12], [-1.1, -1.1]])
+        self.assertTrue(pareto_dominance(obj1=[1, 2], obj2=[2, 2]))
+        non_dominated_front_2d(
+            points=[[0, 5], [1, 4], [2, 3], [3, 2], [4, 1], [2, 2]])
+        crowding_distance(points=[[0, 5], [1, 4], [2, 3], [3, 2], [4, 1]])
+        pop = population(prob=dtlz(prob_id=3, dim=10, fdim=4), size=20)
+        sort_population_mo(points=pop.get_f())
+        select_best_N_mo(points=pop.get_f(), N=13)
+        decompose_objectives(objs=[1, 2, 3], weights=[0.1, 0.1, 0.8], ref_point=[
+                             5, 5, 5], method="weighted")
+        decomposition_weights(n_f=2, n_w=6, method="low discrepancy", seed=33)
+        nadir(points=[[1, 1], [-1, 1], [2.2, 3], [0.1, -0.1]])
+        ideal(points=[[1, 1], [-1, 1], [2.2, 3], [0.1, -0.1]])
+        self.assertEqual(len(select_best_N_mo(points=pop.get_f(), N=0)), 0)
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -1641,7 +1665,7 @@ def run_test_suite(level=0):
     suite.addTest(population_test_case())
     suite.addTest(null_problem_test_case())
     suite.addTest(hypervolume_test_case())
-    # suite.addTest(mo_utils_test_case())
+    suite.addTest(mo_utils_test_case())
     # suite.addTest(con_utils_test_case())
     # suite.addTest(global_rng_test_case())
     # suite.addTest(estimate_sparsity_test_case())

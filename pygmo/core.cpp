@@ -480,6 +480,7 @@ PYBIND11_MODULE(core, m)
                                   pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(std::get<3>(fnds)));
         },
         pygmo::fast_non_dominated_sorting_docstring().c_str(), py::arg("points"));
+
     m.def(
         "pareto_dominance",
         [](const py::array_t<double> &obj1, const py::array_t<double> &obj2) {
@@ -487,56 +488,76 @@ PYBIND11_MODULE(core, m)
                                         pygmo::ndarr_to_vector<pg::vector_double>(obj2));
         },
         pygmo::pareto_dominance_docstring().c_str(), py::arg("obj1"), py::arg("obj2"));
-#if 0
-    bp::def("non_dominated_front_2d", lcast([](const bp::object &points) {
-                return pygmo::vector_to_ndarr(
-                    non_dominated_front_2d(pygmo::obj_to_vvector<std::vector<vector_double>>(points)));
-            }),
-            pygmo::non_dominated_front_2d_docstring().c_str(), bp::arg("points"));
-    bp::def("crowding_distance", lcast([](const bp::object &points) {
-                return pygmo::vector_to_ndarr(
-                    crowding_distance(pygmo::obj_to_vvector<std::vector<vector_double>>(points)));
-            }),
-            pygmo::crowding_distance_docstring().c_str(), bp::arg("points"));
-    bp::def("sort_population_mo", lcast([](const bp::object &input_f) {
-                return pygmo::vector_to_ndarr(
-                    sort_population_mo(pygmo::obj_to_vvector<std::vector<vector_double>>(input_f)));
-            }),
-            pygmo::sort_population_mo_docstring().c_str(), bp::arg("points"));
-    bp::def("select_best_N_mo", lcast([](const bp::object &input_f, unsigned N) {
-                return pygmo::vector_to_ndarr(
-                    select_best_N_mo(pygmo::obj_to_vvector<std::vector<vector_double>>(input_f), N));
-            }),
-            pygmo::select_best_N_mo_docstring().c_str(), (bp::arg("points"), bp::arg("N")));
-    bp::def(
+
+    m.def(
+        "non_dominated_front_2d",
+        [](const py::array_t<double> &points) {
+            return pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(
+                pg::non_dominated_front_2d(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(points)));
+        },
+        pygmo::non_dominated_front_2d_docstring().c_str(), py::arg("points"));
+
+    m.def(
+        "crowding_distance",
+        [](const py::array_t<double> &points) {
+            return pygmo::vector_to_ndarr<py::array_t<double>>(
+                pg::crowding_distance(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(points)));
+        },
+        pygmo::crowding_distance_docstring().c_str(), py::arg("points"));
+
+    m.def(
+        "sort_population_mo",
+        [](const py::array_t<double> &input_f) {
+            return pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(
+                pg::sort_population_mo(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(input_f)));
+        },
+        pygmo::sort_population_mo_docstring().c_str(), py::arg("points"));
+
+    m.def(
+        "select_best_N_mo",
+        [](const py::array_t<double> &input_f, unsigned N) {
+            return pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(
+                pg::select_best_N_mo(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(input_f), N));
+        },
+        pygmo::select_best_N_mo_docstring().c_str(), py::arg("points"), py::arg("N"));
+
+    m.def(
         "decomposition_weights",
-        lcast([](vector_double::size_type n_f, vector_double::size_type n_w, const std::string &method, unsigned seed) {
-            using reng_t = pagmo::detail::random_engine_type;
+        [](pg::vector_double::size_type n_f, pg::vector_double::size_type n_w, const std::string &method,
+           unsigned seed) {
+            using reng_t = pg::detail::random_engine_type;
             reng_t tmp_rng(static_cast<reng_t::result_type>(seed));
-            return pygmo::vvector_to_ndarr(decomposition_weights(n_f, n_w, method, tmp_rng));
-        }),
-        pygmo::decomposition_weights_docstring().c_str(),
-        (bp::arg("n_f"), bp::arg("n_w"), bp::arg("method"), bp::arg("seed")));
+            return pygmo::vvector_to_ndarr<py::array_t<double>>(pg::decomposition_weights(n_f, n_w, method, tmp_rng));
+        },
+        pygmo::decomposition_weights_docstring().c_str(), py::arg("n_f"), py::arg("n_w"), py::arg("method"),
+        py::arg("seed"));
 
-    bp::def("decompose_objectives",
-            lcast([](const bp::object &objs, const bp::object &weights, const bp::object &ref_point,
-                     const std::string &method) {
-                return pygmo::vector_to_ndarr(decompose_objectives(
-                    pygmo::obj_to_vector<vector_double>(objs), pygmo::obj_to_vector<vector_double>(weights),
-                    pygmo::obj_to_vector<vector_double>(ref_point), method));
-            }),
-            pygmo::decompose_objectives_docstring().c_str(),
-            (bp::arg("objs"), bp::arg("weights"), bp::arg("ref_point"), bp::arg("method")));
+    m.def(
+        "decompose_objectives",
+        [](const py::array_t<double> &objs, const py::array_t<double> &weights, const py::array_t<double> &ref_point,
+           const std::string &method) {
+            return pygmo::vector_to_ndarr<py::array_t<double>>(pg::decompose_objectives(
+                pygmo::ndarr_to_vector<pg::vector_double>(objs), pygmo::ndarr_to_vector<pg::vector_double>(weights),
+                pygmo::ndarr_to_vector<pg::vector_double>(ref_point), method));
+        },
+        pygmo::decompose_objectives_docstring().c_str(), py::arg("objs"), py::arg("weights"), py::arg("ref_point"),
+        py::arg("method"));
 
-    bp::def("nadir", lcast([](const bp::object &p) {
-                return pygmo::vector_to_ndarr(pagmo::nadir(pygmo::obj_to_vvector<std::vector<vector_double>>(p)));
-            }),
-            pygmo::nadir_docstring().c_str(), bp::arg("points"));
-    bp::def("ideal", lcast([](const bp::object &p) {
-                return pygmo::vector_to_ndarr(pagmo::ideal(pygmo::obj_to_vvector<std::vector<vector_double>>(p)));
-            }),
-            pygmo::ideal_docstring().c_str(), bp::arg("points"));
-#endif
+    m.def(
+        "nadir",
+        [](const py::array_t<double> &p) {
+            return pygmo::vector_to_ndarr<py::array_t<double>>(
+                pg::nadir(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(p)));
+        },
+        pygmo::nadir_docstring().c_str(), py::arg("points"));
+
+    m.def(
+        "ideal",
+        [](const py::array_t<double> &p) {
+            return pygmo::vector_to_ndarr<py::array_t<double>>(
+                pg::ideal(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(p)));
+        },
+        pygmo::ideal_docstring().c_str(), py::arg("points"));
 
     // Add the submodules.
     auto problems_module = m.def_submodule("problems");
