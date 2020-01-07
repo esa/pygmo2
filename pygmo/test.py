@@ -717,29 +717,17 @@ class archipelago_test_case(_ut.TestCase):
         self._level = level
 
     def runTest(self):
-        print("a")
         self.run_init_tests()
-        print("b")
         self.run_evolve_tests()
-        print("c")
         self.run_access_tests()
-        print("d")
         self.run_push_back_tests()
-        print("e")
         self.run_io_tests()
-        print("f")
         self.run_pickle_tests()
-        print("g")
         self.run_champions_tests()
-        print("h")
         self.run_status_tests()
-        print("i")
         self.run_mig_log_db_tests()
-        print("j")
         self.run_get_set_topo_tests()
-        print("k")
         self.run_mt_mh_tests()
-        print("l")
         if self._level > 0:
             self.run_torture_test_0()
             # NOTE: skip this test for the time being.
@@ -760,183 +748,114 @@ class archipelago_test_case(_ut.TestCase):
     def run_init_tests(self):
         from . import (archipelago, de, rosenbrock, population, null_problem, thread_island,
                        mp_island, topology, unconnected, ring, r_policy, s_policy, fair_replace, select_best, bfe, default_bfe, thread_bfe, problem)
-        print(1)
         a = archipelago()
-        print(2)
         self.assertEqual(len(a), 0)
-        print(3)
         self.assertRaises(IndexError, lambda: a[0])
-        print(4)
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=10)
-        print(5)
         self.assertEqual(len(a), 5)
-        print(6)
         self.assertTrue(a[0].get_algorithm().is_(de))
-        print(7)
         self.assertTrue(a[0].get_population().problem.is_(rosenbrock))
-        print(8)
         self.assertEqual(len(a[0].get_population()), 10)
-        print(9)
         a = archipelago(5, pop=population(), algo=de())
-        print(10)
         self.assertEqual(len(a), 5)
-        print(11)
         self.assertTrue(a[0].get_algorithm().is_(de))
-        print(12)
         self.assertTrue(a[0].get_population().problem.is_(null_problem))
-        print(13)
         self.assertEqual(len(a[0].get_population()), 0)
-        print(14)
         a = archipelago(5, algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=thread_island(), seed=5)
-        print(15)
         self.assertEqual(len(a), 5)
-        print(16)
         self.assertTrue(a[0].get_algorithm().is_(de))
-        print(17)
         self.assertTrue(a[0].get_population().problem.is_(rosenbrock))
-        print(18)
         self.assertEqual(len(a[0].get_population()), 10)
-        print(19)
         # Check unique seeds.
         seeds = list([_.get_population().get_seed() for _ in a])
-        print(20)
         self.assertEqual(len(seeds), len(set(seeds)))
-        print(21)
         # Check seeding is deterministic.
         a2 = archipelago(5, algo=de(), prob=rosenbrock(),
                          pop_size=10, seed=5)
-        print(22)
         seeds2 = list([_.get_population().get_seed() for _ in a2])
-        print(23)
         self.assertEqual(seeds2, seeds)
-        print(24)
         self.assertTrue(all([(t[0].get_population().get_x() == t[
                         1].get_population().get_x()).all() for t in zip(a, a2)]))
-        print(25)
         self.assertTrue(all([(t[0].get_population().get_f() == t[
                         1].get_population().get_f()).all() for t in zip(a, a2)]))
-        print(26)
         self.assertTrue(all([(t[0].get_population().get_ID() == t[
                         1].get_population().get_ID()).all() for t in zip(a, a2)]))
-        print(27)
         # Check the 'size' keyword is not accepted.
         self.assertRaises(KeyError, lambda: archipelago(5, algo=de(), prob=rosenbrock(),
                                                         size=10, udi=thread_island(), seed=5))
-        print(28)
         # Check without seed argument, seeding is non-deterministic.
         a = archipelago(5, algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=thread_island())
-        print(29)
         a2 = archipelago(5, algo=de(), prob=rosenbrock(),
                          pop_size=10, udi=thread_island())
-        print(30)
         seeds = sorted(list([_.get_population().get_seed() for _ in a]))
-        print(31)
         seeds2 = sorted(list([_.get_population().get_seed() for _ in a2]))
-        print(32)
         self.assertTrue(all([t[0] != t[1] for t in zip(seeds, seeds2)]))
-        print(33)
         self.assertTrue(all([(t[0].get_population().get_x() != t[
                         1].get_population().get_x()).all() for t in zip(a, a2)]))
-        print(34)
         self.assertTrue(all([(t[0].get_population().get_f() != t[
                         1].get_population().get_f()).all() for t in zip(a, a2)]))
-        print(35)
         self.assertTrue(all([(t[0].get_population().get_ID() != t[
                         1].get_population().get_ID()).all() for t in zip(a, a2)]))
-        print(36)
         a = archipelago(5, algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5)
-        print(37)
         self.assertEqual(len(a), 5)
-        print(38)
         self.assertTrue(a[0].get_algorithm().is_(de))
-        print(39)
         self.assertTrue(a[0].get_population().problem.is_(rosenbrock))
-        print(40)
         self.assertEqual(len(a[0].get_population()), 10)
-        print(41)
         seeds = list([_.get_population().get_seed() for _ in a])
-        print(42)
         self.assertEqual(len(seeds), len(set(seeds)))
-        print(43)
         self.assertRaises(KeyError, lambda: archipelago(
             5, pop=population(), algo=de(), seed=1))
-        print(44)
 
         # Constructors from topology and custom r_pol, s_pol.
-        print(45)
         a = archipelago(5, t=topology(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5)
-        print(46)
         self.assertTrue(a.get_topology().is_(unconnected))
-        print(47)
         self.assertTrue(
             all([isl.get_r_policy().is_(fair_replace) for isl in a]))
-        print(48)
         self.assertTrue(
             all([isl.get_s_policy().is_(select_best) for isl in a]))
-        print(49)
 
         a = archipelago(5, t=topology(ring()), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5)
-        print(50)
         self.assertTrue(a.get_topology().is_(ring))
 
-        print(51)
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5)
-        print(52)
         self.assertTrue(a.get_topology().is_(ring))
-        print(53)
 
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5, r_pol=r_policy())
-        print(54)
         self.assertTrue(
             all([isl.get_r_policy().is_(fair_replace) for isl in a]))
-        print(56)
         self.assertTrue(
             all([isl.get_s_policy().is_(select_best) for isl in a]))
-        print(57)
 
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5, r_pol=r_policy(), s_pol=s_policy())
-        print(58)
         self.assertTrue(
             all([isl.get_r_policy().is_(fair_replace) for isl in a]))
-        print(59)
         self.assertTrue(
             all([isl.get_s_policy().is_(select_best) for isl in a]))
-        print(60)
 
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(),
                         pop_size=10, udi=mp_island(), seed=5, r_pol=_r_pol(), s_pol=_s_pol())
-        print(61)
         self.assertTrue(all([isl.get_r_policy().is_(_r_pol) for isl in a]))
-        print(62)
         self.assertTrue(all([isl.get_s_policy().is_(_s_pol) for isl in a]))
-        print(63)
 
         # Ctors with bfe.
-        print(64)
         p = problem(rosenbrock())
-        print(65)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=bfe(default_bfe()))
-        print(66)
         for isl in a:
-            print("67 of {}".format(len(a)))
             for x, f in zip(isl.get_population().get_x(), isl.get_population().get_f()):
                 self.assertEqual(p.fitness(x), f)
 
-        print(68)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=thread_bfe())
-        print(69)
         for isl in a:
-            print("70 of {}".format(len(a)))
             for x, f in zip(isl.get_population().get_x(), isl.get_population().get_f()):
                 self.assertEqual(p.fitness(x), f)
 
@@ -949,14 +868,10 @@ class archipelago_test_case(_ut.TestCase):
             def fitness(self, a):
                 return [42]
 
-        print(71)
         p = problem(p())
-        print(72)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=bfe(default_bfe()))
-        print(73)
         for isl in a:
-            print("74 of {}".format(len(a)))
             for x, f in zip(isl.get_population().get_x(), isl.get_population().get_f()):
                 self.assertEqual(p.fitness(x), f)
 
@@ -972,14 +887,10 @@ class archipelago_test_case(_ut.TestCase):
             def batch_fitness(self, dvs):
                 return [43] * len(dvs)
 
-        print(75)
         p = problem(p())
-        print(76)
         a = archipelago(5, t=topology(ring()), algo=de(), prob=p,
                         pop_size=10, udi=mp_island(), seed=5, b=bfe(default_bfe()))
-        print(77)
         for isl in a:
-            print("78 of {}".format(len(a)))
             for f in isl.get_population().get_f():
                 self.assertEqual(f, 43)
 
@@ -1047,74 +958,41 @@ class archipelago_test_case(_ut.TestCase):
     def run_evolve_tests(self):
         from . import archipelago, de, rosenbrock, mp_island, evolve_status
         from copy import deepcopy
-        print("1\n")
         a = archipelago()
-        print("2\n")
         self.assertTrue(a.status == evolve_status.idle)
-        print("3\n")
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=10)
-        print("4\n")
         a.evolve(10)
-        print("5\n")
         a.evolve(10)
-        print("6\n")
         str(a)
-        print("7\n")
         a.wait()
-        print("8\n")
         a.evolve(10)
-        print("9\n")
         a.evolve(10)
-        print("10\n")
         str(a)
-        print("11\n")
         a.wait_check()
-        print("12\n")
         # Copy while evolving.
-        print("13\n")
         a.evolve(10)
-        print("14\n")
         a.evolve(10)
-        print("15\n")
         a2 = deepcopy(a)
-        print("16\n")
         a.wait_check()
-        print("17\n")
         a = archipelago(5, udi=mp_island(), algo=de(),
                         prob=rosenbrock(), pop_size=10)
-        print("18\n")
         a.evolve(10)
-        print("19\n")
         a.evolve(10)
-        print("20\n")
         str(a)
-        print("20a\n")
         a.wait()
-        print("21\n")
         a.evolve(10)
-        print("22\n")
         a.evolve(10)
-        print("23\n")
         str(a)
         a.wait_check()
-        print("24\n")
         # Copy while evolving.
-        print("25\n")
         a.evolve(10)
-        print("26\n") 
         a.evolve(10)
-        print("27\n")
         a2 = deepcopy(a)
-        print("28\n")
         a.wait_check()
-        print("29\n")
         # Throws on wait_check().
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=3)
-        print("30\n")
         a.evolve()
-        print("31\n")
         self.assertRaises(ValueError, lambda: a.wait_check())
-        print("32\n")
 
     def run_access_tests(self):
         from . import archipelago, de, rosenbrock
