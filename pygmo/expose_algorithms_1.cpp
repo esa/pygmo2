@@ -16,13 +16,21 @@
 #include <pagmo/algorithms/gaco.hpp>
 #include <pagmo/algorithms/gwo.hpp>
 #include <pagmo/algorithms/ihs.hpp>
+#include <pagmo/algorithms/maco.hpp>
 #include <pagmo/algorithms/nsga2.hpp>
+#include <pagmo/algorithms/nspso.hpp>
 #include <pagmo/algorithms/null_algorithm.hpp>
 #include <pagmo/algorithms/pso.hpp>
 #include <pagmo/algorithms/pso_gen.hpp>
+#include <pagmo/algorithms/sade.hpp>
 #include <pagmo/algorithms/sea.hpp>
 #include <pagmo/algorithms/sga.hpp>
 #include <pagmo/algorithms/simulated_annealing.hpp>
+#include <pagmo/config.hpp>
+
+#if defined(PAGMO_WITH_NLOPT)
+#include <pagmo/algorithms/nlopt.hpp>
+#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -171,92 +179,102 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         ihs_get_log_docstring().c_str());
     ihs_.def("get_seed", &pagmo::ihs::get_seed, generic_uda_get_seed_docstring().c_str());
 
-#if 0
     // SADE
-    auto sade_ = expose_algorithm_pygmo<sade>("sade", sade_docstring().c_str());
-    sade_.def(bp::init<unsigned, unsigned, unsigned, double, double, bool>(
-        (py::arg("gen") = 1u, py::arg("variant") = 2u, py::arg("variant_adptv") = 1u, py::arg("ftol") = 1e-6,
-         py::arg("xtol") = 1e-6, py::arg("memory") = false)));
-    sade_.def(bp::init<unsigned, unsigned, unsigned, double, double, bool, unsigned>(
-        (py::arg("gen") = 1u, py::arg("variant") = 2u, py::arg("variant_adptv") = 1u, py::arg("ftol") = 1e-6,
-         py::arg("xtol") = 1e-6, py::arg("memory") = false, py::arg("seed"))));
+    auto sade_ = expose_algorithm<pagmo::sade>(m, algo, a_module, "sade", sade_docstring().c_str());
+    sade_.def(py::init<unsigned, unsigned, unsigned, double, double, bool>(), py::arg("gen") = 1u,
+              py::arg("variant") = 2u, py::arg("variant_adptv") = 1u, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6,
+              py::arg("memory") = false);
+    sade_.def(py::init<unsigned, unsigned, unsigned, double, double, bool, unsigned>(), py::arg("gen") = 1u,
+              py::arg("variant") = 2u, py::arg("variant_adptv") = 1u, py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6,
+              py::arg("memory") = false, py::arg("seed"));
     expose_algo_log(sade_, sade_get_log_docstring().c_str());
-    sade_.def("get_seed", &sade::get_seed, generic_uda_get_seed_docstring().c_str());
+    sade_.def("get_seed", &pagmo::sade::get_seed, generic_uda_get_seed_docstring().c_str());
 
     // MACO
-    auto maco_ = expose_algorithm_pygmo<maco>("maco", maco_docstring().c_str());
-    maco_.def(bp::init<unsigned, unsigned, double, unsigned, unsigned, unsigned, double, bool>(
-        (py::arg("gen") = 1u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("threshold") = 1u,
-         py::arg("n_gen_mark") = 7u, py::arg("evalstop") = 100000u, py::arg("focus") = 0., py::arg("memory") = false)));
-    maco_.def(bp::init<unsigned, unsigned, double, unsigned, unsigned, unsigned, double, bool, unsigned>(
-        (py::arg("gen") = 1u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("threshold") = 1u,
-         py::arg("n_gen_mark") = 7u, py::arg("evalstop") = 100000u, py::arg("focus") = 0., py::arg("memory") = false,
-         py::arg("seed"))));
+    auto maco_ = expose_algorithm<pagmo::maco>(m, algo, a_module, "maco", maco_docstring().c_str());
+    maco_.def(py::init<unsigned, unsigned, double, unsigned, unsigned, unsigned, double, bool>(), py::arg("gen") = 1u,
+              py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("threshold") = 1u, py::arg("n_gen_mark") = 7u,
+              py::arg("evalstop") = 100000u, py::arg("focus") = 0., py::arg("memory") = false);
+    maco_.def(py::init<unsigned, unsigned, double, unsigned, unsigned, unsigned, double, bool, unsigned>(),
+              py::arg("gen") = 1u, py::arg("ker") = 63u, py::arg("q") = 1.0, py::arg("threshold") = 1u,
+              py::arg("n_gen_mark") = 7u, py::arg("evalstop") = 100000u, py::arg("focus") = 0.,
+              py::arg("memory") = false, py::arg("seed"));
     // maco needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    maco_.def("get_log", lcast([](const maco &a) -> bp::list {
-                  bp::list retval;
-                  for (const auto &t : a.get_log()) {
-                      retval.append(bp::make_tuple(std::get<0>(t), std::get<1>(t), vector_to_ndarr(std::get<2>(t))));
-                  }
-                  return retval;
-              }),
-              maco_get_log_docstring().c_str());
-
-    maco_.def("get_seed", &maco::get_seed, generic_uda_get_seed_docstring().c_str());
-    maco_.def("set_bfe", &maco::set_bfe, maco_set_bfe_docstring().c_str(), py::arg("b"));
+    maco_.def(
+        "get_log",
+        [](const pagmo::maco &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<2>(t))));
+            }
+            return retval;
+        },
+        maco_get_log_docstring().c_str());
+    maco_.def("get_seed", &pagmo::maco::get_seed, generic_uda_get_seed_docstring().c_str());
+    maco_.def("set_bfe", &pagmo::maco::set_bfe, maco_set_bfe_docstring().c_str(), py::arg("b"));
 
     // NSPSO
-    auto nspso_ = expose_algorithm_pygmo<nspso>("nspso", nspso_docstring().c_str());
-    nspso_.def(bp::init<unsigned, double, double, double, double, double, unsigned, std::string, bool>(
-        (py::arg("gen") = 1u, py::arg("omega") = 0.6, py::arg("c1") = 0.01, py::arg("c2") = 0.5, py::arg("chi") = 0.5,
-         py::arg("v_coeff") = 0.5, py::arg("leader_selection_range") = 2u,
-         py::arg("diversity_mechanism") = "crowding distance", py::arg("memory") = false)));
-    nspso_.def(bp::init<unsigned, double, double, double, double, double, unsigned, std::string, bool, unsigned>(
-        (py::arg("gen") = 1u, py::arg("omega") = 0.6, py::arg("c1") = 0.01, py::arg("c2") = 0.5, py::arg("chi") = 0.5,
-         py::arg("v_coeff") = 0.5, py::arg("leader_selection_range") = 2u,
-         py::arg("diversity_mechanism") = "crowding distance", py::arg("memory") = false, py::arg("seed"))));
+    auto nspso_ = expose_algorithm<pagmo::nspso>(m, algo, a_module, "nspso", nspso_docstring().c_str());
+    nspso_.def(py::init<unsigned, double, double, double, double, double, unsigned, std::string, bool>(),
+               py::arg("gen") = 1u, py::arg("omega") = 0.6, py::arg("c1") = 0.01, py::arg("c2") = 0.5,
+               py::arg("chi") = 0.5, py::arg("v_coeff") = 0.5, py::arg("leader_selection_range") = 2u,
+               py::arg("diversity_mechanism") = "crowding distance", py::arg("memory") = false);
+    nspso_.def(py::init<unsigned, double, double, double, double, double, unsigned, std::string, bool, unsigned>(),
+               py::arg("gen") = 1u, py::arg("omega") = 0.6, py::arg("c1") = 0.01, py::arg("c2") = 0.5,
+               py::arg("chi") = 0.5, py::arg("v_coeff") = 0.5, py::arg("leader_selection_range") = 2u,
+               py::arg("diversity_mechanism") = "crowding distance", py::arg("memory") = false, py::arg("seed"));
     // nspso needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    nspso_.def("get_log", lcast([](const nspso &a) -> bp::list {
-                   bp::list retval;
-                   for (const auto &t : a.get_log()) {
-                       retval.append(bp::make_tuple(std::get<0>(t), std::get<1>(t), vector_to_ndarr(std::get<2>(t))));
-                   }
-                   return retval;
-               }),
-               nspso_get_log_docstring().c_str());
-
-    nspso_.def("get_seed", &nspso::get_seed, generic_uda_get_seed_docstring().c_str());
-    nspso_.def("set_bfe", &nspso::set_bfe, nspso_set_bfe_docstring().c_str(), py::arg("b"));
+    nspso_.def(
+        "get_log",
+        [](const pagmo::nspso &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<2>(t))));
+            }
+            return retval;
+        },
+        nspso_get_log_docstring().c_str());
+    nspso_.def("get_seed", &pagmo::nspso::get_seed, generic_uda_get_seed_docstring().c_str());
+    nspso_.def("set_bfe", &pagmo::nspso::set_bfe, nspso_set_bfe_docstring().c_str(), py::arg("b"));
 
 #if defined(PAGMO_WITH_NLOPT)
     // NLopt.
-    auto nlopt_ = expose_algorithm_pygmo<nlopt>("nlopt", nlopt_docstring().c_str());
-    nlopt_.def(bp::init<const std::string &>((py::arg("solver"))));
-    // Properties for the stopping criteria.
-    add_property(nlopt_, "stopval", &nlopt::get_stopval, &nlopt::set_stopval, nlopt_stopval_docstring().c_str());
-    add_property(nlopt_, "ftol_rel", &nlopt::get_ftol_rel, &nlopt::set_ftol_rel, nlopt_ftol_rel_docstring().c_str());
-    add_property(nlopt_, "ftol_abs", &nlopt::get_ftol_abs, &nlopt::set_ftol_abs, nlopt_ftol_abs_docstring().c_str());
-    add_property(nlopt_, "xtol_rel", &nlopt::get_xtol_rel, &nlopt::set_xtol_rel, nlopt_xtol_rel_docstring().c_str());
-    add_property(nlopt_, "xtol_abs", &nlopt::get_xtol_abs, &nlopt::set_xtol_abs, nlopt_xtol_abs_docstring().c_str());
-    add_property(nlopt_, "maxeval", &nlopt::get_maxeval, &nlopt::set_maxeval, nlopt_maxeval_docstring().c_str());
-    add_property(nlopt_, "maxtime", &nlopt::get_maxtime, &nlopt::set_maxtime, nlopt_maxtime_docstring().c_str());
+    auto nlopt_ = expose_algorithm<pagmo::nlopt>(m, algo, a_module, "nlopt", nlopt_docstring().c_str());
+    nlopt_
+        .def(py::init<const std::string &>(), py::arg("solver"))
+        // Properties for the stopping criteria.
+        .def_property("stopval", &pagmo::nlopt::get_stopval, &pagmo::nlopt::set_stopval,
+                      nlopt_stopval_docstring().c_str())
+        .def_property("ftol_rel", &pagmo::nlopt::get_ftol_rel, &pagmo::nlopt::set_ftol_rel,
+                      nlopt_ftol_rel_docstring().c_str())
+        .def_property("ftol_abs", &pagmo::nlopt::get_ftol_abs, &pagmo::nlopt::set_ftol_abs,
+                      nlopt_ftol_abs_docstring().c_str())
+        .def_property("xtol_rel", &pagmo::nlopt::get_xtol_rel, &pagmo::nlopt::set_xtol_rel,
+                      nlopt_xtol_rel_docstring().c_str())
+        .def_property("xtol_abs", &pagmo::nlopt::get_xtol_abs, &pagmo::nlopt::set_xtol_abs,
+                      nlopt_xtol_abs_docstring().c_str())
+        .def_property("maxeval", &pagmo::nlopt::get_maxeval, &pagmo::nlopt::set_maxeval,
+                      nlopt_maxeval_docstring().c_str())
+        .def_property("maxtime", &pagmo::nlopt::get_maxtime, &pagmo::nlopt::set_maxtime,
+                      nlopt_maxtime_docstring().c_str());
     expose_not_population_based(nlopt_, "nlopt");
     expose_algo_log(nlopt_, nlopt_get_log_docstring().c_str());
-    nlopt_.def("get_last_opt_result", lcast([](const nlopt &n) { return static_cast<int>(n.get_last_opt_result()); }),
-               nlopt_get_last_opt_result_docstring().c_str());
-    nlopt_.def("get_solver_name", &nlopt::get_solver_name, nlopt_get_solver_name_docstring().c_str());
-    add_property(
-        nlopt_, "local_optimizer",
-        bp::make_function(lcast([](nlopt &n) { return n.get_local_optimizer(); }), bp::return_internal_reference<>()),
-        lcast([](nlopt &n, const nlopt *ptr) {
+    nlopt_.def(
+        "get_last_opt_result", [](const pagmo::nlopt &n) { return static_cast<int>(n.get_last_opt_result()); },
+        nlopt_get_last_opt_result_docstring().c_str());
+    nlopt_.def("get_solver_name", &pagmo::nlopt::get_solver_name, nlopt_get_solver_name_docstring().c_str());
+    nlopt_.def_property(
+        "local_optimizer", [](pagmo::nlopt &n) { return n.get_local_optimizer(); },
+        [](pagmo::nlopt &n, const pagmo::nlopt *ptr) {
             if (ptr) {
                 n.set_local_optimizer(*ptr);
             } else {
                 n.unset_local_optimizer();
             }
-        }),
-        nlopt_local_optimizer_docstring().c_str());
-#endif
+        },
+        py::return_value_policy::reference_internal, nlopt_local_optimizer_docstring().c_str());
 #endif
 }
 

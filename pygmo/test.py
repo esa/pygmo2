@@ -2423,6 +2423,259 @@ class wfg_test_case(_ut.TestCase):
         self.assertTrue(prob.get_nobj() == 3)
 
 
+class nlopt_test_case(_ut.TestCase):
+    """Test case for the UDA nlopt
+
+    """
+
+    def runTest(self):
+        from .core import nlopt, algorithm, luksan_vlcek1, problem, population
+        n = nlopt()
+        self.assertEqual(n.get_solver_name(), "cobyla")
+        n = nlopt(solver="slsqp")
+        self.assertEqual(n.get_solver_name(), "slsqp")
+        self.assertRaises(ValueError, lambda: nlopt("dsadsa"))
+
+        self.assertEqual(n.get_last_opt_result(), 1)
+
+        self.assertEqual(n.ftol_abs, 0.)
+        n.ftol_abs = 1E-6
+        self.assertEqual(n.ftol_abs, 1E-6)
+
+        def _():
+            n.ftol_abs = float('nan')
+        self.assertRaises(ValueError, _)
+
+        self.assertEqual(n.ftol_rel, 0.)
+        n.ftol_rel = 1E-6
+        self.assertEqual(n.ftol_rel, 1E-6)
+
+        def _():
+            n.ftol_rel = float('nan')
+        self.assertRaises(ValueError, _)
+
+        self.assertEqual(n.maxeval, 0)
+        n.maxeval = 42
+        self.assertEqual(n.maxeval, 42)
+
+        self.assertEqual(n.maxtime, 0)
+        n.maxtime = 43
+        self.assertEqual(n.maxtime, 43)
+
+        self.assertEqual(n.replacement, "best")
+        n.replacement = "worst"
+        self.assertEqual(n.replacement, "worst")
+
+        def _():
+            n.replacement = "rr"
+        self.assertRaises(ValueError, _)
+        n.replacement = 12
+        self.assertEqual(n.replacement, 12)
+
+        def _():
+            n.replacement = -1
+        self.assertRaises(TypeError, _)
+
+        self.assertEqual(n.selection, "best")
+        n.selection = "worst"
+        self.assertEqual(n.selection, "worst")
+
+        def _():
+            n.selection = "rr"
+        self.assertRaises(ValueError, _)
+        n.selection = 12
+        self.assertEqual(n.selection, 12)
+
+        def _():
+            n.selection = -1
+        self.assertRaises(TypeError, _)
+
+        n.set_random_sr_seed(12)
+        self.assertRaises(TypeError, lambda: n.set_random_sr_seed(-1))
+
+        self.assertEqual(n.stopval, -float('inf'))
+        n.stopval = 1E-6
+        self.assertEqual(n.stopval, 1E-6)
+
+        def _():
+            n.stopval = float('nan')
+        self.assertRaises(ValueError, _)
+
+        self.assertEqual(n.xtol_abs, 0.)
+        n.xtol_abs = 1E-6
+        self.assertEqual(n.xtol_abs, 1E-6)
+
+        def _():
+            n.xtol_abs = float('nan')
+        self.assertRaises(ValueError, _)
+
+        self.assertEqual(n.xtol_rel, 1E-8)
+        n.xtol_rel = 1E-6
+        self.assertEqual(n.xtol_rel, 1E-6)
+
+        def _():
+            n.xtol_rel = float('nan')
+        self.assertRaises(ValueError, _)
+
+        n = nlopt("slsqp")
+        algo = algorithm(n)
+        algo.set_verbosity(5)
+        prob = problem(luksan_vlcek1(20))
+        prob.c_tol = [1E-6] * 18
+        pop = population(prob, 20)
+        pop = algo.evolve(pop)
+        self.assertTrue(len(algo.extract(nlopt).get_log()) != 0)
+
+        # Pickling.
+        from pickle import dumps, loads
+        algo = algorithm(nlopt("slsqp"))
+        algo.set_verbosity(5)
+        prob = problem(luksan_vlcek1(20))
+        prob.c_tol = [1E-6] * 18
+        pop = population(prob, 20)
+        algo.evolve(pop)
+        self.assertEqual(str(algo), str(loads(dumps(algo))))
+        self.assertEqual(algo.extract(nlopt).get_log(), loads(
+            dumps(algo)).extract(nlopt).get_log())
+
+        # Local optimizer.
+        self.assertTrue(nlopt("slsqp").local_optimizer is None)
+        self.assertTrue(nlopt("auglag").local_optimizer is None)
+        n = nlopt("auglag")
+        loc = nlopt("slsqp")
+        n.local_optimizer = loc
+        self.assertFalse(n.local_optimizer is None)
+        self.assertEqual(str(algorithm(loc)), str(
+            algorithm(n.local_optimizer)))
+        pop = population(prob, 20, seed=4)
+        algo = algorithm(n)
+        algo.evolve(pop)
+        self.assertTrue(algo.extract(nlopt).get_last_opt_result() >= 0)
+        n = nlopt("auglag_eq")
+        loc = nlopt("slsqp")
+        n.local_optimizer = loc
+        self.assertFalse(n.local_optimizer is None)
+        self.assertEqual(str(algorithm(loc)), str(
+            algorithm(n.local_optimizer)))
+        pop = population(prob, 20, seed=4)
+        algo = algorithm(n)
+        algo.evolve(pop)
+        self.assertTrue(algo.extract(nlopt).get_last_opt_result() >= 0)
+
+        # Refcount.
+        import sys
+        nl = nlopt("auglag")
+        loc = nlopt("slsqp")
+        nl.local_optimizer = loc
+        old_rc = sys.getrefcount(nl)
+        foo = nl.local_optimizer
+        self.assertEqual(old_rc + 1, sys.getrefcount(nl))
+        del nl
+        self.assertTrue(len(str(foo)) != 0)
+        del foo
+
+
+class ipopt_test_case(_ut.TestCase):
+    """Test case for the UDA ipopt
+
+    """
+
+    def runTest(self):
+        from .core import ipopt, algorithm, luksan_vlcek1, problem, population
+        ip = ipopt()
+        # Check the def-cted state.
+        self.assertEqual(ip.get_last_opt_result(), 0)
+        self.assertEqual(ip.get_log(), [])
+        self.assertEqual(ip.get_numeric_options(), {})
+        self.assertEqual(ip.get_integer_options(), {})
+        self.assertEqual(ip.get_numeric_options(), {})
+        self.assertEqual(ip.selection, "best")
+        self.assertEqual(ip.replacement, "best")
+        self.assertTrue(len(str(algorithm(ip))) != 0)
+
+        # Options testing.
+        ip.set_string_option("marge", "simpson")
+        self.assertEqual(ip.get_string_options(), {"marge": "simpson"})
+        ip.set_string_options({"homer": "simpson", "bart": "simpson"})
+        self.assertEqual(ip.get_string_options(), {
+                         "marge": "simpson", "bart": "simpson", "homer": "simpson"})
+        ip.reset_string_options()
+        self.assertEqual(ip.get_string_options(), {})
+
+        ip.set_integer_option("marge", 0)
+        self.assertEqual(ip.get_integer_options(), {"marge": 0})
+        ip.set_integer_options({"homer": 1, "bart": 2})
+        self.assertEqual(ip.get_integer_options(), {
+                         "marge": 0, "bart": 2, "homer": 1})
+        ip.reset_integer_options()
+        self.assertEqual(ip.get_integer_options(), {})
+
+        ip.set_numeric_option("marge", 0.)
+        self.assertEqual(ip.get_numeric_options(), {"marge": 0.})
+        ip.set_numeric_options({"homer": 1., "bart": 2.})
+        self.assertEqual(ip.get_numeric_options(), {
+                         "marge": 0., "bart": 2., "homer": 1.})
+        ip.reset_numeric_options()
+        self.assertEqual(ip.get_numeric_options(), {})
+
+        # Select/replace.
+        self.assertEqual(ip.replacement, "best")
+        ip.replacement = "worst"
+        self.assertEqual(ip.replacement, "worst")
+
+        def _():
+            ip.replacement = "rr"
+        self.assertRaises(ValueError, _)
+        ip.replacement = 12
+        self.assertEqual(ip.replacement, 12)
+
+        def _():
+            ip.replacement = -1
+        self.assertRaises(TypeError, _)
+
+        self.assertEqual(ip.selection, "best")
+        ip.selection = "worst"
+        self.assertEqual(ip.selection, "worst")
+
+        def _():
+            ip.selection = "rr"
+        self.assertRaises(ValueError, _)
+        ip.selection = 12
+        self.assertEqual(ip.selection, 12)
+
+        def _():
+            ip.selection = -1
+        self.assertRaises(TypeError, _)
+
+        ip.set_random_sr_seed(12)
+        self.assertRaises(TypeError, lambda: ip.set_random_sr_seed(-1))
+
+        ip = ipopt()
+        algo = algorithm(ip)
+        algo.set_verbosity(5)
+        prob = problem(luksan_vlcek1(20))
+        prob.c_tol = [1E-6] * 18
+        pop = population(prob, 20)
+        pop = algo.evolve(pop)
+        self.assertTrue(len(algo.extract(ipopt).get_log()) != 0)
+
+        # Pickling.
+        from pickle import dumps, loads
+        ip = ipopt()
+        ip.set_numeric_option("tol", 1E-7)
+        algo = algorithm(ip)
+        algo.set_verbosity(5)
+        prob = problem(luksan_vlcek1(20))
+        prob.c_tol = [1E-6] * 18
+        pop = population(prob, 20)
+        algo.evolve(pop)
+        self.assertEqual(str(algo), str(loads(dumps(algo))))
+        self.assertEqual(algo.extract(ipopt).get_log(), loads(
+            dumps(algo)).extract(ipopt).get_log())
+        self.assertEqual(algo.extract(ipopt).get_numeric_options(), loads(
+            dumps(algo)).extract(ipopt).get_numeric_options())
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -2513,16 +2766,16 @@ def run_test_suite(level=0):
     suite.addTest(cstrs_self_adaptive_test_case())
     suite.addTest(decorator_problem_test_case())
     suite.addTest(wfg_test_case())
-    # try:
-    #     from .core import nlopt
-    #     suite.addTest(nlopt_test_case())
-    # except ImportError:
-    #     pass
-    # try:
-    #     from .core import ipopt
-    #     suite.addTest(ipopt_test_case())
-    # except ImportError:
-    #     pass
+    try:
+        from .core import nlopt
+        suite.addTest(nlopt_test_case())
+    except ImportError:
+        pass
+    try:
+        from .core import ipopt
+        suite.addTest(ipopt_test_case())
+    except ImportError:
+        pass
 
     test_result = _ut.TextTestRunner(verbosity=2).run(suite)
 
