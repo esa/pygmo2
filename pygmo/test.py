@@ -1088,6 +1088,7 @@ class archipelago_test_case(_ut.TestCase):
         a.evolve(10)
         print("20\n")
         str(a)
+        print("20a\n")
         a.wait()
         print("21\n")
         a.evolve(10)
