@@ -717,17 +717,29 @@ class archipelago_test_case(_ut.TestCase):
         self._level = level
 
     def runTest(self):
+        print("a")
         self.run_init_tests()
+        print("b")
         self.run_evolve_tests()
+        print("c")
         self.run_access_tests()
+        print("d")
         self.run_push_back_tests()
+        print("e")
         self.run_io_tests()
+        print("f")
         self.run_pickle_tests()
+        print("g")
         self.run_champions_tests()
+        print("h")
         self.run_status_tests()
+        print("i")
         self.run_mig_log_db_tests()
+        print("j")
         self.run_get_set_topo_tests()
+        print("k")
         self.run_mt_mh_tests()
+        print("l")
         if self._level > 0:
             self.run_torture_test_0()
             # NOTE: skip this test for the time being.
