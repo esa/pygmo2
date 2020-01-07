@@ -1606,6 +1606,202 @@ class mo_utils_test_case(_ut.TestCase):
         self.assertEqual(len(select_best_N_mo(points=pop.get_f(), N=0)), 0)
 
 
+class con_utils_test_case(_ut.TestCase):
+    """Test case for the constrained utilities (only the interface is tested)
+
+    """
+
+    def runTest(self):
+        from .core import compare_fc, sort_population_con
+        compare_fc(f1=[1, 1, 1], f2=[1, 2.1, -1.2], nec=1, tol=[0] * 2)
+        sort_population_con(
+            input_f=[[1.2, 0.1, -1], [0.2, 1.1, 1.1], [2, -0.5, -2]], nec=1, tol=[1e-8] * 2)
+
+
+class global_rng_test_case(_ut.TestCase):
+    """Test case for the global random number generator
+
+    """
+
+    def runTest(self):
+        from .core import set_global_rng_seed, population, ackley
+        set_global_rng_seed(seed=32)
+        pop = population(prob=ackley(5), size=20)
+        f1 = pop.champion_f
+        set_global_rng_seed(seed=32)
+        pop = population(prob=ackley(5), size=20)
+        f2 = pop.champion_f
+        self.assertTrue(f1 == f2)
+
+
+class estimate_sparsity_test_case(_ut.TestCase):
+    """Test case for the hypervolume utilities
+
+    """
+
+    def runTest(self):
+        import pygmo as pg
+        import numpy as np
+
+        def my_fun(x):
+            return [x[0] + x[3], x[2], x[1]]
+        res = pg.estimate_sparsity(
+            callable=my_fun, x=[0.1, 0.1, 0.1, 0.1], dx=1e-8)
+        self.assertTrue(
+            (res == np.array([[0, 0], [0, 3], [1, 2], [2, 1]])).all())
+
+
+class estimate_gradient_test_case(_ut.TestCase):
+    """Test case for the hypervolume utilities
+
+    """
+
+    def runTest(self):
+        import pygmo as pg
+        import numpy as np
+
+        def my_fun(x):
+            return [x[0] + x[3], x[2], x[1]]
+        out = pg.estimate_gradient(callable=my_fun, x=[0] * 4, dx=1e-8)
+        res = np.array([1.,  0.,  0.,  1.,  0.,  0.,
+                        1.,  0.,  0.,  1.,  0.,  0.])
+        self.assertTrue((abs(out - res) < 1e-8).all())
+        out = pg.estimate_gradient_h(callable=my_fun, x=[0] * 4, dx=1e-8)
+        self.assertTrue((abs(out - res) < 1e-8).all())
+
+
+class random_decision_vector_test_case(_ut.TestCase):
+    """Test case for random_decision_vector().
+
+    """
+
+    def runTest(self):
+        from .core import random_decision_vector, set_global_rng_seed, problem
+
+        class prob(object):
+            def __init__(self, lb, ub, nix=0):
+                self.lb = lb
+                self.ub = ub
+                self.nix = nix
+
+            def fitness(self, x):
+                return [0]
+
+            def get_bounds(self):
+                return self.lb, self.ub
+
+            def get_nix(self):
+                return self.nix
+
+        set_global_rng_seed(42)
+        x = random_decision_vector(prob=problem(
+            prob([1.1, 2.1, -3], [2.1, 3.4, 5], 1)))
+        self.assertTrue(int(x[-1]) == x[-1])
+        self.assertTrue(int(x[1]) != x[1])
+
+        set_global_rng_seed(42)
+        y = random_decision_vector(
+            problem(prob(lb=[1.1, 2.1, -3], ub=[2.1, 3.4, 5], nix=1)))
+        self.assertTrue((x == y).all())
+
+        self.assertTrue(random_decision_vector(
+            problem(prob(lb=[1.1], ub=[1.1])))[0] == 1.1)
+        self.assertTrue(random_decision_vector(
+            problem(prob(lb=[1], ub=[1], nix=1)))[0] == 1)
+        self.assertTrue(random_decision_vector(
+            problem(prob(lb=[0], ub=[3], nix=1)))[0] in [0, 1, 2, 3])
+
+        nan = float("nan")
+        inf = float("inf")
+
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, 0], [1, inf]))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, -inf], [1, 0]))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, -inf], [1, inf]))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, 0], [1, nan]))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, -nan], [1, 0]))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, -nan], [1, nan]))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, 0], [1, 1E100], 1))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, -1E100], [1, 0], 1))))
+        self.assertRaises(
+            ValueError, lambda: random_decision_vector(problem(prob([0, -1E100], [1, 1E100], 1))))
+
+
+class batch_random_decision_vector_test_case(_ut.TestCase):
+    """Test case for batch_random_decision_vector().
+
+    """
+
+    def runTest(self):
+        from .core import batch_random_decision_vector as brdv, set_global_rng_seed, problem
+        import numpy as np
+
+        class prob(object):
+            def __init__(self, lb, ub, nix=0):
+                self.lb = lb
+                self.ub = ub
+                self.nix = nix
+
+            def fitness(self, x):
+                return [0]
+
+            def get_bounds(self):
+                return self.lb, self.ub
+
+            def get_nix(self):
+                return self.nix
+
+        set_global_rng_seed(42)
+        x = brdv(
+            problem(prob([1.1, 2.1, -3], [2.1, 3.4, 5], 1)), 10).reshape(10, 3)
+        np.all([_ >= 1.1 and _ < 2.1 for _ in x[:, 0]])
+        np.all([_ >= 2.1 and _ < 3.4 for _ in x[:, 1]])
+        np.all([_ in range(-3, 6) for _ in x[:, 2]])
+
+        x2 = brdv(prob=problem(prob([1.1, 2.1, -3], [2.1, 3.4, 5], 1)), n=0)
+        self.assertTrue(x2.shape == (0,))
+
+        set_global_rng_seed(42)
+        y = brdv(
+            problem(prob([1.1, 2.1, -3], [2.1, 3.4, 5], 1)), 10).reshape(10, 3)
+        self.assertTrue(np.all(x == y))
+
+        x = brdv(problem(prob([1.1], [1.1])), 10)
+        self.assertTrue(np.all(x == 1.1))
+
+        x = brdv(problem(prob([-1], [-1], 1)), 10)
+        self.assertTrue(np.all(x == -1))
+
+        nan = float("nan")
+        inf = float("inf")
+
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, 0], [1, inf])), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, -inf], [1, 0])), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, -inf], [1, inf])), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, 0], [1, nan])), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, -nan], [1, 0])), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, -nan], [1, nan])), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, 0], [1, 1E100], 1)), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, -1E100], [1, 0], 1)), 1))
+        self.assertRaises(
+            ValueError, lambda: brdv(problem(prob([0, -1E100], [1, 1E100], 1)), 1))
+
+
 def run_test_suite(level=0):
     """Run the full test suite.
 
@@ -1615,7 +1811,6 @@ def run_test_suite(level=0):
         level(``int``): the test level (higher values run longer tests)
 
     """
-    #from . import _problem_test, _algorithm_test, _island_test, _topology_test, _r_policy_test, _s_policy_test, _bfe_test, set_global_rng_seed
     from . import _problem_test, set_global_rng_seed, _algorithm_test, _bfe_test, _island_test, _topology_test, _r_policy_test, _s_policy_test
 
     # Make test runs deterministic.
@@ -1666,12 +1861,12 @@ def run_test_suite(level=0):
     suite.addTest(null_problem_test_case())
     suite.addTest(hypervolume_test_case())
     suite.addTest(mo_utils_test_case())
-    # suite.addTest(con_utils_test_case())
-    # suite.addTest(global_rng_test_case())
-    # suite.addTest(estimate_sparsity_test_case())
-    # suite.addTest(estimate_gradient_test_case())
-    # suite.addTest(random_decision_vector_test_case())
-    # suite.addTest(batch_random_decision_vector_test_case())
+    suite.addTest(con_utils_test_case())
+    suite.addTest(global_rng_test_case())
+    suite.addTest(estimate_sparsity_test_case())
+    suite.addTest(estimate_gradient_test_case())
+    suite.addTest(random_decision_vector_test_case())
+    suite.addTest(batch_random_decision_vector_test_case())
     # try:
     #     from .core import cmaes
     #     suite.addTest(cmaes_test_case())

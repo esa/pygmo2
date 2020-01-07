@@ -39,7 +39,9 @@
 #include <pagmo/threading.hpp>
 #include <pagmo/topology.hpp>
 #include <pagmo/types.hpp>
+#include <pagmo/utils/constrained.hpp>
 #include <pagmo/utils/generic.hpp>
+#include <pagmo/utils/gradients_and_hessians.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_approx.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_fpras.hpp>
 #include <pagmo/utils/hv_algos/hv_hv2d.hpp>
@@ -558,6 +560,63 @@ PYBIND11_MODULE(core, m)
                 pg::ideal(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(p)));
         },
         pygmo::ideal_docstring().c_str(), py::arg("points"));
+
+    // Gradient and Hessians utilities
+    m.def(
+        "estimate_sparsity",
+        [](const py::object &func, const py::array_t<double> &x,
+           double dx) -> py::array_t<pg::vector_double::size_type> {
+            auto f = [&func](const pg::vector_double &x_) {
+                return pygmo::ndarr_to_vector<pg::vector_double>(
+                    py::cast<py::array_t<double>>(func(pygmo::vector_to_ndarr<py::array_t<double>>(x_))));
+            };
+            return pygmo::sp_to_ndarr(pg::estimate_sparsity(f, pygmo::ndarr_to_vector<pg::vector_double>(x), dx));
+        },
+        pygmo::estimate_sparsity_docstring().c_str(), py::arg("callable"), py::arg("x"), py::arg("dx") = 1e-8);
+
+    m.def(
+        "estimate_gradient",
+        [](const py::object &func, const py::array_t<double> &x, double dx) -> py::array_t<double> {
+            auto f = [&func](const pg::vector_double &x_) {
+                return pygmo::ndarr_to_vector<pg::vector_double>(
+                    py::cast<py::array_t<double>>(func(pygmo::vector_to_ndarr<py::array_t<double>>(x_))));
+            };
+            return pygmo::vector_to_ndarr<py::array_t<double>>(
+                pg::estimate_gradient(f, pygmo::ndarr_to_vector<pg::vector_double>(x), dx));
+        },
+        pygmo::estimate_gradient_docstring().c_str(), py::arg("callable"), py::arg("x"), py::arg("dx") = 1e-8);
+
+    m.def(
+        "estimate_gradient_h",
+        [](const py::object &func, const py::array_t<double> &x, double dx) -> py::array_t<double> {
+            auto f = [&func](const pg::vector_double &x_) {
+                return pygmo::ndarr_to_vector<pg::vector_double>(
+                    py::cast<py::array_t<double>>(func(pygmo::vector_to_ndarr<py::array_t<double>>(x_))));
+            };
+            return pygmo::vector_to_ndarr<py::array_t<double>>(
+                pg::estimate_gradient_h(f, pygmo::ndarr_to_vector<pg::vector_double>(x), dx));
+        },
+        pygmo::estimate_gradient_h_docstring().c_str(), py::arg("callable"), py::arg("x"), py::arg("dx") = 1e-2);
+
+    // Constrained optimization utilities
+    m.def(
+        "compare_fc",
+        [](const py::array_t<double> &f1, const py::array_t<double> &f2, pg::vector_double::size_type nec,
+           const py::array_t<double> &tol) {
+            return pg::compare_fc(pygmo::ndarr_to_vector<pg::vector_double>(f1),
+                                  pygmo::ndarr_to_vector<pg::vector_double>(f2), nec,
+                                  pygmo::ndarr_to_vector<pg::vector_double>(tol));
+        },
+        pygmo::compare_fc_docstring().c_str(), py::arg("f1"), py::arg("f2"), py::arg("nec"), py::arg("tol"));
+
+    m.def(
+        "sort_population_con",
+        [](const py::array_t<double> &input_f, pg::vector_double::size_type nec, const py::array_t<double> &tol) {
+            return pygmo::vector_to_ndarr<py::array_t<pg::pop_size_t>>(
+                pg::sort_population_con(pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(input_f), nec,
+                                        pygmo::ndarr_to_vector<pg::vector_double>(tol)));
+        },
+        pygmo::sort_population_con_docstring().c_str(), py::arg("input_f"), py::arg("nec"), py::arg("tol"));
 
     // Add the submodules.
     auto problems_module = m.def_submodule("problems");
