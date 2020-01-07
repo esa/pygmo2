@@ -41,10 +41,10 @@ for _item in dir(_py_islands):
         setattr(islands, _item, getattr(_py_islands, _item))
 del _py_islands
 
-# for _item in dir(_py_problems):
-#     if not _item.startswith("_"):
-#         setattr(problems, _item, getattr(_py_problems, _item))
-# del _py_problems
+for _item in dir(_py_problems):
+    if not _item.startswith("_"):
+        setattr(problems, _item, getattr(_py_problems, _item))
+del _py_problems
 
 for _item in dir(_py_bfes):
     if not _item.startswith("_"):
