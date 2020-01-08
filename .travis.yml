@@ -1,0 +1,20 @@
+language: cpp
+
+sudo: false
+
+# Do not build branches of the form "pr/*". By prefixing pull requests coming
+# from branches inside the repository with pr/, this avoids building both the
+# branch push _and_ the pull request.
+branches:
+  except: /pr\/.*/
+
+matrix:
+  include:
+    - env: PYGMO_BUILD_TYPE="debug_pagmo_head"
+      os: osx
+      osx_image: xcode10.3
+script:
+    - tools/travis_osx.sh
+
+notifications:
+  email: false
