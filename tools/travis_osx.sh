@@ -14,7 +14,7 @@ conda config --add channels conda-forge --force
 if [[ "${PYGMO_BUILD_TYPE}" == "debug_pagmo_head" ]]; then
     conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel"
 else
-    conda_pkgs="cmake boost-cpp python=3.7 numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel"
+    conda_pkgs="cmake boost-cpp python=3.7 numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel pagmo-devel"
 fi
 conda create -q -p $deps_dir -y
 source activate $deps_dir
