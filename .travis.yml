@@ -13,7 +13,6 @@ matrix:
     - env: PYGMO_BUILD_TYPE="debug_pagmo_head"
       os: osx
       osx_image: xcode10.3
-  include:
     - env: PYGMO_BUILD_TYPE="debug_pagmo_latest"
       os: osx
       osx_image: xcode10.3
