@@ -9,7 +9,6 @@ set -e
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
 export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
-export PATH="$deps_dir/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
 conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel"
@@ -44,7 +43,7 @@ ipcluster start --daemonize=True;
 sleep 20;
 
 # Run the test suite.
-python -c "import pygmo; pygmo.test.run_test_suite(1)"
+python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
 set +e
 set +x
