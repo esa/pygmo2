@@ -15,20 +15,10 @@ export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
-conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle dill numba pip pybind11"
+conda_pkgs="cmake boost-cpp python=3.7 numpy cloudpickle dill numba pip pybind11 pagmo-devel"
 conda create -q -p $deps_dir -y
 source activate $deps_dir
 conda install $conda_pkgs -y
-
-# Install pagmo.
-git clone https://github.com/esa/pagmo2.git
-cd pagmo2
-mkdir build
-cd build
-cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DPAGMO_WITH_EIGEN3=ON -DPAGMO_WITH_IPOPT=ON -DPAGMO_WITH_NLOPT=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DCMAKE_CXX_STANDARD=17
-make -j4 install VERBOSE=1
-cd ..
-cd ..
 
 # Create the build dir and cd into it.
 mkdir build
