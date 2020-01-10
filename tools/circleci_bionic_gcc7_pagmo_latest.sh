@@ -12,7 +12,7 @@ sudo apt-get install build-essential wget
 # Install conda+deps.
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 export deps_dir=$HOME/local
-export PATH="$deps_dir/bin:$PATH"
+export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
 conda_pkgs="cmake boost-cpp python=3.7 numpy cloudpickle dill numba pip pybind11 pagmo-devel"
