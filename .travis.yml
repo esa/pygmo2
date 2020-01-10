@@ -10,10 +10,10 @@ branches:
 
 matrix:
   include:
-    - env: PYGMO_BUILD_TYPE="debug_pagmo_head"
+    - env: PYGMO_BUILD_TYPE="debug_pagmo_latest"
       os: osx
       osx_image: xcode10.3
-    - env: PYGMO_BUILD_TYPE="debug_pagmo_latest"
+    - env: PYGMO_BUILD_TYPE="debug_pagmo_head"
       os: osx
       osx_image: xcode10.3
 script:
