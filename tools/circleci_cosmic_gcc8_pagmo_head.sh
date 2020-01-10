@@ -44,4 +44,3 @@ python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_
 
 set +e
 set +x
-
