@@ -3,7 +3,7 @@ trigger:
 
 jobs:
 
-  - job: 'vs2015_release_latest'
+  - job: 'vs2017_release_latest'
     pool:
       vmImage: 'vs2017-win2016'
     timeoutInMinutes: 360
@@ -61,16 +61,14 @@ jobs:
 
       # Configure, build and test.
       - script: |
-          CALL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\..\..\VC\vcvarsall.bat" amd64
           setlocal EnableDelayedExpansion
           mkdir build
           cd build
-          cmake .. -G "NMake Makefiles" ^
-                -DCMAKE_BUILD_TYPE=Release ^
+          cmake .. -G "Visual Studio 15 2017" ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
-          cmake --build . --target install
+          cmake --build . --config RelWithDebInfo --target install
           cd ..
           cd ..
           python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
