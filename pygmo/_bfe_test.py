@@ -149,6 +149,9 @@ class bfe_test_case(_ut.TestCase):
             b_func)(prob=rosenbrock(5), dvs=[5]*35))
 
         # Test that construction from another pygmo.bfe fails.
+        bfe(b_func)
+        bfe(bfe(b_func))
+
         with self.assertRaises(TypeError) as cm:
             bfe(bfe(b_func))
         err = cm.exception
