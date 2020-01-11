@@ -1,4 +1,4 @@
-// Copyright 2019 PaGMO development team
+// Copyright 2020 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
