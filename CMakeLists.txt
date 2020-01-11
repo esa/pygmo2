@@ -140,7 +140,7 @@ endif()
 # NOTE: put the minimum version in a variable
 # so that we can re-use it below.
 set (_PYGMO_MIN_PAGMO_VERSION 2.13.0)
-find_package(pagmo 2.13 REQUIRED)
+find_package(pagmo 2.13.0 REQUIRED)
 if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
     message(FATAL_ERROR "The minimum pagmo version required by pygmo is ${_PYGMO_MIN_PAGMO_VERSION}, but version ${pagmo_VERSION} was found instead.")
 endif()
