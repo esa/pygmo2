@@ -47,9 +47,17 @@ jobs:
                         numba ^
                         pip ^
                         pybind11 ^
+                        ipyparallel ^
                         pagmo-devel
           conda list
         displayName: "Install conda packages"
+
+      - script: |
+          cd tools
+          Powershell.exe -File start_ip_cluster.ps1
+          timeout 20
+          cd ..
+        displayName: "Start ipyparallel"
 
       # Configure, build and test.
       - script: |
