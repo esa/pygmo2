@@ -45,7 +45,8 @@ bfe_inner<py::object>::bfe_inner(const py::object &o)
     // in pygmo, we throw an error if o is a bfe, and instruct
     // the user to employ the standard copy/deepcopy facilities
     // for creating a copy of the input bfe.
-    if (pygmo::type(o).equal(py::module::import("pygmo").attr("bfe"))) {
+    // if (pygmo::type(o).equal(py::module::import("pygmo").attr("bfe"))) {
+    if (py::isinstance(o, py::module::import("pygmo").attr("bfe"))) {
         pygmo::py_throw(PyExc_TypeError,
                         ("a pygmo.bfe cannot be used as a UDBFE for another pygmo.bfe (if you need to copy a "
                          "bfe please use the standard Python copy()/deepcopy() functions)"));
