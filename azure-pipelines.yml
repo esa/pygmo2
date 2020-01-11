@@ -69,8 +69,7 @@ jobs:
                 -DCMAKE_BUILD_TYPE=Release ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
-                -DBoost_NO_BOOST_CMAKE=ON ^
-                -DCMAKE_CXX_STANDARD=14
+                -DBoost_NO_BOOST_CMAKE=ON
           cmake --build . --target install
           cd ..
           cd ..
