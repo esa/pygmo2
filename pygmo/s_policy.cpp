@@ -44,7 +44,7 @@ s_pol_inner<py::object>::s_pol_inner(const py::object &o)
     // in pygmo, we throw an error if o is an s_policy, and instruct
     // the user to employ the standard copy/deepcopy facilities
     // for creating a copy of the input s_policy.
-    if (pygmo::type(o).is(py::module::import("pygmo").attr("s_policy"))) {
+    if (pygmo::type(o).equal(py::module::import("pygmo").attr("s_policy"))) {
         pygmo::py_throw(PyExc_TypeError,
                         ("a pygmo.s_policy cannot be used as a UDSP for another pygmo.s_policy (if you need to copy a "
                          "selection policy please use the standard Python copy()/deepcopy() functions)"));

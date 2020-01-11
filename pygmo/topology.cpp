@@ -46,7 +46,7 @@ topo_inner<py::object>::topo_inner(const py::object &o)
     // in pygmo, we throw an error if o is a topology, and instruct
     // the user to employ the standard copy/deepcopy facilities
     // for creating a copy of the input topology.
-    if (pygmo::type(o).is(py::module::import("pygmo").attr("topology"))) {
+    if (pygmo::type(o).equal(py::module::import("pygmo").attr("topology"))) {
         pygmo::py_throw(PyExc_TypeError,
                         ("a pygmo.topology cannot be used as a UDT for another pygmo.topology (if you need to copy a "
                          "topology please use the standard Python copy()/deepcopy() functions)"));
