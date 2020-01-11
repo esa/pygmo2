@@ -38,7 +38,7 @@ jobs:
       # Create conda enviroment
       # Note: conda activate doesn't work here, because it creates a new shell!
       - script: |
-          conda install cmake ^
+          conda install cmake<3-16 ^
                         boost-cpp ^
                         python=3.7 ^
                         numpy ^
