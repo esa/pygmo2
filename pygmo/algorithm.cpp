@@ -43,7 +43,7 @@ algo_inner<py::object>::algo_inner(const py::object &o)
     // in pygmo, we throw an error if o is a algorithm, and instruct
     // the user to employ the standard copy/deepcopy facilities
     // for creating a copy of the input algorithm.
-    if (pygmo::type(o).is(py::module::import("pygmo").attr("algorithm"))) {
+    if (pygmo::type(o).equal(py::module::import("pygmo").attr("algorithm"))) {
         pygmo::py_throw(
             PyExc_TypeError,
             ("a pygmo.algorithm cannot be used as a UDA for another pygmo.algorithm (if you need to copy an "

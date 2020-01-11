@@ -44,7 +44,7 @@ r_pol_inner<py::object>::r_pol_inner(const py::object &o)
     // in pygmo, we throw an error if o is an r_policy, and instruct
     // the user to employ the standard copy/deepcopy facilities
     // for creating a copy of the input r_policy.
-    if (pygmo::type(o).is(py::module::import("pygmo").attr("r_policy"))) {
+    if (pygmo::type(o).equal(py::module::import("pygmo").attr("r_policy"))) {
         pygmo::py_throw(PyExc_TypeError,
                         ("a pygmo.r_policy cannot be used as a UDRP for another pygmo.r_policy (if you need to copy a "
                          "replacement policy please use the standard Python copy()/deepcopy() functions)"));

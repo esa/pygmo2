@@ -48,7 +48,7 @@ prob_inner<py::object>::prob_inner(const py::object &o)
     // in pygmo, we throw an error if o is a problem, and instruct
     // the user to employ the standard copy/deepcopy facilities
     // for creating a copy of the input problem.
-    if (pygmo::type(o).is(py::module::import("pygmo").attr("problem"))) {
+    if (pygmo::type(o).equal(py::module::import("pygmo").attr("problem"))) {
         pygmo::py_throw(PyExc_TypeError,
                         ("a pygmo.problem cannot be used as a UDP for another pygmo.problem (if you need to copy a "
                          "problem please use the standard Python copy()/deepcopy() functions)"));
