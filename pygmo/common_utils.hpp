@@ -153,7 +153,7 @@ template <typename C>
 inline py::object generic_py_extract(C &c, const py::object &t)
 {
     auto ptr = c.template extract<py::object>();
-    if (ptr && (t.is(type(*ptr)) || t.is(builtins().attr("object")))) {
+    if (ptr && (t.equal(type(*ptr)) || t.equal(builtins().attr("object")))) {
         // c contains a user-defined pythonic entity and either:
         // - the type passed in by the user is the exact type of the user-defined
         //   entity, or
