@@ -36,7 +36,21 @@ release = version
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.mathjax',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'nbsphinx'
 ]
+
+# Intersphinx mappings.
+intersphinx_mapping = {'python': (
+    'https://docs.python.org/3', None),
+    'matplotlib': ('https://matplotlib.org/', None),
+    'ipyparallel': ('https://ipyparallel.readthedocs.io/en/latest/', None),
+    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
+    'pagmo': ('https://esa.github.io/pagmo2/', None)}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -52,9 +66,14 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# The name of an image file (relative to this directory) to use as a favicon of
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+# pixels large.
+html_favicon = 'docs/images/logo_favico.ico'
