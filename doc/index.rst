@@ -55,6 +55,8 @@ pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
    :maxdepth: 2
    :caption: Contents:
 
+   install
+
 Indices and tables
 ==================
 
