@@ -159,5 +159,8 @@ endif()
 # pybind11.
 find_package(pybind11 REQUIRED)
 
+# Configure the sphinx config file.
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)
+
 # Add the module directory.
 add_subdirectory(pygmo)
