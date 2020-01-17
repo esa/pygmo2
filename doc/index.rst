@@ -27,8 +27,10 @@ pygmo
 .. image:: images/migration.png
    :width: 15%
 
-pygmo is a scientific Python library for massively parallel optimization. It is built
-around the idea of providing a unified interface to optimization algorithms and problems,
+pygmo is a scientific Python library for massively parallel optimization.
+It is built
+around the idea of providing a unified interface to optimization
+algorithms and problems,
 and to make their deployment in massively parallel environments easy.
 
 Efficient implementantions of bio-inspired and evolutionary algorithms are
@@ -46,7 +48,8 @@ easily compare them to state-of-the-art implementations of established ones.
 
 If you are using pygmo as part of your research, teaching, or other activities,
 we would be grateful if you could star
-the repository and/or cite our work. The DOI of the latest version and other citation resources are available
+the repository and/or cite our work. The DOI of the latest version and
+other citation resources are available
 at `this link <https://doi.org/10.5281/zenodo.1045336>`__.
 
 pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
@@ -56,6 +59,7 @@ pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
    :caption: Contents:
 
    install
+   overview
 
 Indices and tables
 ==================
