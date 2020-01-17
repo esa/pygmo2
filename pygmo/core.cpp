@@ -26,6 +26,7 @@
 #include <pagmo/batch_evaluators/member_bfe.hpp>
 #include <pagmo/batch_evaluators/thread_bfe.hpp>
 #include <pagmo/bfe.hpp>
+#include <pagmo/config.hpp>
 #include <pagmo/detail/gte_getter.hpp>
 #include <pagmo/detail/make_unique.hpp>
 #include <pagmo/exceptions.hpp>
@@ -218,6 +219,11 @@ PYBIND11_MODULE(core, m)
     // throughout the whole definition of the module.
     py::options options;
     options.disable_function_signatures();
+
+    // Export the pagmo version.
+    m.attr("_pagmo_version_major") = PAGMO_VERSION_MAJOR;
+    m.attr("_pagmo_version_minor") = PAGMO_VERSION_MINOR;
+    m.attr("_pagmo_version_patch") = PAGMO_VERSION_PATCH;
 
     // Expose some internal functions for testing.
     m.def("_callable", &pygmo::callable);

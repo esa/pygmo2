@@ -3,7 +3,155 @@ trigger:
 
 jobs:
 
-  - job: 'vs2017_release_latest'
+  - job: 'vs2017_release_latest_36'
+    pool:
+      vmImage: 'vs2017-win2016'
+    timeoutInMinutes: 360
+    steps:
+
+      # Install Chocolatey (https://chocolatey.org/install#install-with-powershellexe)
+      - powershell: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          Write-Host "##vso[task.setvariable variable=PATH]$env:PATH"
+          choco --version
+        displayName: "Install Chocolatey"
+
+      # Install Miniconda
+      - script: |
+          choco install miniconda3 --yes
+          set PATH=C:\tools\miniconda3\Scripts;C:\tools\miniconda3;C:\tools\miniconda3\Library\bin;%PATH%
+          echo '##vso[task.setvariable variable=PATH]%PATH%'
+          set LIB=C:\tools\miniconda3\Library\lib;%LIB%
+          echo '##vso[task.setvariable variable=LIB]%LIB%'
+          conda --version
+        displayName: "Install Miniconda"
+
+      # Configure Miniconda
+      - script: |
+          conda config --set always_yes yes
+          conda config --add channels conda-forge
+          conda config --set channel_priority strict
+          conda info
+        displayName: "Configure Miniconda"
+
+      # Create conda enviroment
+      # Note: conda activate doesn't work here, because it creates a new shell!
+      - script: |
+          conda install cmake ^
+                        boost-cpp ^
+                        python=3.6 ^
+                        numpy ^
+                        cloudpickle ^
+                        dill ^
+                        numba ^
+                        pip ^
+                        pybind11 ^
+                        ipyparallel ^
+                        pagmo-devel
+          conda list
+        displayName: "Install conda packages"
+
+      - script: |
+          cd tools
+          Powershell.exe -File start_ip_cluster.ps1
+          timeout 20
+          cd ..
+        displayName: "Start ipyparallel"
+
+      # Configure, build and test.
+      - script: |
+          setlocal EnableDelayedExpansion
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 15 2017 Win64" ^
+                -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
+                -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
+                -DBoost_NO_BOOST_CMAKE=ON
+          cmake --build . --config RelWithDebInfo --target install
+          cd ..
+          cd ..
+          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+        displayName: "Configure, build and test"
+
+  - job: 'vs2015_clang_release_latest_36'
+    pool:
+      vmImage: 'vs2017-win2016'
+    timeoutInMinutes: 360
+    steps:
+
+      # Install Chocolatey (https://chocolatey.org/install#install-with-powershellexe)
+      - powershell: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          Write-Host "##vso[task.setvariable variable=PATH]$env:PATH"
+          choco --version
+        displayName: "Install Chocolatey"
+
+      # Install Miniconda
+      - script: |
+          choco install miniconda3 --yes
+          set PATH=C:\tools\miniconda3\Scripts;C:\tools\miniconda3;C:\tools\miniconda3\Library\bin;%PATH%
+          echo '##vso[task.setvariable variable=PATH]%PATH%'
+          set LIB=C:\tools\miniconda3\Library\lib;%LIB%
+          echo '##vso[task.setvariable variable=LIB]%LIB%'
+          conda --version
+        displayName: "Install Miniconda"
+
+      # Configure Miniconda
+      - script: |
+          conda config --set always_yes yes
+          conda config --add channels conda-forge
+          conda config --set channel_priority strict
+          conda info
+        displayName: "Configure Miniconda"
+
+      # Create conda enviroment
+      # Note: conda activate doesn't work here, because it creates a new shell!
+      - script: |
+          conda install cmake ^
+                        boost-cpp ^
+                        python=3.6 ^
+                        numpy ^
+                        cloudpickle ^
+                        dill ^
+                        numba ^
+                        pip ^
+                        pybind11 ^
+                        ipyparallel ^
+                        pagmo-devel ^
+                        ninja ^
+                        clangdev
+          conda list
+        displayName: "Install conda packages"
+
+      - script: |
+          cd tools
+          Powershell.exe -File start_ip_cluster.ps1
+          timeout 20
+          cd ..
+        displayName: "Start ipyparallel"
+
+      # Configure, build and test.
+      - script: |
+          setlocal EnableDelayedExpansion
+          call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
+          mkdir build
+          cd build
+          cmake .. -G Ninja ^
+                -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
+                -DCMAKE_C_COMPILER=clang-cl ^
+                -DCMAKE_CXX_COMPILER=clang-cl ^
+                -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
+                -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
+                -DBoost_NO_BOOST_CMAKE=ON
+          cmake --build . --target install
+          cd ..
+          cd ..
+          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+        displayName: "Configure, build and test"
+
+  - job: 'vs2017_release_latest_37'
     pool:
       vmImage: 'vs2017-win2016'
     timeoutInMinutes: 360
@@ -74,7 +222,7 @@ jobs:
           python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"
 
-  - job: 'vs2015_clang_release_latest'
+  - job: 'vs2015_clang_release_latest_37'
     pool:
       vmImage: 'vs2017-win2016'
     timeoutInMinutes: 360
