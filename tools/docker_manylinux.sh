@@ -26,8 +26,8 @@ cd install
 /opt/python/${PYTHON_DIR}/bin/pip install dill ipyparallel
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 
-# Install git
-yum install git
+# Install git (-y avoids a user prompt)
+yum -y install git
 
 # Install pybind11
 curl -L https://github.com/pybind/pybind11/archive/v2.4.3.tar.gz > v2.4.3
