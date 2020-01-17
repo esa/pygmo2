@@ -60,10 +60,3 @@ pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
 
    install
    overview
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
