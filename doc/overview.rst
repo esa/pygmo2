@@ -33,7 +33,7 @@ Overview
   clusters, GPUs, SIMD vectorization, etc.).
 * A library of ready-to-use optimisation problems
   for algorithmic testing and performance evaluation
-  (Rosenbrock, Rastriging, Lennard-Jones, etc.).
+  (Rosenbrock, Rastrigin, Lennard-Jones, etc.).
 * A library of optimisation-oriented utilities
   (e.g., hypervolume computation, non-dominated
   sorting, plotting, etc.).
@@ -204,4 +204,58 @@ Decompose                                                  :class:`pygmo.decompo
 Translate                                                  :class:`pygmo.translate`
 Unconstrain                                                :class:`pygmo.unconstrain`
 Decorator                                                  :class:`pygmo.decorator_problem`
+========================================================== =========================================
+
+.. _islands:
+
+List of islands
+---------------
+
+This is the list of user defined islands (UDIs)
+currently provided with pygmo. These are classes that
+can be used to construct a :class:`pygmo.island`,
+which will then
+provide a unified interface to access the island's functionalities.
+
+In the pygmo jargon, an island is an entity tasked with
+managing the asynchronous evolution of a population via
+an algorithm in the generalised island model.
+Different UDIs enable different parallelisation
+strategies (e.g., multithreading, multiprocessing,
+cluster architectures, etc.).
+
+========================================================== =========================================
+Common Name                                                Docs of the python class                 
+========================================================== =========================================
+Thread island                                              :class:`pygmo.thread_island`
+Multiprocessing island                                     :class:`pygmo.mp_island`
+Ipyparallel island                                         :class:`pygmo.ipyparallel_island`
+========================================================== =========================================
+
+List of batch fitness evaluators
+--------------------------------
+
+This is the list of user defined batch fitness
+evaluators (UDBFEs)
+currently provided with pygmo. These are classes that
+can be used to construct a :class:`pygmo.bfe`,
+which will then
+provide a unified interface to access the evaluator's
+functionalities.
+
+In the pygmo jargon, a batch fitness evaluator
+implements the capability of evaluating a group
+of decision vectors in a parallel and/or vectorised
+fashion. Batch fitness evaluators are used to implement
+fine-grained parallelisation in pygmo (e.g., parallel
+initialisation of populations, or parallel
+fitness evaluations within the inner loop of an algorithm).
+
+========================================================== =========================================
+Common Name                                                Docs of the python class                 
+========================================================== =========================================
+Default BFE                                                :class:`pygmo.default_bfe`
+Thread BFE                                                 :class:`pygmo.thread_bfe`
+Multiprocessing BFE                                        :class:`pygmo.mp_bfe`
+Ipyparallel BFE                                            :class:`pygmo.ipyparallel_bfe`
 ========================================================== =========================================

@@ -6,27 +6,6 @@
 pygmo
 =====
 
-.. image:: images/prob.png
-   :target: docs/problem_list.html
-   :width: 15%
-
-.. image:: images/algo.png
-   :target: docs/algorithm_list.html
-   :width: 15%
-
-.. image:: images/pop.png
-   :width: 15%
-
-.. image:: images/island.png
-   :target: docs/island_list.html
-   :width: 15%
-
-.. image:: images/archi.png
-   :width: 15%
-
-.. image:: images/migration.png
-   :width: 15%
-
 pygmo is a scientific Python library for massively parallel optimization.
 It is built
 around the idea of providing a unified interface to optimization
