@@ -22,7 +22,7 @@ matrix:
     #- env: PYGMO_BUILD_TYPE="osx_debug_pagmo_head" PYTHON_VERSION="3.7"
     #  os: osx
     #  osx_image: xcode10.3
-    - env: PAGMO_BUILD="manylinux64Py37" DOCKER_IMAGE="pagmo2/manylinux2000_x86_64_with_deps"
+    - env: PYGMO_BUILD_TYPE="manylinux64Py37" DOCKER_IMAGE="pagmo2/manylinux2000_x86_64_with_deps"
       sudo: required
       services:
       - docker
