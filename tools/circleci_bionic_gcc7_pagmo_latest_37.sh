@@ -34,7 +34,7 @@ python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_
 
 # Build the documentation.
 cd ~/project/doc
-export SPHINX_OUTPUT=`make html linkcheck 2>&1`;
+export SPHINX_OUTPUT=`make html linkcheck 2>&1 |grep -v Warning  > /dev/null`;
 
 if [[ "${SPHINX_OUTPUT}" != "" ]]; then
     echo "Sphinx encountered some problem:";
