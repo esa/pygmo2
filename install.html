@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; pygmo 2.14.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo_favico.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="pygmo 2.14.0 documentation" href="index.html"/>
+        <link rel="next" title="Capabilities" href="overview.html"/>
+        <link rel="prev" title="pygmo" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pygmo
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.14.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#packages">Packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conda">Conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pip">pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-from-source">Installation from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verifying-the-installation">Verifying the installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pygmo</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>pygmo has the following <strong>mandatory</strong> runtime dependencies:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/">Python</a> 3.4 or later (Python 2.x is
+<strong>not</strong> supported),</p></li>
+<li><p>the <a class="reference external" href="https://esa.github.io/pagmo2/">pagmo C++ library</a>, version 2.13 or later,</p></li>
+<li><p>the <a class="reference external" href="https://www.boost.org/doc/libs/release/libs/serialization/doc/index.html">Boost serialization library</a>,
+version 1.60 or later,</p></li>
+<li><p><a class="reference external" href="https://numpy.org/">NumPy</a>,</p></li>
+<li><p><a class="reference external" href="https://github.com/cloudpipe/cloudpickle">cloudpickle</a>.</p></li>
+</ul>
+<p>Additionally, pygmo has the following <strong>optional</strong> runtime
+dependencies:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dill.readthedocs.io">dill</a>, which can be used as an
+alternative serialization backend,</p></li>
+<li><p><a class="reference external" href="https://matplotlib.org/">Matplotlib</a>, which is used by a few
+plotting utilities.</p></li>
+</ul>
+</div>
+<div class="section" id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<p>pygmo packages are available from a variety
+of package managers on several platforms.</p>
+<div class="section" id="conda">
+<h3>Conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h3>
+<p>pygmo is available via the <a class="reference external" href="https://conda.io/docs/">conda</a>
+package manager for Linux, OSX and Windows
+thanks to the infrastructure provided by <a class="reference external" href="https://conda-forge.org/">conda-forge</a>.
+In order to install pygmo via conda, you just need to add <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>
+to the channels, and then we can immediately install pygmo:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> conda config --add channels conda-forge
+<span class="gp">$</span> conda install pygmo
+</pre></div>
+</div>
+<p>The conda packages for pygmo are maintained by the core development team,
+and they are regularly updated when new pygmo versions are released.</p>
+<p>Please refer to the <a class="reference external" href="https://conda.io/docs/">conda documentation</a>
+for instructions on how to setup and manage
+your conda installation.</p>
+</div>
+<div class="section" id="pip">
+<h3>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
+<p>pygmo is also available on Linux via the <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a>
+package installer. The installation of pygmo with pip is straightforward:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install pygmo
+</pre></div>
+</div>
+<p>If you want to install pygmo for a single user instead of
+system-wide, which is in general a good idea, you can do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> pip install --user pygmo
+</pre></div>
+</div>
+<p>An even better idea is to make use of Python’s
+<a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtual environments</a>.</p>
+<p>The pip packages for pygmo are maintained by the core development team,
+and they are regularly updated when new pygmo versions are released.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note however that we <strong>strongly</strong> encourage users to install pygmo with conda
+rather than with pip. The reason is that pygmo is built on a
+moderately complicated
+stack of C++ libraries, which have to be bundled together with pygmo
+in the pip package.
+This is a problem if one uses pygmo together with other Python
+packages sharing dependencies with pygmo, because multiple incompatible
+versions of the same C++ library might end up being loaded at the
+same time, leading to crashes and erratic runtime behaviour.
+The conda packages do not suffer from this issue.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to a lack of manpower, we are currently unable to provide
+pip packages for Windows or OSX. If you are willing to help us
+out, please get in contact with us on the
+<a class="reference external" href="https://gitter.im/pagmo2/Lobby">gitter channel</a> or open
+an issue on <a class="reference external" href="https://github.com/esa/pygmo2/issues">github</a>.</p>
+</div>
+</div>
+<div class="section" id="arch-linux">
+<h3>Arch Linux<a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h3>
+<p>pygmo is available on the <a class="reference external" href="https://aur.archlinux.org">Arch User Repository</a> (AUR) in Arch Linux. It is
+recommended to use an AUR helper like
+<a class="reference external" href="https://aur.archlinux.org/packages/yay/">yay</a> or
+<a class="reference external" href="https://aur.archlinux.org/packages/pikaur/">pikaur</a> for ease of installation.
+See the <a class="reference external" href="https://wiki.archlinux.org/index.php/AUR_helpers">AUR helpers</a> page on
+the Arch Linux wiki for more info.</p>
+<p>Install <code class="docutils literal notranslate"><span class="pre">python-pygmo</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> yay -S python-pygmo
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="installation-from-source">
+<h2>Installation from source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h2>
+<p>In order to install pygmo from source, you will need:</p>
+<ul class="simple">
+<li><p>a C++11 capable compiler (any recent version of GCC,
+Clang or MSVC should do),</p></li>
+<li><p>a <a class="reference external" href="https://www.python.org/">Python</a> installation,</p></li>
+<li><p><a class="reference external" href="https://github.com/pybind/pybind11">pybind11</a>,</p></li>
+<li><p>the <a class="reference external" href="https://esa.github.io/pagmo2/">pagmo C++ library</a>,</p></li>
+<li><p>the <a class="reference external" href="https://www.boost.org/">Boost libraries</a>,</p></li>
+<li><p><a class="reference external" href="https://cmake.org/">CMake</a>, version 3.3 or later.</p></li>
+</ul>
+<p>After making sure the dependencies are installed on your system, you can
+download the pygmo source code from the
+<a class="reference external" href="https://github.com/esa/pygmo/releases">GitHub release page</a>. Alternatively,
+and if you like living on the bleeding edge, you can get the very latest
+version of pygmo via <code class="docutils literal notranslate"><span class="pre">git</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/esa/pygmo2.git
+</pre></div>
+</div>
+<p>We follow the usual PR-based development workflow, thus pygmo’s <code class="docutils literal notranslate"><span class="pre">master</span></code>
+branch is normally kept in a working state.</p>
+<p>After downloading and/or unpacking pygmo’s
+source code, go to pygmo’s
+source tree, create a <code class="docutils literal notranslate"><span class="pre">build</span></code> directory and <code class="docutils literal notranslate"><span class="pre">cd</span></code> into it. E.g.,
+on a Unix-like system:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /path/to/pygmo
+<span class="gp">$</span> mkdir build
+<span class="gp">$</span> <span class="nb">cd</span> build
+</pre></div>
+</div>
+<p>Once you are in the <code class="docutils literal notranslate"><span class="pre">build</span></code> directory, you must configure your build
+using <code class="docutils literal notranslate"><span class="pre">cmake</span></code>. There are various useful CMake variables you can set,
+such as:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code>: the build type (<code class="docutils literal notranslate"><span class="pre">Release</span></code>, <code class="docutils literal notranslate"><span class="pre">Debug</span></code>, etc.),
+defaults to <code class="docutils literal notranslate"><span class="pre">Release</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>: the path into which pygmo will be installed
+(e.g., this defaults to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> on Unix-like platforms).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_PREFIX_PATH</span></code>: additional paths that will be searched by CMake
+when looking for dependencies.</p></li>
+</ul>
+<p>Please consult <a class="reference external" href="https://cmake.org/cmake/help/latest/">CMake’s documentation</a>
+for more details about CMake’s variables and options.</p>
+<p>A critical setting for a pygmo installation is the
+value of the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> variable. The pygmo
+build system will attempt to construct an appropriate
+installation path for the Python module by combining
+the value of <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> with the directory
+paths of the Python installation in use in a platform-dependent
+manner.</p>
+<p>For instance, on a typical Linux installation
+of Python 3.6,
+<code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> will be set by default to
+<code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>, and the pygmo build system will
+append <code class="docutils literal notranslate"><span class="pre">lib/python3.6/site-packages</span></code> to the install prefix.
+Thus, the overall install path for the pygmo module will be
+<code class="docutils literal notranslate"><span class="pre">/usr/local/lib/python3.6/site-packages</span></code>. If you want
+to avoid system-wide installations (which require root
+privileges), on Unix-like system it is possible to set
+the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> variable to the directory
+<code class="docutils literal notranslate"><span class="pre">.local</span></code> in your <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">/home/username/.local</span></code>).
+The pygmo install path will then be, in this case,
+<code class="docutils literal notranslate"><span class="pre">/home/username/.local/lib/python3.6/site-packages</span></code>,
+a path which is normally recognised by Python installations
+without the need to modify the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> variable.
+If you install pygmo in non-standard prefixes, you may
+have to tweak your Python installation in order for the
+Python interpreter to find the pygmo module.</p>
+<p>A typical CMake invocation for pygmo may then
+look something like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake ../ -DCMAKE_INSTALL_PREFIX<span class="o">=</span>~/.local
+</pre></div>
+</div>
+<p>That is, we will be installing pygmo into our home
+directory into the <code class="docutils literal notranslate"><span class="pre">.local</span></code>
+subdirectory. If CMake runs without errors, we can then proceed to actually
+building pygmo:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake --build .
+</pre></div>
+</div>
+<p>Finally, we can install pygmo with the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cmake  --build . --target install
+</pre></div>
+</div>
+</div>
+<div class="section" id="verifying-the-installation">
+<h2>Verifying the installation<a class="headerlink" href="#verifying-the-installation" title="Permalink to this headline">¶</a></h2>
+<p>You can verify that pygmo was successfully compiled and
+installed by running the test suite. From a
+Python session, run the following commands:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pygmo</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pygmo</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">run_test_suite</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If these commands execute without any error, then
+your pygmo installation is ready for use.</p>
+</div>
+<div class="section" id="getting-help">
+<h2>Getting help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<p>If you run into troubles installing pygmo, please do not hesitate
+to contact us either through our <a class="reference external" href="https://gitter.im/pagmo2/Lobby">gitter channel</a>
+or by opening an issue report on <a class="reference external" href="https://github.com/esa/pygmo2/issues">github</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="overview.html" class="btn btn-neutral float-right" title="Capabilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="pygmo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, pagmo development team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.14.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
