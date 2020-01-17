@@ -13,3 +13,6 @@ export PATH="$deps_dir/bin:$PATH"
 cd ..;
 docker pull ${DOCKER_IMAGE};
 docker run --rm -e TWINE_PASSWORD -e PYGMO_BUILD_TYPE -e TRAVIS_TAG -v `pwd`:/pygmo2 $DOCKER_IMAGE bash /pygmo2/tools/docker_manylinux.sh
+
+set +e
+set +x
