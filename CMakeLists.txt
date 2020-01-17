@@ -12,7 +12,7 @@ if(NOT CMAKE_BUILD_TYPE)
 	FORCE)
 endif()
 
-project(pygmo VERSION 2.13.0 LANGUAGES CXX C)
+project(pygmo VERSION 2.14.0 LANGUAGES CXX C)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/yacma")
 
@@ -158,6 +158,9 @@ endif()
 
 # pybind11.
 find_package(pybind11 REQUIRED)
+
+# Configure the sphinx config file.
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)
 
 # Add the module directory.
 add_subdirectory(pygmo)
