@@ -1236,7 +1236,7 @@ Problem's thread safety level.
 This method will return a value of the enum :class:`pygmo.thread_safety` which indicates the thread safety level
 of the UDP. Unlike in C++, in Python it is not possible to re-implement this method in the UDP. That is, for C++
 UDPs, the returned value will be the value returned by the ``get_thread_safety()`` method of the UDP. For Python
-UDPs, the returned value will be unconditionally :attr:`pygmo.thread_safety.none`.
+UDPs, the returned value will be unconditionally ``none``.
 
 Returns:
     a value of :class:`pygmo.thread_safety`: the thread safety level of the UDP
@@ -1507,7 +1507,7 @@ Algorithm's thread safety level.
 This method will return a value of the enum :class:`pygmo.thread_safety` which indicates the thread safety level
 of the UDA. Unlike in C++, in Python it is not possible to re-implement this method in the UDA. That is, for C++
 UDAs, the returned value will be the value returned by the ``get_thread_safety()`` method of the UDA. For Python
-UDAs, the returned value will be unconditionally :attr:`pygmo.thread_safety.none`.
+UDAs, the returned value will be unconditionally ``none``.
 
 Returns:
     a value of :class:`pygmo.thread_safety`: the thread safety level of the UDA
@@ -4503,7 +4503,7 @@ An island can be initialised in a variety of ways using keyword arguments:
   If the *udi* parameter is not supplied, the UDI type is chosen according to a heuristic which depends
   on the platform, the Python version and the supplied *algo* and *pop* parameters:
 
-  * if *algo* and *pop*'s problem provide at least the :attr:`~pygmo.thread_safety.basic` thread safety guarantee,
+  * if *algo* and *pop*'s problem provide at least the ``basic`` :class:`~pygmo.thread_safety` guarantee,
     then :class:`~pygmo.thread_island` will be selected as UDI type;
   * otherwise, if the current platform is Windows or the Python version is at least 3.4, then :class:`~pygmo.mp_island`
     will be selected as UDI type, else :class:`~pygmo.ipyparallel_island` will be chosen;
@@ -4765,7 +4765,7 @@ Thread island.
 This class is a user-defined island (UDI) that will run evolutions directly inside
 the separate thread of execution within :class:`pygmo.island`. Evolution tasks running on this
 UDI must involve :class:`~pygmo.algorithm` and :class:`~pygmo.problem` instances
-that provide at least the :attr:`~pygmo.thread_safety.basic` thread safety guarantee, otherwise
+that provide at least the ``basic`` :class:`~pygmo.thread_safety` guarantee, otherwise
 errors will be raised during the evolution.
 
 Note that algorithms and problems implemented in Python are never considered thread safe, and thus
@@ -6298,7 +6298,7 @@ Bfe's thread safety level.
 This method will return a value of the enum :class:`pygmo.thread_safety` which indicates the thread safety level
 of the UDBFE. Unlike in C++, in Python it is not possible to re-implement this method in the UDBFE. That is, for C++
 UDBFEs, the returned value will be the value returned by the ``get_thread_safety()`` method of the UDBFE. For Python
-UDBFEs, the returned value will be unconditionally :attr:`pygmo.thread_safety.none`.
+UDBFEs, the returned value will be unconditionally ``none``.
 
 Returns:
     a value of :class:`pygmo.thread_safety`: the thread safety level of the UDBFE
@@ -6322,8 +6322,8 @@ of its call operator to another UDBFE. Specifically:
 * if the input problem provides a batch fitness member function (as established by
   :func:`pygmo.problem.has_batch_fitness()`), then a :class:`~pygmo.member_bfe` will
   be constructed and invoked to produce the return value; otherwise,
-* if the input problem provides at least the :attr:`~pygmo.thread_safety.basic` thread
-  safety level (as established by :func:`pygmo.problem.get_thread_safety()`), then a
+* if the input problem provides at least the ``basic`` :class:`~pygmo.thread_safety`
+  guarantee (as established by :func:`pygmo.problem.get_thread_safety()`), then a
   :class:`pygmo.thread_bfe` will be constructed and invoked to produce the return value;
   otherwise,
 * a :class:`pygmo.mp_bfe` will be constructed and invoked to produce the return value.
@@ -7295,6 +7295,105 @@ std::string evolve_status_busy_error_docstring()
 {
     return R"(asynchronous operations are ongoing, and an error was generated
   by an asynchronous operation in the past (value = 3)
+)";
+}
+
+std::string thread_safety_docstring()
+{
+    return R"(Thread safety level.
+
+This enumeration defines a set of values that can be used to specify the thread safety of problems, algorithms, etc.
+
+.. note::
+
+   For safety reasons, pygmo currently does not allow to set a thread safety level higher than ``none``
+   for any user-defined object implemented in Python. That is, only problems, algorithms, etc.
+   implemented in C++ can have some degree of thread safety.
+
+)";
+}
+
+std::string thread_safety_none_docstring()
+{
+    return R"(no thread safety - concurrent operations on distinct objects are unsafe (value = 0)
+
+)";
+}
+
+std::string thread_safety_basic_docstring()
+{
+    return R"(basic thread safety - concurrent operations on distinct objects are safe (value = 1)
+
+)";
+}
+
+std::string thread_safety_constant_docstring()
+{
+    return R"(constant thread safety - constant (i.e., read-only) concurrent operations on the same object are safe (value = 2)
+
+)";
+}
+
+std::string migration_type_docstring()
+{
+    return R"(Migration type.
+
+This enumeration represents the available migration policies in an :class:`~pygmo.archipelago`:
+
+* with the point-to-point migration policy, during migration an island will
+  consider individuals from only one of the connecting islands;
+* with the broadcast migration policy, during migration an island will consider
+  individuals from *all* the connecting islands.
+
+)";
+}
+
+std::string migration_type_p2p_docstring()
+{
+    return R"(point-to-point migration (value = 0)
+
+)";
+}
+
+std::string migration_type_broadcast_docstring()
+{
+    return R"(broadcast migration (value = 1)
+
+)";
+}
+
+std::string migrant_handling_docstring()
+{
+    return R"(Migrant handling policy.
+
+This enumeration represents the available migrant handling
+policies in an :class:`~pygmo.archipelago`.
+
+During migration,
+individuals are selected from the islands and copied into a migration
+database, from which they can be fetched by other islands.
+This policy establishes what happens to the migrants in the database
+after they have been fetched by a destination island:
+
+* with the preserve policy, a copy of the candidate migrants
+  remains in the database;
+* with the evict policy, the candidate migrants are
+  removed from the database.
+
+)";
+}
+
+std::string migrant_handling_preserve_docstring()
+{
+    return R"(perserve migrants in the database (value = 0)
+
+)";
+}
+
+std::string migrant_handling_evict_docstring()
+{
+    return R"(evict migrants from the database (value = 1)
+
 )";
 }
 
