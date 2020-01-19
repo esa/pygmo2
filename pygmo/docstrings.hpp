@@ -318,6 +318,13 @@ std::string bls_selection_docstring(const std::string &);
 std::string bls_replacement_docstring(const std::string &);
 std::string bls_set_random_sr_seed_docstring(const std::string &);
 
+// evolve_status enum.
+std::string evolve_status_docstring();
+std::string evolve_status_idle_docstring();
+std::string evolve_status_busy_docstring();
+std::string evolve_status_idle_error_docstring();
+std::string evolve_status_busy_error_docstring();
+
 } // namespace pygmo
 
 #endif

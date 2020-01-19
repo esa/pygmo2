@@ -322,11 +322,11 @@ PYBIND11_MODULE(core, m)
         .value("constant", pg::thread_safety::constant);
 
     // The evolve_status enum.
-    py::enum_<pg::evolve_status>(m, "evolve_status")
-        .value("idle", pg::evolve_status::idle)
-        .value("busy", pg::evolve_status::busy)
-        .value("idle_error", pg::evolve_status::idle_error)
-        .value("busy_error", pg::evolve_status::busy_error);
+    py::enum_<pg::evolve_status>(m, "evolve_status", pygmo::evolve_status_docstring().c_str())
+        .value("idle", pg::evolve_status::idle, pygmo::evolve_status_idle_docstring().c_str())
+        .value("busy", pg::evolve_status::busy, pygmo::evolve_status_busy_docstring().c_str())
+        .value("idle_error", pg::evolve_status::idle_error, pygmo::evolve_status_idle_error_docstring().c_str())
+        .value("busy_error", pg::evolve_status::busy_error, pygmo::evolve_status_busy_error_docstring().c_str());
 
     // Migration type enum.
     py::enum_<pg::migration_type>(m, "migration_type")

@@ -85,8 +85,8 @@ If the problem is multi-objective one single best is not well defined. In this c
 individuals by calling the :func:`pygmo.sort_population_mo()` function.
 
 Args:
-    tol (``float`` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints. By default, the c_tol attribute 
-    from the population problem is used.
+    tol (``float`` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
+      :attr:`~pygmo.problem.c_tol` attribute from the population's problem is used.
 
 Returns:
     ``int``: the index of the best individual
@@ -400,7 +400,7 @@ methods:
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDP should be implemented and on how they are used by :class:`~pygmo.problem`.
 Note that the exposed C++ problems can also be used as UDPs, even if they do not expose any of the
-mandatory or optional methods listed above (see :ref:`here <py_problems>` for the
+mandatory or optional methods listed above (see :ref:`here <problems>` for the
 full list of UDPs already coded in pygmo).
 
 This class is the Python counterpart of the C++ class :cpp:class:`pagmo::problem`.
@@ -1330,7 +1330,7 @@ Additional optional methods can be implemented in a UDA:
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDA should be implemented and on how they are used by :class:`~pygmo.algorithm`.
 Note that the exposed C++ algorithms can also be used as UDAs, even if they do not expose any of the
-mandatory or optional methods listed above (see :ref:`here <py_algorithms>` for the
+mandatory or optional methods listed above (see :ref:`here <algorithms>` for the
 full list of UDAs already coded in pygmo).
 
 This class is the Python counterpart of the C++ class :cpp:class:`pagmo::algorithm`.
@@ -4457,7 +4457,7 @@ They establish how individuals are selected and replaced from the island when mi
 the :class:`~pygmo.archipelago`. If the island is not part of an :class:`~pygmo.archipelago`,
 the replacement and selection policies play no role.
 
-Typically, pygmo users will employ an already-available UDI in conjunction with this class (see :ref:`here <py_islands>`
+Typically, pygmo users will employ an already-available UDI in conjunction with this class (see :ref:`here <islands>`
 for a full list), but advanced users can implement their own UDI types. A user-defined island must implement
 the following method:
 
@@ -4577,7 +4577,7 @@ this method will re-throw the exception raised by the first enqueued task that t
 from all the other tasks that threw will be ignored.
 
 Note that :func:`~pygmo.island.wait_check()` resets the status of the island: after a call to :func:`~pygmo.island.wait_check()`,
-:attr:`~pygmo.island.status` will always return :attr:`pygmo.evolve_status.idle`.
+:attr:`~pygmo.island.status` will always return the ``idle`` :class:`~pygmo.evolve_status`.
 
 Raises:
     unspecified: any exception thrown by evolution tasks or by the underlying C++ method
@@ -4593,7 +4593,7 @@ This method will block until all the evolution tasks enqueued via :func:`~pygmo.
 Exceptions thrown by the enqueued tasks can be re-raised via :func:`~pygmo.island.wait_check()`: they will **not** be
 re-thrown by this method. Also, contrary to :func:`~pygmo.island.wait_check()`, this method will **not** reset the
 status of the island: after a call to :func:`~pygmo.island.wait()`, :attr:`~pygmo.island.status` will always return
-either :attr:`pygmo.evolve_status.idle` or :attr:`pygmo.evolve_status.idle_error`.
+either the ``idle`` or ``idle_error`` :class:`~pygmo.evolve_status`.
 
 )";
 }
@@ -4605,18 +4605,18 @@ std::string island_status_docstring()
 This read-only property will return an :class:`~pygmo.evolve_status` flag indicating the current status of
 asynchronous operations in the island. The flag will be:
 
-* :attr:`~pygmo.evolve_status.idle` if the island is currently not evolving and no exceptions
+* ``idle`` if the island is currently not evolving and no exceptions
   were thrown by evolution tasks since the last call to :func:`~pygmo.island.wait_check()`;
-* :attr:`~pygmo.evolve_status.busy` if the island is evolving and no exceptions
+* ``busy`` if the island is evolving and no exceptions
   have (yet) been thrown by evolution tasks since the last call to :func:`~pygmo.island.wait_check()`;
-* :attr:`~pygmo.evolve_status.idle_error` if the island is currently not evolving and at least one
+* ``idle_error`` if the island is currently not evolving and at least one
   evolution task threw an exception since the last call to :func:`~pygmo.island.wait_check()`;
-* :attr:`~pygmo.evolve_status.busy_error` if the island is currently evolving and at least one
+* ``busy_error`` if the island is currently evolving and at least one
   evolution task has already thrown an exception since the last call to :func:`~pygmo.island.wait_check()`.
 
 Note that after a call to :func:`~pygmo.island.wait_check()`, :attr:`~pygmo.island.status` will always return
-:attr:`~pygmo.evolve_status.idle`, and after a call to :func:`~pygmo.island.wait()`, :attr:`~pygmo.island.status`
-will always return either :attr:`~pygmo.evolve_status.idle` or :attr:`~pygmo.evolve_status.idle_error`.
+``idle``, and after a call to :func:`~pygmo.island.wait()`, :attr:`~pygmo.island.status`
+will always return either ``idle`` or ``idle_error``.
 
 Returns:
     :class:`~pygmo.evolve_status`: a flag indicating the current status of asynchronous operations in the island
@@ -4825,18 +4825,18 @@ std::string archipelago_status_docstring()
 This read-only property will return an :class:`~pygmo.evolve_status` flag indicating the current status of
 asynchronous operations in the archipelago. The flag will be:
 
-* :attr:`~pygmo.evolve_status.idle` if, for all the islands in the archipelago, :attr:`pygmo.island.status`
-  returns :attr:`~pygmo.evolve_status.idle`;
-* :attr:`~pygmo.evolve_status.busy` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
-  returns :attr:`~pygmo.evolve_status.busy`, and for no island :attr:`pygmo.island.status` returns an error status;
-* :attr:`~pygmo.evolve_status.idle_error` if no island in the archipelago is busy and for at least one island
-  :attr:`pygmo.island.status` returns :attr:`~pygmo.evolve_status.idle_error`;
-* :attr:`~pygmo.evolve_status.busy_error` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
+* ``idle`` if, for all the islands in the archipelago, :attr:`pygmo.island.status`
+  returns ``idle``;
+* ``busy`` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
+  returns ``busy``, and for no island :attr:`pygmo.island.status` returns an error status;
+* ``idle_error`` if no island in the archipelago is busy and for at least one island
+  :attr:`pygmo.island.status` returns ``idle_error``;
+* ``busy_error`` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
   returns an error status and at least one island is busy.
 
 Note that after a call to :func:`~pygmo.archipelago.wait_check()`, :attr:`pygmo.archipelago.status` will always return
-:attr:`~pygmo.evolve_status.idle`, and after a call to :func:`~pygmo.archipelago.wait()`, :attr:`pygmo.archipelago.status`
-will always return either :attr:`~pygmo.evolve_status.idle` or :attr:`~pygmo.evolve_status.idle_error`.
+``idle``, and after a call to :func:`~pygmo.archipelago.wait()`, :attr:`pygmo.archipelago.status`
+will always return either ``idle`` or ``idle_error``.
 
 Returns:
     :class:`~pygmo.evolve_status`:  a flag indicating the current status of asynchronous operations in the archipelago
@@ -4854,7 +4854,7 @@ This method will call :func:`pygmo.island.wait()` on all the islands of the arch
 evolutions can be re-raised via :func:`~pygmo.archipelago.wait_check()`: they will **not** be re-thrown by this method.
 Also, contrary to :func:`~pygmo.archipelago.wait_check()`, this method will **not** reset the status of the archipelago:
 after a call to :func:`~pygmo.archipelago.wait()`, the :attr:`~pygmo.archipelago.status` attribute will
-always return either :attr:`pygmo.evolve_status.idle` or :attr:`pygmo.evolve_status.idle_error`.
+always return either ``idle`` or ``idle_error``.
 
 )";
 }
@@ -4872,7 +4872,7 @@ and all the exceptions thrown by the other calls to :func:`pygmo.island.wait_che
 
 Note that :func:`~pygmo.archipelago.wait_check()` resets the status of the archipelago: after a call to
 :func:`~pygmo.archipelago.wait_check()`, the :attr:`~pygmo.archipelago.status` attribute will
-always return :attr:`pygmo.evolve_status.idle`.
+always return ``idle``.
 
 Raises:
     unspecified: any exception thrown by any evolution task queued in the archipelago's
@@ -7252,6 +7252,49 @@ Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
       type conversion errors, mismatched function signatures, etc.)
 
+)";
+}
+
+// evolve_status enum.
+std::string evolve_status_docstring()
+{
+    return R"(Evolution status.
+
+This enumeration contains status flags used to represent the current status of asynchronous evolution/optimisation
+in :class:`pygmo.island` and :class:`pygmo.archipelago`.
+
+.. seealso::
+
+   :attr:`pygmo.island.status` and :attr:`pygmo.archipelago.status`.
+
+)";
+}
+
+std::string evolve_status_idle_docstring()
+{
+    return R"(no asynchronous operations are ongoing, and no error was generated
+  by an asynchronous operation in the past (value = 0)
+)";
+}
+
+std::string evolve_status_busy_docstring()
+{
+    return R"(asynchronous operations are ongoing, and no error was generated
+  by an asynchronous operation in the past (value = 1)
+)";
+}
+
+std::string evolve_status_idle_error_docstring()
+{
+    return R"(no asynchronous operations are ongoing, but an error was generated
+  by an asynchronous operation in the past (value = 2)
+)";
+}
+
+std::string evolve_status_busy_error_docstring()
+{
+    return R"(asynchronous operations are ongoing, and an error was generated
+  by an asynchronous operation in the past (value = 3)
 )";
 }
 
