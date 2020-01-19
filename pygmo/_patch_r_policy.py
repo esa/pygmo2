@@ -20,7 +20,7 @@ def _r_policy_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::r_policy::extract()`),
     * if *t* is :class:`object` and the UDRP is a Python object (as opposed to an
-      :ref:`exposed C++ replacement policy <py_r_policies_cpp>`), then a reference to the
+      :ref:`exposed C++ replacement policy <r_policies_cpp>`), then a reference to the
       UDRP will be returned (this allows to extract a Python UDRP without knowing its type),
     * otherwise, :data:`None` will be returned.
 

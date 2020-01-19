@@ -1330,7 +1330,7 @@ Additional optional methods can be implemented in a UDA:
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDA should be implemented and on how they are used by :class:`~pygmo.algorithm`.
 Note that the exposed C++ algorithms can also be used as UDAs, even if they do not expose any of the
-mandatory or optional methods listed above (see :ref:`here <algorithms>` for the
+mandatory or optional methods listed above (see :ref:`here <available_algorithms>` for the
 full list of UDAs already coded in pygmo).
 
 This class is the Python counterpart of the C++ class :cpp:class:`pagmo::algorithm`.
@@ -4457,7 +4457,7 @@ They establish how individuals are selected and replaced from the island when mi
 the :class:`~pygmo.archipelago`. If the island is not part of an :class:`~pygmo.archipelago`,
 the replacement and selection policies play no role.
 
-Typically, pygmo users will employ an already-available UDI in conjunction with this class (see :ref:`here <islands>`
+Typically, pygmo users will employ an already-available UDI in conjunction with this class (see :ref:`here <available_islands>`
 for a full list), but advanced users can implement their own UDI types. A user-defined island must implement
 the following method:
 

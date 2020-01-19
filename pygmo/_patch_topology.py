@@ -20,7 +20,7 @@ def _topology_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::topology::extract()`),
     * if *t* is :class:`object` and the UDT is a Python object (as opposed to an
-      :ref:`exposed C++ topology <py_topologies_cpp>`), then a reference to the
+      :ref:`exposed C++ topology <topologies_cpp>`), then a reference to the
       UDT will be returned (this allows to extract a Python UDT without knowing its type),
     * otherwise, :data:`None` will be returned.
 

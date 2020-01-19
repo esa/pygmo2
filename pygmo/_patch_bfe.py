@@ -20,7 +20,7 @@ def _bfe_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::bfe::extract()`),
     * if *t* is :class:`object` and the UDBFE is a Python object (as opposed to an
-      :ref:`exposed C++ bfe <py_bfes_cpp>`), then a reference to the
+      :ref:`exposed C++ bfe <bfes_cpp>`), then a reference to the
       UDBFE will be returned (this allows to extract a Python UDBFE without knowing its type),
     * otherwise, :data:`None` will be returned.
 

@@ -16,3 +16,17 @@ Core classes
    r_policy
    s_policy
    misc
+
+Implemented user-defined classes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. toctree::
+   :maxdepth: 1
+
+   problems
+   algorithms
+   islands
+   bfes
+   topologies
+   r_policies
+   s_policies
