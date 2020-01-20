@@ -9,10 +9,10 @@ set -e
 PAGMO_LATEST="2.13.0"
 PYBIND11_VERSION="2.4.3"
 
-if [[ ${PYGMO_BUILD_TYPE} == *37 ]]; then
+if [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
 	PYTHON_DIR="cp37-cp37m"
 	PYTHON_VERSION="37"
-elif [[ ${PYGMO_BUILD_TYPE} == *36 ]]; then
+elif [[ ${PYGMO_BUILD_TYPE} == *36* ]]; then
 	PYTHON_DIR="cp36-cp36m"
 	PYTHON_VERSION="36"
 else
@@ -87,8 +87,8 @@ cd /
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
-export PAGMO_RELEASE_VERSION=`echo "${TRAVIS_TAG}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
-if [[ "${PAGMO_RELEASE_VERSION}" != "" ]]; then
+export PYGMO_RELEASE_VERSION=`echo "${TRAVIS_TAG}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
+if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
     echo "Release build detected, uploading to PyPi."
     /opt/python/${PYTHON_DIR}/bin/pip install twine
 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa /pygmo2/build/wheel/dist2/pygmo*
