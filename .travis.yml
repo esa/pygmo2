@@ -8,22 +8,44 @@ sudo: false
 branches:
   except: /pr\/.*/
 
+  global:
+    # twine password.
+    - secure: "ricordatidimettrlaqui"
+
+
 matrix:
   include:
-    - env: PYGMO_BUILD_TYPE="debug_pagmo_latest" PYTHON_VERSION="3.6"
+    - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_latest" PYTHON_VERSION="3.6"
       os: osx
       osx_image: xcode10.3
-    - env: PYGMO_BUILD_TYPE="debug_pagmo_head" PYTHON_VERSION="3.6"
+    - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_head" PYTHON_VERSION="3.6"
       os: osx
       osx_image: xcode10.3
-    - env: PYGMO_BUILD_TYPE="debug_pagmo_latest" PYTHON_VERSION="3.7"
+    - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_latest" PYTHON_VERSION="3.7"
       os: osx
       osx_image: xcode10.3
-    - env: PYGMO_BUILD_TYPE="debug_pagmo_head" PYTHON_VERSION="3.7"
+    - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_head" PYTHON_VERSION="3.7"
       os: osx
       osx_image: xcode10.3
-script:
-    - tools/travis_osx.sh
+    - env: PYGMO_BUILD_TYPE="manylinux64Py37_head" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
+      sudo: required
+      services:
+      - docker
+    - env: PYGMO_BUILD_TYPE="manylinux64Py37_latest" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
+      sudo: required
+      services:
+      - docker
+    - env: PYGMO_BUILD_TYPE="manylinux64Py36_head" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
+      sudo: required
+      services:
+      - docker
+    - env: PYGMO_BUILD_TYPE="manylinux64Py36_latest" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
+      sudo: required
+      services:
+      - docker
+script:  
+    - if [[ "${PYGMO_BUILD_TYPE}" == osx* ]]; then bash tools/travis_osx.sh; fi
+    - if [[ "${PYGMO_BUILD_TYPE}" == manylinux* ]]; then bash tools/travis_manylinux.sh; fi
 
 notifications:
   email: false
