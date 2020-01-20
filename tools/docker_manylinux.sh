@@ -6,6 +6,9 @@ set -x
 # Exit on error.
 set -e
 
+PAGMO_LATEST="2.13.0"
+PYBIND11_VERSION="2.4.3"
+
 if [[ ${PYGMO_BUILD_TYPE} == *37 ]]; then
 	PYTHON_DIR="cp37-cp37m"
 	PYTHON_VERSION="37"
@@ -30,9 +33,9 @@ cd install
 yum -y install git
 
 # Install pybind11
-curl -L https://github.com/pybind/pybind11/archive/v2.4.3.tar.gz > v2.4.3
-tar xvf v2.4.3 > /dev/null 2>&1
-cd pybind11-2.4.3
+curl -L https://github.com/pybind/pybind11/archive/v${PYBIND11_VERSION}.tar.gz > v${PYBIND11_VERSION}
+tar xvf v${PYBIND11_VERSION} > /dev/null 2>&1
+cd pybind11-${PYBIND11_VERSION}
 mkdir build
 cd build
 cmake ../ -DPYBIND11_TEST=OFF > /dev/null
@@ -40,8 +43,17 @@ make install > /dev/null 2>&1
 cd ..
 
 # Install pagmo
-git clone https://github.com/esa/pagmo2.git
-cd pagmo2
+if [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
+	curl -L https://github.com/esa/pagmo2/archive/v${PAGMO_LATEST}.tar.gz > v${PAGMO_LATEST}
+	tar xvf v${PAGMO_LATEST} > /dev/null 2>&1
+	cd pagmo2-${PAGMO_LATEST}
+elif [[ ${PYGMO_BUILD_TYPE} == *head ]]; then
+	git clone https://github.com/esa/pagmo2.git
+	cd pagmo2
+else
+	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
+	exit 1
+fi
 mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \
