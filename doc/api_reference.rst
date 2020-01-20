@@ -30,3 +30,15 @@ Implemented user-defined classes
    topologies
    r_policies
    s_policies
+
+Utilities
+^^^^^^^^^
+.. toctree::
+  :maxdepth: 1
+
+  generic_utils
+  mo_utils
+  con_utils
+  gh_utils
+  hv_utils
+  plotting

@@ -3439,7 +3439,7 @@ Args:
     n (int): the number of decision vectors that will be generated
 
 Returns:
-    :class:`numpy.ndarray`: a random decision vector within the problem's bounds
+    :class:`numpy.ndarray`: a batch of random decision vectors within the problem's bounds, laid out contiguously in a 1D array
 
 Raises:
     OverflowError: in case of (unlikely) overflows
@@ -3712,8 +3712,8 @@ std::string sort_population_mo_docstring()
 Sorts a multi-objective, unconstrained,  population (intended here as a 2D array-like
 containing objective vectors) with respect to the following strict ordering:
 
-- :math:`f_1 \prec f_2` if the non domination ranks are such that :math:`i_1 < i_2`. In case :math:`i_1 = i_2`,
-   then :math:`f_1 \prec f_2` if the crowding distances are such that :math:`d_1 > d_2`.
+* :math:`f_1 \prec f_2` if the non domination ranks are such that :math:`i_1 < i_2`. In case :math:`i_1 = i_2`,
+  then :math:`f_1 \prec f_2` if the crowding distances are such that :math:`d_1 > d_2`.
 
 Complexity is :math:`\mathcal{O}(M N^2)` where :math:`M` is the size of the objective vector and :math:`N` is the number of individuals.
 
@@ -3935,7 +3935,8 @@ The following strict ordering is used:
   in :math:`f_1` is smaller than the objectve value in :math:`f_2`
 
 .. note::
-   the fitness vectors are assumed to contain exactly one objective, \p neq equality constraints and the rest (if any) inequality constraints.
+   The fitness vectors are assumed to contain exactly one objective, *nec* equality constraints
+   and the rest (if any) inequality constraints.
 
 Args:
     f1 (array-like object): the first fitness vector
@@ -3946,7 +3947,7 @@ Args:
 Raises:
     OverflowError: if *nec* is negative or greater than an implementation-defined value
     ValueError: if *f1* and *f2* do not have equal size :math:`n`, if *f1* does not have at least size 1, 
-      if *neq* is larger than :math:`n-1` (too many constraints) or if the size of *tol* is not :math:`n - 1`
+      if *nec* is larger than :math:`n-1` (too many constraints) or if the size of *tol* is not :math:`n - 1`
     TypeError: if *f1*, *f2* or *tol* cannot be converted to a vector of floats
 
 Returns:
@@ -3978,7 +3979,8 @@ The following strict ordering is used (same as the one used in :func:`pygmo.comp
   in :math:`f_1` is smaller than the objectve value in :math:`f_2`
 
 .. note::
-   the fitness vectors are assumed to contain exactly one objective, \p neq equality constraints and the rest (if any) inequality constraints.
+   The fitness vectors are assumed to contain exactly one objective, *nec* equality constraints
+   and the rest (if any) inequality constraints.
 
 Args:
     input_f (2-D array-like object): the fitness vectors
@@ -3987,7 +3989,7 @@ Args:
 
 Raises:
     OverflowError: if *nec* is negative or greater than an implementation-defined value
-    ValueError: if the input fitness vectors do not have all the same size :math:`n >=1`, or if *neq* is larger than :math:`n-1` (too many constraints)
+    ValueError: if the input fitness vectors do not have all the same size :math:`n >=1`, or if *nec* is larger than :math:`n-1` (too many constraints)
       or if the size of *tol* is not equal to :math:`n-1`
     TypeError: if *input_f* cannot be converted to a vector of vector of floats or *tol* cannot be converted to a vector of floats.
 
