@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Echo each command
+# Echo each command.
 set -x
 
 # Exit on error.

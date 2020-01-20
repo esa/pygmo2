@@ -5,12 +5,12 @@ import sys
 
 NAME = 'pygmo'
 VERSION = '@pygmo_VERSION@'
-DESCRIPTION = 'Parallel optimisation for C++ / Python'
+DESCRIPTION = 'Parallel optimisation for Python'
 LONG_DESCRIPTION = 'A platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model.'
-URL = 'https://github.com/esa/pagmo2'
+URL = 'https://github.com/esa/pygmo2'
 AUTHOR = 'The pagmo development team'
 AUTHOR_EMAIL = 'pagmo@googlegroups.com'
-LICENSE = 'GPLv3+/LGPL3+'
+LICENSE = 'MPL-2.0'
 CLASSIFIERS = [
     # How mature is this project? Common values are
     #   3 - Alpha
@@ -24,10 +24,7 @@ CLASSIFIERS = [
     'Topic :: Scientific/Engineering',
     'Topic :: Scientific/Engineering :: Mathematics',
     'Topic :: Scientific/Engineering :: Physics',
-
-    'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
-    'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
-
+    'License :: OSI Approved :: Mozilla Public License 2.0 (MPL-2.0)',
     'Programming Language :: Python :: 3'
 ]
 KEYWORDS = 'science math physics optimization ai evolutionary-computing parallel-computing metaheuristics'
