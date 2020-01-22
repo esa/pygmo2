@@ -5724,13 +5724,13 @@ are divided into three categories:
 * *integer* options (i.e., the type of the option is ``int``),
 * *numeric* options (i.e., the type of the option is ``float``).
 
-The full list of options is available on the `Ipopt website <https://www.coin-or.org/Ipopt/documentation/node40.html>`__.
+The full list of options is available on the `Ipopt website <https://coin-or.github.io/Ipopt/OPTIONS.html>`__.
 :class:`pygmo.ipopt` allows to configure any Ipopt option via methods such as :func:`~pygmo.ipopt.set_string_options()`,
 :func:`~pygmo.ipopt.set_string_option()`, :func:`~pygmo.ipopt.set_integer_options()`, etc., which need to be used before
 invoking the ``evolve()`` method.
 
 If the user does not set any option, :class:`pygmo.ipopt` use Ipopt's default values for the options (see the
-`documentation <https://www.coin-or.org/Ipopt/documentation/node40.html>`__), with the following
+`documentation <https://coin-or.github.io/Ipopt/OPTIONS.html>`__), with the following
 modifications:
 
 * if the ``"print_level"`` integer option is **not** set by the user, it will be set to 0 by :class:`pygmo.ipopt` (this will
