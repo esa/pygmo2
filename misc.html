@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Miscellanea &mdash; pygmo 2.14.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo_favico.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="List of problems" href="problems.html" />
+    <link rel="prev" title="Selection policy" href="s_policy.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pygmo
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.14.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_reference.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="api_reference.html#core-classes">Core classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="algorithm.html">Algorithm class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="problem.html">Problem class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="population.html">Population class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="island.html">Island class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="archipelago.html">Archipelago class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bfe.html">Batch fitness evaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topology.html">Topology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="r_policy.html">Replacement policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="s_policy.html">Selection policy</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Miscellanea</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#implemented-user-defined-classes">Implemented user-defined classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pygmo</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="api_reference.html">API reference</a> &raquo;</li>
+        
+      <li>Miscellanea</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/misc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="miscellanea">
+<h1>Miscellanea<a class="headerlink" href="#miscellanea" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pygmo.thread_safety">
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">thread_safety</code><a class="headerlink" href="#pygmo.thread_safety" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thread safety level.</p>
+<p>This enumeration defines a set of values that can be used to specify the thread safety of problems, algorithms, etc.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For safety reasons, pygmo currently does not allow to set a thread safety level higher than <code class="docutils literal notranslate"><span class="pre">none</span></code>
+for any user-defined object implemented in Python. That is, only problems, algorithms, etc.
+implemented in C++ can have some degree of thread safety.</p>
+</div>
+<p>Members:</p>
+<blockquote>
+<div><p>none : no thread safety - concurrent operations on distinct objects are unsafe (value = 0)</p>
+<p>basic : basic thread safety - concurrent operations on distinct objects are safe (value = 1)</p>
+<p>constant : constant thread safety - constant (i.e., read-only) concurrent operations on the same object are safe (value = 2)</p>
+</div></blockquote>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="pygmo.evolve_status">
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">evolve_status</code><a class="headerlink" href="#pygmo.evolve_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evolution status.</p>
+<p>This enumeration contains status flags used to represent the current status of asynchronous evolution/optimisation
+in <a class="reference internal" href="island.html#pygmo.island" title="pygmo.island"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.island</span></code></a> and <a class="reference internal" href="archipelago.html#pygmo.archipelago" title="pygmo.archipelago"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.archipelago</span></code></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="island.html#pygmo.island.status" title="pygmo.island.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pygmo.island.status</span></code></a> and <a class="reference internal" href="archipelago.html#pygmo.archipelago.status" title="pygmo.archipelago.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pygmo.archipelago.status</span></code></a>.</p>
+</div>
+<p>Members:</p>
+<blockquote>
+<div><p>idle : no asynchronous operations are ongoing, and no error was generated
+by an asynchronous operation in the past (value = 0)</p>
+<p>busy : asynchronous operations are ongoing, and no error was generated
+by an asynchronous operation in the past (value = 1)</p>
+<p>idle_error : no asynchronous operations are ongoing, but an error was generated
+by an asynchronous operation in the past (value = 2)</p>
+<p>busy_error : asynchronous operations are ongoing, and an error was generated
+by an asynchronous operation in the past (value = 3)</p>
+</div></blockquote>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="pygmo.migration_type">
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">migration_type</code><a class="headerlink" href="#pygmo.migration_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Migration type.</p>
+<p>This enumeration represents the available migration policies in an <a class="reference internal" href="archipelago.html#pygmo.archipelago" title="pygmo.archipelago"><code class="xref py py-class docutils literal notranslate"><span class="pre">archipelago</span></code></a>:</p>
+<ul class="simple">
+<li><p>with the point-to-point migration policy, during migration an island will
+consider individuals from only one of the connecting islands;</p></li>
+<li><p>with the broadcast migration policy, during migration an island will consider
+individuals from <em>all</em> the connecting islands.</p></li>
+</ul>
+<p>Members:</p>
+<blockquote>
+<div><p>p2p : point-to-point migration (value = 0)</p>
+<p>broadcast : broadcast migration (value = 1)</p>
+</div></blockquote>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="pygmo.migrant_handling">
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">migrant_handling</code><a class="headerlink" href="#pygmo.migrant_handling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Migrant handling policy.</p>
+<p>This enumeration represents the available migrant handling
+policies in an <a class="reference internal" href="archipelago.html#pygmo.archipelago" title="pygmo.archipelago"><code class="xref py py-class docutils literal notranslate"><span class="pre">archipelago</span></code></a>.</p>
+<p>During migration,
+individuals are selected from the islands and copied into a migration
+database, from which they can be fetched by other islands.
+This policy establishes what happens to the migrants in the database
+after they have been fetched by a destination island:</p>
+<ul class="simple">
+<li><p>with the preserve policy, a copy of the candidate migrants
+remains in the database;</p></li>
+<li><p>with the evict policy, the candidate migrants are
+removed from the database.</p></li>
+</ul>
+<p>Members:</p>
+<blockquote>
+<div><p>preserve : perserve migrants in the database (value = 0)</p>
+<p>evict : evict migrants from the database (value = 1)</p>
+</div></blockquote>
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="function">
+<dt id="pygmo.set_serialization_backend">
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">set_serialization_backend</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.set_serialization_backend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set pygmo’s serialization backend.</p>
+<p>This function allows to specify the serialization backend that is used internally by pygmo
+for the (de)serialization of pythonic user-defined entities (e.g., user-defined pythonic
+problems, algorithms, etc.).</p>
+<p>By default, pygmo uses the <a class="reference external" href="https://github.com/cloudpipe/cloudpickle">cloudpickle</a>
+module, which extends the capabilities of the standard <a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> module with support
+for lambdas, functions and classes defined interactively in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> module, etc.</p>
+<p>In some specific cases, however, different serialization backends might work better than cloudpickle,
+and thus pygmo provides the possibility for the cognizant user to switch to another
+serialization backend.</p>
+<p>The valid backends are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'pickle'</span></code> (i.e., the standard Python <a class="reference external" href="https://docs.python.org/3/library/pickle.html#module-pickle" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> module),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'cloudpickle'</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'dill'</span></code> (from the <a class="reference external" href="https://pypi.org/project/dill/">dill</a> library).</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting the serialization backend is not thread-safe: do <strong>not</strong> set
+the serialization backend while concurrently setting/getting it from another thread,
+or while asynchronous evolutions/optimisations are ongoing.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – the name of the desired backend</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>name</em> is not a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>name</em> is not one of <code class="docutils literal notranslate"><span class="pre">['pickle',</span> <span class="pre">'cloudpickle',</span> <span class="pre">'dill']</span></code></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.8)"><strong>ImportError</strong></a> – if <em>name</em> is <code class="docutils literal notranslate"><span class="pre">'dill'</span></code> but the dill module is not installed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmo.get_serialization_backend">
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">get_serialization_backend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.get_serialization_backend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get pygmo’s serialization backend.</p>
+<p>This function will return pygmo’s current serialization backend (see
+<a class="reference internal" href="#pygmo.set_serialization_backend" title="pygmo.set_serialization_backend"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_serialization_backend()</span></code></a> for an explanation of the
+available backends).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the current serialization backend (as a Python module)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/types.html#types.ModuleType" title="(in Python v3.8)">types.ModuleType</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="problems.html" class="btn btn-neutral float-right" title="List of problems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="s_policy.html" class="btn btn-neutral float-left" title="Selection policy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, pagmo development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

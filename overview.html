@@ -28,6 +28,8 @@
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -38,6 +40,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials/tutorials.html" />
     <link rel="prev" title="Installation" href="install.html" /> 
 </head>
 
@@ -107,6 +110,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#list-of-batch-fitness-evaluators">List of batch fitness evaluators</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
 </ul>
 
             
@@ -236,10 +242,10 @@ sorting, plotting, etc.).</p></li>
 </ul>
 </div>
 <div class="section" id="list-of-algorithms">
-<span id="algorithms"></span><h2>List of algorithms<a class="headerlink" href="#list-of-algorithms" title="Permalink to this headline">¶</a></h2>
+<span id="available-algorithms"></span><h2>List of algorithms<a class="headerlink" href="#list-of-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>This is the list of user defined algorithms (UDAs) currently
 provided with pygmo. These are classes that
-can be used to construct a <a class="reference external" href="https://esa.github.io/pagmo2/docs/python/py_algorithm.html#pygmo.algorithm" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.algorithm</span></code></a>, which will
+can be used to construct a <a class="reference internal" href="algorithm.html#pygmo.algorithm" title="pygmo.algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.algorithm</span></code></a>, which will
 then provide a unified interface to access the algorithm’s functionalities.</p>
 <p>Generally speaking, algorithms can solve only specific problem classes.
 In the tables below, we use the following
@@ -255,7 +261,7 @@ flags to signal which problem types an algorithm can solve:</p>
 <p>Note that algorithms that do not directly support integer
 programming will still work on integer problems
 (i.e., they will optimise the relaxed problem).
-Note also that it is possible to use <a class="reference internal" href="#meta-problems"><span class="std std-ref">meta-problems</span></a>
+Note also that it is possible to use <a class="reference internal" href="#available-meta-problems"><span class="std std-ref">meta-problems</span></a>
 to turn constrained problems into unconstrained ones,
 and multi-objective problems into single-objective ones.</p>
 <div class="section" id="heuristic-global-optimization">
@@ -274,75 +280,75 @@ and multi-objective problems into single-objective ones.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Extended Ant Colony Optimization (GACO)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.gaco" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.gaco</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.gaco" title="pygmo.gaco"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.gaco</span></code></a></p></td>
 <td><p>S-CU-I</p></td>
 </tr>
 <tr class="row-odd"><td><p>Differential Evolution (DE)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.de" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.de</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.de" title="pygmo.de"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.de</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Self-adaptive DE (jDE and iDE)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.sade" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.sade</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.sade" title="pygmo.sade"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.sade</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Self-adaptive DE (de_1220 aka pDE)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.de1220" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.de1220</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.de1220" title="pygmo.de1220"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.de1220</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Grey wolf optimizer (GWO)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.gwo" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.gwo</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.gwo" title="pygmo.gwo"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.gwo</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Improved Harmony Search</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.ihs" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ihs</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.ihs" title="pygmo.ihs"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ihs</span></code></a></p></td>
 <td><p>SM-CU-I</p></td>
 </tr>
 <tr class="row-even"><td><p>Particle Swarm Optimization (PSO)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.pso" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.pso</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.pso" title="pygmo.pso"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.pso</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Particle Swarm Optimization Generational (GPSO)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.pso_gen" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.pso_gen</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.pso_gen" title="pygmo.pso_gen"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.pso_gen</span></code></a></p></td>
 <td><p>S-U-sto</p></td>
 </tr>
 <tr class="row-even"><td><p>(N+1)-ES Simple Evolutionary Algorithm</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.sea" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.sea</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.sea" title="pygmo.sea"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.sea</span></code></a></p></td>
 <td><p>S-U-sto</p></td>
 </tr>
 <tr class="row-odd"><td><p>Simple Genetic Algorithm</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.sga" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.sga</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.sga" title="pygmo.sga"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.sga</span></code></a></p></td>
 <td><p>S-U-I-sto</p></td>
 </tr>
 <tr class="row-even"><td><p>Corana’s Simulated Annealing (SA)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.simulated_annealing" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.simulated_annealing</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.simulated_annealing" title="pygmo.simulated_annealing"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.simulated_annealing</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Artificial Bee Colony (ABC)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.bee_colony" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.bee_colony</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.bee_colony" title="pygmo.bee_colony"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.bee_colony</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Covariance Matrix Adaptation Evo. Strategy (CMA-ES)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.cmaes" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cmaes</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.cmaes" title="pygmo.cmaes"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cmaes</span></code></a></p></td>
 <td><p>S-U-sto</p></td>
 </tr>
 <tr class="row-odd"><td><p>Exponential Evolution Strategies (xNES)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.xnes" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.xnes</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.xnes" title="pygmo.xnes"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.xnes</span></code></a></p></td>
 <td><p>S-U-sto</p></td>
 </tr>
 <tr class="row-even"><td><p>Non-dominated Sorting GA (NSGA2)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nsga2" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nsga2</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nsga2" title="pygmo.nsga2"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nsga2</span></code></a></p></td>
 <td><p>M-U-I</p></td>
 </tr>
 <tr class="row-odd"><td><p>Multi-objective EA vith Decomposition (MOEA/D)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.moead" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.moead</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.moead" title="pygmo.moead"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.moead</span></code></a></p></td>
 <td><p>M-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Multi-objective Hypervolume-based ACO (MHACO)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.maco" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.maco</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.maco" title="pygmo.maco"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.maco</span></code></a></p></td>
 <td><p>M-U-I</p></td>
 </tr>
 <tr class="row-odd"><td><p>Non-dominated Sorting PSO (NSPSO)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nspso" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nspso</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nspso" title="pygmo.nspso"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nspso</span></code></a></p></td>
 <td><p>M-U-I</p></td>
 </tr>
 </tbody>
@@ -364,59 +370,59 @@ and multi-objective problems into single-objective ones.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Compass Search (CS)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.compass_search" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.compass_search</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.compass_search" title="pygmo.compass_search"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.compass_search</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-odd"><td><p>COBYLA (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-even"><td><p>BOBYQA (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>NEWUOA + bound constraints (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>PRAXIS (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Nelder-Mead simplex (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Subplex (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>MMA (Method of Moving Asymptotes) (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-even"><td><p>CCSA (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-odd"><td><p>SLSQP (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-even"><td><p>Low-storage BFGS (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Preconditioned truncated Newton (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Shifted limited-memory variable-metric (from NLopt)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Ipopt</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.ipopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ipopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.ipopt" title="pygmo.ipopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ipopt</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-even"><td><p>SNOPT (in pagmo_plugins_non_free affiliated package)</p></td>
@@ -446,15 +452,15 @@ and multi-objective problems into single-objective ones.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Monotonic Basin Hopping (MBH)</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.mbh" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mbh</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.mbh" title="pygmo.mbh"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mbh</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 <tr class="row-odd"><td><p>Cstrs Self-Adaptive</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.cstrs_self_adaptive" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cstrs_self_adaptive</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.cstrs_self_adaptive" title="pygmo.cstrs_self_adaptive"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cstrs_self_adaptive</span></code></a></p></td>
 <td><p>S-C</p></td>
 </tr>
 <tr class="row-even"><td><p>Augmented Lagrangian algorithm (from NLopt) <a class="footnote-reference brackets" href="#auglag" id="id2">2</a></p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/algorithms/py_algorithms.html#pygmo.nlopt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
 <td><p>S-CU</p></td>
 </tr>
 </tbody>
@@ -476,9 +482,9 @@ in conjunction with other NLopt algorithms.</p>
 </div>
 </div>
 <div class="section" id="list-of-problems">
-<span id="problems"></span><h2>List of problems<a class="headerlink" href="#list-of-problems" title="Permalink to this headline">¶</a></h2>
+<h2>List of problems<a class="headerlink" href="#list-of-problems" title="Permalink to this headline">¶</a></h2>
 <p>This is the list of user defined problems (UDPs) currently provided with pygmo.
-These are classes that can be used to construct a <a class="reference external" href="https://esa.github.io/pagmo2/docs/python/py_problem.html#pygmo.problem" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a>,
+These are classes that can be used to construct a <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a>,
 which will
 then provide a unified interface to access the problem’s functionalities.</p>
 <p>In the tables below, we classify optimisation problems
@@ -507,47 +513,47 @@ according to the following flags:</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Ackley</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.ackley" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ackley</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.ackley" title="pygmo.ackley"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ackley</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Golomb Ruler</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.golomb_ruler" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.golomb_ruler</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.golomb_ruler" title="pygmo.golomb_ruler"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.golomb_ruler</span></code></a></p></td>
 <td><p>S-C-I</p></td>
 </tr>
 <tr class="row-even"><td><p>Griewank</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.griewank" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.griewank</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.griewank" title="pygmo.griewank"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.griewank</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Hock Schittkowsky 71</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.hock_schittkowsky_71" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.hock_schittkowsky_71</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.hock_schittkowsky_71" title="pygmo.hock_schittkowsky_71"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.hock_schittkowsky_71</span></code></a></p></td>
 <td><p>S-C</p></td>
 </tr>
 <tr class="row-even"><td><p>Inventory</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.inventory" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.inventory</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.inventory" title="pygmo.inventory"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.inventory</span></code></a></p></td>
 <td><p>S-U-sto</p></td>
 </tr>
 <tr class="row-odd"><td><p>Lennard Jones</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.lennard_jones" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.lennard_jones</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.lennard_jones" title="pygmo.lennard_jones"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.lennard_jones</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Luksan Vlcek 1</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.luksan_vlcek1" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.luksan_vlcek1</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.luksan_vlcek1" title="pygmo.luksan_vlcek1"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.luksan_vlcek1</span></code></a></p></td>
 <td><p>S-C</p></td>
 </tr>
 <tr class="row-odd"><td><p>Rastrigin</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.rastrigin" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.rastrigin</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.rastrigin" title="pygmo.rastrigin"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.rastrigin</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>MINLP Rastrigin</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.minlp_rastrigin" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.minlp_rastrigin</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.minlp_rastrigin" title="pygmo.minlp_rastrigin"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.minlp_rastrigin</span></code></a></p></td>
 <td><p>S-U-I</p></td>
 </tr>
 <tr class="row-odd"><td><p>Rosenbrock</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.rosenbrock" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.rosenbrock</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.rosenbrock" title="pygmo.rosenbrock"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.rosenbrock</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>Schwefel</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.schwefel" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.schwefel</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.schwefel" title="pygmo.schwefel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.schwefel</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 </tbody>
@@ -569,38 +575,38 @@ according to the following flags:</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>CEC2006</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.cec2006" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2006</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.cec2006" title="pygmo.cec2006"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2006</span></code></a></p></td>
 <td><p>S-C</p></td>
 </tr>
 <tr class="row-odd"><td><p>CEC2009</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.cec2009" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2009</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.cec2009" title="pygmo.cec2009"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2009</span></code></a></p></td>
 <td><p>S-C</p></td>
 </tr>
 <tr class="row-even"><td><p>CEC2013</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.cec2013" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2013</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.cec2013" title="pygmo.cec2013"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2013</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>CEC2014</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.cec2014" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2014</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.cec2014" title="pygmo.cec2014"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.cec2014</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-even"><td><p>ZDT</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.zdt" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.zdt</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.zdt" title="pygmo.zdt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.zdt</span></code></a></p></td>
 <td><p>M-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>DTLZ</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.dtlz" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.dtlz</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.dtlz" title="pygmo.dtlz"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.dtlz</span></code></a></p></td>
 <td><p>M-U</p></td>
 </tr>
 <tr class="row-even"><td><p>WFG</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.wfg" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.wfg</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.wfg" title="pygmo.wfg"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.wfg</span></code></a></p></td>
 <td><p>M-U</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="meta-problems">
-<span id="id3"></span><h3>Meta-problems<a class="headerlink" href="#meta-problems" title="Permalink to this headline">¶</a></h3>
+<span id="available-meta-problems"></span><h3>Meta-problems<a class="headerlink" href="#meta-problems" title="Permalink to this headline">¶</a></h3>
 <p>Meta-problems are UDPs that take another UDP as input, yielding a new UDP
 which modifies the behaviour and/or the properties of the original
 problem in a variety of ways.</p>
@@ -616,26 +622,26 @@ problem in a variety of ways.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Decompose</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.decompose" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.decompose</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.decompose" title="pygmo.decompose"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.decompose</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Translate</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.translate" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.translate</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.translate" title="pygmo.translate"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.translate</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Unconstrain</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.unconstrain" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.unconstrain</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.unconstrain" title="pygmo.unconstrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.unconstrain</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Decorator</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#pygmo.decorator_problem" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.decorator_problem</span></code></a></p></td>
+<td><p><a class="reference internal" href="problems.html#pygmo.decorator_problem" title="pygmo.decorator_problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.decorator_problem</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="section" id="list-of-islands">
-<span id="islands"></span><h2>List of islands<a class="headerlink" href="#list-of-islands" title="Permalink to this headline">¶</a></h2>
+<span id="available-islands"></span><h2>List of islands<a class="headerlink" href="#list-of-islands" title="Permalink to this headline">¶</a></h2>
 <p>This is the list of user defined islands (UDIs)
 currently provided with pygmo. These are classes that
-can be used to construct a <a class="reference external" href="https://esa.github.io/pagmo2/docs/python/py_island.html#pygmo.island" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.island</span></code></a>,
+can be used to construct a <a class="reference internal" href="island.html#pygmo.island" title="pygmo.island"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.island</span></code></a>,
 which will then
 provide a unified interface to access the island’s functionalities.</p>
 <p>In the pygmo jargon, an island is an entity tasked with
@@ -656,13 +662,13 @@ cluster architectures, etc.).</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Thread island</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/islands/py_islands.html#pygmo.thread_island" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.thread_island</span></code></a></p></td>
+<td><p><a class="reference internal" href="islands.html#pygmo.thread_island" title="pygmo.thread_island"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.thread_island</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Multiprocessing island</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/islands/py_islands.html#pygmo.mp_island" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mp_island</span></code></a></p></td>
+<td><p><a class="reference internal" href="islands.html#pygmo.mp_island" title="pygmo.mp_island"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mp_island</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Ipyparallel island</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/islands/py_islands.html#pygmo.ipyparallel_island" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ipyparallel_island</span></code></a></p></td>
+<td><p><a class="reference internal" href="islands.html#pygmo.ipyparallel_island" title="pygmo.ipyparallel_island"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ipyparallel_island</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -672,7 +678,7 @@ cluster architectures, etc.).</p>
 <p>This is the list of user defined batch fitness
 evaluators (UDBFEs)
 currently provided with pygmo. These are classes that
-can be used to construct a <a class="reference external" href="https://esa.github.io/pagmo2/docs/python/py_bfe.html#pygmo.bfe" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.bfe</span></code></a>,
+can be used to construct a <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.bfe</span></code></a>,
 which will then
 provide a unified interface to access the evaluator’s
 functionalities.</p>
@@ -695,16 +701,16 @@ fitness evaluations within the inner loop of an algorithm).</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Default BFE</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/bfes/py_bfes.html#pygmo.default_bfe" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.default_bfe</span></code></a></p></td>
+<td><p><a class="reference internal" href="bfes.html#pygmo.default_bfe" title="pygmo.default_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.default_bfe</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Thread BFE</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/bfes/py_bfes.html#pygmo.thread_bfe" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.thread_bfe</span></code></a></p></td>
+<td><p><a class="reference internal" href="bfes.html#pygmo.thread_bfe" title="pygmo.thread_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.thread_bfe</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Multiprocessing BFE</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/bfes/py_bfes.html#pygmo.mp_bfe" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mp_bfe</span></code></a></p></td>
+<td><p><a class="reference internal" href="bfes.html#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mp_bfe</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Ipyparallel BFE</p></td>
-<td><p><a class="reference external" href="https://esa.github.io/pagmo2/docs/python/bfes/py_bfes.html#pygmo.ipyparallel_bfe" title="(in pagmo v2.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ipyparallel_bfe</span></code></a></p></td>
+<td><p><a class="reference internal" href="bfes.html#pygmo.ipyparallel_bfe" title="pygmo.ipyparallel_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.ipyparallel_bfe</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -718,6 +724,8 @@ fitness evaluations within the inner loop of an algorithm).</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorials/tutorials.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

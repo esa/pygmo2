@@ -38,7 +38,7 @@ Overview
   (e.g., hypervolume computation, non-dominated
   sorting, plotting, etc.).
 
-.. _algorithms:
+.. _available_algorithms:
 
 List of algorithms
 ------------------
@@ -62,7 +62,7 @@ flags to signal which problem types an algorithm can solve:
 Note that algorithms that do not directly support integer
 programming will still work on integer problems
 (i.e., they will optimise the relaxed problem).
-Note also that it is possible to use :ref:`meta-problems <meta_problems>`
+Note also that it is possible to use :ref:`meta-problems <available_meta_problems>`
 to turn constrained problems into unconstrained ones,
 and multi-objective problems into single-objective ones.
 
@@ -136,8 +136,6 @@ Augmented Lagrangian algorithm (from NLopt) [#auglag]_ :class:`pygmo.nlopt`     
 .. [#auglag] The Augmented Lagrangian algorithm can be used only
    in conjunction with other NLopt algorithms.
 
-.. _problems:
-
 List of problems
 ----------------
 
@@ -188,7 +186,7 @@ DTLZ                               :class:`pygmo.dtlz`                          
 WFG                                :class:`pygmo.wfg`                           M-U
 ================================== ============================================ =============== 
 
-.. _meta_problems:
+.. _available_meta_problems:
 
 Meta-problems
 ^^^^^^^^^^^^^
@@ -206,7 +204,7 @@ Unconstrain                                                :class:`pygmo.unconst
 Decorator                                                  :class:`pygmo.decorator_problem`
 ========================================================== =========================================
 
-.. _islands:
+.. _available_islands:
 
 List of islands
 ---------------
