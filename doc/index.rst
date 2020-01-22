@@ -40,3 +40,4 @@ pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
    install
    overview
    api_reference
+   credits
