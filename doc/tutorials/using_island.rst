@@ -147,7 +147,7 @@ Everything looks fine: in our thread nothing really happened nor threw. But if w
 
 What has happened? I need to retrieve that message!
 
-    >>> isl.wait_check()
+    >>> isl.wait_check() # doctest: +SKIP
     Traceback (most recent call last):
       File "/Users/darioizzo/miniconda3/envs/pagmo/lib/python3.6/doctest.py", line 1330, in __run
         compileflags, 1), test.globs)

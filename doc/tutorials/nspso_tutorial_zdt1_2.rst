@@ -41,8 +41,8 @@ Each of the UDAs is run ten times on each problem and the results are eventually
     >>> mean_cd_nsga2_zdt1=[]
     >>> mean_cd_nsga2_zdt2=[]
 
-    >>> #We run the algos ten times each, and we store p-distance and crowding distance
-    >>> for j in problems:
+    >>> # We run the algos ten times each, and we store p-distance and crowding distance
+    >>> for j in problems: #doctest: +SKIP
     ...       # 1. We declare the problem (either ZDT1 or ZDT2):
     ...       if j==1:
     ...           udp=zdt(prob_id=1)
@@ -97,7 +97,7 @@ Once that we have run the three algorithms on the ZDT1 and ZDT3 problems, by sto
 
 .. doctest::
 
-    >>> # 6. We print the results: #doctest: +SKIP 
+    >>> # 6. We print the results:
     >>> print("\n NSPSO with crowding distance:") #doctest: +SKIP 
     >>> print("ZDT1-> p-distance mean and std: %(mean)f +/- %(std)f" %{"mean":np.nanmean(p_dist_nspso_cd_zdt1), "std":np.nanstd(p_dist_nspso_cd_zdt1)}) #doctest: +SKIP 
     >>> print("ZDT2-> p-distance mean and std: %(mean)f +/- %(std)f" %{"mean":np.nanmean(p_dist_nspso_cd_zdt2), "std":np.nanstd(p_dist_nspso_cd_zdt2)}) #doctest: +SKIP 
@@ -115,20 +115,20 @@ Once that we have run the three algorithms on the ZDT1 and ZDT3 problems, by sto
     >>> print("ZDT2-> p-distance mean and std: %(mean)f +/- %(std)f" %{"mean":np.nanmean(p_dist_nsga2_zdt2), "std":np.nanstd(p_dist_nsga2_zdt2)}) #doctest: +SKIP 
     >>> print("ZDT1-> crowding distance mean and std: %(mean)f +/- %(std)f" %{"mean":np.nanmean(mean_cd_nsga2_zdt1), "std":np.nanstd(mean_cd_nsga2_zdt1)}) #doctest: +SKIP 
     >>> print("ZDT2-> crowding distance mean and std: %(mean)f +/- %(std)f" %{"mean":np.nanmean(mean_cd_nsga2_zdt2), "std":np.nanstd(mean_cd_nsga2_zdt2)}) #doctest: +SKIP 
-     NSPSO with crowding distance: #doctest: +SKIP 
-     ZDT1-> p-distance mean and std: 0.054309 +/- 0.028563 #doctest: +SKIP 
-     ZDT2-> p-distance mean and std: 0.020207 +/- 0.016466 #doctest: +SKIP 
-     ZDT1-> crowding distance mean and std: 0.020099 +/- 0.000038 #doctest: +SKIP 
-     ZDT2-> crowding distance mean and std: 0.020065 +/- 0.000102 #doctest: +SKIP 
+     NSPSO with crowding distance:
+     ZDT1-> p-distance mean and std: 0.054309 +/- 0.028563
+     ZDT2-> p-distance mean and std: 0.020207 +/- 0.016466
+     ZDT1-> crowding distance mean and std: 0.020099 +/- 0.000038
+     ZDT2-> crowding distance mean and std: 0.020065 +/- 0.000102
     <BLANKLINE>
-     NSPSO with niche count: #doctest: +SKIP 
-     ZDT1-> p-distance mean and std: 0.054797 +/- 0.016863 #doctest: +SKIP
-     ZDT2-> p-distance mean and std: 0.011945 +/- 0.010522 #doctest: +SKIP
-     ZDT1-> crowding distance mean and std: 0.049834 +/- 0.009898 #doctest: +SKIP
-     ZDT2-> crowding distance mean and std: 0.044450 +/- 0.010312 #doctest: +SKIP
+     NSPSO with niche count:
+     ZDT1-> p-distance mean and std: 0.054797 +/- 0.016863
+     ZDT2-> p-distance mean and std: 0.011945 +/- 0.010522
+     ZDT1-> crowding distance mean and std: 0.049834 +/- 0.009898
+     ZDT2-> crowding distance mean and std: 0.044450 +/- 0.010312
     <BLANKLINE>
      NSGA2:
-     ZDT1-> p-distance mean and std: 0.011525 +/- 0.001534 #doctest: +SKIP
-     ZDT2-> p-distance mean and std: 0.009290 +/- 0.001335 #doctest: +SKIP
-     ZDT1-> crowding distance mean and std: 0.020099 +/- 0.000038 #doctest: +SKIP
-     ZDT2-> crowding distance mean and std: 0.020065 +/- 0.000102 #doctest: +SKIP
+     ZDT1-> p-distance mean and std: 0.011525 +/- 0.001534
+     ZDT2-> p-distance mean and std: 0.009290 +/- 0.001335
+     ZDT1-> crowding distance mean and std: 0.020099 +/- 0.000038
+     ZDT2-> crowding distance mean and std: 0.020065 +/- 0.000102
