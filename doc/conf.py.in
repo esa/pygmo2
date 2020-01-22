@@ -41,7 +41,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
-    #'nbsphinx'
+    'nbsphinx'
 ]
 
 autoclass_content = 'both'
