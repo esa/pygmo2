@@ -44,6 +44,8 @@ extensions = [
     'nbsphinx'
 ]
 
+autoclass_content = 'both'
+
 # Intersphinx mappings.
 intersphinx_mapping = {'python': (
     'https://docs.python.org/3', None),

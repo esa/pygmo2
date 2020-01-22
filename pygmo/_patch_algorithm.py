@@ -20,7 +20,7 @@ def _algorithm_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::algorithm::extract()`),
     * if *t* is :class:`object` and the UDA is a Python object (as opposed to an
-      :ref:`exposed C++ algorithm <py_algorithms_cpp>`), then a reference to the
+      :ref:`exposed C++ algorithm <algorithms_cpp>`), then a reference to the
       UDA will be returned (this allows to extract a Python UDA without knowing its type),
     * otherwise, :data:`None` will be returned.
 

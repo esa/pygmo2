@@ -20,7 +20,7 @@ def _island_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::island::extract()`),
     * if *t* is :class:`object` and the UDI is a Python object (as opposed to an
-      :ref:`exposed C++ island <py_islands_cpp>`), then a reference to the
+      :ref:`exposed C++ island <islands_cpp>`), then a reference to the
       UDI will be returned (this allows to extract a Python UDI without knowing its type),
     * otherwise, :data:`None` will be returned.
 

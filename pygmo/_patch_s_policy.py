@@ -20,7 +20,7 @@ def _s_policy_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::s_policy::extract()`),
     * if *t* is :class:`object` and the UDSP is a Python object (as opposed to an
-      :ref:`exposed C++ selection policy <py_s_policies_cpp>`), then a reference to the
+      :ref:`exposed C++ selection policy <s_policies_cpp>`), then a reference to the
       UDSP will be returned (this allows to extract a Python UDSP without knowing its type),
     * otherwise, :data:`None` will be returned.
 

@@ -318,6 +318,29 @@ std::string bls_selection_docstring(const std::string &);
 std::string bls_replacement_docstring(const std::string &);
 std::string bls_set_random_sr_seed_docstring(const std::string &);
 
+// evolve_status enum.
+std::string evolve_status_docstring();
+std::string evolve_status_idle_docstring();
+std::string evolve_status_busy_docstring();
+std::string evolve_status_idle_error_docstring();
+std::string evolve_status_busy_error_docstring();
+
+// thread_safety enum.
+std::string thread_safety_docstring();
+std::string thread_safety_none_docstring();
+std::string thread_safety_basic_docstring();
+std::string thread_safety_constant_docstring();
+
+// migration_type enum.
+std::string migration_type_docstring();
+std::string migration_type_p2p_docstring();
+std::string migration_type_broadcast_docstring();
+
+// migrant_handling enum.
+std::string migrant_handling_docstring();
+std::string migrant_handling_preserve_docstring();
+std::string migrant_handling_evict_docstring();
+
 } // namespace pygmo
 
 #endif

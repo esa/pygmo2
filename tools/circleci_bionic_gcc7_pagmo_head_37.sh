@@ -42,6 +42,10 @@ cd
 # Run the test suite.
 python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
+# Run the additional tests.
+cd ~/project/tools
+python circleci_additional_tests.py
+
 # Build the documentation.
 cd ~/project/doc
 export SPHINX_OUTPUT=`make html linkcheck 2>&1 |grep -v Warning  > /dev/null`;
@@ -52,6 +56,9 @@ if [[ "${SPHINX_OUTPUT}" != "" ]]; then
     exit 1;
 fi
 echo "Sphinx ran successfully";
+
+# Run the doctests.
+make doctest;
 
 if [[ ! -z "${CI_PULL_REQUEST}" ]]; then
     echo "Testing a pull request, the generated documentation will not be uploaded.";

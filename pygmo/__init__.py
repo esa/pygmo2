@@ -673,7 +673,8 @@ def set_serialization_backend(name):
     .. warning::
 
        Setting the serialization backend is not thread-safe: do **not** set
-       the serialization backend while concurrently setting/getting it from another thread.
+       the serialization backend while concurrently setting/getting it from another thread,
+       or while asynchronous evolutions/optimisations are ongoing.
 
     Args:
         name (str): the name of the desired backend

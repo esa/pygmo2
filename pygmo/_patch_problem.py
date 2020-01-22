@@ -20,7 +20,7 @@ def _problem_extract(self, t):
       (this mirrors the behaviour of the corresponding C++ method
       :cpp:func:`pagmo::problem::extract()`),
     * if *t* is :class:`object` and the UDP is a Python object (as opposed to an
-      :ref:`exposed C++ problem <py_problems_cpp>`), then a reference to the
+      :ref:`exposed C++ problem <problems_cpp>`), then a reference to the
       UDP will be returned (this allows to extract a Python UDP without knowing its type),
     * otherwise, :data:`None` will be returned.
 

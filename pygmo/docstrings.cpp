@@ -85,8 +85,8 @@ If the problem is multi-objective one single best is not well defined. In this c
 individuals by calling the :func:`pygmo.sort_population_mo()` function.
 
 Args:
-    tol (``float`` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints. By default, the c_tol attribute 
-    from the population problem is used.
+    tol (``float`` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
+      :attr:`~pygmo.problem.c_tol` attribute from the population's problem is used.
 
 Returns:
     ``int``: the index of the best individual
@@ -400,7 +400,7 @@ methods:
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDP should be implemented and on how they are used by :class:`~pygmo.problem`.
 Note that the exposed C++ problems can also be used as UDPs, even if they do not expose any of the
-mandatory or optional methods listed above (see :ref:`here <py_problems>` for the
+mandatory or optional methods listed above (see :ref:`here <problems>` for the
 full list of UDPs already coded in pygmo).
 
 This class is the Python counterpart of the C++ class :cpp:class:`pagmo::problem`.
@@ -1236,7 +1236,7 @@ Problem's thread safety level.
 This method will return a value of the enum :class:`pygmo.thread_safety` which indicates the thread safety level
 of the UDP. Unlike in C++, in Python it is not possible to re-implement this method in the UDP. That is, for C++
 UDPs, the returned value will be the value returned by the ``get_thread_safety()`` method of the UDP. For Python
-UDPs, the returned value will be unconditionally :attr:`pygmo.thread_safety.none`.
+UDPs, the returned value will be unconditionally ``none``.
 
 Returns:
     a value of :class:`pygmo.thread_safety`: the thread safety level of the UDP
@@ -1330,7 +1330,7 @@ Additional optional methods can be implemented in a UDA:
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDA should be implemented and on how they are used by :class:`~pygmo.algorithm`.
 Note that the exposed C++ algorithms can also be used as UDAs, even if they do not expose any of the
-mandatory or optional methods listed above (see :ref:`here <py_algorithms>` for the
+mandatory or optional methods listed above (see :ref:`here <available_algorithms>` for the
 full list of UDAs already coded in pygmo).
 
 This class is the Python counterpart of the C++ class :cpp:class:`pagmo::algorithm`.
@@ -1507,7 +1507,7 @@ Algorithm's thread safety level.
 This method will return a value of the enum :class:`pygmo.thread_safety` which indicates the thread safety level
 of the UDA. Unlike in C++, in Python it is not possible to re-implement this method in the UDA. That is, for C++
 UDAs, the returned value will be the value returned by the ``get_thread_safety()`` method of the UDA. For Python
-UDAs, the returned value will be unconditionally :attr:`pygmo.thread_safety.none`.
+UDAs, the returned value will be unconditionally ``none``.
 
 Returns:
     a value of :class:`pygmo.thread_safety`: the thread safety level of the UDA
@@ -3439,7 +3439,7 @@ Args:
     n (int): the number of decision vectors that will be generated
 
 Returns:
-    :class:`numpy.ndarray`: a random decision vector within the problem's bounds
+    :class:`numpy.ndarray`: a batch of random decision vectors within the problem's bounds, laid out contiguously in a 1D array
 
 Raises:
     OverflowError: in case of (unlikely) overflows
@@ -3712,8 +3712,8 @@ std::string sort_population_mo_docstring()
 Sorts a multi-objective, unconstrained,  population (intended here as a 2D array-like
 containing objective vectors) with respect to the following strict ordering:
 
-- :math:`f_1 \prec f_2` if the non domination ranks are such that :math:`i_1 < i_2`. In case :math:`i_1 = i_2`,
-   then :math:`f_1 \prec f_2` if the crowding distances are such that :math:`d_1 > d_2`.
+* :math:`f_1 \prec f_2` if the non domination ranks are such that :math:`i_1 < i_2`. In case :math:`i_1 = i_2`,
+  then :math:`f_1 \prec f_2` if the crowding distances are such that :math:`d_1 > d_2`.
 
 Complexity is :math:`\mathcal{O}(M N^2)` where :math:`M` is the size of the objective vector and :math:`N` is the number of individuals.
 
@@ -3935,7 +3935,8 @@ The following strict ordering is used:
   in :math:`f_1` is smaller than the objectve value in :math:`f_2`
 
 .. note::
-   the fitness vectors are assumed to contain exactly one objective, \p neq equality constraints and the rest (if any) inequality constraints.
+   The fitness vectors are assumed to contain exactly one objective, *nec* equality constraints
+   and the rest (if any) inequality constraints.
 
 Args:
     f1 (array-like object): the first fitness vector
@@ -3946,7 +3947,7 @@ Args:
 Raises:
     OverflowError: if *nec* is negative or greater than an implementation-defined value
     ValueError: if *f1* and *f2* do not have equal size :math:`n`, if *f1* does not have at least size 1, 
-      if *neq* is larger than :math:`n-1` (too many constraints) or if the size of *tol* is not :math:`n - 1`
+      if *nec* is larger than :math:`n-1` (too many constraints) or if the size of *tol* is not :math:`n - 1`
     TypeError: if *f1*, *f2* or *tol* cannot be converted to a vector of floats
 
 Returns:
@@ -3978,7 +3979,8 @@ The following strict ordering is used (same as the one used in :func:`pygmo.comp
   in :math:`f_1` is smaller than the objectve value in :math:`f_2`
 
 .. note::
-   the fitness vectors are assumed to contain exactly one objective, \p neq equality constraints and the rest (if any) inequality constraints.
+   The fitness vectors are assumed to contain exactly one objective, *nec* equality constraints
+   and the rest (if any) inequality constraints.
 
 Args:
     input_f (2-D array-like object): the fitness vectors
@@ -3987,7 +3989,7 @@ Args:
 
 Raises:
     OverflowError: if *nec* is negative or greater than an implementation-defined value
-    ValueError: if the input fitness vectors do not have all the same size :math:`n >=1`, or if *neq* is larger than :math:`n-1` (too many constraints)
+    ValueError: if the input fitness vectors do not have all the same size :math:`n >=1`, or if *nec* is larger than :math:`n-1` (too many constraints)
       or if the size of *tol* is not equal to :math:`n-1`
     TypeError: if *input_f* cannot be converted to a vector of vector of floats or *tol* cannot be converted to a vector of floats.
 
@@ -4457,7 +4459,7 @@ They establish how individuals are selected and replaced from the island when mi
 the :class:`~pygmo.archipelago`. If the island is not part of an :class:`~pygmo.archipelago`,
 the replacement and selection policies play no role.
 
-Typically, pygmo users will employ an already-available UDI in conjunction with this class (see :ref:`here <py_islands>`
+Typically, pygmo users will employ an already-available UDI in conjunction with this class (see :ref:`here <available_islands>`
 for a full list), but advanced users can implement their own UDI types. A user-defined island must implement
 the following method:
 
@@ -4503,7 +4505,7 @@ An island can be initialised in a variety of ways using keyword arguments:
   If the *udi* parameter is not supplied, the UDI type is chosen according to a heuristic which depends
   on the platform, the Python version and the supplied *algo* and *pop* parameters:
 
-  * if *algo* and *pop*'s problem provide at least the :attr:`~pygmo.thread_safety.basic` thread safety guarantee,
+  * if *algo* and *pop*'s problem provide at least the ``basic`` :class:`~pygmo.thread_safety` guarantee,
     then :class:`~pygmo.thread_island` will be selected as UDI type;
   * otherwise, if the current platform is Windows or the Python version is at least 3.4, then :class:`~pygmo.mp_island`
     will be selected as UDI type, else :class:`~pygmo.ipyparallel_island` will be chosen;
@@ -4577,7 +4579,7 @@ this method will re-throw the exception raised by the first enqueued task that t
 from all the other tasks that threw will be ignored.
 
 Note that :func:`~pygmo.island.wait_check()` resets the status of the island: after a call to :func:`~pygmo.island.wait_check()`,
-:attr:`~pygmo.island.status` will always return :attr:`pygmo.evolve_status.idle`.
+:attr:`~pygmo.island.status` will always return the ``idle`` :class:`~pygmo.evolve_status`.
 
 Raises:
     unspecified: any exception thrown by evolution tasks or by the underlying C++ method
@@ -4593,7 +4595,7 @@ This method will block until all the evolution tasks enqueued via :func:`~pygmo.
 Exceptions thrown by the enqueued tasks can be re-raised via :func:`~pygmo.island.wait_check()`: they will **not** be
 re-thrown by this method. Also, contrary to :func:`~pygmo.island.wait_check()`, this method will **not** reset the
 status of the island: after a call to :func:`~pygmo.island.wait()`, :attr:`~pygmo.island.status` will always return
-either :attr:`pygmo.evolve_status.idle` or :attr:`pygmo.evolve_status.idle_error`.
+either the ``idle`` or ``idle_error`` :class:`~pygmo.evolve_status`.
 
 )";
 }
@@ -4605,18 +4607,18 @@ std::string island_status_docstring()
 This read-only property will return an :class:`~pygmo.evolve_status` flag indicating the current status of
 asynchronous operations in the island. The flag will be:
 
-* :attr:`~pygmo.evolve_status.idle` if the island is currently not evolving and no exceptions
+* ``idle`` if the island is currently not evolving and no exceptions
   were thrown by evolution tasks since the last call to :func:`~pygmo.island.wait_check()`;
-* :attr:`~pygmo.evolve_status.busy` if the island is evolving and no exceptions
+* ``busy`` if the island is evolving and no exceptions
   have (yet) been thrown by evolution tasks since the last call to :func:`~pygmo.island.wait_check()`;
-* :attr:`~pygmo.evolve_status.idle_error` if the island is currently not evolving and at least one
+* ``idle_error`` if the island is currently not evolving and at least one
   evolution task threw an exception since the last call to :func:`~pygmo.island.wait_check()`;
-* :attr:`~pygmo.evolve_status.busy_error` if the island is currently evolving and at least one
+* ``busy_error`` if the island is currently evolving and at least one
   evolution task has already thrown an exception since the last call to :func:`~pygmo.island.wait_check()`.
 
 Note that after a call to :func:`~pygmo.island.wait_check()`, :attr:`~pygmo.island.status` will always return
-:attr:`~pygmo.evolve_status.idle`, and after a call to :func:`~pygmo.island.wait()`, :attr:`~pygmo.island.status`
-will always return either :attr:`~pygmo.evolve_status.idle` or :attr:`~pygmo.evolve_status.idle_error`.
+``idle``, and after a call to :func:`~pygmo.island.wait()`, :attr:`~pygmo.island.status`
+will always return either ``idle`` or ``idle_error``.
 
 Returns:
     :class:`~pygmo.evolve_status`: a flag indicating the current status of asynchronous operations in the island
@@ -4765,7 +4767,7 @@ Thread island.
 This class is a user-defined island (UDI) that will run evolutions directly inside
 the separate thread of execution within :class:`pygmo.island`. Evolution tasks running on this
 UDI must involve :class:`~pygmo.algorithm` and :class:`~pygmo.problem` instances
-that provide at least the :attr:`~pygmo.thread_safety.basic` thread safety guarantee, otherwise
+that provide at least the ``basic`` :class:`~pygmo.thread_safety` guarantee, otherwise
 errors will be raised during the evolution.
 
 Note that algorithms and problems implemented in Python are never considered thread safe, and thus
@@ -4825,18 +4827,18 @@ std::string archipelago_status_docstring()
 This read-only property will return an :class:`~pygmo.evolve_status` flag indicating the current status of
 asynchronous operations in the archipelago. The flag will be:
 
-* :attr:`~pygmo.evolve_status.idle` if, for all the islands in the archipelago, :attr:`pygmo.island.status`
-  returns :attr:`~pygmo.evolve_status.idle`;
-* :attr:`~pygmo.evolve_status.busy` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
-  returns :attr:`~pygmo.evolve_status.busy`, and for no island :attr:`pygmo.island.status` returns an error status;
-* :attr:`~pygmo.evolve_status.idle_error` if no island in the archipelago is busy and for at least one island
-  :attr:`pygmo.island.status` returns :attr:`~pygmo.evolve_status.idle_error`;
-* :attr:`~pygmo.evolve_status.busy_error` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
+* ``idle`` if, for all the islands in the archipelago, :attr:`pygmo.island.status`
+  returns ``idle``;
+* ``busy`` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
+  returns ``busy``, and for no island :attr:`pygmo.island.status` returns an error status;
+* ``idle_error`` if no island in the archipelago is busy and for at least one island
+  :attr:`pygmo.island.status` returns ``idle_error``;
+* ``busy_error`` if, for at least one island in the archipelago, :attr:`pygmo.island.status`
   returns an error status and at least one island is busy.
 
 Note that after a call to :func:`~pygmo.archipelago.wait_check()`, :attr:`pygmo.archipelago.status` will always return
-:attr:`~pygmo.evolve_status.idle`, and after a call to :func:`~pygmo.archipelago.wait()`, :attr:`pygmo.archipelago.status`
-will always return either :attr:`~pygmo.evolve_status.idle` or :attr:`~pygmo.evolve_status.idle_error`.
+``idle``, and after a call to :func:`~pygmo.archipelago.wait()`, :attr:`pygmo.archipelago.status`
+will always return either ``idle`` or ``idle_error``.
 
 Returns:
     :class:`~pygmo.evolve_status`:  a flag indicating the current status of asynchronous operations in the archipelago
@@ -4854,7 +4856,7 @@ This method will call :func:`pygmo.island.wait()` on all the islands of the arch
 evolutions can be re-raised via :func:`~pygmo.archipelago.wait_check()`: they will **not** be re-thrown by this method.
 Also, contrary to :func:`~pygmo.archipelago.wait_check()`, this method will **not** reset the status of the archipelago:
 after a call to :func:`~pygmo.archipelago.wait()`, the :attr:`~pygmo.archipelago.status` attribute will
-always return either :attr:`pygmo.evolve_status.idle` or :attr:`pygmo.evolve_status.idle_error`.
+always return either ``idle`` or ``idle_error``.
 
 )";
 }
@@ -4872,7 +4874,7 @@ and all the exceptions thrown by the other calls to :func:`pygmo.island.wait_che
 
 Note that :func:`~pygmo.archipelago.wait_check()` resets the status of the archipelago: after a call to
 :func:`~pygmo.archipelago.wait_check()`, the :attr:`~pygmo.archipelago.status` attribute will
-always return :attr:`pygmo.evolve_status.idle`.
+always return ``idle``.
 
 Raises:
     unspecified: any exception thrown by any evolution task queued in the archipelago's
@@ -5722,13 +5724,13 @@ are divided into three categories:
 * *integer* options (i.e., the type of the option is ``int``),
 * *numeric* options (i.e., the type of the option is ``float``).
 
-The full list of options is available on the `Ipopt website <https://www.coin-or.org/Ipopt/documentation/node40.html>`__.
+The full list of options is available on the `Ipopt website <https://coin-or.github.io/Ipopt/OPTIONS.html>`__.
 :class:`pygmo.ipopt` allows to configure any Ipopt option via methods such as :func:`~pygmo.ipopt.set_string_options()`,
 :func:`~pygmo.ipopt.set_string_option()`, :func:`~pygmo.ipopt.set_integer_options()`, etc., which need to be used before
 invoking the ``evolve()`` method.
 
 If the user does not set any option, :class:`pygmo.ipopt` use Ipopt's default values for the options (see the
-`documentation <https://www.coin-or.org/Ipopt/documentation/node40.html>`__), with the following
+`documentation <https://coin-or.github.io/Ipopt/OPTIONS.html>`__), with the following
 modifications:
 
 * if the ``"print_level"`` integer option is **not** set by the user, it will be set to 0 by :class:`pygmo.ipopt` (this will
@@ -6298,7 +6300,7 @@ Bfe's thread safety level.
 This method will return a value of the enum :class:`pygmo.thread_safety` which indicates the thread safety level
 of the UDBFE. Unlike in C++, in Python it is not possible to re-implement this method in the UDBFE. That is, for C++
 UDBFEs, the returned value will be the value returned by the ``get_thread_safety()`` method of the UDBFE. For Python
-UDBFEs, the returned value will be unconditionally :attr:`pygmo.thread_safety.none`.
+UDBFEs, the returned value will be unconditionally ``none``.
 
 Returns:
     a value of :class:`pygmo.thread_safety`: the thread safety level of the UDBFE
@@ -6322,8 +6324,8 @@ of its call operator to another UDBFE. Specifically:
 * if the input problem provides a batch fitness member function (as established by
   :func:`pygmo.problem.has_batch_fitness()`), then a :class:`~pygmo.member_bfe` will
   be constructed and invoked to produce the return value; otherwise,
-* if the input problem provides at least the :attr:`~pygmo.thread_safety.basic` thread
-  safety level (as established by :func:`pygmo.problem.get_thread_safety()`), then a
+* if the input problem provides at least the ``basic`` :class:`~pygmo.thread_safety`
+  guarantee (as established by :func:`pygmo.problem.get_thread_safety()`), then a
   :class:`pygmo.thread_bfe` will be constructed and invoked to produce the return value;
   otherwise,
 * a :class:`pygmo.mp_bfe` will be constructed and invoked to produce the return value.
@@ -7251,6 +7253,148 @@ Raises:
     OverflowError: if the attribute is set to an integer which is negative or too large
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
       type conversion errors, mismatched function signatures, etc.)
+
+)";
+}
+
+// evolve_status enum.
+std::string evolve_status_docstring()
+{
+    return R"(Evolution status.
+
+This enumeration contains status flags used to represent the current status of asynchronous evolution/optimisation
+in :class:`pygmo.island` and :class:`pygmo.archipelago`.
+
+.. seealso::
+
+   :attr:`pygmo.island.status` and :attr:`pygmo.archipelago.status`.
+
+)";
+}
+
+std::string evolve_status_idle_docstring()
+{
+    return R"(no asynchronous operations are ongoing, and no error was generated
+  by an asynchronous operation in the past (value = 0)
+)";
+}
+
+std::string evolve_status_busy_docstring()
+{
+    return R"(asynchronous operations are ongoing, and no error was generated
+  by an asynchronous operation in the past (value = 1)
+)";
+}
+
+std::string evolve_status_idle_error_docstring()
+{
+    return R"(no asynchronous operations are ongoing, but an error was generated
+  by an asynchronous operation in the past (value = 2)
+)";
+}
+
+std::string evolve_status_busy_error_docstring()
+{
+    return R"(asynchronous operations are ongoing, and an error was generated
+  by an asynchronous operation in the past (value = 3)
+)";
+}
+
+std::string thread_safety_docstring()
+{
+    return R"(Thread safety level.
+
+This enumeration defines a set of values that can be used to specify the thread safety of problems, algorithms, etc.
+
+.. note::
+
+   For safety reasons, pygmo currently does not allow to set a thread safety level higher than ``none``
+   for any user-defined object implemented in Python. That is, only problems, algorithms, etc.
+   implemented in C++ can have some degree of thread safety.
+
+)";
+}
+
+std::string thread_safety_none_docstring()
+{
+    return R"(no thread safety - concurrent operations on distinct objects are unsafe (value = 0)
+
+)";
+}
+
+std::string thread_safety_basic_docstring()
+{
+    return R"(basic thread safety - concurrent operations on distinct objects are safe (value = 1)
+
+)";
+}
+
+std::string thread_safety_constant_docstring()
+{
+    return R"(constant thread safety - constant (i.e., read-only) concurrent operations on the same object are safe (value = 2)
+
+)";
+}
+
+std::string migration_type_docstring()
+{
+    return R"(Migration type.
+
+This enumeration represents the available migration policies in an :class:`~pygmo.archipelago`:
+
+* with the point-to-point migration policy, during migration an island will
+  consider individuals from only one of the connecting islands;
+* with the broadcast migration policy, during migration an island will consider
+  individuals from *all* the connecting islands.
+
+)";
+}
+
+std::string migration_type_p2p_docstring()
+{
+    return R"(point-to-point migration (value = 0)
+
+)";
+}
+
+std::string migration_type_broadcast_docstring()
+{
+    return R"(broadcast migration (value = 1)
+
+)";
+}
+
+std::string migrant_handling_docstring()
+{
+    return R"(Migrant handling policy.
+
+This enumeration represents the available migrant handling
+policies in an :class:`~pygmo.archipelago`.
+
+During migration,
+individuals are selected from the islands and copied into a migration
+database, from which they can be fetched by other islands.
+This policy establishes what happens to the migrants in the database
+after they have been fetched by a destination island:
+
+* with the preserve policy, a copy of the candidate migrants
+  remains in the database;
+* with the evict policy, the candidate migrants are
+  removed from the database.
+
+)";
+}
+
+std::string migrant_handling_preserve_docstring()
+{
+    return R"(perserve migrants in the database (value = 0)
+
+)";
+}
+
+std::string migrant_handling_evict_docstring()
+{
+    return R"(evict migrants from the database (value = 1)
 
 )";
 }

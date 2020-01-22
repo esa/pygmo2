@@ -316,27 +316,27 @@ PYBIND11_MODULE(core, m)
     });
 
     // The thread_safety enum.
-    py::enum_<pg::thread_safety>(m, "thread_safety")
-        .value("none", pg::thread_safety::none)
-        .value("basic", pg::thread_safety::basic)
-        .value("constant", pg::thread_safety::constant);
+    py::enum_<pg::thread_safety>(m, "thread_safety", pygmo::thread_safety_docstring().c_str())
+        .value("none", pg::thread_safety::none, pygmo::thread_safety_none_docstring().c_str())
+        .value("basic", pg::thread_safety::basic, pygmo::thread_safety_basic_docstring().c_str())
+        .value("constant", pg::thread_safety::constant, pygmo::thread_safety_constant_docstring().c_str());
 
     // The evolve_status enum.
-    py::enum_<pg::evolve_status>(m, "evolve_status")
-        .value("idle", pg::evolve_status::idle)
-        .value("busy", pg::evolve_status::busy)
-        .value("idle_error", pg::evolve_status::idle_error)
-        .value("busy_error", pg::evolve_status::busy_error);
+    py::enum_<pg::evolve_status>(m, "evolve_status", pygmo::evolve_status_docstring().c_str())
+        .value("idle", pg::evolve_status::idle, pygmo::evolve_status_idle_docstring().c_str())
+        .value("busy", pg::evolve_status::busy, pygmo::evolve_status_busy_docstring().c_str())
+        .value("idle_error", pg::evolve_status::idle_error, pygmo::evolve_status_idle_error_docstring().c_str())
+        .value("busy_error", pg::evolve_status::busy_error, pygmo::evolve_status_busy_error_docstring().c_str());
 
     // Migration type enum.
-    py::enum_<pg::migration_type>(m, "migration_type")
-        .value("p2p", pg::migration_type::p2p)
-        .value("broadcast", pg::migration_type::broadcast);
+    py::enum_<pg::migration_type>(m, "migration_type", pygmo::migration_type_docstring().c_str())
+        .value("p2p", pg::migration_type::p2p, pygmo::migration_type_p2p_docstring().c_str())
+        .value("broadcast", pg::migration_type::broadcast, pygmo::migration_type_broadcast_docstring().c_str());
 
     // Migrant handling policy enum.
-    py::enum_<pg::migrant_handling>(m, "migrant_handling")
-        .value("preserve", pg::migrant_handling::preserve)
-        .value("evict", pg::migrant_handling::evict);
+    py::enum_<pg::migrant_handling>(m, "migrant_handling", pygmo::migrant_handling_docstring().c_str())
+        .value("preserve", pg::migrant_handling::preserve, pygmo::migrant_handling_preserve_docstring().c_str())
+        .value("evict", pg::migrant_handling::evict, pygmo::migrant_handling_evict_docstring().c_str());
 
     // Generic utilities
     m.def(
