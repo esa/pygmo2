@@ -16,7 +16,7 @@ Efficient implementantions of bio-inspired and evolutionary algorithms are
 sided to state-of-the-art optimization algorithms
 (Simplex Methods, SQP methods, interior points methods, ...)
 and can be easily mixed (also with your newly-invented algorithms)
-to build a super-algorithm exploiting algoritmic cooperation via the
+to build a super-algorithm exploiting algorithmic cooperation via the
 asynchronous, generalized island model.
 
 pygmo can be used to solve constrained, unconstrained, single objective,
