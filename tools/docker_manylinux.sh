@@ -12,7 +12,7 @@ PYBIND11_VERSION="2.4.3"
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
 	PYTHON_VERSION="38"
-if [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
+elif [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
 	PYTHON_DIR="cp37-cp37m"
 	PYTHON_VERSION="37"
 elif [[ ${PYGMO_BUILD_TYPE} == *36* ]]; then
