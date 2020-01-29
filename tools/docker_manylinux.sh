@@ -26,24 +26,19 @@ fi
 cd
 cd install
 
-# Python mandatory deps.
-/opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
-# Python optional deps.
-/opt/python/${PYTHON_DIR}/bin/pip install dill ipyparallel
-/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
+# Install conda+deps.
+curl -L https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > miniconda.sh
+export deps_dir=$HOME/local
+export PATH="$HOME/miniconda/bin:$PATH"
+bash miniconda.sh -b -p $HOME/miniconda
+conda config --add channels conda-forge --force
+conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.6 numpy cloudpickle dill numba pip pybind11"
+conda create -q -p $deps_dir -y
+source activate $deps_dir
+conda install $conda_pkgs -y
 
 # Install git (-y avoids a user prompt)
 yum -y install git
-
-# Install pybind11
-curl -L https://github.com/pybind/pybind11/archive/v${PYBIND11_VERSION}.tar.gz > v${PYBIND11_VERSION}
-tar xvf v${PYBIND11_VERSION} > /dev/null 2>&1
-cd pybind11-${PYBIND11_VERSION}
-mkdir build
-cd build
-cmake ../ -DPYBIND11_TEST=OFF > /dev/null
-make install > /dev/null 2>&1
-cd ..
 
 # Install pagmo
 if [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
@@ -59,21 +54,26 @@ else
 fi
 mkdir build
 cd build
-cmake -DBoost_NO_BOOST_CMAKE=ON \
-	-DPAGMO_WITH_EIGEN3=yes \
-	-DPAGMO_WITH_NLOPT=yes \
-	-DPAGMO_WITH_IPOPT=yes \
-	-DCMAKE_BUILD_TYPE=Release ../;
-make install
-cd ..
+
+cmake -DCMAKE_BUILD_TYPE=Release \ 
+	-DBoost_NO_BOOST_CMAKE=ON \
+	-DPAGMO_WITH_EIGEN3=ON \
+	-DPAGMO_WITH_IPOPT=ON \
+	-DPAGMO_WITH_NLOPT=ON \
+	-DCMAKE_PREFIX_PATH=$deps_dir \
+	-DCMAKE_INSTALL_PREFIX=$deps_dir \
+	-DCMAKE_CXX_STANDARD=17 ../
+make -j2 install
 
 # pygmo
 cd /pygmo2
 mkdir build
 cd build
-cmake -DBoost_NO_BOOST_CMAKE=ON \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DPYTHON_EXECUTABLE=/opt/python/${PYTHON_DIR}/bin/python ../;
+cmake -DCMAKE_BUILD_TYPE=Release \
+	-DBoost_NO_BOOST_CMAKE=ON \
+	-DCMAKE_PREFIX_PATH=$deps_dir \
+	-DCMAKE_INSTALL_PREFIX=$deps_dir \
+	-DCMAKE_CXX_STANDARD=17 ../;
 make -j2 install
 
 # Making the wheel and isntalling it
