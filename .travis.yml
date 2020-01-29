@@ -35,10 +35,10 @@ matrix:
       sudo: required
       services:
       - docker
-    #- env: PYGMO_BUILD_TYPE="manylinux64Py37_head" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
-    #  sudo: required
-    #  services:
-    #  - docker
+    - env: PYGMO_BUILD_TYPE="manylinux64Py37_head" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
+      sudo: required
+      services:
+      - docker
     #- env: PYGMO_BUILD_TYPE="manylinux64Py37_latest" DOCKER_IMAGE="pagmo2/manylinux2010_x86_64_with_deps"
     #  sudo: required
     #  services:
