@@ -19,11 +19,11 @@ matrix:
       os: osx
       osx_image: xcode10.3
     - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_head" PYTHON_VERSION="3.8"
-     os: osx
+      os: osx
       osx_image: xcode10.3
     - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_latest" PYTHON_VERSION="3.7"
       os: osx
-     osx_image: xcode10.3
+      osx_image: xcode10.3
     - env: PYGMO_BUILD_TYPE="osx_debug_pagmo_head" PYTHON_VERSION="3.7"
       os: osx
       osx_image: xcode10.3
