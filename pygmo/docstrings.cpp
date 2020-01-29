@@ -2667,7 +2667,7 @@ as is the case for the grey wolf optimizer, are often but small variations of al
 biological metaphors. In the case of GWO this is particularly evident as the position update rule is shokingly
 trivial and can also be easily seen as a product of an evolutionary metaphor or a particle swarm one. Such an update rule
 is also not particulary effective and results in a rather poor performance most of times. Reading the original
-peer-reviewed paper, where the poor algoritmic perfromance is hidden by the methodological flaws of the benchmark presented,
+peer-reviewed paper, where the poor algorithmic perfromance is hidden by the methodological flaws of the benchmark presented,
 one is left with a bitter opinion of the whole peer-review system.
 
 This algorithm can be applied to box-bounded single-objective, constrained and unconstrained
@@ -3037,7 +3037,7 @@ Args:
     eta1 (``float``): social component
     eta2 (``float``): cognitive component
     max_vel (``float``): maximum allowed particle velocities (normalized with respect to the bounds width)
-    variant (``int``): algoritmic variant
+    variant (``int``): algorithmic variant
     neighb_type (``int``): swarm topology (defining each particle's neighbours)
     neighb_param (``int``): topology parameter (defines how many neighbours to consider)
     memory (``bool``): when true the velocities are not reset between successive calls to the evolve method
@@ -3145,7 +3145,7 @@ Args:
     eta1 (``float``): social component
     eta2 (``float``): cognitive component
     max_vel (``float``): maximum allowed particle velocities (normalized with respect to the bounds width)
-    variant (``int``): algoritmic variant
+    variant (``int``): algorithmic variant
     neighb_type (``int``): swarm topology (defining each particle's neighbours)
     neighb_param (``int``): topology parameter (defines how many neighbours to consider)
     memory (``bool``): when true the velocities are not reset between successive calls to the evolve method
