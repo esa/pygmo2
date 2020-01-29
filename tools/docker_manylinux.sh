@@ -11,13 +11,13 @@ PYBIND11_VERSION="2.4.3"
 
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
-	PYTHON_VERSION="38"
+	PYTHON_VERSION="3.8"
 elif [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
 	PYTHON_DIR="cp37-cp37m"
-	PYTHON_VERSION="37"
+	PYTHON_VERSION="3.7"
 elif [[ ${PYGMO_BUILD_TYPE} == *36* ]]; then
 	PYTHON_DIR="cp36-cp36m"
-	PYTHON_VERSION="36"
+	PYTHON_VERSION="3.6"
 else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1
@@ -32,7 +32,7 @@ export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
-conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.6 numpy cloudpickle dill numba pip pybind11"
+conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11"
 conda create -q -p $deps_dir -y
 source activate $deps_dir
 conda install $conda_pkgs -y
@@ -55,7 +55,7 @@ fi
 mkdir build
 cd build
 
-cmake -DCMAKE_BUILD_TYPE=Release \ 
+cmake -DCMAKE_BUILD_TYPE=Release \
 	-DBoost_NO_BOOST_CMAKE=ON \
 	-DPAGMO_WITH_EIGEN3=ON \
 	-DPAGMO_WITH_IPOPT=ON \
