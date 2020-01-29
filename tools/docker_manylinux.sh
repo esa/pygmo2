@@ -9,6 +9,9 @@ set -e
 PAGMO_LATEST="2.13.0"
 PYBIND11_VERSION="2.4.3"
 
+if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
+	PYTHON_DIR="cp38-cp38"
+	PYTHON_VERSION="38"
 if [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
 	PYTHON_DIR="cp37-cp37m"
 	PYTHON_VERSION="37"
