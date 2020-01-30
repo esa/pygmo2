@@ -9,12 +9,12 @@ set -e
 PAGMO_LATEST="2.13.0"
 PYBIND11_VERSION="2.4.3"
 
-if [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
+if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
+	PYTHON_DIR="cp38-cp38"
+elif [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
 	PYTHON_DIR="cp37-cp37m"
-	PYTHON_VERSION="37"
 elif [[ ${PYGMO_BUILD_TYPE} == *36* ]]; then
 	PYTHON_DIR="cp36-cp36m"
-	PYTHON_VERSION="36"
 else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1
@@ -26,8 +26,12 @@ cd install
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
-/opt/python/${PYTHON_DIR}/bin/pip install dill ipyparallel
-/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
+/opt/python/${PYTHON_DIR}/bin/pip install dill
+# For py38 ipyparallel does not pass the CI (2 tests are failing and hangs)
+if [[ ${PYGMO_BUILD_TYPE} != *38* ]]; then
+	/opt/python/${PYTHON_DIR}/bin/pip install ipyparallel
+	/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
+fi
 
 # Install git (-y avoids a user prompt)
 yum -y install git
