@@ -38,6 +38,7 @@ set(PYGMO_PYTHON_FILES
     _r_policy_test.py
     _topology_test.py
     _py_problems.py
+    _ipyparallel_utils.py
 )
 
 # Copy the python files in the current binary dir,

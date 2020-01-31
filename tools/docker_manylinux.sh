@@ -27,11 +27,9 @@ cd install
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
 /opt/python/${PYTHON_DIR}/bin/pip install dill
-# For py38 ipyparallel does not pass the CI (2 tests are failing and hangs)
-if [[ ${PYGMO_BUILD_TYPE} != *38* ]]; then
-	/opt/python/${PYTHON_DIR}/bin/pip install ipyparallel
-	/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
-fi
+
+/opt/python/${PYTHON_DIR}/bin/pip install ipyparallel
+/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 
 # Install git (-y avoids a user prompt)
 yum -y install git
@@ -65,7 +63,7 @@ cmake -DBoost_NO_BOOST_CMAKE=ON \
 	-DPAGMO_WITH_NLOPT=yes \
 	-DPAGMO_WITH_IPOPT=yes \
 	-DCMAKE_BUILD_TYPE=Release ../;
-make install
+make -j4 install
 cd ..
 
 # pygmo

@@ -136,6 +136,8 @@ Augmented Lagrangian algorithm (from NLopt) [#auglag]_ :class:`pygmo.nlopt`     
 .. [#auglag] The Augmented Lagrangian algorithm can be used only
    in conjunction with other NLopt algorithms.
 
+.. _available_problems:
+
 List of problems
 ----------------
 
