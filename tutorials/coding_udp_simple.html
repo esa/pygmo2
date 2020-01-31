@@ -117,6 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known issues</a></li>
 </ul>
 
             
@@ -362,7 +363,7 @@ about the wrong return type the first time the <code class="docutils literal not
 <div class="section" id="notes-on-computational-speed">
 <h2>Notes on computational speed<a class="headerlink" href="#notes-on-computational-speed" title="Permalink to this headline">¶</a></h2>
 <p>The most performant way to write a UDP is to code it in C++ and expose it to python. Most UDPs that
-are included in pygmo (see <a class="reference external" href="https://esa.github.io/pagmo2/docs/python/problems/py_problems.html#py-problems" title="(in pagmo v2.14.0)"><span>List of problems available in pygmo</span></a>) are like that. When writing your own UDP, though, it is often quicker and less
+are included in pygmo (see <a class="reference internal" href="../overview.html#available-problems"><span class="std std-ref">List of problems</span></a>) are like that. When writing your own UDP, though, it is often quicker and less
 painful to code, as shown in this tutorial, directly in python. What effect does this have w.r.t. the ideal
 situation? Well, Let’s see, on a test machine, a simple example: the scalable Rosenbrock function:</p>
 <div class="math notranslate nohighlight">

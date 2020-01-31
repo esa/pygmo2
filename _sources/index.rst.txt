@@ -31,7 +31,7 @@ the repository and/or cite our work. The DOI of the latest version and
 other citation resources are available
 at `this link <https://doi.org/10.5281/zenodo.1045336>`__.
 
-pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
+pygmo is based on the `pagmo C++ library <https://github.com/esa/pagmo2>`__.
 
 .. toctree::
    :maxdepth: 2
@@ -43,3 +43,4 @@ pygmo is based on the `pagmo C++ library <https://esa.github.io/pagmo2/>`__.
    api_reference
    credits
    changelog
+   known_issues

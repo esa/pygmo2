@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; pygmo 2.14.0 documentation</title>
+  <title>Known issues &mdash; pygmo 2.14.0 documentation</title>
   
 
   
@@ -30,7 +30,6 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script type="text/javascript" src="_static/searchtools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -40,7 +39,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -71,7 +71,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -89,14 +89,14 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known issues</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Known issues</a></li>
 </ul>
 
             
@@ -142,12 +142,14 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+      <li>Known issues</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
+            <a href="_sources/known_issues.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -159,24 +161,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
 
-  
-  <div id="search-results">
-  
-  </div>
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="known-issues">
+<h1>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p>Due to an <a class="reference external" href="https://bugs.python.org/issue38501">upstream bug</a>,
+when using Python 3.8 pygmo might hang when exiting the Python
+interpreter. In order to work around this issue, you can execute the
+following lines</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pygmo</span><span class="o">.</span><span class="n">mp_island</span><span class="o">.</span><span class="n">shutdown_pool</span><span class="p">()</span>
+<span class="n">pygmo</span><span class="o">.</span><span class="n">mp_bfe</span><span class="o">.</span><span class="n">shutdown_pool</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>at the end of your script/interactive session.</p>
+</li>
+</ul>
+</div>
+
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -209,14 +245,7 @@
   
   
     
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>
