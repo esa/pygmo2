@@ -12,7 +12,7 @@ export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
 
-if [[ "${PYGMO_BUILD_TYPE}" == "debug_pagmo_head" ]]; then
+if [[ "${PYGMO_BUILD_TYPE}" == *pagmo_head ]]; then
     conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel"
 else
     conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel pagmo-devel"
@@ -24,7 +24,7 @@ conda install $conda_pkgs -y
 export CXX=clang++
 export CC=clang
 
-if [[ "${PYGMO_BUILD_TYPE}" == "debug_pagmo_head" ]]; then
+if [[ "${PYGMO_BUILD_TYPE}" == *pagmo_head ]]; then
     # Install pagmo.
     git clone https://github.com/esa/pagmo2.git
     cd pagmo2
