@@ -386,14 +386,13 @@ class ipyparallel_bfe(object):
              or by the :func:`ipyparallel.Client.load_balanced_view()` method
 
         """
-        from ipyparallel import Client
-        import gc
+        from ._ipyparallel_utils import _make_ipyparallel_view
 
         with ipyparallel_bfe._view_lock:
             if ipyparallel_bfe._view is None:
                 # Create the new view.
-                ipyparallel_bfe._view = Client(
-                    *client_args, **client_kwargs).load_balanced_view(*view_args, **view_kwargs)
+                ipyparallel_bfe._view = _make_ipyparallel_view(
+                    client_args, client_kwargs, view_args, view_kwargs)
 
     @staticmethod
     def shutdown_view():
@@ -447,6 +446,7 @@ class ipyparallel_bfe(object):
         """
         import pickle
         import numpy as np
+        from ._ipyparallel_utils import _make_ipyparallel_view
 
         # Fetch the dimension and the fitness
         # dimension of the problem.
@@ -470,8 +470,8 @@ class ipyparallel_bfe(object):
 
         with ipyparallel_bfe._view_lock:
             if ipyparallel_bfe._view is None:
-                from ipyparallel import Client
-                ipyparallel_bfe._view = Client().load_balanced_view()
+                ipyparallel_bfe._view = _make_ipyparallel_view(
+                    [], {}, [], {})
             ret = ipyparallel_bfe._view.map_async(_mp_ipy_bfe_func, async_args)
 
         # Build the vector of fitness vectors as a 2D numpy array.

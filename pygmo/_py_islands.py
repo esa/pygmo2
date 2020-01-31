@@ -499,14 +499,13 @@ class ipyparallel_island(object):
              or by the :func:`ipyparallel.Client.load_balanced_view()` method
 
         """
-        from ipyparallel import Client
-        import gc
+        from ._ipyparallel_utils import _make_ipyparallel_view
 
         with ipyparallel_island._view_lock:
             if ipyparallel_island._view is None:
                 # Create the new view.
-                ipyparallel_island._view = Client(
-                    *client_args, **client_kwargs).load_balanced_view(*view_args, **view_kwargs)
+                ipyparallel_island._view = _make_ipyparallel_view(
+                    client_args, client_kwargs, view_args, view_kwargs)
 
     @staticmethod
     def shutdown_view():
@@ -560,11 +559,13 @@ class ipyparallel_island(object):
         # the algo and pop, so that we can catch
         # serialization errors early.
         import pickle
+        from ._ipyparallel_utils import _make_ipyparallel_view
+
         ser_algo_pop = pickle.dumps((algo, pop))
         with ipyparallel_island._view_lock:
             if ipyparallel_island._view is None:
-                from ipyparallel import Client
-                ipyparallel_island._view = Client().load_balanced_view()
+                ipyparallel_island._view = _make_ipyparallel_view(
+                    [], {}, [], {})
             ret = ipyparallel_island._view.apply_async(
                 _evolve_func_ipy, ser_algo_pop)
 
