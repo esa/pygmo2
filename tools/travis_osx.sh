@@ -12,19 +12,10 @@ export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
 
-# In python 3.8 we skip the ipyparallel tests (they fail for some reason linked to serializatin and ipyparallel interplays)
 if [[ "${PYGMO_BUILD_TYPE}" == "debug_pagmo_head" ]]; then
-    if  [[ "${PYTHON_VERSION}" != "3.8" ]]; then
-        conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel"
-    else
-        conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev"
-    fi
+    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel"
 else
-    if  [[ "${PYTHON_VERSION}" != "3.8" ]]; then
-        conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel pagmo-devel"
-    else
-        conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev pagmo-devel"
-    fi
+    conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle dill numba pip pybind11 clang clangdev ipyparallel pagmo-devel"
 fi
 conda create -q -p $deps_dir -y
 source activate $deps_dir
@@ -54,11 +45,9 @@ cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DCMAKE_PREFIX_PATH
 make -j2 install VERBOSE=1
 cd
 
-if  [[ "${PYTHON_VERSION}" != "3.8" ]]; then
-    ipcluster start --daemonize=True;
-    # Give some time for the cluster to start up.
-    sleep 20;
-fi
+ipcluster start --daemonize=True;
+# Give some time for the cluster to start up.
+sleep 20;
 
 # Run the test suite.
 python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
