@@ -178,7 +178,7 @@ Notes on computational speed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The most performant way to write a UDP is to code it in C++ and expose it to python. Most UDPs that
-are included in pygmo (see :ref:`py_problems`) are like that. When writing your own UDP, though, it is often quicker and less
+are included in pygmo (see :ref:`available_problems`) are like that. When writing your own UDP, though, it is often quicker and less
 painful to code, as shown in this tutorial, directly in python. What effect does this have w.r.t. the ideal
 situation? Well, Let's see, on a test machine, a simple example: the scalable Rosenbrock function:
 
