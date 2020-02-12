@@ -13,6 +13,9 @@ New
   `the pagmo changelog <https://esa.github.io/pagmo2/changelog.html>`__
   for the changelog of previous pygmo
   versions.
+- Implement a setter for the migration database
+  of an archipelago
+  (`#25 <https://github.com/esa/pygmo2/pull/25>`__).
 
 Fix
 ~~~
