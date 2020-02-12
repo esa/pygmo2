@@ -59,6 +59,7 @@ fi
 mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \
+	-DCMAKE_CXX_STANDARD=17 \
 	-DPAGMO_WITH_EIGEN3=yes \
 	-DPAGMO_WITH_NLOPT=yes \
 	-DPAGMO_WITH_IPOPT=yes \
