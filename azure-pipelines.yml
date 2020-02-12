@@ -45,7 +45,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel
@@ -116,7 +115,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel ^
@@ -193,7 +191,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel
@@ -264,7 +261,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel ^
@@ -341,7 +337,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel
@@ -412,7 +407,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel ^
