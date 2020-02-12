@@ -133,6 +133,7 @@ class mp_bfe(object):
         """
         import pickle
         import numpy as np
+        from .core import _pagmo_version_major, _pagmo_version_minor
 
         # Fetch the dimension and the fitness
         # dimension of the problem.
@@ -169,8 +170,9 @@ class mp_bfe(object):
         # Reshape it so that it is 1D.
         fvs.shape = (ndvs*nf,)
 
-        # Ensure the increment the fevals for prob.
-        prob.increment_fevals(ndvs)
+        if (_pagmo_version_major, _pagmo_version_minor) < (2, 14):
+            # Ensure the increment the fevals for prob.
+            prob.increment_fevals(ndvs)
 
         return fvs
 
@@ -447,6 +449,7 @@ class ipyparallel_bfe(object):
         import pickle
         import numpy as np
         from ._ipyparallel_utils import _make_ipyparallel_view
+        from .core import _pagmo_version_major, _pagmo_version_minor
 
         # Fetch the dimension and the fitness
         # dimension of the problem.
@@ -479,8 +482,9 @@ class ipyparallel_bfe(object):
         # Reshape it so that it is 1D.
         fvs.shape = (ndvs*nf,)
 
-        # Ensure the increment the fevals for prob.
-        prob.increment_fevals(ndvs)
+        if (_pagmo_version_major, _pagmo_version_minor) < (2, 14):
+            # Ensure the increment the fevals for prob.
+            prob.increment_fevals(ndvs)
 
         return fvs
 
