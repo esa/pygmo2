@@ -45,7 +45,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel
@@ -65,6 +64,7 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 15 2017 Win64" ^
+          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
@@ -116,14 +116,28 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
-                        pybind11 ^
                         ipyparallel ^
                         pagmo-devel ^
                         ninja ^
                         clangdev
           conda list
         displayName: "Install conda packages"
+
+      # Install pybind11.
+      - script: |
+          setlocal EnableDelayedExpansion
+          git clone https://github.com/pybind/pybind11.git
+          cd pybind11
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 15 2017" -A x64 ^
+                   -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
+                   -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
+                   -DPYBIND11_TEST=NO
+          cmake --build . --config Release --target install
+          cd ..
+          cd ..
+        displayName: "Install pybind11"
 
       - script: |
           cd tools
@@ -139,6 +153,7 @@ jobs:
           mkdir build
           cd build
           cmake .. -G Ninja ^
+          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
                 -DCMAKE_C_COMPILER=clang-cl ^
                 -DCMAKE_CXX_COMPILER=clang-cl ^
@@ -193,7 +208,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel
@@ -213,6 +227,7 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 15 2017 Win64" ^
+          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
@@ -264,14 +279,28 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
-                        pybind11 ^
                         ipyparallel ^
                         pagmo-devel ^
                         ninja ^
                         clangdev
           conda list
         displayName: "Install conda packages"
+
+      # Install pybind11.
+      - script: |
+          setlocal EnableDelayedExpansion
+          git clone https://github.com/pybind/pybind11.git
+          cd pybind11
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 15 2017" -A x64 ^
+                   -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
+                   -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
+                   -DPYBIND11_TEST=NO
+          cmake --build . --config Release --target install
+          cd ..
+          cd ..
+        displayName: "Install pybind11"
 
       - script: |
           cd tools
@@ -287,6 +316,7 @@ jobs:
           mkdir build
           cd build
           cmake .. -G Ninja ^
+          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
                 -DCMAKE_C_COMPILER=clang-cl ^
                 -DCMAKE_CXX_COMPILER=clang-cl ^
@@ -341,7 +371,6 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
                         pybind11 ^
                         ipyparallel ^
                         pagmo-devel
@@ -361,6 +390,7 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 15 2017 Win64" ^
+          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
@@ -412,14 +442,28 @@ jobs:
                         cloudpickle ^
                         dill ^
                         numba ^
-                        pip ^
-                        pybind11 ^
                         ipyparallel ^
                         pagmo-devel ^
                         ninja ^
                         clangdev
           conda list
         displayName: "Install conda packages"
+
+      # Install pybind11.
+      - script: |
+          setlocal EnableDelayedExpansion
+          git clone https://github.com/pybind/pybind11.git
+          cd pybind11
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 15 2017" -A x64 ^
+                   -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
+                   -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
+                   -DPYBIND11_TEST=NO
+          cmake --build . --config Release --target install
+          cd ..
+          cd ..
+        displayName: "Install pybind11"
 
       - script: |
           cd tools
@@ -435,6 +479,7 @@ jobs:
           mkdir build
           cd build
           cmake .. -G Ninja ^
+          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
                 -DCMAKE_C_COMPILER=clang-cl ^
                 -DCMAKE_CXX_COMPILER=clang-cl ^

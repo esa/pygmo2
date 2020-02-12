@@ -4947,7 +4947,40 @@ The migrants tuples consist of 3 values each:
   stored in row-major order).
 
 Returns:
-    list: a copy of the database of migrants
+    :class:`list`: a copy of the database of migrants
+
+Raises:
+    unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g., type conversion errors,
+      mismatched function signatures, etc.)
+
+)";
+}
+
+std::string archipelago_set_migrants_db_docstring()
+{
+    return R"(set_migrants_db(mig)
+
+During the evolution of an archipelago, islands will periodically
+store the individuals selected for migration in a *migrant database*.
+This is a :class:`list` of :class:`tuple` objects whose
+size is equal to the number of islands in the archipelago, and which
+contains the current candidate outgoing migrants for each island.
+
+The migrants tuples consist of 3 values each:
+
+* a 1D NumPy array of individual IDs (represented as 64-bit unsigned integrals),
+* a 2D NumPy array of decision vectors (i.e., the decision vectors of each individual,
+  stored in row-major order),
+* a 2D NumPy array of fitness vectors (i.e., the fitness vectors of each individual,
+  stored in row-major order).
+
+This setter allows to replace the current database of migrants with a new one.
+
+Note that this setter will accept in input a malformed database of migrants without complaining.
+An invalid database of migrants will however result in exceptions being raised when migration occurs.
+
+Args:
+    mig (:class:`list`): the new database of migrants
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g., type conversion errors,
