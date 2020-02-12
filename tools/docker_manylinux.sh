@@ -71,11 +71,12 @@ cd /pygmo2
 mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \
+	-DCMAKE_CXX_STANDARD=17 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DPYTHON_EXECUTABLE=/opt/python/${PYTHON_DIR}/bin/python ../;
 make -j2 install
 
-# Making the wheel and isntalling it
+# Making the wheel and installing it
 cd wheel
 # Copy the installed pygmo files, wherever they might be in /usr/local,
 # into the current dir.
