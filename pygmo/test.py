@@ -896,6 +896,7 @@ class archipelago_test_case(_ut.TestCase):
 
     def run_mig_log_db_tests(self):
         from . import archipelago, de, rosenbrock, ring
+        import numpy as np
         a = archipelago(5, t=ring(), algo=de(), prob=rosenbrock(), pop_size=10)
         a.evolve(10)
         a.wait_check()
@@ -915,6 +916,22 @@ class archipelago_test_case(_ut.TestCase):
             self.assertEqual(e[3].shape, (1,))
             self.assertTrue(e[4] < 5)
             self.assertTrue(e[5] < 5)
+
+        if hasattr(archipelago, "set_migrants_db"):
+            db = a.get_migrants_db()
+            db[0] = ([], np.zeros((0, 2)), np.zeros((0, 1)))
+            a.set_migrants_db(db)
+            db = a.get_migrants_db()
+            g = db[0]
+            self.assertEqual(len(g), 3)
+            self.assertEqual(len(g[0]), 0)
+            self.assertEqual(len(g[1]), 0)
+            self.assertEqual(len(g[2]), 0)
+            for g in db[1:]:
+                self.assertEqual(len(g), 3)
+                self.assertEqual(len(g[0]), 1)
+                self.assertEqual(g[1].shape, (1, 2))
+                self.assertEqual(g[2].shape, (1, 1))
 
     def run_get_set_topo_tests(self):
         from . import archipelago, de, rosenbrock, ring, topology, fully_connected

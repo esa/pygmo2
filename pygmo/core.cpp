@@ -793,6 +793,20 @@ PYBIND11_MODULE(core, m)
                 return retval;
             },
             pygmo::archipelago_get_migrants_db_docstring().c_str())
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 14)
+        .def(
+            "set_migrants_db",
+            [](pg::archipelago &archi, const py::list &mig) {
+                pg::archipelago::migrants_db_t mig_db;
+
+                for (const auto &o : mig) {
+                    mig_db.push_back(pygmo::iterable_to_inds(py::cast<py::iterable>(o)));
+                }
+
+                archi.set_migrants_db(mig_db);
+            },
+            pygmo::archipelago_set_migrants_db_docstring().c_str())
+#endif
         .def(
             "get_migration_log",
             [](const pg::archipelago &archi) -> py::list {
