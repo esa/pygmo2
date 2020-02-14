@@ -17,6 +17,7 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <pybind11/iostream.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
@@ -978,7 +979,15 @@ PYBIND11_MODULE(core, m)
         // UDA extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::algorithm>)
         // Algorithm methods.
-        .def("evolve", &pg::algorithm::evolve, pygmo::algorithm_evolve_docstring().c_str(), py::arg("pop"))
+        .def(
+            "evolve",
+            [](const pagmo::algorithm &instance, pagmo::population pop) {
+                py::scoped_ostream_redirect stream(std::cout,                               // std::ostream&
+                                                   py::module::import("sys").attr("stdout") // Python output
+                );
+                return instance.evolve(pop);
+            },
+            pygmo::algorithm_evolve_docstring().c_str(), py::arg("pop"))
         .def("set_seed", &pg::algorithm::set_seed, pygmo::algorithm_set_seed_docstring().c_str(), py::arg("seed"))
         .def("has_set_seed", &pg::algorithm::has_set_seed, pygmo::algorithm_has_set_seed_docstring().c_str())
         .def("set_verbosity", &pg::algorithm::set_verbosity, pygmo::algorithm_set_verbosity_docstring().c_str(),
