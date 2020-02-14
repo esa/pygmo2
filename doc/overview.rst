@@ -256,6 +256,7 @@ Common Name                                                Docs of the python cl
 ========================================================== =========================================
 Default BFE                                                :class:`pygmo.default_bfe`
 Thread BFE                                                 :class:`pygmo.thread_bfe`
+Member BFE                                                 :class:`pygmo.member_bfe`
 Multiprocessing BFE                                        :class:`pygmo.mp_bfe`
 Ipyparallel BFE                                            :class:`pygmo.ipyparallel_bfe`
 ========================================================== =========================================
