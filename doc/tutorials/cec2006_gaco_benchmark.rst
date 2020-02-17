@@ -25,7 +25,7 @@ In order to run the UDAs on these problems we can write the following piece of c
     >>> real_minima=[0.0539415140, -47.7648884595, 961.7150222899, -1.9051552586, 8853.5396748064, -0.8660254038]
     >>> #we instantiate the problems
     >>> problems=[pg.cec2006(13), pg.cec2006(14), pg.cec2006(15), pg.cec2006(16), pg.cec2006(17), pg.cec2006(18)]
-    >>> for index in range(0,6):
+    >>> for index in range(0,6): # doctest:+SKIP
     ...       #we extract the problem of the case:
     ...       udp = problems[index]
     ...       prob = pg.problem(udp)
@@ -81,7 +81,7 @@ In order to run the UDAs on these problems we can write the following piece of c
     ...           log_gaco_P18=uda_gaco.get_log()
     ...           log_sa_sade_P18=uda_sa_sade.get_log()
     ...           log_sa_gaco_P18=uda_sa_gaco.get_log()
-
+    
 In this case, we run :class:`~pygmo.gaco` using a population of 100 individuals and 550 generations, whereas we run
 :class:`~pygmo.gaco` and :class:`~pygmo.sade` with :class:`~pygmo.cstrs_self_adaptive` for 40 iterations with 10 generations
 and 125 individuals in the population.
