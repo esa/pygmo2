@@ -1,6 +1,6 @@
 trigger:
   - master
-
+ 
 jobs:
 
   - job: 'vs2017_release_latest_36'
