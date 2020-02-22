@@ -2721,99 +2721,106 @@ def run_test_suite(level=0):
     # least the first N tests are really deterministic.
     set_global_rng_seed(42)
 
-    retval = 0
-    suite = _ut.TestLoader().loadTestsFromTestCase(core_test_case)
-    suite.addTest(_bfe_test.bfe_test_case())
-    suite.addTest(_bfe_test.thread_bfe_test_case())
-    suite.addTest(_bfe_test.member_bfe_test_case())
-    suite.addTest(_bfe_test.mp_bfe_test_case())
-    suite.addTest(_bfe_test.ipyparallel_bfe_test_case())
-    suite.addTest(_bfe_test.default_bfe_test_case())
-    suite.addTest(archipelago_test_case(level))
-    suite.addTest(_island_test.island_test_case())
-    suite.addTest(_s_policy_test.s_policy_test_case())
-    suite.addTest(_r_policy_test.r_policy_test_case())
-    suite.addTest(_topology_test.topology_test_case())
-    suite.addTest(fair_replace_test_case())
-    suite.addTest(select_best_test_case())
-    suite.addTest(unconnected_test_case())
-    suite.addTest(ring_test_case())
-    suite.addTest(fully_connected_test_case())
-    suite.addTest(thread_island_torture_test_case())
-    suite.addTest(_problem_test.problem_test_case())
-    suite.addTest(_algorithm_test.algorithm_test_case())
-    suite.addTest(_island_test.mp_island_test_case(level))
-    suite.addTest(_island_test.ipyparallel_island_test_case(level))
-    suite.addTest(golomb_ruler_test_case())
-    suite.addTest(lennard_jones_test_case())
-    suite.addTest(de_test_case())
-    suite.addTest(nsga2_test_case())
-    suite.addTest(gaco_test_case())
-    suite.addTest(gwo_test_case())
-    suite.addTest(de1220_test_case())
-    suite.addTest(sea_test_case())
-    suite.addTest(pso_test_case())
-    suite.addTest(pso_gen_test_case())
-    suite.addTest(bee_colony_test_case())
-    suite.addTest(compass_search_test_case())
-    suite.addTest(sa_test_case())
-    suite.addTest(moead_test_case())
-    suite.addTest(sga_test_case())
-    suite.addTest(ihs_test_case())
-    suite.addTest(population_test_case())
-    suite.addTest(null_problem_test_case())
-    suite.addTest(hypervolume_test_case())
-    suite.addTest(mo_utils_test_case())
-    suite.addTest(con_utils_test_case())
-    suite.addTest(global_rng_test_case())
-    suite.addTest(estimate_sparsity_test_case())
-    suite.addTest(estimate_gradient_test_case())
-    suite.addTest(random_decision_vector_test_case())
-    suite.addTest(batch_random_decision_vector_test_case())
     try:
-        from .core import cmaes
-        suite.addTest(cmaes_test_case())
-    except ImportError:
-        pass
-    try:
-        from .core import xnes
-        suite.addTest(xnes_test_case())
-    except ImportError:
-        pass
-    suite.addTest(dtlz_test_case())
-    suite.addTest(cec2006_test_case())
-    suite.addTest(cec2009_test_case())
-    suite.addTest(cec2013_test_case())
-    suite.addTest(cec2014_test_case())
-    suite.addTest(luksan_vlcek1_test_case())
-    suite.addTest(minlp_rastrigin_test_case())
-    suite.addTest(rastrigin_test_case())
-    suite.addTest(translate_test_case())
-    suite.addTest(decompose_test_case())
-    suite.addTest(unconstrain_test_case())
-    suite.addTest(mbh_test_case())
-    suite.addTest(cstrs_self_adaptive_test_case())
-    suite.addTest(decorator_problem_test_case())
-    suite.addTest(wfg_test_case())
-    try:
-        from .core import nlopt
-        suite.addTest(nlopt_test_case())
-    except ImportError:
-        pass
-    try:
-        from .core import ipopt
-        suite.addTest(ipopt_test_case())
-    except ImportError:
-        pass
 
-    test_result = _ut.TextTestRunner(verbosity=2).run(suite)
+        retval = 0
+        suite = _ut.TestLoader().loadTestsFromTestCase(core_test_case)
+        suite.addTest(_bfe_test.bfe_test_case())
+        suite.addTest(_bfe_test.thread_bfe_test_case())
+        suite.addTest(_bfe_test.member_bfe_test_case())
+        suite.addTest(_bfe_test.mp_bfe_test_case())
+        suite.addTest(_bfe_test.ipyparallel_bfe_test_case())
+        suite.addTest(_bfe_test.default_bfe_test_case())
+        suite.addTest(archipelago_test_case(level))
+        suite.addTest(_island_test.island_test_case())
+        suite.addTest(_s_policy_test.s_policy_test_case())
+        suite.addTest(_r_policy_test.r_policy_test_case())
+        suite.addTest(_topology_test.topology_test_case())
+        suite.addTest(fair_replace_test_case())
+        suite.addTest(select_best_test_case())
+        suite.addTest(unconnected_test_case())
+        suite.addTest(ring_test_case())
+        suite.addTest(fully_connected_test_case())
+        suite.addTest(thread_island_torture_test_case())
+        suite.addTest(_problem_test.problem_test_case())
+        suite.addTest(_algorithm_test.algorithm_test_case())
+        suite.addTest(_island_test.mp_island_test_case(level))
+        suite.addTest(_island_test.ipyparallel_island_test_case(level))
+        suite.addTest(golomb_ruler_test_case())
+        suite.addTest(lennard_jones_test_case())
+        suite.addTest(de_test_case())
+        suite.addTest(nsga2_test_case())
+        suite.addTest(gaco_test_case())
+        suite.addTest(gwo_test_case())
+        suite.addTest(de1220_test_case())
+        suite.addTest(sea_test_case())
+        suite.addTest(pso_test_case())
+        suite.addTest(pso_gen_test_case())
+        suite.addTest(bee_colony_test_case())
+        suite.addTest(compass_search_test_case())
+        suite.addTest(sa_test_case())
+        suite.addTest(moead_test_case())
+        suite.addTest(sga_test_case())
+        suite.addTest(ihs_test_case())
+        suite.addTest(population_test_case())
+        suite.addTest(null_problem_test_case())
+        suite.addTest(hypervolume_test_case())
+        suite.addTest(mo_utils_test_case())
+        suite.addTest(con_utils_test_case())
+        suite.addTest(global_rng_test_case())
+        suite.addTest(estimate_sparsity_test_case())
+        suite.addTest(estimate_gradient_test_case())
+        suite.addTest(random_decision_vector_test_case())
+        suite.addTest(batch_random_decision_vector_test_case())
+        try:
+            from .core import cmaes
+            suite.addTest(cmaes_test_case())
+        except ImportError:
+            pass
+        try:
+            from .core import xnes
+            suite.addTest(xnes_test_case())
+        except ImportError:
+            pass
+        suite.addTest(dtlz_test_case())
+        suite.addTest(cec2006_test_case())
+        suite.addTest(cec2009_test_case())
+        suite.addTest(cec2013_test_case())
+        suite.addTest(cec2014_test_case())
+        suite.addTest(luksan_vlcek1_test_case())
+        suite.addTest(minlp_rastrigin_test_case())
+        suite.addTest(rastrigin_test_case())
+        suite.addTest(translate_test_case())
+        suite.addTest(decompose_test_case())
+        suite.addTest(unconstrain_test_case())
+        suite.addTest(mbh_test_case())
+        suite.addTest(cstrs_self_adaptive_test_case())
+        suite.addTest(decorator_problem_test_case())
+        suite.addTest(wfg_test_case())
+        try:
+            from .core import nlopt
+            suite.addTest(nlopt_test_case())
+        except ImportError:
+            pass
+        try:
+            from .core import ipopt
+            suite.addTest(ipopt_test_case())
+        except ImportError:
+            pass
 
-    # Re-seed to random just in case anyone ever uses this function
-    # in an interactive session or something.
-    import random
-    set_global_rng_seed(random.randint(0, 2**30))
+        test_result = _ut.TextTestRunner(verbosity=2).run(suite)
 
-    if len(test_result.failures) > 0 or len(test_result.errors) > 0:
-        retval = 1
-    if retval != 0:
-        raise RuntimeError('One or more tests failed.')
+        # Re-seed to random just in case anyone ever uses this function
+        # in an interactive session or something.
+        import random
+        set_global_rng_seed(random.randint(0, 2**30))
+
+        if len(test_result.failures) > 0 or len(test_result.errors) > 0:
+            retval = 1
+        if retval != 0:
+            raise RuntimeError('One or more tests failed.')
+    except:
+        print("ASDDDDDDDDDDDDDDDDDDDDDDDDASDADASDSA")
+        from . import mp_island, mp_bfe
+        mp_island.shutdown_pool()
+        mp_bfe.shutdown_pool()
