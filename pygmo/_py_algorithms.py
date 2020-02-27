@@ -85,7 +85,15 @@ try:
                 callback=self.callback,
                 options=self.options,
             )
-            population.set_xf(idx, result.x, result.fun)
+
+            # wrap result in array if necessary
+            fun = result.fun
+            try:
+                iter(fun)
+            except TypeError:
+                fun = [fun]
+
+            population.set_xf(idx, result.x, fun)
             return population
 
         def get_name(self) -> str:
