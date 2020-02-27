@@ -4,6 +4,18 @@ try:
     from scipy.optimize import minimize
 
     class scipy:
+        """
+        This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
+        The constructor accepts those arguments that are specific to the algorithm:
+        - args
+        - method
+        - tol - the tolerance
+        - callback
+        - options
+
+        Other aspects, like bounds or the existence of a gradient and hessian, are taken from the problem.
+        """
+
         def __init__(self, args=(), method=None, tol=None, callback=None, options=None):
             method_list = [
                 "Nelder-Mead",
@@ -32,7 +44,18 @@ try:
             self.options = options
 
         def evolve(self, population):
+            """
+            Take a random member of the population, use it as initial guess
+            for calling scipy.optimize.minimize and replace it with the final result.
+
+            Modifies the given population and returns it.
+            """
             problem = population.problem
+
+            if problem.get_nc() > 1:
+                raise NotImplementedError(
+                    "Constraints not yet supported in SciPy wrapper."
+                )
 
             if problem.get_nobj() > 1:
                 raise NotImplementedError("Multiple objectives not supported.")
@@ -65,11 +88,11 @@ try:
             population.set_xf(idx, result.x, result.fun)
             return population
 
-        def get_name(self):
+        def get_name(self) -> str:
             if self.method is not None:
-                return "SciPy implementation of " + self.method
+                return self.method + ", provided by SciPy"
             else:
-                return "Wrapper around scipy.optimize.minimize, method unspecified."
+                return "scipy.optimize.minimize, method unspecified."
 
 
 except ImportError:
