@@ -108,10 +108,10 @@ class r_policy_test_case(_ut.TestCase):
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return []
         r_pol = r_policy(r())
-        self.assertRaises(ValueError, lambda: r_pol.replace(inds=([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(RuntimeError, lambda: r_pol.replace(inds=([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), nx=2, nix=0, nobj=1, nec=0, nic=0, tol=[], mig=([], np.zeros((0, 2)), np.zeros((0, 2)))))
         # Try also flipping around the named argument.
-        self.assertRaises(ValueError, lambda: r_pol.replace(nx=2, inds=([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(RuntimeError, lambda: r_pol.replace(nx=2, inds=([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), nec=0, nix=0, nobj=1, nic=0, mig=([], np.zeros((0, 2)), np.zeros((0, 2))), tol=[]))
 
         class r(object):
@@ -143,7 +143,7 @@ class r_policy_test_case(_ut.TestCase):
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return 1
         r_pol = r_policy(r())
-        self.assertRaises(TypeError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(RuntimeError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))))
 
         class r(object):

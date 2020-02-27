@@ -22,6 +22,7 @@
 #include <pagmo/s11n.hpp>
 
 #include "common_utils.hpp"
+#include "handle_thread_py_exception.hpp"
 #include "island.hpp"
 #include "object_serialization.hpp"
 
@@ -58,50 +59,63 @@ void isl_inner<py::object>::run_evolve(island &isl) const
     // doing anything with the interpreter (including the throws in the checks below).
     pygmo::gil_thread_ensurer gte;
 
-    auto isl_name = get_name();
-
-    auto ret = m_value.attr("run_evolve")(isl.get_algorithm(), isl.get_population());
-
-    py::tuple ret_tup;
+    // NOTE: every time we call into the Python interpreter from a separate thread, we need to
+    // handle Python exceptions in a special way.
+    std::string isl_name;
     try {
-        ret_tup = py::cast<py::tuple>(ret);
-    } catch (const py::cast_error &) {
-        pygmo::py_throw(PyExc_TypeError, ("the 'run_evolve()' method of a user-defined island "
-                                          "must return a tuple, but it returned an object of type '"
-                                          + pygmo::str(pygmo::type(ret)) + "' instead")
-                                             .c_str());
-    }
-    if (py::len(ret_tup) != 2) {
-        pygmo::py_throw(PyExc_ValueError, ("the tuple returned by the 'run_evolve()' method of a user-defined island "
-                                           "must have 2 elements, but instead it has "
-                                           + std::to_string(py::len(ret_tup)) + " element(s)")
-                                              .c_str());
+        isl_name = get_name();
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic island. The error is:\n", eas);
     }
 
-    algorithm ret_algo;
     try {
-        ret_algo = py::cast<algorithm>(ret_tup[0]);
-    } catch (const py::cast_error &) {
-        pygmo::py_throw(PyExc_TypeError,
-                        ("the first value returned by the 'run_evolve()' method of a user-defined island "
-                         "must be an algorithm, but an object of type '"
-                         + pygmo::str(pygmo::type(ret_tup[0])) + "' was returned instead")
-                            .c_str());
-    }
+        auto ret = m_value.attr("run_evolve")(isl.get_algorithm(), isl.get_population());
 
-    population ret_pop;
-    try {
-        ret_pop = py::cast<population>(ret_tup[1]);
-    } catch (const py::cast_error &) {
-        pygmo::py_throw(PyExc_TypeError,
-                        ("the second value returned by the 'run_evolve()' method of a user-defined island "
-                         "must be a population, but an object of type '"
-                         + pygmo::str(pygmo::type(ret_tup[1])) + "' was returned instead")
-                            .c_str());
-    }
+        py::tuple ret_tup;
+        try {
+            ret_tup = py::cast<py::tuple>(ret);
+        } catch (const py::cast_error &) {
+            pygmo::py_throw(PyExc_TypeError, ("the 'run_evolve()' method of a user-defined island "
+                                              "must return a tuple, but it returned an object of type '"
+                                              + pygmo::str(pygmo::type(ret)) + "' instead")
+                                                 .c_str());
+        }
+        if (py::len(ret_tup) != 2) {
+            pygmo::py_throw(PyExc_ValueError,
+                            ("the tuple returned by the 'run_evolve()' method of a user-defined island "
+                             "must have 2 elements, but instead it has "
+                             + std::to_string(py::len(ret_tup)) + " element(s)")
+                                .c_str());
+        }
 
-    isl.set_algorithm(ret_algo);
-    isl.set_population(ret_pop);
+        algorithm ret_algo;
+        try {
+            ret_algo = py::cast<algorithm>(ret_tup[0]);
+        } catch (const py::cast_error &) {
+            pygmo::py_throw(PyExc_TypeError,
+                            ("the first value returned by the 'run_evolve()' method of a user-defined island "
+                             "must be an algorithm, but an object of type '"
+                             + pygmo::str(pygmo::type(ret_tup[0])) + "' was returned instead")
+                                .c_str());
+        }
+
+        population ret_pop;
+        try {
+            ret_pop = py::cast<population>(ret_tup[1]);
+        } catch (const py::cast_error &) {
+            pygmo::py_throw(PyExc_TypeError,
+                            ("the second value returned by the 'run_evolve()' method of a user-defined island "
+                             "must be a population, but an object of type '"
+                             + pygmo::str(pygmo::type(ret_tup[1])) + "' was returned instead")
+                                .c_str());
+        }
+
+        isl.set_algorithm(ret_algo);
+        isl.set_population(ret_pop);
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception(
+            "The asynchronous evolution of a pythonic island of type '" + isl_name + "' raised an error:\n", eas);
+    }
 }
 
 std::string isl_inner<py::object>::get_name() const
