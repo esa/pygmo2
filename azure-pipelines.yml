@@ -71,7 +71,7 @@ jobs:
           cmake --build . --config RelWithDebInfo --target install
           cd ..
           cd ..
-          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+          python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"
 
   - job: 'vs2015_clang_release_latest_36'
@@ -163,7 +163,7 @@ jobs:
           cmake --build . --target install
           cd ..
           cd ..
-          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+          python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"
 
   - job: 'vs2017_release_latest_37'
@@ -234,7 +234,7 @@ jobs:
           cmake --build . --config RelWithDebInfo --target install
           cd ..
           cd ..
-          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+          python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"
 
   - job: 'vs2015_clang_release_latest_37'
@@ -326,7 +326,7 @@ jobs:
           cmake --build . --target install
           cd ..
           cd ..
-          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+          python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"
 
   - job: 'vs2017_release_latest_38'
@@ -397,7 +397,7 @@ jobs:
           cmake --build . --config RelWithDebInfo --target install
           cd ..
           cd ..
-          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+          python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"
 
   - job: 'vs2015_clang_release_latest_38'
@@ -489,5 +489,5 @@ jobs:
           cmake --build . --target install
           cd ..
           cd ..
-          python -c "import pygmo; pygmo.test.run_test_suite(0); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+          python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
         displayName: "Configure, build and test"

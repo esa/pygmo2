@@ -24,6 +24,7 @@
 #include <pagmo/types.hpp>
 
 #include "common_utils.hpp"
+#include "handle_thread_py_exception.hpp"
 #include "object_serialization.hpp"
 #include "topology.hpp"
 
@@ -70,44 +71,56 @@ std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_c
     // doing anything with the interpreter (including the throws in the checks below).
     pygmo::gil_thread_ensurer gte;
 
-    auto topo_name = get_name();
-
-    // Fetch the connections in Python form.
-    auto o = py::cast<py::iterable>(m_value.attr("get_connections")(n));
-
-    // Prepare the return value.
-    std::pair<std::vector<std::size_t>, vector_double> retval;
-
-    // We will try to interpret o as a collection of generic python objects.
-    auto begin = std::begin(o);
-    const auto end = std::end(o);
-
-    if (begin == end) {
-        // Empty iteratable.
-        pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
-                                           + "' is empty (it should contain 2 elements)")
-                                              .c_str());
+    // NOTE: every time we call into the Python interpreter from a separate thread, we need to
+    // handle Python exceptions in a special way.
+    std::string topo_name;
+    try {
+        topo_name = get_name();
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception("Could not fetch the name of a pythonic topology. The error is:\n", eas);
     }
 
-    retval.first = pygmo::ndarr_to_vector<std::vector<std::size_t>>(py::cast<py::array_t<std::size_t>>(*begin));
+    try {
+        // Fetch the connections in Python form.
+        auto o = py::cast<py::iterable>(m_value.attr("get_connections")(n));
 
-    if (++begin == end) {
-        // Only one element in the iteratable.
-        pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
-                                           + "' has only 1 element (it should contain 2 elements)")
-                                              .c_str());
+        // Prepare the return value.
+        std::pair<std::vector<std::size_t>, vector_double> retval;
+
+        // We will try to interpret o as a collection of generic python objects.
+        auto begin = std::begin(o);
+        const auto end = std::end(o);
+
+        if (begin == end) {
+            // Empty iteratable.
+            pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
+                                               + "' is empty (it should contain 2 elements)")
+                                                  .c_str());
+        }
+
+        retval.first = pygmo::ndarr_to_vector<std::vector<std::size_t>>(py::cast<py::array_t<std::size_t>>(*begin));
+
+        if (++begin == end) {
+            // Only one element in the iteratable.
+            pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
+                                               + "' has only 1 element (it should contain 2 elements)")
+                                                  .c_str());
+        }
+
+        retval.second = pygmo::ndarr_to_vector<vector_double>(py::cast<py::array_t<double>>(*begin));
+
+        if (++begin != end) {
+            // Too many elements.
+            pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
+                                               + "' has more than 2 elements (it should contain 2 elements)")
+                                                  .c_str());
+        }
+
+        return retval;
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception(
+            "The get_connections() method of a pythonic topology of type '" + topo_name + "' raised an error:\n", eas);
     }
-
-    retval.second = pygmo::ndarr_to_vector<vector_double>(py::cast<py::array_t<double>>(*begin));
-
-    if (++begin != end) {
-        // Too many elements.
-        pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
-                                           + "' has more than 2 elements (it should contain 2 elements)")
-                                              .c_str());
-    }
-
-    return retval;
 }
 
 void topo_inner<py::object>::push_back()

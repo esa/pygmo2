@@ -156,7 +156,7 @@ class island_test_case(_ut.TestCase):
         isl = island(prob=rosenbrock(), udi=_udi_03(),
                      size=11, algo=de(), seed=15)
         isl.evolve()
-        with self.assertRaises(ValueError) as cm:
+        with self.assertRaises(RuntimeError) as cm:
             isl.wait_check()
         err = cm.exception
         self.assertTrue(
@@ -468,7 +468,7 @@ class mp_island_test_case(_ut.TestCase):
         mp_island.init_pool()
         mp_island.resize_pool(6)
         isl.evolve(20)
-        isl.evolve(20)
+        isl.wait_check()
         mp_island.resize_pool(4)
         isl.wait_check()
         isl.evolve(20)
@@ -584,7 +584,7 @@ class mp_island_test_case(_ut.TestCase):
             isl.evolve()
             isl.wait()
             self.assertTrue("**error occurred**" in repr(isl))
-            self.assertRaises(ValueError, lambda: isl.wait_check())
+            self.assertRaises(RuntimeError, lambda: isl.wait_check())
 
 
 class ipyparallel_island_test_case(_ut.TestCase):

@@ -119,7 +119,7 @@ class topology_test_case(_ut.TestCase):
             def get_connections(self, n):
                 return []
         topo = topology(t())
-        self.assertRaises(ValueError, lambda: topo.get_connections(0))
+        self.assertRaises(RuntimeError, lambda: topo.get_connections(0))
 
         class t(object):
 
