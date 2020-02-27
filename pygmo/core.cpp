@@ -218,9 +218,11 @@ PYBIND11_MODULE(core, m)
     PyEval_InitThreads();
 
     // We activate the unique pointer
-    stream_redirect_ptr.reset(new py::scoped_ostream_redirect(std::cout,                               // std::ostream&
-                                                              py::module::import("sys").attr("stdout") // Python output
-                                                              ));
+    // stream_redirect_ptr.reset(new py::scoped_ostream_redirect(std::cout,                               //
+    // std::ostream&
+    //                                                           py::module::import("sys").attr("stdout") // Python
+    //                                                           output
+    //                                                           ));
 
     // Disable automatic function signatures in the docs.
     // NOTE: the 'options' object needs to stay alive
@@ -1192,6 +1194,6 @@ PYBIND11_MODULE(core, m)
     topology_class.def(py::init<const py::object &>(), py::arg("udt"));
 
     // Resetting the stream redirection pointer.
-    auto atexit = py::module::import("atexit");
-    atexit.attr("register")(py::cpp_function([]() { stream_redirect_ptr.reset(); }));
+    // auto atexit = py::module::import("atexit");
+    // atexit.attr("register")(py::cpp_function([]() { stream_redirect_ptr.reset(); }));
 }
