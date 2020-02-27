@@ -468,7 +468,7 @@ class mp_island_test_case(_ut.TestCase):
         mp_island.init_pool()
         mp_island.resize_pool(6)
         isl.evolve(20)
-        isl.wait_check()
+        isl.evolve(20)
         mp_island.resize_pool(4)
         isl.wait_check()
         isl.evolve(20)
