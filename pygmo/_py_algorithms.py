@@ -52,7 +52,7 @@ try:
             """
             problem = population.problem
 
-            if problem.get_nc() > 1:
+            if problem.get_nc() > 0:
                 raise NotImplementedError(
                     "Constraints not yet supported in SciPy wrapper."
                 )
