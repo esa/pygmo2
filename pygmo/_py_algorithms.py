@@ -124,7 +124,7 @@ try:
 
             if level <= 0:
                 if self.options is not None:
-                    self.options.pop("disp")
+                    self.options.pop("disp", None)
 
 
 except ImportError:
