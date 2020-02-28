@@ -54,7 +54,7 @@ try:
 
             if problem.get_nc() > 0:
                 raise NotImplementedError(
-                    "Constraints not yet supported in SciPy wrapper."
+                    "Constraints not yet supported in SciPy wrapper, as they differ among methods."
                 )
 
             if problem.get_nobj() > 1:
@@ -97,10 +97,35 @@ try:
             return population
 
         def get_name(self) -> str:
+            """
+            Returns the method name if one was selected, scipy.optimize.minimize otherwise
+            """
             if self.method is not None:
                 return self.method + ", provided by SciPy"
             else:
                 return "scipy.optimize.minimize, method unspecified."
+
+        def set_verbosity(self, level: int) -> None:
+            """
+            Modifies the 'disp' parameter in the options dict. Every verbosity level above zero sets it to true.
+            """
+            if level > 0:
+                if self.options is None:
+                    self.options = dict()
+
+                if disp in self.options and self.options["disp"] == False:
+                    raise ValueError(
+                        "Conflicting options: Verbosity\
+                        set to "
+                        + str(level)
+                        + ", but disp to False"
+                    )
+
+                self.options["disp"] = True
+
+            if level <= 0:
+                if self.options is not None:
+                    self.options.pop("disp")
 
 
 except ImportError:
