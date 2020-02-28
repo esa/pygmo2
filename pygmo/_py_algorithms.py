@@ -113,10 +113,9 @@ try:
                 if self.options is None:
                     self.options = dict()
 
-                if disp in self.options and self.options["disp"] == False:
+                if "disp" in self.options and self.options["disp"] is False:
                     raise ValueError(
-                        "Conflicting options: Verbosity\
-                        set to "
+                        "Conflicting options: Verbosity set to "
                         + str(level)
                         + ", but disp to False"
                     )
