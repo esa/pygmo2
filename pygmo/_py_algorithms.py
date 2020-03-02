@@ -14,7 +14,7 @@ try:
         - callback
         - options
 
-        Other aspects, like bounds or the existence of a gradient and hessian, are taken from the problem.
+        The problem bounds and the existence of a gradient and hessian are deduced calling the relevant problem methods (problem.has_gradient(), etc..)
         """
 
         def __init__(self, args=(), method=None, tol=None, callback=None, options=None):
