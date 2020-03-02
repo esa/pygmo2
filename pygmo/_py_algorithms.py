@@ -2,6 +2,7 @@ import random
 
 try:
     from scipy.optimize import minimize
+    import numpy
 
     class scipy:
         """
@@ -43,6 +44,46 @@ try:
             self.callback = callback
             self.options = options
 
+        def _generateGradientSparsityWrapper(self, func, shape, sparsity):
+            
+            def wrapper(x):
+                sparseValues = func(x)
+                pattern = sparsity
+                nnz = len(sparseValues)
+                if nnz != len(sparsity):
+                    raise ValueError("Sparse gradient/hessian has " 
+                                     + str(nnz) 
+                                     + " non-zeros, but sparsity pattern has " 
+                                     + str(len(sparsity)))
+                    
+                result = numpy.zeros(shape)
+                for i in range(nnz):
+                    result[sparsity[i][1]] = sparseValues[i]
+            
+                return result
+            
+            return wrapper
+
+        def _generateHessianSparsityWrapper(self, func, shape, sparsity):
+            
+            def wrapper(x):
+                sparseValues = func(x)
+                pattern = sparsity
+                nnz = len(sparseValues)
+                if nnz != len(sparsity):
+                    raise ValueError("Sparse gradient/hessian has " 
+                                     + str(nnz) 
+                                     + " non-zeros, but sparsity pattern has " 
+                                     + str(len(sparsity)))
+                    
+                result = numpy.zeros(shape)
+                for i in range(nnz):
+                    result[sparsity[i][0]][sparsity[i][1]] = sparseValues[i]
+            
+                return result
+            
+            return wrapper
+
         def evolve(self, population):
             """
             Take a random member of the population, use it as initial guess
@@ -58,19 +99,30 @@ try:
                 )
 
             if problem.get_nobj() > 1:
-                raise NotImplementedError("Multiple objectives not supported.")
+                raise ValueError(
+                    "Multiple objectives detected in "
+                    + problem.get_name()
+                    + " instance. The wrapped scipy.optimize.minimize cannot deal with them"
+                )
 
-            jac = None
-            hess = None
-            if problem.has_gradient():
-                jac = problem.gradient
+            if problem.is_stochastic():
+                raise ValueError(
+                    problem.get_name()
+                    + " appears to be stochastic, the wrapped scipy.optimize.minimize cannot deal with it"
+                )
 
-            if problem.has_hessians():
-                hess = problem.hessians
 
             bounds = problem.get_bounds()
             dim = len(bounds[0])
             bounds_seq = [(bounds[0][d], bounds[1][d]) for d in range(dim)]
+
+            jac = None
+            hess = None
+            if problem.has_gradient():
+                jac = self._generateGradientSparsityWrapper(problem.gradient, dim, problem.gradient_sparsity())
+
+            if problem.has_hessians():
+                hess = self._generateHessianSparsityWrapper(problem.hessians, (dim,dim), problem.hessians_sparsity())
 
             idx = random.randint(0, len(population) - 1)
             result = minimize(
