@@ -51,7 +51,7 @@ void handle_thread_py_exception(const std::string &err, const py::error_already_
                                                                    obj_or_none(eas.trace()))));
     } catch (const py::error_already_set &) {
         // The block above threw from Python. There's not much we can do.
-        PyErr_Clear();
+        ::PyErr_Clear();
         throw std::runtime_error("While trying to analyze the error message of a Python exception raised in a "
                                  "separate thread, another Python exception was raised. Giving up now.");
     }
