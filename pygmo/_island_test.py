@@ -687,5 +687,5 @@ class ipyparallel_island_test_case(_ut.TestCase):
             isl.evolve()
             isl.wait()
             self.assertTrue("**error occurred**" in repr(isl))
-            self.assertRaises(ipyparallel.error.RemoteError,
+            self.assertRaises(RuntimeError,
                               lambda: isl.wait_check())
