@@ -108,10 +108,10 @@ class s_policy_test_case(_ut.TestCase):
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return []
         s_pol = s_policy(r())
-        self.assertRaises(ValueError, lambda: s_pol.select(inds=([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(RuntimeError, lambda: s_pol.select(inds=([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), nx=2, nix=0, nobj=1, nec=0, nic=0, tol=[]))
         # Try also flipping around the named argument.
-        self.assertRaises(ValueError, lambda: s_pol.select(nx=2, inds=([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(RuntimeError, lambda: s_pol.select(nx=2, inds=([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), nec=0, nix=0, nobj=1, nic=0, tol=[]))
 
         class r(object):
@@ -143,7 +143,7 @@ class s_policy_test_case(_ut.TestCase):
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return 1
         s_pol = s_policy(r())
-        self.assertRaises(TypeError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(RuntimeError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), 2, 0, 1, 0, 0, []))
 
         class r(object):
