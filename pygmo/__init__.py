@@ -6,6 +6,15 @@
 # Public License v. 2.0. If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+try:
+    from scipy.optimize import minimize
+
+except ImportError as e:
+    raise ImportError(
+        "from scipy.optimize import minimize raised an exception, please make sure scipy is installed and reachable. Error: "
+        + str(e)
+    )
+
 from ._check_deps import *
 # Version setup.
 from ._version import __version__
@@ -33,15 +42,6 @@ import cloudpickle as _cloudpickle
 # Explicitly import the test submodule
 from . import test
 import atexit as _atexit
-
-try:
-    from scipy.optimize import minimize
-
-except ImportError as e:
-    raise ImportError(
-        "from scipy.optimize import minimize raised an exception, please make sure scipy is installed and reachable. Error: "
-        + str(e)
-    )
 
 
 # We move into the problems, algorithms, etc. namespaces
