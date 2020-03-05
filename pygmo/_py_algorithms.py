@@ -103,8 +103,6 @@ class scipy:
         return wrapper
 
     def _generateHessianSparsityWrapper(self, func, shape, sparsity):
-        print("Hessian sparsity pattern:", sparsity)
-
         def wrapper(x):
             sparseValues = func(x)
             nnz = len(sparseValues)
