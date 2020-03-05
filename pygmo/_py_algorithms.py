@@ -1,7 +1,45 @@
 import random
 
 import numpy
+
 from scipy.optimize import minimize
+from scipy.optimize import NonlinearConstraint
+
+
+class _fitnessCache:
+    def __init__(self, problem):
+        self.problem = problem
+        self.args = None
+        self.kwargs = None
+        self.result = None
+
+    def updateCache(self, *args, **kwargs):
+        if True or not (self.args == args and self.kwargs == kwargs):
+            # print("Updating fitness")
+            self.args = args
+            self.kwargs = kwargs
+            self.result = self.problem.fitness(*args, **kwargs)
+        else:
+            # print("Keeping cached fitness")
+            pass
+
+    def fitness(self, *args, **kwargs):
+        self.updateCache(*args, **kwargs)
+        return self.result[: self.problem.get_nobj()]
+
+    def generateEQConstraint(self, i):
+        def eqFunc(*args, **kwargs):
+            self.updateCache(*args, **kwargs)
+            return self.result[self.problem.get_nobj() + i]
+
+        return eqFunc
+
+    def generateNQConstraint(self, i):
+        def neqFunc(*args, **kwargs):
+            self.updateCache(*args, **kwargs)
+            return -self.result[self.problem.get_nobj() + self.problem.get_nec() + i]
+
+        return neqFunc
 
 
 class scipy:
@@ -65,6 +103,8 @@ class scipy:
         return wrapper
 
     def _generateHessianSparsityWrapper(self, func, shape, sparsity):
+        print("Hessian sparsity pattern:", sparsity)
+
         def wrapper(x):
             sparseValues = func(x)
             nnz = len(sparseValues)
@@ -93,9 +133,18 @@ class scipy:
         """
         problem = population.problem
 
-        if problem.get_nc() > 0:
-            raise NotImplementedError(
-                "Constraints not yet supported in SciPy wrapper, as they differ among methods."
+        if problem.get_nc() > 0 and self.method not in [
+            "COBYLA",
+            "SLSQP",
+            "trust-constr",
+            None,
+        ]:
+            raise ValueError(
+                "Problem "
+                + problem.get_name()
+                + " has constraints. Constraints are not implemented for method "
+                + str(self.method)
+                + ", they are only implemented for methods COBYLA, SLSQP and trust-constr."
             )
 
         if problem.get_nobj() > 1:
@@ -128,18 +177,63 @@ class scipy:
             )
 
         idx = random.randint(0, len(population) - 1)
-        result = minimize(
-            problem.fitness,
-            population.get_x()[idx],
-            args=self.args,
-            method=self.method,
-            jac=jac,
-            hess=hess,
-            bounds=bounds_seq,
-            tol=self.tol,
-            callback=self.callback,
-            options=self.options,
-        )
+        if problem.get_nc() > 0:
+            # Need to handle constraints, put them in a wrapper to avoid multiple fitness evaluations.
+            fitnessWrapper = _fitnessCache(problem)
+            constraints = []
+            if self.method in ["COBYLA", "SLSQP", None]:
+                for i in range(problem.get_nec()):
+                    constraint = {
+                        "type": "eq",
+                        "fun": fitnessWrapper.generateEQConstraint(i),
+                    }
+                    constraints.append(constraint)
+
+                for i in range(problem.get_nic()):
+                    constraint = {
+                        "type": "ineq",
+                        "fun": fitnessWrapper.generateNQConstraint(i),
+                    }
+                    constraints.append(constraint)
+            else:
+                for i in range(problem.get_nec()):
+                    constraint = NonlinearConstraint(
+                        fitnessWrapper.generateEQConstraint(i), 0, 0
+                    )
+                    constraints.append(constraint)
+
+                for i in range(problem.get_nic()):
+                    constraint = NonlinearConstraint(
+                        fitnessWrapper.generateNQConstraint(i), 0, float("inf")
+                    )
+                    constraints.append(constraint)
+
+            result = minimize(
+                fitnessWrapper.fitness,
+                population.get_x()[idx],
+                args=self.args,
+                method=self.method,
+                jac=jac,
+                hess=hess,
+                bounds=bounds_seq,
+                constraints=constraints,
+                tol=self.tol,
+                callback=self.callback,
+                options=self.options,
+            )
+        else:
+            result = minimize(
+                problem.fitness,
+                population.get_x()[idx],
+                args=self.args,
+                method=self.method,
+                jac=jac,
+                hess=hess,
+                bounds=bounds_seq,
+                tol=self.tol,
+                callback=self.callback,
+                options=self.options,
+            )
 
         # wrap result in array if necessary
         fun = result.fun
@@ -148,7 +242,10 @@ class scipy:
         except TypeError:
             fun = [fun]
 
-        population.set_xf(idx, result.x, fun)
+        if problem.get_nc() > 0:
+            population.set_x(idx, result.x)
+        else:
+            population.set_xf(idx, result.x, fun)
         return population
 
     def get_name(self) -> str:
