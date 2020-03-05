@@ -28,6 +28,7 @@ class algorithm_test_case(_ut.TestCase):
         self.run_name_info_tests()
         self.run_thread_safety_tests()
         self.run_pickle_tests()
+        self.run_scipy_wrapper_tests()
 
     def run_basic_tests(self):
         # Tests for minimal algorithm, and mandatory methods.
@@ -421,3 +422,62 @@ class algorithm_test_case(_ut.TestCase):
         self.assertEqual(repr(a), repr(a_))
         self.assertTrue(a.is_(mbh))
         self.assertTrue(a.extract(mbh).inner_algorithm.is_(_algo))
+
+    def run_scipy_wrapper_tests(self):
+        from . import (
+            scipy,
+            problem,
+            ackley,
+            rosenbrock,
+            rastrigin,
+            minlp_rastrigin,
+            hock_schittkowsky_71,
+            luksan_vlcek1,
+            golomb_ruler,
+            population,
+            algorithm,
+        )
+
+        # simple test with ackley, a problem without gradients or constraints
+        methods = ["L-BFGS-B", "TNC", "SLSQP"]
+        problem = problem(ackley(10))
+        population = population(prob=problem, size=1, seed=0)
+        init = population.champion_f
+
+        for m in methods:
+            pop = population.__copy__()
+            scp = algorithm(scipy(method=m))
+            result = scp.evolve(pop).champion_f
+            self.assertTrue(result[0] <= init[0])
+            self.assertTrue(pop.problem.get_fevals() > 1)
+
+        # simple test with rosenbrock, a problem with a gradient
+        methods = ["L-BFGS-B", "TNC", "SLSQP", "trust-constr"]
+        problem = problem(rosenbrock(10))
+        population = population(prob=problem, size=1, seed=0)
+        init = population.champion_f
+
+        for m in methods:
+            pop = population.__copy__()
+            scp = algorithm(scipy(method=m))
+            result = scp.evolve(pop).champion_f
+            self.assertTrue(result[0] <= init[0])
+            self.assertTrue(pop.problem.get_fevals() > 1)
+            self.assertTrue(pop.problem.get_gevals() > 1)
+
+        # testing Hessian and Hessian sparsity
+        methods = ["trust-constr", "trust-exact", "trust-krylov"]
+        problems = [problem(rastrigin(10)), problem(minlp_rastrigin(10))]
+
+        for inst in problems:
+            population = pygmo.population(prob=inst, size=1, seed=0)
+            init = population.champion_f
+
+            for m in methods:
+                pop = population.__copy__()
+                scp = pygmo.algorithm(pygmo.scipy(method=m))
+                result = scp.evolve(pop).champion_f
+                self.assertTrue(result[0] <= init[0])
+                self.assertTrue(pop.problem.get_fevals() > 1)
+                self.assertTrue(pop.problem.get_gevals() > 0)
+                self.assertTrue(pop.problem.get_hevals() > 0)
