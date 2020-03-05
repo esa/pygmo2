@@ -440,44 +440,62 @@ class algorithm_test_case(_ut.TestCase):
 
         # simple test with ackley, a problem without gradients or constraints
         methods = ["L-BFGS-B", "TNC", "SLSQP"]
-        problem = problem(ackley(10))
-        population = population(prob=problem, size=1, seed=0)
-        init = population.champion_f
+        prob = problem(ackley(10))
+        pop = population(prob=prob, size=1, seed=0)
+        init = pop.champion_f
 
         for m in methods:
-            pop = population.__copy__()
+            popc = pop.__copy__()
             scp = algorithm(scipy(method=m))
-            result = scp.evolve(pop).champion_f
+            result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
-            self.assertTrue(pop.problem.get_fevals() > 1)
+            self.assertTrue(popc.problem.get_fevals() > 1)
 
         # simple test with rosenbrock, a problem with a gradient
         methods = ["L-BFGS-B", "TNC", "SLSQP", "trust-constr"]
-        problem = problem(rosenbrock(10))
-        population = population(prob=problem, size=1, seed=0)
-        init = population.champion_f
+        prob = problem(rosenbrock(10))
+        pop = population(prob=prob, size=1, seed=0)
+        init = pop.champion_f
 
         for m in methods:
-            pop = population.__copy__()
+            popc = pop.__copy__()
             scp = algorithm(scipy(method=m))
-            result = scp.evolve(pop).champion_f
+            result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
-            self.assertTrue(pop.problem.get_fevals() > 1)
-            self.assertTrue(pop.problem.get_gevals() > 1)
+            self.assertTrue(popc.problem.get_fevals() > 1)
+            self.assertTrue(popc.problem.get_gevals() > 1)
 
         # testing Hessian and Hessian sparsity
         methods = ["trust-constr", "trust-exact", "trust-krylov"]
         problems = [problem(rastrigin(10)), problem(minlp_rastrigin(10))]
 
         for inst in problems:
-            population = pygmo.population(prob=inst, size=1, seed=0)
-            init = population.champion_f
+            pop = population(prob=inst, size=1, seed=0)
+            init = pop.champion_f
 
             for m in methods:
-                pop = population.__copy__()
-                scp = pygmo.algorithm(pygmo.scipy(method=m))
-                result = scp.evolve(pop).champion_f
+                popc = pop.__copy__()
+                scp = algorithm(scipy(method=m))
+                result = scp.evolve(popc).champion_f
                 self.assertTrue(result[0] <= init[0])
-                self.assertTrue(pop.problem.get_fevals() > 1)
-                self.assertTrue(pop.problem.get_gevals() > 0)
-                self.assertTrue(pop.problem.get_hevals() > 0)
+                self.assertTrue(popc.problem.get_fevals() > 1)
+                self.assertTrue(popc.problem.get_gevals() > 0)
+                self.assertTrue(popc.problem.get_hevals() > 0)
+
+        # testing constraints without Hessians
+        methods = ['SLSQP','trust-constr']
+        raw_probs = [luksan_vlcek1(10),golomb_ruler(2,10)]
+        instances = [problem(prob) for prob in raw_probs]
+
+        for inst in instances:
+            pop = population(prob=inst, size=1, seed=0)
+            init = pop.champion_f
+            
+            for m in methods:
+                popc = pop.__copy__()
+                print(m, ": ", end="")
+                scp = algorithm(scipy(method=m))
+                result = scp.evolve(popc).champion_f
+                self.assertTrue(result[0] <= init[0])
+                self.assertTrue(popc.problem.get_fevals() > 1)
+                # TODO: test that result fulfills constraints
