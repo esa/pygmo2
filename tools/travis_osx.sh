@@ -13,7 +13,7 @@ bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
 
 if [[ "${PYGMO_BUILD_TYPE}" == *pagmo_head ]]; then
-    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pybind11 clang clangdev ipyparallel"
+    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle dill numba pybind11 clang clangdev ipyparallel scipy"
 else
     conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle dill numba pybind11 clang clangdev ipyparallel pagmo-devel"
 fi

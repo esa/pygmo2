@@ -47,7 +47,6 @@ class scipy:
     def _generateGradientSparsityWrapper(self, func, shape, sparsity):
         def wrapper(x):
             sparseValues = func(x)
-            pattern = sparsity
             nnz = len(sparseValues)
             if nnz != len(sparsity):
                 raise ValueError(
@@ -68,7 +67,6 @@ class scipy:
     def _generateHessianSparsityWrapper(self, func, shape, sparsity):
         def wrapper(x):
             sparseValues = func(x)
-            pattern = sparsity
             nnz = len(sparseValues)
             if nnz != len(sparsity):
                 raise ValueError(
