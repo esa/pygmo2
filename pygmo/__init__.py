@@ -34,6 +34,15 @@ import cloudpickle as _cloudpickle
 from . import test
 import atexit as _atexit
 
+try:
+    from scipy.optimize import minimize
+
+except ImportError as e:
+    raise ImportError(
+        "from scipy.optimize import minimize raised an exception, please make sure scipy is installed and reachable. Error: "
+        + str(e)
+    )
+
 
 # We move into the problems, algorithms, etc. namespaces
 # all the pure python UDAs, UDPs and UDIs.
