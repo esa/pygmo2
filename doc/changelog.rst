@@ -3,7 +3,15 @@
 Changelog
 =========
 
-2.14.0 (unreleased)
+2.14.1 (2020-03-06)
+-------------------
+
+Fix
+~~~
+
+- Fix the upload of the binary wheels to pypi.
+
+2.14.0 (2020-03-04)
 -------------------
 
 New

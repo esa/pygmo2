@@ -1235,9 +1235,11 @@ class archipelago_test_case(_ut.TestCase):
         archi = archipelago(n=5, algo=sade(
             50), prob=_raise_exception_2(), pop_size=20)
         archi.evolve()
-        archi = archipelago(n=1100, algo=sade(
+        archi2 = archipelago(n=1100, algo=sade(
             500), prob=ackley(50), pop_size=50)
-        archi.evolve()
+        archi2.evolve()
+        archi.wait_check()
+        archi2.wait_check()
 
     def run_migration_torture_test(self):
         from . import archipelago, de, rosenbrock, fair_replace, select_best, r_policy, s_policy

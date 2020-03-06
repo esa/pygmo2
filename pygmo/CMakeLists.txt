@@ -74,6 +74,7 @@ YACMA_PYTHON_MODULE(core
     expose_s_policies.cpp
     topology.cpp
     expose_topologies.cpp
+    handle_thread_py_exception.cpp
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
