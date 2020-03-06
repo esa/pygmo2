@@ -499,3 +499,16 @@ class algorithm_test_case(_ut.TestCase):
                 self.assertTrue(result[0] <= init[0])
                 self.assertTrue(popc.problem.get_fevals() > 1)
                 # TODO: test that result fulfills constraints
+
+        # testing constraints with Hessians
+        method = 'trust-constr'
+        prob = problem(hock_schittkowsky_71())
+        pop = population(prob=prob, size=1, seed=0)
+        init = pop.champion_f
+
+        popc = pop.__copy__()
+        scp = algorithm(scipy(method=method))
+        result = scp.evolve(popc).champion_f
+        self.assertTrue(popc.problem.get_fevals() > 1)
+        self.assertTrue(popc.problem.get_gevals() > 0)
+        self.assertTrue(popc.problem.get_hevals() > 0)
