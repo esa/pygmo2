@@ -4,14 +4,14 @@ import numpy
 from scipy.optimize import NonlinearConstraint, minimize
 
 
-def _generateGradientSparsityWrapper(func, idx, shape, sparsity_func):
+def _generate_gradient_sparsity_wrapper(func, idx, shape, sparsity_func):
 
     sparsity = sparsity_func()
 
     def wrapper(*args, **kwargs):
         # Here we get back just one one-dimensional gradient, including all dimensions and constraints
-        sparseValues = func(*args, **kwargs)
-        nnz = len(sparseValues)
+        sparse_values = func(*args, **kwargs)
+        nnz = len(sparse_values)
         if nnz != len(sparsity):
             raise ValueError(
                 "Sparse gradient/hessian has "
@@ -24,20 +24,20 @@ def _generateGradientSparsityWrapper(func, idx, shape, sparsity_func):
         for i in range(nnz):
             # filter for just the dimension we need
             if sparsity[i][0] == idx:
-                result[sparsity[i][1]] = sparseValues[i]
+                result[sparsity[i][1]] = sparse_values[i]
 
         return result
 
     return wrapper
 
 
-def _generateHessianSparsityWrapper(func, idx, shape, sparsity_func):
+def _generate_hessian_sparsity_wrapper(func, idx, shape, sparsity_func):
 
     sparsity = sparsity_func()[idx]
 
     def wrapper(*args, **kwargs):
-        sparseValues = func(*args, **kwargs)[idx]
-        nnz = len(sparseValues)
+        sparse_values = func(*args, **kwargs)[idx]
+        nnz = len(sparse_values)
         print("Found", nnz, "non-zeros.")
         if nnz != len(sparsity):
             raise ValueError(
@@ -49,21 +49,21 @@ def _generateHessianSparsityWrapper(func, idx, shape, sparsity_func):
 
         result = numpy.zeros(shape)
         for i in range(nnz):
-            result[sparsity[i][0]][sparsity[i][1]] = sparseValues[i]
+            result[sparsity[i][0]][sparsity[i][1]] = sparse_values[i]
 
         return result
 
     return wrapper
 
 
-class _fitnessCache:
+class _fitness_cache:
     def __init__(self, problem):
         self.problem = problem
         self.args = None
         self.kwargs = None
         self.result = None
 
-    def updateCache(self, *args, **kwargs):
+    def update_cache(self, *args, **kwargs):
         if True or not (self.args == args and self.kwargs == kwargs):
             # print("Updating fitness")
             self.args = args
@@ -74,19 +74,19 @@ class _fitnessCache:
             pass
 
     def fitness(self, *args, **kwargs):
-        self.updateCache(*args, **kwargs)
+        self.update_cache(*args, **kwargs)
         return self.result[: self.problem.get_nobj()]
 
-    def generateEQConstraint(self, i):
+    def generate_eq_constraint(self, i):
         def eqFunc(*args, **kwargs):
-            self.updateCache(*args, **kwargs)
+            self.update_cache(*args, **kwargs)
             return self.result[self.problem.get_nobj() + i]
 
         return eqFunc
 
-    def generateNQConstraint(self, i):
+    def generate_neq_constraint(self, i):
         def neqFunc(*args, **kwargs):
-            self.updateCache(*args, **kwargs)
+            self.update_cache(*args, **kwargs)
             return -self.result[self.problem.get_nobj() + self.problem.get_nec() + i]
 
         return neqFunc
@@ -175,49 +175,49 @@ class scipy:
         jac = None
         hess = None
         if problem.has_gradient():
-            jac = _generateGradientSparsityWrapper(
+            jac = _generate_gradient_sparsity_wrapper(
                 problem.gradient, 0, dim, problem.gradient_sparsity
             )
 
         if problem.has_hessians():
-            hess = _generateHessianSparsityWrapper(
+            hess = _generate_hessian_sparsity_wrapper(
                 problem.hessians, 0, (dim, dim), problem.hessians_sparsity
             )
 
         idx = random.randint(0, len(population) - 1)
         if problem.get_nc() > 0:
             # Need to handle constraints, put them in a wrapper to avoid multiple fitness evaluations.
-            fitnessWrapper = _fitnessCache(problem)
+            fitness_wrapper = _fitness_cache(problem)
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
                 for i in range(problem.get_nec()):
                     constraint = {
                         "type": "eq",
-                        "fun": fitnessWrapper.generateEQConstraint(i),
+                        "fun": fitness_wrapper.generate_eq_constraint(i),
                     }
                     constraints.append(constraint)
 
                 for i in range(problem.get_nic()):
                     constraint = {
                         "type": "ineq",
-                        "fun": fitnessWrapper.generateNQConstraint(i),
+                        "fun": fitness_wrapper.generate_neq_constraint(i),
                     }
                     constraints.append(constraint)
             else:
                 for i in range(problem.get_nec()):
                     constraint = NonlinearConstraint(
-                        fitnessWrapper.generateEQConstraint(i), 0, 0
+                        fitness_wrapper.generate_eq_constraint(i), 0, 0
                     )
                     constraints.append(constraint)
 
                 for i in range(problem.get_nic()):
                     constraint = NonlinearConstraint(
-                        fitnessWrapper.generateNQConstraint(i), 0, float("inf")
+                        fitness_wrapper.generate_neq_constraint(i), 0, float("inf")
                     )
                     constraints.append(constraint)
 
             result = minimize(
-                fitnessWrapper.fitness,
+                fitness_wrapper.fitness,
                 population.get_x()[idx],
                 args=self.args,
                 method=self.method,
