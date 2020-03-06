@@ -6,6 +6,9 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <pagmo/config.hpp>
+
+#include <cassert>
 #include <initializer_list>
 #include <iterator>
 #include <string>
@@ -15,10 +18,25 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/iterator/transform_iterator.hpp>
+#include <boost/iterator/zip_iterator.hpp>
+#include <boost/tuple/tuple.hpp>
+
+#endif
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/types.hpp>
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+#include <pagmo/topology.hpp>
+
+#endif
 
 #include "common_utils.hpp"
 
@@ -200,5 +218,90 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
 
     return pagmo::individuals_group_t(std::move(ID_vec), std::move(dvs_vec), std::move(fvs_vec));
 }
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+py::object bgl_graph_t_to_networkx(const pagmo::bgl_graph_t &g)
+{
+    auto dg = py::module::import("networkx").attr("DiGraph")();
+
+    for (auto vs = boost::vertices(g); vs.first != vs.second; ++vs.first) {
+        // Get the list of outgoing edges from the current vertex.
+        const auto erange = boost::out_edges(*vs.first, g);
+
+        // Helper to extract the target vertex from an edge descriptor (that is,
+        // the vertex a directed edge points to).
+        auto target_getter = [&g](decltype(*erange.first) ed) { return boost::target(ed, g); };
+
+        // Helper to extract the edge weight from an edge descriptor.
+        auto weight_getter = [&g](decltype(*erange.first) ed) { return g[ed]; };
+
+        // Make zip iterators for bundling together the target of an edge
+        // and its weight.
+        auto z_begin
+            = boost::make_zip_iterator(boost::make_tuple(boost::make_transform_iterator(erange.first, target_getter),
+                                                         boost::make_transform_iterator(erange.first, weight_getter)));
+        auto z_end
+            = boost::make_zip_iterator(boost::make_tuple(boost::make_transform_iterator(erange.second, target_getter),
+                                                         boost::make_transform_iterator(erange.second, weight_getter)));
+
+        py::list tmp_list;
+        for (; z_begin != z_end; ++z_begin) {
+            // Add to the list a tuple containing:
+            // - the index of the current node,
+            // - the index of the node it connects to,
+            // - the weight of the connection.
+            tmp_list.append(py::make_tuple(*vs.first, boost::get<0>(*z_begin), boost::get<1>(*z_begin)));
+        }
+
+        dg.attr("add_weighted_edges_from")(tmp_list);
+    }
+
+    return dg;
+}
+
+pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
+{
+    // Check the type of the input object.
+    if (!py::isinstance(g, py::module::import("networkx").attr("DiGraph"))) {
+        py_throw(
+            PyExc_TypeError,
+            ("in order to construct a pagmo::bgl_graph_t object a NetworX DiGraph is needed, but an object of type '"
+             + str(type(g)) + "' was passed instead")
+                .c_str());
+    }
+
+    pagmo::bgl_graph_t ret;
+    for (const auto &t : g.attr("edges").attr("data")()) {
+        auto tup = t.cast<py::tuple>();
+
+        if (py::len(tup) != 3u) {
+            py_throw(
+                PyExc_ValueError,
+                ("while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge consisting of a tuple of "
+                 + std::to_string(py::len(tup))
+                 + " elements was encountered, but an edge consisting of 3 elements is needed instead (source node, "
+                   "destination node, edge weight)")
+                    .c_str());
+        }
+
+        auto d = tup[2].cast<py::dict>();
+
+        if (!py::cast<bool>(d.attr("__contains__")("weight"))) {
+            py_throw(PyExc_ValueError, "while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge "
+                                       "without a 'weight' property was encountered");
+        }
+
+        const auto result
+            = boost::add_edge(boost::vertex(tup[0].cast<pagmo::bgl_graph_t::vertices_size_type>(), ret),
+                              boost::vertex(tup[1].cast<pagmo::bgl_graph_t::vertices_size_type>(), ret), ret);
+        assert(result.second);
+        ret[result.first] = d["weight"].cast<double>();
+    }
+
+    return ret;
+}
+
+#endif
 
 } // namespace pygmo

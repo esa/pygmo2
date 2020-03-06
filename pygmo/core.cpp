@@ -1166,6 +1166,11 @@ PYBIND11_MODULE(core, m)
         .def(
             "push_back", [](pg::topology &t, unsigned n) { t.push_back(n); },
             pygmo::topology_push_back_docstring().c_str(), py::arg("n") = std::size_t(1))
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+        .def(
+            "to_networkx", [](const pg::topology &t) { return pygmo::bgl_graph_t_to_networkx(t.to_bgl()); },
+            pygmo::topology_to_networkx_docstring().c_str())
+#endif
         .def("get_name", &pg::topology::get_name, pygmo::topology_get_name_docstring().c_str())
         .def("get_extra_info", &pg::topology::get_extra_info, pygmo::topology_get_extra_info_docstring().c_str());
 

@@ -8,6 +8,8 @@
 
 #include <string>
 
+#include <pagmo/config.hpp>
+
 #include "docstrings.hpp"
 
 namespace pygmo
@@ -6571,6 +6573,28 @@ Raises:
 
 )";
 }
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+std::string topology_to_networkx_docstring()
+{
+    return R"(to_networkx()
+
+Topology's extra info.
+
+If the UDT provides a ``get_extra_info()`` method, then this method will return the output of its ``get_extra_info()``
+method. Otherwise, an empty string will be returned.
+
+Returns:
+  str: extra info about the UDT
+
+Raises:
+  unspecified: any exception thrown by the ``get_extra_info()`` method of the UDT
+
+)";
+}
+
+#endif
 
 std::string unconnected_docstring()
 {

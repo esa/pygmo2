@@ -11,6 +11,8 @@
 
 #include <string>
 
+#include <pagmo/config.hpp>
+
 namespace pygmo
 {
 
@@ -280,6 +282,9 @@ std::string topology_get_connections_docstring();
 std::string topology_push_back_docstring();
 std::string topology_get_name_docstring();
 std::string topology_get_extra_info_docstring();
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+std::string topology_to_networkx_docstring();
+#endif
 
 // udt.
 std::string unconnected_docstring();
