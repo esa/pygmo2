@@ -43,6 +43,7 @@ cd build
 cmake ../ -DPYBIND11_TEST=OFF > /dev/null
 make install > /dev/null 2>&1
 cd ..
+cd ..
 
 # Install pagmo
 if [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
@@ -65,7 +66,7 @@ cmake -DBoost_NO_BOOST_CMAKE=ON \
 	-DPAGMO_WITH_IPOPT=yes \
 	-DCMAKE_BUILD_TYPE=Release ../;
 make -j4 install
-cd ..
+
 
 # pygmo
 cd /pygmo2
