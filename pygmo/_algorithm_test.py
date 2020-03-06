@@ -425,17 +425,17 @@ class algorithm_test_case(_ut.TestCase):
 
     def run_scipy_wrapper_tests(self):
         from . import (
-            scipy,
-            problem,
             ackley,
-            rosenbrock,
-            rastrigin,
-            minlp_rastrigin,
+            algorithm,
+            golomb_ruler,
             hock_schittkowsky_71,
             luksan_vlcek1,
-            golomb_ruler,
+            minlp_rastrigin,
             population,
-            algorithm,
+            problem,
+            rastrigin,
+            rosenbrock,
+            scipy,
         )
 
         # simple test with ackley, a problem without gradients or constraints
@@ -483,14 +483,14 @@ class algorithm_test_case(_ut.TestCase):
                 self.assertTrue(popc.problem.get_hevals() > 0)
 
         # testing constraints without Hessians
-        methods = ['SLSQP','trust-constr']
-        raw_probs = [luksan_vlcek1(10),golomb_ruler(2,10)]
+        methods = ["SLSQP", "trust-constr"]
+        raw_probs = [luksan_vlcek1(10), golomb_ruler(2, 10)]
         instances = [problem(prob) for prob in raw_probs]
 
         for inst in instances:
             pop = population(prob=inst, size=1, seed=0)
             init = pop.champion_f
-            
+
             for m in methods:
                 popc = pop.__copy__()
                 print(m, ": ", end="")
@@ -501,7 +501,7 @@ class algorithm_test_case(_ut.TestCase):
                 # TODO: test that result fulfills constraints
 
         # testing constraints with Hessians
-        method = 'trust-constr'
+        method = "trust-constr"
         prob = problem(hock_schittkowsky_71())
         pop = population(prob=prob, size=1, seed=0)
         init = pop.champion_f
@@ -509,6 +509,7 @@ class algorithm_test_case(_ut.TestCase):
         popc = pop.__copy__()
         scp = algorithm(scipy(method=method))
         result = scp.evolve(popc).champion_f
+        self.assertTrue(result[0] <= init[0])
         self.assertTrue(popc.problem.get_fevals() > 1)
         self.assertTrue(popc.problem.get_gevals() > 0)
         self.assertTrue(popc.problem.get_hevals() > 0)
