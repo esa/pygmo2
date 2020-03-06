@@ -1,9 +1,59 @@
 import random
 
 import numpy
+from scipy.optimize import NonlinearConstraint, minimize
 
-from scipy.optimize import minimize
-from scipy.optimize import NonlinearConstraint
+
+def _generateGradientSparsityWrapper(func, idx, shape, sparsity_func):
+
+    sparsity = sparsity_func()
+
+    def wrapper(*args, **kwargs):
+        # Here we get back just one one-dimensional gradient, including all dimensions and constraints
+        sparseValues = func(*args, **kwargs)
+        nnz = len(sparseValues)
+        if nnz != len(sparsity):
+            raise ValueError(
+                "Sparse gradient/hessian has "
+                + str(nnz)
+                + " non-zeros, but sparsity pattern has "
+                + str(len(sparsity))
+            )
+
+        result = numpy.zeros(shape)
+        for i in range(nnz):
+            # filter for just the dimension we need
+            if sparsity[i][0] == idx:
+                result[sparsity[i][1]] = sparseValues[i]
+
+        return result
+
+    return wrapper
+
+
+def _generateHessianSparsityWrapper(func, idx, shape, sparsity_func):
+
+    sparsity = sparsity_func()[idx]
+
+    def wrapper(*args, **kwargs):
+        sparseValues = func(*args, **kwargs)[idx]
+        nnz = len(sparseValues)
+        print("Found", nnz, "non-zeros.")
+        if nnz != len(sparsity):
+            raise ValueError(
+                "Sparse gradient/hessian has "
+                + str(nnz)
+                + " non-zeros, but sparsity pattern has "
+                + str(len(sparsity))
+            )
+
+        result = numpy.zeros(shape)
+        for i in range(nnz):
+            result[sparsity[i][0]][sparsity[i][1]] = sparseValues[i]
+
+        return result
+
+    return wrapper
 
 
 class _fitnessCache:
@@ -82,46 +132,6 @@ class scipy:
         self.callback = callback
         self.options = options
 
-    def _generateGradientSparsityWrapper(self, func, shape, sparsity):
-        def wrapper(x):
-            sparseValues = func(x)
-            nnz = len(sparseValues)
-            if nnz != len(sparsity):
-                raise ValueError(
-                    "Sparse gradient/hessian has "
-                    + str(nnz)
-                    + " non-zeros, but sparsity pattern has "
-                    + str(len(sparsity))
-                )
-
-            result = numpy.zeros(shape)
-            for i in range(nnz):
-                result[sparsity[i][1]] = sparseValues[i]
-
-            return result
-
-        return wrapper
-
-    def _generateHessianSparsityWrapper(self, func, shape, sparsity):
-        def wrapper(x):
-            sparseValues = func(x)
-            nnz = len(sparseValues)
-            if nnz != len(sparsity):
-                raise ValueError(
-                    "Sparse gradient/hessian has "
-                    + str(nnz)
-                    + " non-zeros, but sparsity pattern has "
-                    + str(len(sparsity))
-                )
-
-            result = numpy.zeros(shape)
-            for i in range(nnz):
-                result[sparsity[i][0]][sparsity[i][1]] = sparseValues[i]
-
-            return result
-
-        return wrapper
-
     def evolve(self, population):
         """
         Take a random member of the population, use it as initial guess
@@ -165,13 +175,13 @@ class scipy:
         jac = None
         hess = None
         if problem.has_gradient():
-            jac = self._generateGradientSparsityWrapper(
-                problem.gradient, dim, problem.gradient_sparsity()
+            jac = _generateGradientSparsityWrapper(
+                problem.gradient, 0, dim, problem.gradient_sparsity
             )
 
         if problem.has_hessians():
-            hess = self._generateHessianSparsityWrapper(
-                problem.hessians, (dim, dim), problem.hessians_sparsity()
+            hess = _generateHessianSparsityWrapper(
+                problem.hessians, 0, (dim, dim), problem.hessians_sparsity
             )
 
         idx = random.randint(0, len(population) - 1)
