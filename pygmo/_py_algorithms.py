@@ -38,7 +38,6 @@ def _generate_hessian_sparsity_wrapper(func, idx, shape, sparsity_func):
     def wrapper(*args, **kwargs):
         sparse_values = func(*args, **kwargs)[idx]
         nnz = len(sparse_values)
-        print("Found", nnz, "non-zeros.")
         if nnz != len(sparsity):
             raise ValueError(
                 "Sparse gradient/hessian has "
