@@ -500,7 +500,7 @@ class algorithm_test_case(_ut.TestCase):
                 self.assertTrue(popc.problem.get_fevals() > 1)
                 # TODO: test that result fulfills constraints
 
-        # testing constraints with Hessians
+        # testing constraints with gradients and Hessians
         method = "trust-constr"
         prob = problem(hock_schittkowsky_71())
         pop = population(prob=prob, size=1, seed=0)
@@ -513,3 +513,9 @@ class algorithm_test_case(_ut.TestCase):
         self.assertTrue(popc.problem.get_fevals() > 1)
         self.assertTrue(popc.problem.get_gevals() > 0)
         self.assertTrue(popc.problem.get_hevals() > 0)
+
+        # testing verbosity
+        method_list = ["Nelder-Mead","Powell","CG","BFGS","Newton-CG","L-BFGS-B","TNC","COBYLA","SLSQP","trust-constr","dogleg","trust-ncg","trust-exact","trust-krylov"]
+        for m in methods:
+            scp = algorithm(scipy(method=m))
+            scp.set_verbosity(1)
