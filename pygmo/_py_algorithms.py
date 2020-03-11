@@ -1,12 +1,18 @@
 import random
+import warnings
 
 import numpy
 from scipy.optimize import NonlinearConstraint, minimize
 
 
-def _generate_gradient_sparsity_wrapper(func, idx, shape, sparsity_func):
+def _generate_gradient_sparsity_wrapper(
+    func, idx, shape, sparsity_func, invert_sign=False
+):
 
     sparsity = sparsity_func()
+    sign = 1
+    if invert_sign:
+        sign = -1
 
     def wrapper(*args, **kwargs):
         # Here we get back just one one-dimensional gradient, including all dimensions and constraints
@@ -24,16 +30,21 @@ def _generate_gradient_sparsity_wrapper(func, idx, shape, sparsity_func):
         for i in range(nnz):
             # filter for just the dimension we need
             if sparsity[i][0] == idx:
-                result[sparsity[i][1]] = sparse_values[i]
+                result[sparsity[i][1]] = sign * sparse_values[i]
 
         return result
 
     return wrapper
 
 
-def _generate_hessian_sparsity_wrapper(func, idx, shape, sparsity_func):
+def _generate_hessian_sparsity_wrapper(
+    func, idx, shape, sparsity_func, invert_sign=False
+):
 
     sparsity = sparsity_func()[idx]
+    sign = 1
+    if invert_sign:
+        sign = -1
 
     def wrapper(*args, **kwargs):
         sparse_values = func(*args, **kwargs)[idx]
@@ -48,7 +59,7 @@ def _generate_hessian_sparsity_wrapper(func, idx, shape, sparsity_func):
 
         result = numpy.zeros(shape)
         for i in range(nnz):
-            result[sparsity[i][0]][sparsity[i][1]] = sparse_values[i]
+            result[sparsity[i][0]][sparsity[i][1]] = sign * sparse_values[i]
 
         return result
 
@@ -86,6 +97,7 @@ class _fitness_cache:
     def generate_neq_constraint(self, i):
         def neqFunc(*args, **kwargs):
             self.update_cache(*args, **kwargs)
+            # In pagmo, inequality constraints have to be negative, in scipy they have to be non-negative.
             return -self.result[self.problem.get_nobj() + self.problem.get_nec() + i]
 
         return neqFunc
@@ -194,6 +206,15 @@ class scipy:
                         "type": "eq",
                         "fun": fitness_wrapper.generate_eq_constraint(i),
                     }
+
+                    if problem.has_gradient():
+                        constraint["jac"] = _generate_gradient_sparsity_wrapper(
+                            problem.gradient,
+                            problem.get_nobj() + i,
+                            dim,
+                            problem.gradient_sparsity,
+                        )
+
                     constraints.append(constraint)
 
                 for i in range(problem.get_nic()):
@@ -201,18 +222,62 @@ class scipy:
                         "type": "ineq",
                         "fun": fitness_wrapper.generate_neq_constraint(i),
                     }
+
+                    if problem.has_gradient():
+                        constraint["jac"] = _generate_gradient_sparsity_wrapper(
+                            problem.gradient,
+                            problem.get_nobj() + problem.get_nec() + i,
+                            dim,
+                            problem.gradient_sparsity,
+                            invert_sign=True,
+                        )
+
                     constraints.append(constraint)
             else:
-                for i in range(problem.get_nec()):
-                    constraint = NonlinearConstraint(
-                        fitness_wrapper.generate_eq_constraint(i), 0, 0
+                if not self.method == "trust-constr":
+                    raise ValueError(
+                        "Unexpected method with constraints: " + self.method
                     )
-                    constraints.append(constraint)
 
-                for i in range(problem.get_nic()):
-                    constraint = NonlinearConstraint(
-                        fitness_wrapper.generate_neq_constraint(i), 0, float("inf")
+                if problem.has_hessians():
+                    warnings.warn(
+                        "Problem "
+                        + problem.get_name()
+                        + " has constraints and hessians, but trust-constr requires the callable to also accept lagrange multipliers. Thus, hessians of constraints are ignored."
                     )
+
+                for i in range(problem.get_nc()):
+                    func = None
+                    ub = 0
+                    invert_sign = i >= problem.get_nec()
+
+                    if i < problem.get_nec():
+                        # Equality constraint
+                        func = fitness_wrapper.generate_eq_constraint(i)
+                        ub = 0
+                    else:
+                        # Inequality constraint, have to negate the sign
+                        func = fitness_wrapper.generate_neq_constraint(
+                            i - problem.get_nec()
+                        )
+                        ub = float("inf")
+
+                    conGrad = None
+                    if problem.has_gradient():
+                        conGrad = _generate_gradient_sparsity_wrapper(
+                            problem.gradient,
+                            problem.get_nobj() + i,
+                            dim,
+                            problem.gradient_sparsity,
+                            invert_sign=invert_sign,
+                        )
+
+                    # Constructing the actual constraint objects. All constraints in pygmo are treated as nonlinear.
+                    if problem.has_gradient():
+                        constraint = NonlinearConstraint(func, 0, ub, jac=conGrad)
+                    else:
+                        constraint = NonlinearConstraint(func, 0, 0)
+
                     constraints.append(constraint)
 
             result = minimize(
