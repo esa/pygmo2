@@ -18,7 +18,24 @@ class scipy:
     This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
 
     Construction arguments are those options of scipy.optimize.minimize that are not problem-specific. 
-    The problem-specific ones, for example the bounds, constraints and the existence of a gradient and hessian, are deduced from the problem in the population given to evolve.
+    The problem-specific ones, for example the bounds, constraints and the existence of a gradient and hessian,
+     are deduced from the problem in the population given to evolve.
+
+    Example:
+
+    >>> import pygmo as pg
+    >>> prob = pg.problem(pg.rosenbrock(10))
+    >>> pop = pg.population(prob=prob, size=1, seed=0)
+    >>> pop.champion_f[0]
+    929975.7994682974
+    >>> scp = pg.algorithm(pg.scipy(method="L-BFGS-B"))
+    >>> result = scp.evolve(pop).champion_f
+    >>> result[0]
+    1.1377074469794883e-11
+    >>> pop.problem.get_fevals()
+    55
+    >>> pop.problem.get_gevals()
+    54
     """
 
     try:
@@ -338,7 +355,7 @@ class scipy:
             fitness_wrapper = scipy._fitness_cache(problem)
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
-                # COBYLYA and SLSQP 
+                # COBYLYA and SLSQP
                 for i in range(problem.get_nec()):
                     constraint = {
                         "type": "eq",
