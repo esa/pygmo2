@@ -13,157 +13,164 @@ import numpy
 from scipy.optimize import NonlinearConstraint, minimize
 
 
-def _generate_gradient_sparsity_wrapper(
-    func, idx, shape, sparsity_func, invert_sign=False
-):
-    """
-    A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
-
-    Pygmo convention is to include problem constraints into its fitness function. The same applies to the gradient.
-    The scipy.optimize.minimize function expects a separate callable for each constraint, this function creates a wrapper that extracts a requested dimension.
-    It also transforms the sparse gradient into a dense representation.
-
-    Args:
-
-        func: the gradient callable
-        idx: the requested dimension.
-        shape: the shape of the result as interpreted by numpy. Should be (dim) for a problem of input dimension dim.
-        sparsity_func: a callable giving the sparsity pattern. Use problem.gradient_sparsity.
-        invert_sign: whether all values of the gradient should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
-
-    Returns:
-
-        a callable that passes all arguments to the gradient callable func and returns the dense gradient at dimension idx
-
-    Raises:
-
-        unspecified: any exception thrown by sparsity_func
-
-
-    """
-    sparsity = sparsity_func()
-    sign = 1
-    if invert_sign:
-        sign = -1
-
-    def wrapper(*args, **kwargs):
-        """
-        Calls the gradient callable and returns dense representation along a fixed dimension
-        
-        Args:
-
-            args: arguments for callable
-            kwargs: keyword arguments for callable
-
-        Returns:
-
-            dense representation of gradient
-
-        Raises:
-
-            ValueError: If number of non-zeros in gradient and sparsity pattern disagree
-            unspecified: any exception thrown by wrapped callable
-
-        """
-        sparse_values = func(*args, **kwargs)
-        nnz = len(sparse_values)
-        if nnz != len(sparsity):
-            raise ValueError(
-                "Sparse gradient has "
-                + str(nnz)
-                + " non-zeros, but sparsity pattern has "
-                + str(len(sparsity))
-            )
-
-        result = numpy.zeros(shape)
-        for i in range(nnz):
-            # filter for just the dimension we need
-            if sparsity[i][0] == idx:
-                result[sparsity[i][1]] = sign * sparse_values[i]
-
-        return result
-
-    return wrapper
-
-
-def _generate_hessian_sparsity_wrapper(
-    func, idx, shape, sparsity_func, invert_sign=False
-):
-    """
-    A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
-
-    Pygmo convention is to include problem constraints into its fitness function. The same applies to the hessian
-    The scipy.optimize.minimize function expects separate callables for the fitness function and each constraint.
-    This function creates a wrapper that extracts a requested dimension and also transforms the sparse hessian into a dense representation.
-
-    Keyword args:
-
-        func: the hessian callable
-        idx: the requested dimension.
-        shape: the shape of the result as interpreted by numpy. Should be (dim,dim) for a problem of input dimension dim.
-        sparsity_func: a callable giving the sparsity pattern. Use problem.hessians_sparsity.
-        invert_sign: whether all values of the hessian should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
-
-    Returns:
-
-        a callable that passes all arguments to the hessian callable func and returns the dense hessian at dimension idx
-
-    Raises:
-
-        unspecified: any exception thrown by sparsity_func
-
-
-    """
-    sparsity = sparsity_func()[idx]
-    sign = 1
-    if invert_sign:
-        sign = -1
-
-    def wrapper(*args, **kwargs):
-        """
-        Calls the hessian callable and returns dense representation along a fixed dimension
-        
-        Args:
-
-            args: arguments for callable
-            kwargs: keyword arguments for callable
-
-        Returns:
-
-            dense representation of hessian
-
-        Raises:
-
-            ValueError: If number of non-zeros in hessian and sparsity pattern disagree
-            unspecified: any exception thrown by wrapped callable
-
-        """
-        sparse_values = func(*args, **kwargs)[idx]
-        nnz = len(sparse_values)
-        if nnz != len(sparsity):
-            raise ValueError(
-                "Sparse hessian has "
-                + str(nnz)
-                + " non-zeros, but sparsity pattern has "
-                + str(len(sparsity))
-            )
-
-        result = numpy.zeros(shape)
-        for i in range(nnz):
-            result[sparsity[i][0]][sparsity[i][1]] = sign * sparse_values[i]
-
-        return result
-
-    return wrapper
-
-
 class scipy:
     """
     This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
 
     Construction arguments are those options of scipy.optimize.minimize that are not problem-specific. 
-    The problem-specific ones, for example the bounds, constraints and the existence of a gradient and hessian, are deduced when calling evolve.
+    The problem-specific ones, for example the bounds, constraints and the existence of a gradient and hessian, are deduced from the problem in the population given to evolve.
     """
+
+    try:
+        from scipy.optimize import minimize
+
+    except ImportError as e:
+        raise ImportError(
+            "from scipy.optimize import minimize raised an exception, please make sure scipy is installed and reachable. Error: "
+            + str(e)
+        )
+
+    def _generate_gradient_sparsity_wrapper(
+        func, idx, shape, sparsity_func, invert_sign=False
+    ):
+        """
+        A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
+
+        Pygmo convention is to include problem constraints into its fitness function. The same applies to the gradient.
+        The scipy.optimize.minimize function expects a separate callable for each constraint, this function creates a wrapper that extracts a requested dimension.
+        It also transforms the sparse gradient into a dense representation.
+
+        Args:
+
+            func: the gradient callable
+            idx: the requested dimension.
+            shape: the shape of the result as interpreted by numpy. Should be (dim) for a problem of input dimension dim.
+            sparsity_func: a callable giving the sparsity pattern. Use problem.gradient_sparsity.
+            invert_sign: whether all values of the gradient should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
+
+        Returns:
+
+            a callable that passes all arguments to the gradient callable func and returns the dense gradient at dimension idx
+
+        Raises:
+
+            unspecified: any exception thrown by sparsity_func
+
+
+        """
+        sparsity = sparsity_func()
+        sign = 1
+        if invert_sign:
+            sign = -1
+
+        def wrapper(*args, **kwargs):
+            """
+            Calls the gradient callable and returns dense representation along a fixed dimension
+            
+            Args:
+
+                args: arguments for callable
+                kwargs: keyword arguments for callable
+
+            Returns:
+
+                dense representation of gradient
+
+            Raises:
+
+                ValueError: If number of non-zeros in gradient and sparsity pattern disagree
+                unspecified: any exception thrown by wrapped callable
+
+            """
+            sparse_values = func(*args, **kwargs)
+            nnz = len(sparse_values)
+            if nnz != len(sparsity):
+                raise ValueError(
+                    "Sparse gradient has "
+                    + str(nnz)
+                    + " non-zeros, but sparsity pattern has "
+                    + str(len(sparsity))
+                )
+
+            result = numpy.zeros(shape)
+            for i in range(nnz):
+                # filter for just the dimension we need
+                if sparsity[i][0] == idx:
+                    result[sparsity[i][1]] = sign * sparse_values[i]
+
+            return result
+
+        return wrapper
+
+    def _generate_hessian_sparsity_wrapper(
+        func, idx, shape, sparsity_func, invert_sign=False
+    ):
+        """
+        A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
+
+        Pygmo convention is to include problem constraints into its fitness function. The same applies to the hessian
+        The scipy.optimize.minimize function expects separate callables for the fitness function and each constraint.
+        This function creates a wrapper that extracts a requested dimension and also transforms the sparse hessian into a dense representation.
+
+        Keyword args:
+
+            func: the hessian callable
+            idx: the requested dimension.
+            shape: the shape of the result as interpreted by numpy. Should be (dim,dim) for a problem of input dimension dim.
+            sparsity_func: a callable giving the sparsity pattern. Use problem.hessians_sparsity.
+            invert_sign: whether all values of the hessian should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
+
+        Returns:
+
+            a callable that passes all arguments to the hessian callable func and returns the dense hessian at dimension idx
+
+        Raises:
+
+            unspecified: any exception thrown by sparsity_func
+
+
+        """
+        sparsity = sparsity_func()[idx]
+        sign = 1
+        if invert_sign:
+            sign = -1
+
+        def wrapper(*args, **kwargs):
+            """
+            Calls the hessian callable and returns dense representation along a fixed dimension
+            
+            Args:
+
+                args: arguments for callable
+                kwargs: keyword arguments for callable
+
+            Returns:
+
+                dense representation of hessian
+
+            Raises:
+
+                ValueError: If number of non-zeros in hessian and sparsity pattern disagree
+                unspecified: any exception thrown by wrapped callable
+
+            """
+            sparse_values = func(*args, **kwargs)[idx]
+            nnz = len(sparse_values)
+            if nnz != len(sparsity):
+                raise ValueError(
+                    "Sparse hessian has "
+                    + str(nnz)
+                    + " non-zeros, but sparsity pattern has "
+                    + str(len(sparsity))
+                )
+
+            result = numpy.zeros(shape)
+            for i in range(nnz):
+                result[sparsity[i][0]][sparsity[i][1]] = sign * sparse_values[i]
+
+            return result
+
+        return wrapper
 
     class _fitness_cache:
         """
@@ -267,11 +274,11 @@ class scipy:
 
         Args:
 
-            population: The population containing the problem and a set of initial solutions
+            population: The population containing the problem and a set of initial solutions.
 
         Returns:
 
-            The changed population
+            The changed population.
 
         Raises:
 
@@ -316,12 +323,12 @@ class scipy:
         jac = None
         hess = None
         if problem.has_gradient():
-            jac = _generate_gradient_sparsity_wrapper(
+            jac = scipy._generate_gradient_sparsity_wrapper(
                 problem.gradient, 0, dim, problem.gradient_sparsity
             )
 
         if problem.has_hessians():
-            hess = _generate_hessian_sparsity_wrapper(
+            hess = scipy._generate_hessian_sparsity_wrapper(
                 problem.hessians, 0, (dim, dim), problem.hessians_sparsity
             )
 
@@ -331,6 +338,7 @@ class scipy:
             fitness_wrapper = scipy._fitness_cache(problem)
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
+                # COBYLYA and SLSQP 
                 for i in range(problem.get_nec()):
                     constraint = {
                         "type": "eq",
@@ -338,7 +346,7 @@ class scipy:
                     }
 
                     if problem.has_gradient():
-                        constraint["jac"] = _generate_gradient_sparsity_wrapper(
+                        constraint["jac"] = scipy._generate_gradient_sparsity_wrapper(
                             problem.gradient,
                             problem.get_nobj() + i,
                             dim,
@@ -354,7 +362,7 @@ class scipy:
                     }
 
                     if problem.has_gradient():
-                        constraint["jac"] = _generate_gradient_sparsity_wrapper(
+                        constraint["jac"] = scipy._generate_gradient_sparsity_wrapper(
                             problem.gradient,
                             problem.get_nobj() + problem.get_nec() + i,
                             dim,
@@ -364,6 +372,7 @@ class scipy:
 
                     constraints.append(constraint)
             else:
+                # this should be method trust-constr
                 if not self.method == "trust-constr":
                     raise ValueError(
                         "Unexpected method with constraints: " + self.method
@@ -394,7 +403,7 @@ class scipy:
 
                     conGrad = None
                     if problem.has_gradient():
-                        conGrad = _generate_gradient_sparsity_wrapper(
+                        conGrad = scipy._generate_gradient_sparsity_wrapper(
                             problem.gradient,
                             problem.get_nobj() + i,
                             dim,
@@ -424,6 +433,7 @@ class scipy:
                 options=self.options,
             )
         else:
+            # Case without constraints
             result = minimize(
                 problem.fitness,
                 population.get_x()[idx],
@@ -469,7 +479,7 @@ class scipy:
 
         Raises:
 
-            ValueError: If options dict was given in instance constructor and has conflicting options
+            ValueError: If options dict was given in instance constructor and has options conflicting with verbosity level
 
         """
         if level > 0:
