@@ -438,8 +438,11 @@ class algorithm_test_case(_ut.TestCase):
             scipy,
         )
 
+        # testing invalid method
+        self.assertRaises(ValueError, lambda: scipy(method="foo"))
+
         # simple test with ackley, a problem without gradients or constraints
-        methods = ["L-BFGS-B", "TNC", "SLSQP"]
+        methods = ["L-BFGS-B", "TNC", "SLSQP", None]
         prob = problem(ackley(10))
         pop = population(prob=prob, size=1, seed=0)
         init = pop.champion_f
@@ -452,7 +455,7 @@ class algorithm_test_case(_ut.TestCase):
             self.assertTrue(popc.problem.get_fevals() > 1)
 
         # simple test with rosenbrock, a problem with a gradient
-        methods = ["L-BFGS-B", "TNC", "SLSQP", "trust-constr"]
+        methods = ["L-BFGS-B", "TNC", "SLSQP", "trust-constr", None]
         prob = problem(rosenbrock(10))
         pop = population(prob=prob, size=1, seed=0)
         init = pop.champion_f
@@ -466,7 +469,7 @@ class algorithm_test_case(_ut.TestCase):
             self.assertTrue(popc.problem.get_gevals() > 1)
 
         # testing Hessian and Hessian sparsity
-        methods = ["trust-constr", "trust-exact", "trust-krylov"]
+        methods = ["trust-constr", "trust-exact", "trust-krylov", None]
         problems = [problem(rastrigin(10)), problem(minlp_rastrigin(10))]
 
         for inst in problems:
@@ -480,10 +483,11 @@ class algorithm_test_case(_ut.TestCase):
                 self.assertTrue(result[0] <= init[0])
                 self.assertTrue(popc.problem.get_fevals() > 1)
                 self.assertTrue(popc.problem.get_gevals() > 0)
-                self.assertTrue(popc.problem.get_hevals() > 0)
+                if m is not None:
+                    self.assertTrue(popc.problem.get_hevals() > 0)
 
         # testing constraints without Hessians
-        methods = ["SLSQP", "trust-constr"]
+        methods = ["SLSQP", "trust-constr", None]
         raw_probs = [luksan_vlcek1(10), golomb_ruler(2, 10)]
         instances = [problem(prob) for prob in raw_probs]
 
@@ -501,21 +505,24 @@ class algorithm_test_case(_ut.TestCase):
                 # TODO: test that result fulfills constraints
 
         # testing constraints with gradients and Hessians
-        method = "trust-constr"
+        methods = ["trust-constr", None]
         prob = problem(hock_schittkowsky_71())
         pop = population(prob=prob, size=1, seed=0)
         init = pop.champion_f
 
-        popc = pop.__copy__()
-        scp = algorithm(scipy(method=method))
-        result = scp.evolve(popc).champion_f
-        self.assertTrue(result[0] <= init[0])
-        self.assertTrue(popc.problem.get_fevals() > 1)
-        self.assertTrue(popc.problem.get_gevals() > 0)
-        self.assertTrue(popc.problem.get_hevals() > 0)
+        for m in methods:
+            popc = pop.__copy__()
+            scp = algorithm(scipy(method=m))
+            result = scp.evolve(popc).champion_f
+            self.assertTrue(result[0] <= init[0])
+            self.assertTrue(popc.problem.get_fevals() > 1)
+            self.assertTrue(popc.problem.get_gevals() > 0)
+            if m is not None:
+                self.assertTrue(popc.problem.get_hevals() > 0)
 
         # testing verbosity
-        method_list = ["Nelder-Mead","Powell","CG","BFGS","Newton-CG","L-BFGS-B","TNC","COBYLA","SLSQP","trust-constr","dogleg","trust-ncg","trust-exact","trust-krylov"]
+        method_list = ["Nelder-Mead","Powell","CG","BFGS","Newton-CG","L-BFGS-B","TNC","COBYLA","SLSQP","trust-constr","dogleg","trust-ncg","trust-exact","trust-krylov",None]
         for m in methods:
             scp = algorithm(scipy(method=m))
             scp.set_verbosity(1)
+            scp.get_name()
