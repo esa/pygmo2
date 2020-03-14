@@ -223,8 +223,14 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
 
 py::object bgl_graph_t_to_networkx(const pagmo::bgl_graph_t &g)
 {
+    // Init the retval.
     auto dg = py::module::import("networkx").attr("DiGraph")();
 
+    // Add the list of nodes.
+    dg.attr("add_nodes_from")(py::module::import("builtins").attr("range")(boost::num_vertices(g)));
+
+    // Create the edge list.
+    py::list edge_list;
     for (auto vs = boost::vertices(g); vs.first != vs.second; ++vs.first) {
         // Get the list of outgoing edges from the current vertex.
         const auto erange = boost::out_edges(*vs.first, g);
@@ -241,21 +247,21 @@ py::object bgl_graph_t_to_networkx(const pagmo::bgl_graph_t &g)
         auto z_begin
             = boost::make_zip_iterator(boost::make_tuple(boost::make_transform_iterator(erange.first, target_getter),
                                                          boost::make_transform_iterator(erange.first, weight_getter)));
-        auto z_end
+        const auto z_end
             = boost::make_zip_iterator(boost::make_tuple(boost::make_transform_iterator(erange.second, target_getter),
                                                          boost::make_transform_iterator(erange.second, weight_getter)));
 
-        py::list tmp_list;
         for (; z_begin != z_end; ++z_begin) {
             // Add to the list a tuple containing:
             // - the index of the current node,
             // - the index of the node it connects to,
             // - the weight of the connection.
-            tmp_list.append(py::make_tuple(*vs.first, boost::get<0>(*z_begin), boost::get<1>(*z_begin)));
+            edge_list.append(py::make_tuple(*vs.first, boost::get<0>(*z_begin), boost::get<1>(*z_begin)));
         }
-
-        dg.attr("add_weighted_edges_from")(tmp_list);
     }
+
+    // Add the edges.
+    dg.attr("add_weighted_edges_from")(edge_list);
 
     return dg;
 }
@@ -272,6 +278,14 @@ pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
     }
 
     pagmo::bgl_graph_t ret;
+
+    // Add the vertices.
+    const auto n_vertices = boost::numeric_cast<pagmo::bgl_graph_t::vertices_size_type>(py::len(g));
+    for (pagmo::bgl_graph_t::vertices_size_type i = 0; i < n_vertices; ++i) {
+        boost::add_vertex(ret);
+    }
+
+    // Add the edges.
     for (const auto &t : g.attr("edges").attr("data")()) {
         auto tup = t.cast<py::tuple>();
 
@@ -280,7 +294,7 @@ pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
                 PyExc_ValueError,
                 ("while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge consisting of a tuple of "
                  + std::to_string(py::len(tup))
-                 + " elements was encountered, but an edge consisting of 3 elements is needed instead (source node, "
+                 + " elements was encountered, but a tuple of 3 elements is needed instead (source node, "
                    "destination node, edge weight)")
                     .c_str());
         }
