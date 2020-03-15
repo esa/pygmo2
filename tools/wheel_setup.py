@@ -24,7 +24,7 @@ CLASSIFIERS = [
     'Topic :: Scientific/Engineering',
     'Topic :: Scientific/Engineering :: Mathematics',
     'Topic :: Scientific/Engineering :: Physics',
-    'License :: OSI Approved :: Mozilla Public License 2.0 (MPL-2.0)',
+    'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
     'Programming Language :: Python :: 3'
 ]
 KEYWORDS = 'science math physics optimization ai evolutionary-computing parallel-computing metaheuristics'
