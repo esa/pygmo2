@@ -189,46 +189,20 @@ class scipy:
 
         return wrapper
 
-    class _fitness_cache:
-        """
-        Cache to avoid multiple evaluations of the fitness functions for the same parameters.
-        This is necessary since pygmo.problem evaluates all constraints with the fitness function,
-        but scipy expects a different callable for each constraint.
-        """
+    def _generate_eq_constraint(problem, i):
+        def eqFunc(*args, **kwargs):
+            return problem.fitness(*args, **kwargs)[problem.get_nobj() + i]
 
-        def __init__(self, problem):
-            self.problem = problem
-            self.args = None
-            self.kwargs = None
-            self.result = None
+        return eqFunc
 
-        def update_cache_if_necessary(self, *args, **kwargs):
-            if True or not (self.args == args and self.kwargs == kwargs):  # TODO: fix!
-                # Updating fitness
-                self.args = args
-                self.kwargs = kwargs
-                self.result = self.problem.fitness(*args, **kwargs)
+    def _generate_neq_constraint(problem, i):
+        def neqFunc(*args, **kwargs):
+            # In pagmo, inequality constraints have to be negative, in scipy they have to be non-negative.
+            return -problem.fitness(*args, **kwargs)[
+                problem.get_nobj() + problem.get_nec() + i
+            ]
 
-        def fitness(self, *args, **kwargs):
-            self.update_cache_if_necessary(*args, **kwargs)
-            return self.result[: self.problem.get_nobj()]
-
-        def generate_eq_constraint(self, i):
-            def eqFunc(*args, **kwargs):
-                self.update_cache_if_necessary(*args, **kwargs)
-                return self.result[self.problem.get_nobj() + i]
-
-            return eqFunc
-
-        def generate_neq_constraint(self, i):
-            def neqFunc(*args, **kwargs):
-                self.update_cache_if_necessary(*args, **kwargs)
-                # In pagmo, inequality constraints have to be negative, in scipy they have to be non-negative.
-                return -self.result[
-                    self.problem.get_nobj() + self.problem.get_nec() + i
-                ]
-
-            return neqFunc
+        return neqFunc
 
     def __init__(
         self,
@@ -351,15 +325,13 @@ class scipy:
 
         idx = random.randint(0, len(population) - 1)
         if problem.get_nc() > 0:
-            # Need to handle constraints, put them in a wrapper to avoid multiple fitness evaluations.
-            fitness_wrapper = scipy._fitness_cache(problem)
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
                 # COBYLYA and SLSQP
                 for i in range(problem.get_nec()):
                     constraint = {
                         "type": "eq",
-                        "fun": fitness_wrapper.generate_eq_constraint(i),
+                        "fun": scipy._generate_eq_constraint(problem, i),
                     }
 
                     if problem.has_gradient():
@@ -375,7 +347,7 @@ class scipy:
                 for i in range(problem.get_nic()):
                     constraint = {
                         "type": "ineq",
-                        "fun": fitness_wrapper.generate_neq_constraint(i),
+                        "fun": scipy._generate_neq_constraint(problem, i),
                     }
 
                     if problem.has_gradient():
@@ -409,12 +381,12 @@ class scipy:
 
                     if i < problem.get_nec():
                         # Equality constraint
-                        func = fitness_wrapper.generate_eq_constraint(i)
+                        func = scipy._generate_eq_constraint(problem, i)
                         ub = 0
                     else:
                         # Inequality constraint, have to negate the sign
-                        func = fitness_wrapper.generate_neq_constraint(
-                            i - problem.get_nec()
+                        func = scipy._generate_neq_constraint(
+                            problem, i - problem.get_nec()
                         )
                         ub = float("inf")
 
@@ -437,7 +409,9 @@ class scipy:
                     constraints.append(constraint)
 
             result = minimize(
-                fitness_wrapper.fitness,
+                lambda *args, **kwargs: problem.fitness(*args, **kwargs)[
+                    : problem.get_nobj()
+                ],
                 population.get_x()[idx],
                 args=self.args,
                 method=self.method,
