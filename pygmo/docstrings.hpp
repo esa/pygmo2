@@ -300,6 +300,7 @@ std::string ring_get_weight_docstring();
 std::string fully_connected_docstring();
 std::string fully_connected_get_weight_docstring();
 std::string fully_connected_num_vertices_docstring();
+std::string free_form_docstring();
 
 // r_policy.
 std::string r_policy_docstring();

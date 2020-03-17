@@ -295,7 +295,7 @@ pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
                 ("while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge consisting of a tuple of "
                  + std::to_string(py::len(tup))
                  + " elements was encountered, but a tuple of 3 elements is needed instead (source node, "
-                   "destination node, edge weight)")
+                   "destination node, edge attributes)")
                     .c_str());
         }
 
@@ -303,7 +303,7 @@ pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
 
         if (!py::cast<bool>(d.attr("__contains__")("weight"))) {
             py_throw(PyExc_ValueError, "while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge "
-                                       "without a 'weight' property was encountered");
+                                       "without a 'weight' attribute was encountered");
         }
 
         const auto result

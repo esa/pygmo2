@@ -6463,6 +6463,8 @@ Additional optional methods can be implemented in a UDT:
      ...
    def get_extra_info(self):
      ...
+   def to_networkx(self):
+     ...
 
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDT are used by :class:`~pygmo.topology`.
@@ -6580,16 +6582,27 @@ std::string topology_to_networkx_docstring()
 {
     return R"(to_networkx()
 
-Topology's extra info.
+.. versionadded:: 2.15
 
-If the UDT provides a ``get_extra_info()`` method, then this method will return the output of its ``get_extra_info()``
-method. Otherwise, an empty string will be returned.
+Conversion to NetworkX.
+
+If the UDT provides a ``to_networkx()`` method, then this method will invoke it and return
+its output. Otherwise, an error will be raised.
+
+This method is meant to export a representation of the current state of the topology
+as a NetworkX graph object. The returned object must be a :class:`networkx.DiGraph`
+in which the edges have a ``weight`` attribute represented as a floating-point value.
+Note that this method will strip away all node attributes and edge attributes other
+than ``weight`` from the graph returned by the UDT.
 
 Returns:
-  str: extra info about the UDT
+  networkx.DiGraph: a graph representation of the UDT
 
 Raises:
-  unspecified: any exception thrown by the ``get_extra_info()`` method of the UDT
+  NotImplementedError: if the UDT does not provide a ``to_networkx()`` method
+  TypeError: if the object returned by the UDT is not a :class:`networkx.DiGraph`
+  ValueError: if the edges of the returned graph do not all have a ``weight`` attribute
+  unspecified: any exception thrown by the ``to_networkx()`` method of the UDT
 
 )";
 }
@@ -6794,6 +6807,40 @@ std::string fully_connected_get_weight_docstring()
 std::string fully_connected_num_vertices_docstring()
 {
     return base_bgl_num_vertices_docstring();
+}
+
+std::string free_form_docstring()
+{
+    return R"(Free-form topology.
+
+This user-defined topology (UDT) represents a graph in which
+vertices and edges can be manipulated freely. Instances
+of this class can be constructed from either:
+
+* a :class:`~pygmo.topology`,
+* another UDT,
+* a :class:`networkx.DiGraph`,
+* :data:`None`.
+
+Construction from :data:`None` will initialise a topology
+without vertices or edges.
+
+Construction from a :class:`networkx.DiGraph` will initialise
+a topology whose vertices and edges are described by the
+input graph. All the edges of the input graph must have
+a :class:`float` attribute called ``weight`` whose value
+is in the :math:`\left[0 , 1\right]` range.
+
+When *t* is a :class:`~pygmo.topology` or a UDT,
+the constructor will attempt to fetch the NetworkX
+representation of the input object via the
+:func:`pygmo.topology.to_networkx()` method, and will then
+proceed in the same manner explained in the previous
+paragraph.
+
+See also the docs of the C++ class :cpp:class:`pagmo::free_form`.
+
+)";
 }
 
 std::string r_policy_docstring()

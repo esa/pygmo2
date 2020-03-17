@@ -628,6 +628,67 @@ class ring_test_case(_ut.TestCase):
         self.assertEqual(topo.get_name(), "Ring")
 
 
+class free_form_test_case(_ut.TestCase):
+    """Test case for the free_form UDT
+
+    """
+
+    def runTest(self):
+        from .core import free_form, topology
+
+        # Default ctor.
+        udt = free_form()
+        self.assertEqual(udt.num_vertices(), 0)
+        udt = free_form(t=None)
+        self.assertEqual(udt.num_vertices(), 0)
+
+        # A few misc tests for the BGL API,
+        # which is also tested in ring.
+        udt.add_vertex()
+        udt.add_vertex()
+        udt.add_vertex()
+        self.assertEqual(udt.num_vertices(), 3)
+        self.assertFalse(udt.are_adjacent(0, 1))
+        self.assertFalse(udt.are_adjacent(1, 2))
+        udt.add_edge(0, 1)
+        self.assertTrue(udt.are_adjacent(0, 1))
+
+        topo = topology(udt=udt)
+        topo.push_back()
+        self.assertTrue(len(topo.get_connections(0)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(0)[1]) == 0)
+        self.assertTrue(topo.get_connections(1)[0] == [0])
+        self.assertTrue(topo.get_connections(1)[1] == [1.])
+        self.assertTrue(len(topo.get_connections(2)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(2)[1]) == 0)
+        self.assertTrue(len(topo.get_connections(3)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(3)[1]) == 0)
+        self.assertEqual(topo.get_name(), "Free form")
+
+        try:
+            import networkx as nx
+        except ImportError:
+            return
+
+        # Constructor from a valid DiGraph.
+        g = nx.DiGraph()
+        udt = free_form(g)
+        self.assertEqual(udt.num_vertices(), 0)
+        g.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+        udt = free_form(g)
+        self.assertEqual(udt.num_vertices(), 3)
+        self.assertTrue(udt.are_adjacent(0, 1))
+        self.assertTrue(udt.are_adjacent(1, 2))
+        self.assertFalse(udt.are_adjacent(1, 0))
+        self.assertFalse(udt.are_adjacent(2, 0))
+        self.assertEqual(len(topo.get_connections(0)[0]), 0)
+        self.assertEqual(len(topo.get_connections(0)[1]), 0)
+        self.assertEqual(topology(udt=udt).get_connections(1)[0], [0])
+        self.assertEqual(topology(udt=udt).get_connections(1)[1], [.5])
+        self.assertEqual(topology(udt=udt).get_connections(2)[0], [1])
+        self.assertEqual(topology(udt=udt).get_connections(2)[1], [1.])
+
+
 class fully_connected_test_case(_ut.TestCase):
     """Test case for the fully_connected UDT
 
@@ -2728,6 +2789,7 @@ def run_test_suite(level=0):
     suite.addTest(select_best_test_case())
     suite.addTest(unconnected_test_case())
     suite.addTest(ring_test_case())
+    suite.addTest(free_form_test_case())
     suite.addTest(fully_connected_test_case())
     suite.addTest(thread_island_torture_test_case())
     suite.addTest(_problem_test.problem_test_case())
