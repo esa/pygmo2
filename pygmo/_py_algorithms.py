@@ -48,7 +48,14 @@ class scipy:
             + str(e)
         )
 
-    @jit(nopython=True)
+    def _maybe_jit(func):
+        try:
+            from numba import jit
+            return jit(nopython=True)(func)
+        except ModuleNotFoundError:
+            return func
+
+    @_maybe_jit
     def _unpack_sparse_gradient(
         sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
     ):
@@ -66,7 +73,7 @@ class scipy:
         return result
 
 
-    @jit(nopython=True)
+    @_maybe_jit
     def _unpack_sparse_hessian(
         sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
     ):
