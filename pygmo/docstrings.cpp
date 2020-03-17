@@ -6466,6 +6466,11 @@ Additional optional methods can be implemented in a UDT:
    def to_networkx(self):
      ...
 
+.. note::
+
+   The ``to_networkx()`` method is available only if pygmo was compiled
+   with pagmo 2.15.0 or later.
+
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDT are used by :class:`~pygmo.topology`.
 

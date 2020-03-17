@@ -11,6 +11,7 @@ from ._check_deps import *
 from ._version import __version__
 # We import the sub-modules into the root namespace
 from .core import *
+from .core import _pagmo_version_major, _pagmo_version_minor, _pagmo_version_patch
 from .plotting import *
 from ._py_islands import *
 from ._py_problems import *
@@ -649,39 +650,38 @@ def _archi_set_topology(self, t):
 setattr(archipelago, "set_topology", _archi_set_topology)
 
 
-# Override of the free_form constructor.
-__original_free_form_init = free_form.__init__
+if _pagmo_version_major > 2 or (_pagmo_version_major == 2 and _pagmo_version_minor >= 15):
+    # Override of the free_form constructor.
+    __original_free_form_init = free_form.__init__
 
+    def _free_form_init(self, t=None):
+        """
+        Args:
+            t: the object that will be used for construction
 
-def _free_form_init(self, t=None):
-    """
-    Args:
-        t: the object that will be used for construction
+        Raises:
+            ValueError: if the edges of the input :class:`networkx.DiGraph`
+              do not all have a ``weight`` attribute, or if any edge weight
+              is outside the :math:`\\left[ 0, 1 \\right]` range
+            unspecified: any exception thrown by :func:`pygmo.topology.to_networkx()`, or by
+              the construction of a :class:`~pygmo.topology` from a UDT
 
-    Raises:
-        ValueError: if the edges of the input :class:`networkx.DiGraph`
-          do not all have a ``weight`` attribute, or if any edge weight
-          is outside the :math:`\\left[ 0, 1 \\right]` range
-        unspecified: any exception thrown by :func:`pygmo.topology.to_networkx()`, or by
-          the construction of a :class:`~pygmo.topology` from a UDT
+        """
+        import networkx as nx
 
-    """
-    import networkx as nx
+        if t is None:
+            # Default ctor.
+            __original_free_form_init(self)
+        elif type(t) == topology or isinstance(t, nx.DiGraph):
+            # Ctors from topology or DiGraph are exposed
+            # directly.
+            __original_free_form_init(self, t)
+        else:
+            # If t is neither a topology, nor a DiGraph,
+            # assume that it is a UDT.
+            __original_free_form_init(self, topology(t))
 
-    if t is None:
-        # Default ctor.
-        __original_free_form_init(self)
-    elif type(t) == topology or isinstance(t, nx.DiGraph):
-        # Ctors from topology or DiGraph are exposed
-        # directly.
-        __original_free_form_init(self, t)
-    else:
-        # If t is neither a topology, nor a DiGraph,
-        # assume that it is a UDT.
-        __original_free_form_init(self, topology(t))
-
-
-setattr(free_form, "__init__", _free_form_init)
+    setattr(free_form, "__init__", _free_form_init)
 
 
 def set_serialization_backend(name):
