@@ -11,7 +11,7 @@ import warnings
 
 import numpy
 from scipy.optimize import NonlinearConstraint, minimize
-
+from numba import jit
 
 class scipy:
     """
@@ -80,6 +80,7 @@ class scipy:
         if invert_sign:
             sign = -1
 
+        @jit(nopython=True)
         def wrapper(*args, **kwargs):
             """
             Calls the gradient callable and returns dense representation along a fixed dimension
@@ -152,6 +153,7 @@ class scipy:
         if invert_sign:
             sign = -1
 
+        @jit(nopython=True)
         def wrapper(*args, **kwargs):
             """
             Calls the hessian callable and returns dense representation along a fixed dimension
