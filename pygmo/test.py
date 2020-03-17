@@ -634,7 +634,10 @@ class free_form_test_case(_ut.TestCase):
     """
 
     def runTest(self):
-        from .core import free_form, topology
+        try:
+            from .core import free_form, topology, ring
+        except ImportError:
+            return
 
         # Default ctor.
         udt = free_form()
@@ -687,6 +690,46 @@ class free_form_test_case(_ut.TestCase):
         self.assertEqual(topology(udt=udt).get_connections(1)[1], [.5])
         self.assertEqual(topology(udt=udt).get_connections(2)[0], [1])
         self.assertEqual(topology(udt=udt).get_connections(2)[1], [1.])
+
+        # Constructor from an invalid DiGraph.
+        g = nx.DiGraph()
+        g.add_edges_from([(0, 1), (1, 2)])
+        with self.assertRaises(ValueError) as cm:
+            udt = free_form(g)
+        err = cm.exception
+        self.assertEqual(str(err), "while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge "
+                         "without a 'weight' attribute was encountered")
+
+        g = nx.DiGraph()
+        g.add_weighted_edges_from([(0, 1, .5), (1, 2, -1.)])
+        with self.assertRaises(ValueError) as cm:
+            udt = free_form(g)
+        err = cm.exception
+        self.assertTrue("In the constructor of a free_form topology from a graph object, an invalid "
+                        "edge weight" in str(err))
+
+        # Constructor from topology/UDT.
+        udt = free_form(ring(10, .3))
+        self.assertEqual(udt.num_vertices(), 10)
+        self.assertTrue(udt.are_adjacent(0, 1))
+        self.assertEqual(udt.get_edge_weight(0, 1), .3)
+        self.assertTrue(udt.are_adjacent(1, 0))
+        self.assertEqual(udt.get_edge_weight(1, 0), .3)
+        self.assertTrue(udt.are_adjacent(9, 0))
+        self.assertEqual(udt.get_edge_weight(9, 0), .3)
+        self.assertTrue(udt.are_adjacent(0, 9))
+        self.assertEqual(udt.get_edge_weight(0, 9), .3)
+
+        udt = free_form(topology(ring(10, .3)))
+        self.assertEqual(udt.num_vertices(), 10)
+        self.assertTrue(udt.are_adjacent(0, 1))
+        self.assertEqual(udt.get_edge_weight(0, 1), .3)
+        self.assertTrue(udt.are_adjacent(1, 0))
+        self.assertEqual(udt.get_edge_weight(1, 0), .3)
+        self.assertTrue(udt.are_adjacent(9, 0))
+        self.assertEqual(udt.get_edge_weight(9, 0), .3)
+        self.assertTrue(udt.are_adjacent(0, 9))
+        self.assertEqual(udt.get_edge_weight(0, 9), .3)
 
 
 class fully_connected_test_case(_ut.TestCase):

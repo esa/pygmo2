@@ -75,6 +75,10 @@ void expose_base_bgl_topo(py::class_<Topo> &c)
     c.def("set_weight", &Topo::set_weight, pygmo::base_bgl_set_weight_docstring().c_str(), py::arg("i"), py::arg("j"),
           py::arg("w"));
     c.def("set_all_weights", &Topo::set_all_weights, pygmo::base_bgl_set_all_weights_docstring().c_str(), py::arg("w"));
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+    c.def("get_edge_weight", &Topo::get_edge_weight, pygmo::base_bgl_get_edge_weight_docstring().c_str(), py::arg("i"),
+          py::arg("j"));
+#endif
 }
 
 } // namespace

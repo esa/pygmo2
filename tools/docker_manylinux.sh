@@ -24,7 +24,7 @@ cd
 cd install
 
 # Python mandatory deps.
-/opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
+/opt/python/${PYTHON_DIR}/bin/pip install cloudpickle networkx numpy
 # Python optional deps.
 /opt/python/${PYTHON_DIR}/bin/pip install dill
 

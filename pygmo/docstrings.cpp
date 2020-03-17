@@ -6639,7 +6639,7 @@ Args:
     w (float): the weight of the edges
 
 Raises:
-    OverflowError: if *n* is negative or too large
+    TypeError: if *n* is negative or too large
     ValueError: if *w* is not in the :math:`\left[0, 1\right]` range
 
 )";
@@ -6681,8 +6681,8 @@ Returns:
     bool: :data:`True` if *i* and *j* are adjacent, :data:`False` otherwise
 
 Raises:
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices
-    OverflowError: if *i* or *j* are negative or too large
 
 )";
 }
@@ -6714,7 +6714,7 @@ Args:
     w (float): the edge's weight
 
 Raises:
-    OverflowError: if *i* or *j* are negative or too large
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices, *i* and *j* are already adjacent, or
        if *w* is not in the :math:`\left[0, 1\right]` range
 
@@ -6734,8 +6734,8 @@ Args:
     j (int): the second vertex index
 
 Raises:
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices, or *i* and *j* are not adjacent
-    OverflowError: if *i* or *j* are negative or too large
 
 )";
 }
@@ -6754,7 +6754,7 @@ Args:
     w (float): the desired weight
 
 Raises:
-    OverflowError: if *i* or *j* are negative or too large
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices, *i* and *j* are not adjacent, or
        if *w* is not in the :math:`\left[0, 1\right]` range
 
@@ -6776,6 +6776,33 @@ Raises:
 )";
 }
 
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+std::string base_bgl_get_edge_weight_docstring()
+{
+    return R"(get_edge_weight(i, j)
+
+.. versionadded:: 2.15
+
+Fetch the weight of the edge connecting *i* to *j*.
+
+Args:
+    i (int): the source vertex index
+    j (int): the destination vertex index
+
+Returns:
+    float: the weight of the edge connecting *i* to *j*
+
+Raises:
+    TypeError: if *i* or *j* are negative or too large
+    ValueError: if either *i* or *j* are not smaller than the number of vertices, or
+      *i* and *j* are not adjacent
+
+)";
+}
+
+#endif
+
 std::string fully_connected_docstring()
 {
     return R"(__init__(n=0, w=1.)
@@ -6793,7 +6820,7 @@ Args:
     w (float): the weight of the edges
 
 Raises:
-    OverflowError: if *n* is negative or too large
+    TypeError: if *n* is negative or too large
     ValueError: if *w* is not in the :math:`\left[0, 1\right]` range
 
 )";
@@ -6808,6 +6835,8 @@ std::string fully_connected_num_vertices_docstring()
 {
     return base_bgl_num_vertices_docstring();
 }
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
 
 std::string free_form_docstring()
 {
@@ -6842,6 +6871,8 @@ See also the docs of the C++ class :cpp:class:`pagmo::free_form`.
 
 )";
 }
+
+#endif
 
 std::string r_policy_docstring()
 {
