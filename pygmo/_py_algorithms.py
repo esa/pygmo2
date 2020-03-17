@@ -13,6 +13,7 @@ import numpy
 from scipy.optimize import NonlinearConstraint, minimize
 from numba import jit
 
+
 class scipy:
     """
     This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
@@ -47,6 +48,39 @@ class scipy:
             + str(e)
         )
 
+    @jit(nopython=True)
+    def _unpack_sparse_gradient(
+        sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
+    ):
+        nnz = len(sparse_values)
+        sign = 1
+        if invert_sign:
+            sign = -1
+
+        result = numpy.zeros(shape)
+        for i in range(nnz):
+            # filter for just the dimension we need
+            if sparsity_pattern[i][0] == idx:
+                result[sparsity_pattern[i][1]] = sign * sparse_values[i]
+
+        return result
+
+
+    @jit(nopython=True)
+    def _unpack_sparse_hessian(
+        sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
+    ):
+        nnz = len(sparse_values)
+        sign = 1
+        if invert_sign:
+            sign = -1
+
+        result = numpy.zeros(shape)
+        for i in range(nnz):
+            result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = sign * sparse_values[i]
+
+        return result
+
     def _generate_gradient_sparsity_wrapper(
         func, idx, shape, sparsity_func, invert_sign=False
     ):
@@ -75,12 +109,8 @@ class scipy:
 
 
         """
-        sparsity = sparsity_func()
-        sign = 1
-        if invert_sign:
-            sign = -1
+        sparsity_pattern = sparsity_func()
 
-        @jit(nopython=True)
         def wrapper(*args, **kwargs):
             """
             Calls the gradient callable and returns dense representation along a fixed dimension
@@ -102,21 +132,16 @@ class scipy:
             """
             sparse_values = func(*args, **kwargs)
             nnz = len(sparse_values)
-            if nnz != len(sparsity):
+            if nnz != len(sparsity_pattern):
                 raise ValueError(
                     "Sparse gradient has "
                     + str(nnz)
                     + " non-zeros, but sparsity pattern has "
-                    + str(len(sparsity))
+                    + str(len(sparsity_pattern))
                 )
-
-            result = numpy.zeros(shape)
-            for i in range(nnz):
-                # filter for just the dimension we need
-                if sparsity[i][0] == idx:
-                    result[sparsity[i][1]] = sign * sparse_values[i]
-
-            return result
+            return scipy._unpack_sparse_gradient(
+                sparse_values, idx, shape, sparsity_pattern, invert_sign
+            )
 
         return wrapper
 
@@ -148,12 +173,11 @@ class scipy:
 
 
         """
-        sparsity = sparsity_func()[idx]
+        sparsity_pattern = sparsity_func()[idx]
         sign = 1
         if invert_sign:
             sign = -1
 
-        @jit(nopython=True)
         def wrapper(*args, **kwargs):
             """
             Calls the hessian callable and returns dense representation along a fixed dimension
@@ -175,19 +199,17 @@ class scipy:
             """
             sparse_values = func(*args, **kwargs)[idx]
             nnz = len(sparse_values)
-            if nnz != len(sparsity):
+            if nnz != len(sparsity_pattern):
                 raise ValueError(
                     "Sparse hessian has "
                     + str(nnz)
                     + " non-zeros, but sparsity pattern has "
-                    + str(len(sparsity))
+                    + str(len(sparsity_pattern))
                 )
 
-            result = numpy.zeros(shape)
-            for i in range(nnz):
-                result[sparsity[i][0]][sparsity[i][1]] = sign * sparse_values[i]
-
-            return result
+            return scipy._unpack_sparse_hessian(
+                sparse_values, idx, shape, sparsity_pattern, invert_sign
+            )
 
         return wrapper
 
