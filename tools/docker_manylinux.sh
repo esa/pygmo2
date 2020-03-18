@@ -24,11 +24,9 @@ cd
 cd install
 
 # Python mandatory deps.
-/opt/python/${PYTHON_DIR}/bin/pip install cloudpickle networkx numpy
+/opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
-/opt/python/${PYTHON_DIR}/bin/pip install dill
-
-/opt/python/${PYTHON_DIR}/bin/pip install ipyparallel
+/opt/python/${PYTHON_DIR}/bin/pip install dill networkx ipyparallel
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 
 # Install git (-y avoids a user prompt)
