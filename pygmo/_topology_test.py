@@ -28,6 +28,7 @@ class topology_test_case(_ut.TestCase):
         self.run_extract_tests()
         self.run_name_info_tests()
         self.run_pickle_tests()
+        self.run_to_networkx_tests()
 
     def run_basic_tests(self):
         # Tests for minimal topology, and mandatory methods.
@@ -320,3 +321,162 @@ class topology_test_case(_ut.TestCase):
         t = loads(dumps(t_))
         self.assertEqual(repr(t), repr(t_))
         self.assertTrue(t.is_(_topo))
+
+    def run_to_networkx_tests(self):
+        from .core import _pagmo_version_major, _pagmo_version_minor, topology
+
+        try:
+            import networkx as nx
+        except ImportError:
+            return
+
+        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 15):
+            return
+
+        g = nx.DiGraph()
+        g.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+
+        # Good implementation.
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+            def to_networkx(self):
+                ret = nx.DiGraph()
+                ret.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+                return ret
+
+        self.assertTrue(nx.is_isomorphic(
+            topology(t()).to_networkx(), g))
+
+        # Graph with isolated nodes, and nodes not numbered
+        # sequentially.
+        g = nx.DiGraph()
+        g.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+        g.add_node(3)
+        g.add_node(4)
+
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+            def to_networkx(self):
+                ret = nx.DiGraph()
+                ret.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+                ret.add_node(7)
+                ret.add_node(8)
+                return ret
+
+        self.assertTrue(nx.is_isomorphic(
+            topology(t()).to_networkx(), g))
+        self.assertEqual(
+            list(topology(t()).to_networkx().nodes), [0, 1, 2, 3, 4])
+
+        # Nodes attributes stripped away.
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+            def to_networkx(self):
+                ret = nx.DiGraph()
+                ret.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+                ret.add_node(7, size=10)
+                ret.add_node(8, weight=20)
+                return ret
+
+        tmp = topology(t()).to_networkx()
+        self.assertTrue(nx.is_isomorphic(tmp, g))
+        self.assertEqual(list(tmp.nodes), [0, 1, 2, 3, 4])
+        self.assertEqual(tmp[3], {})
+        self.assertEqual(tmp[4], {})
+
+        # Edge attributes other than weight stripped away.
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+            def to_networkx(self):
+                ret = nx.DiGraph()
+                ret.add_edge(0, 1, size=56, weight=.5)
+                ret.add_edge(1, 2, color='blue', weight=1)
+                ret.add_node(7, size=10)
+                ret.add_node(8, weight=20)
+                return ret
+
+        tmp = topology(t()).to_networkx()
+        self.assertTrue(nx.is_isomorphic(tmp, g))
+        self.assertEqual(list(tmp.nodes), [0, 1, 2, 3, 4])
+        self.assertEqual(tmp[3], {})
+        self.assertEqual(tmp[4], {})
+        self.assertEqual(tmp.edges[0, 1], {'weight': .5})
+        self.assertEqual(tmp.edges[1, 2], {'weight': 1.})
+
+        # Error handling.
+        # No method.
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+        with self.assertRaises(NotImplementedError) as cm:
+            topology(t()).to_networkx()
+        err = cm.exception
+        self.assertTrue(
+            "the to_networkx() conversion method has been invoked in the user-defined Python topology" in str(err))
+
+        # Wrong return type.
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+            def to_networkx(self):
+                return 1
+
+        with self.assertRaises(TypeError) as cm:
+            topology(t()).to_networkx()
+        err = cm.exception
+        self.assertTrue(
+            "in order to construct a pagmo::bgl_graph_t object a NetworX DiGraph is needed, but an" in str(err))
+
+        # Weightless edges.
+        class t:
+
+            def get_connections(self, n):
+                return [[], []]
+
+            def push_back(self):
+                pass
+
+            def to_networkx(self):
+                ret = nx.DiGraph()
+                ret.add_edges_from([(0, 1), (1, 2)])
+                return ret
+
+        with self.assertRaises(ValueError) as cm:
+            topology(t()).to_networkx()
+        err = cm.exception
+        self.assertTrue(
+            "without a 'weight' attribute was encountered" in str(err))

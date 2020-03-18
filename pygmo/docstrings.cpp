@@ -6597,8 +6597,12 @@ its output. Otherwise, an error will be raised.
 This method is meant to export a representation of the current state of the topology
 as a NetworkX graph object. The returned object must be a :class:`networkx.DiGraph`
 in which the edges have a ``weight`` attribute represented as a floating-point value.
+
 Note that this method will strip away all node attributes and edge attributes other
-than ``weight`` from the graph returned by the UDT.
+than ``weight`` from the graph returned by the UDT. It will also redefine the nodes
+to be numbered sequentially (that is, if the NetworkX graph returned by the UDT
+has three nodes numbered 0, 1 and 5, the graph returned by this method will have
+nodes numbered 0, 1 and 2).
 
 Returns:
   networkx.DiGraph: a graph representation of the UDT

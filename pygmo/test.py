@@ -627,6 +627,37 @@ class ring_test_case(_ut.TestCase):
         self.assertTrue(len(topo.get_connections(3)[1]) == 2)
         self.assertEqual(topo.get_name(), "Ring")
 
+        self.run_get_edge_weight_tests()
+
+    def run_get_edge_weight_tests(self):
+        from .core import _pagmo_version_major, _pagmo_version_minor, ring
+
+        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 15):
+            return
+
+        t = ring(5)
+        self.assertEqual(t.get_edge_weight(0, 1), 1.)
+        self.assertEqual(t.get_edge_weight(4, 0), 1.)
+
+        t = ring(5, .3)
+        self.assertEqual(t.get_edge_weight(0, 1), .3)
+        self.assertEqual(t.get_edge_weight(4, 0), .3)
+
+        with self.assertRaises(TypeError) as cm:
+            t.get_edge_weight(-1, 1)
+
+        with self.assertRaises(ValueError) as cm:
+            t.get_edge_weight(1, 3)
+        err = cm.exception
+        self.assertTrue(
+            "cannot get the weight of an edge in a BGL topology: the vertex 1 is not connected to vertex 3" in str(err))
+
+        with self.assertRaises(ValueError) as cm:
+            t.get_edge_weight(1, 10)
+        err = cm.exception
+        self.assertTrue(
+            "invalid vertex index in a BGL topology: the index is 10, but the number of vertices is only 5" in str(err))
+
 
 class free_form_test_case(_ut.TestCase):
     """Test case for the free_form UDT
