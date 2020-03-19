@@ -20,7 +20,9 @@ dependencies:
 * `dill <https://dill.readthedocs.io>`__, which can be used as an
   alternative serialization backend,
 * `Matplotlib <https://matplotlib.org/>`__, which is used by a few
-  plotting utilities.
+  plotting utilities,
+* `NetworkX <https://networkx.github.io/>`__, which is used for
+  importing/exporting topologies as graphs.
 
 Packages
 --------
@@ -90,8 +92,8 @@ and they are regularly updated when new pygmo versions are released.
    Due to a lack of manpower, we are currently unable to provide
    pip packages for Windows or OSX. If you are willing to help us
    out, please get in contact with us on the
-   `gitter channel <https://gitter.im/pagmo2/Lobby>`__ or open
-   an issue on `github <https://github.com/esa/pygmo2/issues>`__.
+   `gitter channel <https://gitter.im/pagmo2/Lobby>`__ or (even better)
+   open a PR on `github <https://github.com/esa/pygmo2/pulls>`__.
 
 Arch Linux
 ^^^^^^^^^^

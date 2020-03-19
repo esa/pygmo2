@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Problem class &mdash; pygmo 2.14.1 documentation</title>
+  <title>Problem class &mdash; pygmo 2.15.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.14.1
+                2.15.0
               </div>
             
           
@@ -298,7 +298,7 @@ methods in the UDP should be implemented and on how they are used by <a class="r
 Note that the exposed C++ problems can also be used as UDPs, even if they do not expose any of the
 mandatory or optional methods listed above (see <a class="reference internal" href="problems.html#problems"><span class="std std-ref">here</span></a> for the
 full list of UDPs already coded in pygmo).</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4N5pagmo7problemE" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:problem</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4N5pagmo7problemE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:problem</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udp</strong> – a user-defined problem, either C++ or Python</p>
@@ -410,7 +410,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDP is <em>t</em>, then a reference to the UDP will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4I0ENK5pagmo7problem7extractEPK1Tv" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:problem::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4I0ENK5pagmo7problem7extractEPK1Tv" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:problem::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDP is a Python object (as opposed to an
 <a class="reference internal" href="problems.html#problems-cpp"><span class="std std-ref">exposed C++ problem</span></a>), then a reference to the
 UDP will be returned (this allows to extract a Python UDP without knowing its type),</p></li>

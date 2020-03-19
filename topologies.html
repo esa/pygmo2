@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of topologies &mdash; pygmo 2.14.1 documentation</title>
+  <title>List of topologies &mdash; pygmo 2.15.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.14.1
+                2.15.0
               </div>
             
           
@@ -215,7 +215,7 @@
 <dd><p>Unconnected topology.</p>
 <p>This user-defined topology (UDT) represents an unconnected graph. This is the default
 UDT used by <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.topology</span></code></a>.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/unconnected.html#_CPPv4N5pagmo11unconnectedE" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:unconnected</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/unconnected.html#_CPPv4N5pagmo11unconnectedE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:unconnected</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
@@ -225,7 +225,7 @@ UDT used by <a class="reference internal" href="topology.html#pygmo.topology" ti
 <dd><p>Ring topology.</p>
 <p>This user-defined topology (UDT) represents a bidirectional ring (that is, a ring in
 which each node connects to both the previous and the following nodes).</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/ring.html#_CPPv4N5pagmo4ringE" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:ring</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/ring.html#_CPPv4N5pagmo4ringE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:ring</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -235,7 +235,7 @@ which each node connects to both the previous and the following nodes).</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>n</em> is negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>n</em> is negative or too large</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
@@ -255,7 +255,7 @@ which each node connects to both the previous and the following nodes).</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are already adjacent, or
     if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
@@ -291,8 +291,38 @@ which each node connects to both the previous and the following nodes).</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.ring.get_edge_weight">
+<code class="sig-name descname">get_edge_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.get_edge_weight" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 2.15.</span></p>
+</div>
+<p>Fetch the weight of the edge connecting <em>i</em> to <em>j</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the source vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the destination vertex index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the weight of the edge connecting <em>i</em> to <em>j</em></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if either <em>i</em> or <em>j</em> are not smaller than the number of vertices, or
+    <em>i</em> and <em>j</em> are not adjacent</p></li>
 </ul>
 </dd>
 </dl>
@@ -338,8 +368,8 @@ which each node connects to both the previous and the following nodes).</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, or <em>i</em> and <em>j</em> are not adjacent</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
 </ul>
 </dd>
 </dl>
@@ -374,7 +404,7 @@ which each node connects to both the previous and the following nodes).</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are not adjacent, or
     if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
@@ -392,7 +422,7 @@ which each node connects to both the previous and the following nodes).</p>
 <p>This user-defined topology (UDT) represents a <em>complete graph</em> (that is, a topology
 in which all vertices connect to all other vertices). The edge weight is configurable
 at construction, and it will be the same for all the edges in the topology.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/fully_connected.html#_CPPv4N5pagmo15fully_connectedE" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:fully_connected</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/fully_connected.html#_CPPv4N5pagmo15fully_connectedE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:fully_connected</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -402,7 +432,7 @@ at construction, and it will be the same for all the edges in the topology.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>n</em> is negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>n</em> is negative or too large</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
@@ -429,6 +459,209 @@ at construction, and it will be the same for all the edges in the topology.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="pygmo.free_form">
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">free_form</code><span class="sig-paren">(</span><em class="sig-param">t=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Free-form topology.</p>
+<p>This user-defined topology (UDT) represents a graph in which
+vertices and edges can be manipulated freely. Instances
+of this class can be constructed from either:</p>
+<ul class="simple">
+<li><p>a <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">topology</span></code></a>,</p></li>
+<li><p>another UDT,</p></li>
+<li><p>a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>,</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>.</p></li>
+</ul>
+<p>Construction from <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> will initialise a topology
+without vertices or edges.</p>
+<p>Construction from a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a> will initialise
+a topology whose vertices and edges are described by the
+input graph. All the edges of the input graph must have
+a <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> attribute called <code class="docutils literal notranslate"><span class="pre">weight</span></code> whose value
+is in the <span class="math notranslate nohighlight">\(\left[0 , 1\right]\)</span> range.</p>
+<p>When <em>t</em> is a <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">topology</span></code></a> or a UDT,
+the constructor will attempt to fetch the NetworkX
+representation of the input object via the
+<a class="reference internal" href="topology.html#pygmo.topology.to_networkx" title="pygmo.topology.to_networkx"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.topology.to_networkx()</span></code></a> method, and will then
+proceed in the same manner explained in the previous
+paragraph.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/free_form.html#_CPPv4N5pagmo9free_formE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:free_form</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>t</strong> – the object that will be used for construction</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the edges of the input <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>
+    do not all have a <code class="docutils literal notranslate"><span class="pre">weight</span></code> attribute, or if any edge weight
+    is outside the <span class="math notranslate nohighlight">\(\left[ 0, 1 \right]\)</span> range</p></li>
+<li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="topology.html#pygmo.topology.to_networkx" title="pygmo.topology.to_networkx"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.topology.to_networkx()</span></code></a>, or by
+    the construction of a <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">topology</span></code></a> from a UDT</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pygmo.free_form.add_edge">
+<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">w=1.</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new edge.</p>
+<p>This method will add a new edge of weight <em>w</em> connecting <em>i</em> to <em>j</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the second vertex index</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – the edge’s weight</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are already adjacent, or
+    if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.add_vertex">
+<code class="sig-name descname">add_vertex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.add_vertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a vertex.</p>
+<p>This method will add a new vertex to the topology.</p>
+<p>The newly-added vertex will be disjoint from any other vertex in the topology (i.e., there are no connections to/from the new vertex).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.are_adjacent">
+<code class="sig-name descname">are_adjacent</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.are_adjacent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if two vertices are adjacent.</p>
+<p>Two vertices <em>i</em> and <em>j</em> are adjacent if there is a directed edge connecting <em>i</em> to <em>j</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the second vertex index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> if <em>i</em> and <em>j</em> are adjacent, <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.get_edge_weight">
+<code class="sig-name descname">get_edge_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.get_edge_weight" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 2.15.</span></p>
+</div>
+<p>Fetch the weight of the edge connecting <em>i</em> to <em>j</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the source vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the destination vertex index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the weight of the edge connecting <em>i</em> to <em>j</em></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if either <em>i</em> or <em>j</em> are not smaller than the number of vertices, or
+    <em>i</em> and <em>j</em> are not adjacent</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.num_vertices">
+<code class="sig-name descname">num_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.num_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of vertices in the topology</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.remove_edge">
+<code class="sig-name descname">remove_edge</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.remove_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an existing edge.</p>
+<p>This method will remove the edge connecting <em>i</em> to <em>j</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the second vertex index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, or <em>i</em> and <em>j</em> are not adjacent</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.set_all_weights">
+<code class="sig-name descname">set_all_weights</code><span class="sig-paren">(</span><em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.set_all_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will set the weights of all edges in the topology to <em>w</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – the edges’ weight</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmo.free_form.set_weight">
+<code class="sig-name descname">set_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.set_weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the weight of an edge.</p>
+<p>This method will set to <em>w</em> the weight of the edge connecting <em>i</em> to <em>j</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the second vertex index</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – the desired weight</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are not adjacent, or
+    if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

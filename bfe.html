@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Batch fitness evaluator &mdash; pygmo 2.14.1 documentation</title>
+  <title>Batch fitness evaluator &mdash; pygmo 2.15.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.14.1
+                2.15.0
               </div>
             
           
@@ -252,7 +252,7 @@ stored contiguously).</p>
 </div>
 <p>See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDBFE are used by <a class="reference internal" href="#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4N5pagmo3bfeE" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:bfe</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4N5pagmo3bfeE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:bfe</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udbfe</strong> – a user-defined batch fitness evaluator, either C++ or Python</p>
@@ -314,7 +314,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDBFE is <em>t</em>, then a reference to the UDBFE will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4I0ENK5pagmo3bfe7extractEPK1Tv" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:bfe::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4I0ENK5pagmo3bfe7extractEPK1Tv" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:bfe::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDBFE is a Python object (as opposed to an
 <a class="reference internal" href="bfes.html#bfes-cpp"><span class="std std-ref">exposed C++ bfe</span></a>), then a reference to the
 UDBFE will be returned (this allows to extract a Python UDBFE without knowing its type),</p></li>

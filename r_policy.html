@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Replacement policy &mdash; pygmo 2.14.1 documentation</title>
+  <title>Replacement policy &mdash; pygmo 2.15.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.14.1
+                2.15.0
               </div>
             
           
@@ -269,7 +269,7 @@ and thus they need to provide a certain degree of thread safety. Specifically, t
 <code class="docutils literal notranslate"><span class="pre">replace()</span></code> method of the UDRP might be invoked concurrently with
 any other method of the UDRP interface. It is up to the
 authors of user-defined replacement policies to ensure that this safety requirement is satisfied.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/r_policy.html#_CPPv4N5pagmo8r_policyE" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:r_policy</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/r_policy.html#_CPPv4N5pagmo8r_policyE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:r_policy</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udrp</strong> – a user-defined replacement policy, either C++ or Python</p>
@@ -294,7 +294,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDRP is <em>t</em>, then a reference to the UDRP will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/r_policy.html#_CPPv4I0ENK5pagmo8r_policy7extractEPK1Tv" title="(in pagmo v2.14.0)"><code class="docutils literal notranslate"><span class="pre">:r_policy::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/r_policy.html#_CPPv4I0ENK5pagmo8r_policy7extractEPK1Tv" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:r_policy::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDRP is a Python object (as opposed to an
 <a class="reference internal" href="r_policies.html#r-policies-cpp"><span class="std std-ref">exposed C++ replacement policy</span></a>), then a reference to the
 UDRP will be returned (this allows to extract a Python UDRP without knowing its type),</p></li>

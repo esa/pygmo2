@@ -20,3 +20,8 @@ Topologies exposed from C++
 
 .. autoclass:: pygmo.fully_connected
    :members:
+
+-------------------------------------------------------------
+
+.. autoclass:: pygmo.free_form
+   :members:
