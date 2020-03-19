@@ -43,6 +43,7 @@ jobs:
                         python=3.6 ^
                         numpy ^
                         cloudpickle ^
+                        networkx ^
                         dill ^
                         numba ^
                         pybind11 ^
@@ -114,6 +115,7 @@ jobs:
                         python=3.6 ^
                         numpy ^
                         cloudpickle ^
+                        networkx ^
                         dill ^
                         numba ^
                         ipyparallel ^
@@ -206,6 +208,7 @@ jobs:
                         python=3.7 ^
                         numpy ^
                         cloudpickle ^
+                        networkx ^
                         dill ^
                         numba ^
                         pybind11 ^
@@ -277,6 +280,7 @@ jobs:
                         python=3.7 ^
                         numpy ^
                         cloudpickle ^
+                        networkx ^
                         dill ^
                         numba ^
                         ipyparallel ^
@@ -369,6 +373,7 @@ jobs:
                         python=3.8 ^
                         numpy ^
                         cloudpickle ^
+                        networkx ^
                         dill ^
                         numba ^
                         pybind11 ^
@@ -440,6 +445,7 @@ jobs:
                         python=3.8 ^
                         numpy ^
                         cloudpickle ^
+                        networkx ^
                         dill ^
                         numba ^
                         ipyparallel ^

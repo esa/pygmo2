@@ -19,7 +19,14 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
+#include <pagmo/config.hpp>
 #include <pagmo/types.hpp>
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+#include <pagmo/topology.hpp>
+
+#endif
 
 namespace pygmo
 {
@@ -227,6 +234,14 @@ py::tuple inds_to_tuple(const pagmo::individuals_group_t &);
 
 // Convert a Python iterable into an individuals_group_t.
 pagmo::individuals_group_t iterable_to_inds(const py::iterable &);
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+// Conversion between BGL and NetworkX.
+py::object bgl_graph_t_to_networkx(const pagmo::bgl_graph_t &);
+pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &);
+
+#endif
 
 } // namespace pygmo
 

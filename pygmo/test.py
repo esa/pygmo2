@@ -627,6 +627,141 @@ class ring_test_case(_ut.TestCase):
         self.assertTrue(len(topo.get_connections(3)[1]) == 2)
         self.assertEqual(topo.get_name(), "Ring")
 
+        self.run_get_edge_weight_tests()
+
+    def run_get_edge_weight_tests(self):
+        from .core import _pagmo_version_major, _pagmo_version_minor, ring
+
+        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 15):
+            return
+
+        t = ring(5)
+        self.assertEqual(t.get_edge_weight(0, 1), 1.)
+        self.assertEqual(t.get_edge_weight(4, 0), 1.)
+
+        t = ring(5, .3)
+        self.assertEqual(t.get_edge_weight(0, 1), .3)
+        self.assertEqual(t.get_edge_weight(4, 0), .3)
+
+        with self.assertRaises(TypeError) as cm:
+            t.get_edge_weight(-1, 1)
+
+        with self.assertRaises(ValueError) as cm:
+            t.get_edge_weight(1, 3)
+        err = cm.exception
+        self.assertTrue(
+            "cannot get the weight of an edge in a BGL topology: the vertex 1 is not connected to vertex 3" in str(err))
+
+        with self.assertRaises(ValueError) as cm:
+            t.get_edge_weight(1, 10)
+        err = cm.exception
+        self.assertTrue(
+            "invalid vertex index in a BGL topology: the index is 10, but the number of vertices is only 5" in str(err))
+
+
+class free_form_test_case(_ut.TestCase):
+    """Test case for the free_form UDT
+
+    """
+
+    def runTest(self):
+        try:
+            from .core import free_form, topology, ring
+        except ImportError:
+            return
+
+        # Default ctor.
+        udt = free_form()
+        self.assertEqual(udt.num_vertices(), 0)
+        udt = free_form(t=None)
+        self.assertEqual(udt.num_vertices(), 0)
+
+        # A few misc tests for the BGL API,
+        # which is also tested in ring.
+        udt.add_vertex()
+        udt.add_vertex()
+        udt.add_vertex()
+        self.assertEqual(udt.num_vertices(), 3)
+        self.assertFalse(udt.are_adjacent(0, 1))
+        self.assertFalse(udt.are_adjacent(1, 2))
+        udt.add_edge(0, 1)
+        self.assertTrue(udt.are_adjacent(0, 1))
+
+        topo = topology(udt=udt)
+        topo.push_back()
+        self.assertTrue(len(topo.get_connections(0)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(0)[1]) == 0)
+        self.assertTrue(topo.get_connections(1)[0] == [0])
+        self.assertTrue(topo.get_connections(1)[1] == [1.])
+        self.assertTrue(len(topo.get_connections(2)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(2)[1]) == 0)
+        self.assertTrue(len(topo.get_connections(3)[0]) == 0)
+        self.assertTrue(len(topo.get_connections(3)[1]) == 0)
+        self.assertEqual(topo.get_name(), "Free form")
+
+        try:
+            import networkx as nx
+        except ImportError:
+            return
+
+        # Constructor from a valid DiGraph.
+        g = nx.DiGraph()
+        udt = free_form(g)
+        self.assertEqual(udt.num_vertices(), 0)
+        g.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+        udt = free_form(g)
+        self.assertEqual(udt.num_vertices(), 3)
+        self.assertTrue(udt.are_adjacent(0, 1))
+        self.assertTrue(udt.are_adjacent(1, 2))
+        self.assertFalse(udt.are_adjacent(1, 0))
+        self.assertFalse(udt.are_adjacent(2, 0))
+        self.assertEqual(len(topo.get_connections(0)[0]), 0)
+        self.assertEqual(len(topo.get_connections(0)[1]), 0)
+        self.assertEqual(topology(udt=udt).get_connections(1)[0], [0])
+        self.assertEqual(topology(udt=udt).get_connections(1)[1], [.5])
+        self.assertEqual(topology(udt=udt).get_connections(2)[0], [1])
+        self.assertEqual(topology(udt=udt).get_connections(2)[1], [1.])
+
+        # Constructor from an invalid DiGraph.
+        g = nx.DiGraph()
+        g.add_edges_from([(0, 1), (1, 2)])
+        with self.assertRaises(ValueError) as cm:
+            udt = free_form(g)
+        err = cm.exception
+        self.assertEqual(str(err), "while converting a NetworX DiGraph to a pagmo::bgl_graph_t object, an edge "
+                         "without a 'weight' attribute was encountered")
+
+        g = nx.DiGraph()
+        g.add_weighted_edges_from([(0, 1, .5), (1, 2, -1.)])
+        with self.assertRaises(ValueError) as cm:
+            udt = free_form(g)
+        err = cm.exception
+        self.assertTrue("In the constructor of a free_form topology from a graph object, an invalid "
+                        "edge weight" in str(err))
+
+        # Constructor from topology/UDT.
+        udt = free_form(ring(10, .3))
+        self.assertEqual(udt.num_vertices(), 10)
+        self.assertTrue(udt.are_adjacent(0, 1))
+        self.assertEqual(udt.get_edge_weight(0, 1), .3)
+        self.assertTrue(udt.are_adjacent(1, 0))
+        self.assertEqual(udt.get_edge_weight(1, 0), .3)
+        self.assertTrue(udt.are_adjacent(9, 0))
+        self.assertEqual(udt.get_edge_weight(9, 0), .3)
+        self.assertTrue(udt.are_adjacent(0, 9))
+        self.assertEqual(udt.get_edge_weight(0, 9), .3)
+
+        udt = free_form(topology(ring(10, .3)))
+        self.assertEqual(udt.num_vertices(), 10)
+        self.assertTrue(udt.are_adjacent(0, 1))
+        self.assertEqual(udt.get_edge_weight(0, 1), .3)
+        self.assertTrue(udt.are_adjacent(1, 0))
+        self.assertEqual(udt.get_edge_weight(1, 0), .3)
+        self.assertTrue(udt.are_adjacent(9, 0))
+        self.assertEqual(udt.get_edge_weight(9, 0), .3)
+        self.assertTrue(udt.are_adjacent(0, 9))
+        self.assertEqual(udt.get_edge_weight(0, 9), .3)
+
 
 class fully_connected_test_case(_ut.TestCase):
     """Test case for the fully_connected UDT
@@ -2728,6 +2863,7 @@ def run_test_suite(level=0):
     suite.addTest(select_best_test_case())
     suite.addTest(unconnected_test_case())
     suite.addTest(ring_test_case())
+    suite.addTest(free_form_test_case())
     suite.addTest(fully_connected_test_case())
     suite.addTest(thread_island_torture_test_case())
     suite.addTest(_problem_test.problem_test_case())
