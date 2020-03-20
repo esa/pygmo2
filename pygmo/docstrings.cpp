@@ -8,6 +8,8 @@
 
 #include <string>
 
+#include <pagmo/config.hpp>
+
 #include "docstrings.hpp"
 
 namespace pygmo
@@ -6461,6 +6463,13 @@ Additional optional methods can be implemented in a UDT:
      ...
    def get_extra_info(self):
      ...
+   def to_networkx(self):
+     ...
+
+.. note::
+
+   The ``to_networkx()`` method is available only if pygmo was compiled
+   with pagmo 2.15.0 or later.
 
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDT are used by :class:`~pygmo.topology`.
@@ -6572,6 +6581,43 @@ Raises:
 )";
 }
 
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+std::string topology_to_networkx_docstring()
+{
+    return R"(to_networkx()
+
+.. versionadded:: 2.15
+
+Conversion to NetworkX.
+
+If the UDT provides a ``to_networkx()`` method, then this method will invoke it and return
+its output. Otherwise, an error will be raised.
+
+This method is meant to export a representation of the current state of the topology
+as a NetworkX graph object. The returned object must be a :class:`networkx.DiGraph`
+in which the edges have a ``weight`` attribute represented as a floating-point value.
+
+Note that this method will strip away all node attributes and edge attributes other
+than ``weight`` from the graph returned by the UDT. It will also redefine the nodes
+to be numbered sequentially (that is, if the NetworkX graph returned by the UDT
+has three nodes numbered 0, 1 and 5, the graph returned by this method will have
+nodes numbered 0, 1 and 2).
+
+Returns:
+  networkx.DiGraph: a graph representation of the UDT
+
+Raises:
+  NotImplementedError: if the UDT does not provide a ``to_networkx()`` method
+  TypeError: if the object returned by the UDT is not a :class:`networkx.DiGraph`
+  ValueError: if the edges of the returned graph do not all have a ``weight`` attribute
+  unspecified: any exception thrown by the ``to_networkx()`` method of the UDT
+
+)";
+}
+
+#endif
+
 std::string unconnected_docstring()
 {
     return R"(__init__()
@@ -6602,7 +6648,7 @@ Args:
     w (float): the weight of the edges
 
 Raises:
-    OverflowError: if *n* is negative or too large
+    TypeError: if *n* is negative or too large
     ValueError: if *w* is not in the :math:`\left[0, 1\right]` range
 
 )";
@@ -6644,8 +6690,8 @@ Returns:
     bool: :data:`True` if *i* and *j* are adjacent, :data:`False` otherwise
 
 Raises:
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices
-    OverflowError: if *i* or *j* are negative or too large
 
 )";
 }
@@ -6677,7 +6723,7 @@ Args:
     w (float): the edge's weight
 
 Raises:
-    OverflowError: if *i* or *j* are negative or too large
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices, *i* and *j* are already adjacent, or
        if *w* is not in the :math:`\left[0, 1\right]` range
 
@@ -6697,8 +6743,8 @@ Args:
     j (int): the second vertex index
 
 Raises:
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices, or *i* and *j* are not adjacent
-    OverflowError: if *i* or *j* are negative or too large
 
 )";
 }
@@ -6717,7 +6763,7 @@ Args:
     w (float): the desired weight
 
 Raises:
-    OverflowError: if *i* or *j* are negative or too large
+    TypeError: if *i* or *j* are negative or too large
     ValueError: if *i* or *j* are not smaller than the number of vertices, *i* and *j* are not adjacent, or
        if *w* is not in the :math:`\left[0, 1\right]` range
 
@@ -6739,6 +6785,33 @@ Raises:
 )";
 }
 
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+std::string base_bgl_get_edge_weight_docstring()
+{
+    return R"(get_edge_weight(i, j)
+
+.. versionadded:: 2.15
+
+Fetch the weight of the edge connecting *i* to *j*.
+
+Args:
+    i (int): the source vertex index
+    j (int): the destination vertex index
+
+Returns:
+    float: the weight of the edge connecting *i* to *j*
+
+Raises:
+    TypeError: if *i* or *j* are negative or too large
+    ValueError: if either *i* or *j* are not smaller than the number of vertices, or
+      *i* and *j* are not adjacent
+
+)";
+}
+
+#endif
+
 std::string fully_connected_docstring()
 {
     return R"(__init__(n=0, w=1.)
@@ -6756,7 +6829,7 @@ Args:
     w (float): the weight of the edges
 
 Raises:
-    OverflowError: if *n* is negative or too large
+    TypeError: if *n* is negative or too large
     ValueError: if *w* is not in the :math:`\left[0, 1\right]` range
 
 )";
@@ -6771,6 +6844,44 @@ std::string fully_connected_num_vertices_docstring()
 {
     return base_bgl_num_vertices_docstring();
 }
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+
+std::string free_form_docstring()
+{
+    return R"(Free-form topology.
+
+This user-defined topology (UDT) represents a graph in which
+vertices and edges can be manipulated freely. Instances
+of this class can be constructed from either:
+
+* a :class:`~pygmo.topology`,
+* another UDT,
+* a :class:`networkx.DiGraph`,
+* :data:`None`.
+
+Construction from :data:`None` will initialise a topology
+without vertices or edges.
+
+Construction from a :class:`networkx.DiGraph` will initialise
+a topology whose vertices and edges are described by the
+input graph. All the edges of the input graph must have
+a :class:`float` attribute called ``weight`` whose value
+is in the :math:`\left[0 , 1\right]` range.
+
+When *t* is a :class:`~pygmo.topology` or a UDT,
+the constructor will attempt to fetch the NetworkX
+representation of the input object via the
+:func:`pygmo.topology.to_networkx()` method, and will then
+proceed in the same manner explained in the previous
+paragraph.
+
+See also the docs of the C++ class :cpp:class:`pagmo::free_form`.
+
+)";
+}
+
+#endif
 
 std::string r_policy_docstring()
 {
