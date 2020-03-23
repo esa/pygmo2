@@ -11,7 +11,6 @@ import warnings
 
 import numpy
 from scipy.optimize import NonlinearConstraint, minimize
-from numba import jit
 
 
 class scipy:
@@ -51,6 +50,7 @@ class scipy:
     def _maybe_jit(func):
         try:
             from numba import jit
+
             return jit(nopython=True)(func)
         except ModuleNotFoundError:
             return func
@@ -72,7 +72,6 @@ class scipy:
 
         return result
 
-
     @_maybe_jit
     def _unpack_sparse_hessian(
         sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
@@ -84,7 +83,9 @@ class scipy:
 
         result = numpy.zeros(shape)
         for i in range(nnz):
-            result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = sign * sparse_values[i]
+            result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
+                sign * sparse_values[i]
+            )
 
         return result
 
