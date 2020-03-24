@@ -10,8 +10,6 @@ import random
 import warnings
 
 import numpy
-from scipy.optimize import NonlinearConstraint, minimize
-
 
 class scipy:
     """
@@ -37,15 +35,6 @@ class scipy:
     >>> pop.problem.get_gevals()
     54
     """
-
-    try:
-        from scipy.optimize import minimize
-
-    except ImportError as e:
-        raise ImportError(
-            "from scipy.optimize import minimize raised an exception, please make sure scipy is installed and reachable. Error: "
-            + str(e)
-        )
 
     def _maybe_jit(func):
         try:
@@ -258,6 +247,16 @@ class scipy:
                 ValueError: If method is not one of Nelder-Mead Powell, CG, BFGS, Newton-CG, L-BFGS-B, TNC, COBYLA, SLSQP, trust-constr, dogleg, trust-ncg, trust-exact, trust-krylov or None.
 
         """
+
+        try:
+            from scipy.optimize import minimize, NonlinearConstraint
+
+        except ImportError as e:
+            raise ImportError(
+                "from scipy.optimize import minimize raised an exception, please make sure scipy is installed and reachable. Error: "
+                + str(e)
+            )
+
         method_list = [
             "Nelder-Mead",
             "Powell",
@@ -310,6 +309,9 @@ class scipy:
             ValueError: If the problem is stochastic
             unspecified: any exception thrown the member functions of the problem
         """
+
+        from scipy.optimize import minimize, NonlinearConstraint
+
         problem = population.problem
 
         if problem.get_nc() > 0 and self.method not in [
