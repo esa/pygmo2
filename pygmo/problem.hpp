@@ -12,6 +12,7 @@
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <typeindex>
 #include <utility>
 #include <vector>
 
@@ -81,6 +82,7 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     virtual void set_seed(unsigned) override final;
     virtual bool has_set_seed() const override final;
     virtual thread_safety get_thread_safety() const override final;
+    virtual std::type_index get_type_index() const override final;
     template <typename Archive>
     void save(Archive &, unsigned) const;
     template <typename Archive>

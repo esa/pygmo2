@@ -10,6 +10,8 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <typeindex>
+#include <typeinfo>
 #include <utility>
 #include <vector>
 
@@ -344,6 +346,11 @@ bool prob_inner<py::object>::has_set_seed() const
 thread_safety prob_inner<py::object>::get_thread_safety() const
 {
     return thread_safety::none;
+}
+
+std::type_index prob_inner<py::object>::get_type_index() const
+{
+    return std::type_index(typeid(py::object));
 }
 
 template <typename Archive>
