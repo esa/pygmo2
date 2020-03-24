@@ -11,13 +11,35 @@ import warnings
 
 import numpy
 
+from typing import Mapping, Tuple, Union
+
 class scipy:
     """
     This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
 
+    This wraps several well-known local optimization algorithms:
+     - Nelder-Mead
+     - Powell
+     - CG
+     - BFGS
+     - Newton-CG
+     - L-BFGS-B
+     - TNC
+     - COBYLA
+     - SLSQP
+     - trust-constr
+     - dogleg
+     - trust-ncg
+     - trust-exact
+     - trust-krylov
+
+    These methods are mostly variants of gradient descent. Some of them require a gradient and will throw
+    an error if invoked on a problem that does not offer one.
+    Constraints are only supported by methods COBYLA, SLSQP and trust-constr.
+
     Construction arguments are those options of scipy.optimize.minimize that are not problem-specific. 
-    The problem-specific ones, for example the bounds, constraints and the existence of a gradient and hessian,
-     are deduced from the problem in the population given to evolve.
+    Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
+    are deduced from the problem in the population given to the evolve function.
 
     Example:
 
@@ -37,6 +59,10 @@ class scipy:
     """
 
     def _maybe_jit(func):
+        """
+        This function tries to import the just-in-time compiler from numba and apply it to the passed function.
+        If the import fails, the argument is returned unchanged.
+        """
         try:
             from numba import jit
 
@@ -44,10 +70,11 @@ class scipy:
         except ModuleNotFoundError:
             return func
 
+    @staticmethod
     @_maybe_jit
     def _unpack_sparse_gradient(
-        sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
-    ):
+        sparse_values: Mapping[int, float], idx: int, shape: Tuple[int], sparsity_pattern, invert_sign: bool = False
+    ) -> numpy.ndarray:
         nnz = len(sparse_values)
         sign = 1
         if invert_sign:
@@ -61,10 +88,11 @@ class scipy:
 
         return result
 
+    @staticmethod
     @_maybe_jit
     def _unpack_sparse_hessian(
-        sparse_values, idx: int, shape, sparsity_pattern, invert_sign: bool = False
-    ):
+        sparse_values: Mapping[int, float], idx: int, shape: Tuple[int, int], sparsity_pattern, invert_sign: bool = False
+    ) -> numpy.ndarray:
         nnz = len(sparse_values)
         sign = 1
         if invert_sign:
@@ -78,8 +106,9 @@ class scipy:
 
         return result
 
+    @staticmethod
     def _generate_gradient_sparsity_wrapper(
-        func, idx, shape, sparsity_func, invert_sign=False
+        func, idx: int, shape: Union[Tuple[int],int], sparsity_func, invert_sign=False
     ):
         """
         A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
@@ -108,7 +137,7 @@ class scipy:
         """
         sparsity_pattern = sparsity_func()
 
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
             Calls the gradient callable and returns dense representation along a fixed dimension
             
@@ -142,8 +171,9 @@ class scipy:
 
         return wrapper
 
+    @staticmethod
     def _generate_hessian_sparsity_wrapper(
-        func, idx, shape, sparsity_func, invert_sign=False
+        func, idx: int, shape: Tuple[int, int], sparsity_func, invert_sign=False
     ):
         """
         A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
@@ -175,7 +205,7 @@ class scipy:
         if invert_sign:
             sign = -1
 
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
             Calls the hessian callable and returns dense representation along a fixed dimension
             
@@ -210,13 +240,15 @@ class scipy:
 
         return wrapper
 
-    def _generate_eq_constraint(problem, i):
+    @staticmethod
+    def _generate_eq_constraint(problem, i: int):
         def eqFunc(*args, **kwargs):
             return problem.fitness(*args, **kwargs)[problem.get_nobj() + i]
 
         return eqFunc
 
-    def _generate_neq_constraint(problem, i):
+    @staticmethod
+    def _generate_neq_constraint(problem, i: int):
         def neqFunc(*args, **kwargs):
             # In pagmo, inequality constraints have to be negative, in scipy they have to be non-negative.
             return -problem.fitness(*args, **kwargs)[
