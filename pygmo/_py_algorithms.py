@@ -11,7 +11,8 @@ import warnings
 
 import numpy
 
-from typing import Mapping, Tuple, Union
+from typing import Any, Callable, Mapping, MutableMapping, Optional, Tuple, Union
+
 
 class scipy:
     """
@@ -36,10 +37,6 @@ class scipy:
     These methods are mostly variants of gradient descent. Some of them require a gradient and will throw
     an error if invoked on a problem that does not offer one.
     Constraints are only supported by methods COBYLA, SLSQP and trust-constr.
-
-    Construction arguments are those options of scipy.optimize.minimize that are not problem-specific. 
-    Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
-    are deduced from the problem in the population given to the evolve function.
 
     Example:
 
@@ -73,7 +70,11 @@ class scipy:
     @staticmethod
     @_maybe_jit
     def _unpack_sparse_gradient(
-        sparse_values: Mapping[int, float], idx: int, shape: Tuple[int], sparsity_pattern, invert_sign: bool = False
+        sparse_values: Mapping[int, float],
+        idx: int,
+        shape: Tuple[int],
+        sparsity_pattern,
+        invert_sign: bool = False,
     ) -> numpy.ndarray:
         nnz = len(sparse_values)
         sign = 1
@@ -91,7 +92,11 @@ class scipy:
     @staticmethod
     @_maybe_jit
     def _unpack_sparse_hessian(
-        sparse_values: Mapping[int, float], idx: int, shape: Tuple[int, int], sparsity_pattern, invert_sign: bool = False
+        sparse_values: Mapping[int, float],
+        idx: int,
+        shape: Tuple[int, int],
+        sparsity_pattern,
+        invert_sign: bool = False,
     ) -> numpy.ndarray:
         nnz = len(sparse_values)
         sign = 1
@@ -108,7 +113,7 @@ class scipy:
 
     @staticmethod
     def _generate_gradient_sparsity_wrapper(
-        func, idx: int, shape: Union[Tuple[int],int], sparsity_func, invert_sign=False
+        func, idx: int, shape: Union[Tuple[int], int], sparsity_func, invert_sign=False
     ):
         """
         A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
@@ -262,10 +267,15 @@ class scipy:
         args=(),
         method: str = None,
         tol: float = None,
-        callback=None,
-        options: dict = None,
+        callback: Optional[Callable[[numpy.ndarray],Any]] = None,
+        options: Optional[MutableMapping[str, Any]] = None,
     ) -> None:
         """
+            Initialize a wrapper instance for a specific algorithm.
+            Construction arguments are those options of scipy.optimize.minimize that are not problem-specific. 
+            Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
+            are deduced from the problem in the population given to the evolve function.
+
             Args:
 
                 args: optional - extra arguments for fitness callable
