@@ -5,6 +5,12 @@ List of algorithms
 
 .. _algorithms_cpp:
 
+Algorithms implemented in Python
+---------------------------
+
+.. autoclass:: pygmo.scipy
+   :members:
+
 Algorithms exposed from C++
 ---------------------------
 

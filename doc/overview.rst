@@ -13,7 +13,8 @@ Overview
   single and multi-objective algorithms,
   wrappers for third-party solvers (e.g.,
   `NLopt <https://nlopt.readthedocs.io/en/latest/>`__,
-  `Ipopt <https://projects.coin-or.org/Ipopt>`__, etc.).
+  `Ipopt <https://projects.coin-or.org/Ipopt>`__,
+  `SciPy <https://www.scipy.org/>`__, etc.).
 * Comprehensive support for coarse-grained
   parallelisation via the
   `generalised island model <https://link.springer.com/chapter/10.1007/978-3-642-28789-3_7>`__.
@@ -97,18 +98,26 @@ Local optimization
 Common Name                                            Docs of the python class                                                                  Capabilities
 ====================================================== ========================================================================================= ===============
 Compass Search (CS)                                    :class:`pygmo.compass_search`                                                             S-CU
-COBYLA (from NLopt)                                    :class:`pygmo.nlopt`                                                                      S-CU
+COBYLA (from NLopt or SciPy)                           :class:`pygmo.nlopt`                                                                      S-CU
 BOBYQA (from NLopt)                                    :class:`pygmo.nlopt`                                                                      S-U
 NEWUOA + bound constraints (from NLopt)                :class:`pygmo.nlopt`                                                                      S-U
 PRAXIS (from NLopt)                                    :class:`pygmo.nlopt`                                                                      S-U
-Nelder-Mead simplex (from NLopt)                       :class:`pygmo.nlopt`                                                                      S-U
+Nelder-Mead simplex (from NLopt or SciPy)              :class:`pygmo.nlopt`                                                                      S-U
 Subplex (from NLopt)                                   :class:`pygmo.nlopt`                                                                      S-U
 MMA (Method of Moving Asymptotes) (from NLopt)         :class:`pygmo.nlopt`                                                                      S-CU
 CCSA (from NLopt)                                      :class:`pygmo.nlopt`                                                                      S-CU
-SLSQP (from NLopt)                                     :class:`pygmo.nlopt`                                                                      S-CU
-Low-storage BFGS (from NLopt)                          :class:`pygmo.nlopt`                                                                      S-U
+SLSQP (from NLopt or SciPy)                            :class:`pygmo.nlopt`                                                                      S-CU
+Low-storage BFGS (from NLopt or SciPy)                 :class:`pygmo.nlopt`                                                                      S-U
 Preconditioned truncated Newton (from NLopt)           :class:`pygmo.nlopt`                                                                      S-U
 Shifted limited-memory variable-metric (from NLopt)    :class:`pygmo.nlopt`                                                                      S-U
+Powell (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-U
+CG (from SciPy)                                        :class:`pygmo.scipy`                                                                      S-U
+BFGS (from SciPy)                                      :class:`pygmo.scipy`                                                                      S-U
+Trust Constr (from SciPy)                              :class:`pygmo.scipy`                                                                      S-CU
+Dogleg (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-U
+Trust Ncg (from SciPy)                                 :class:`pygmo.scipy`                                                                      S-U
+Trust exact (from SciPy)                               :class:`pygmo.scipy`                                                                      S-U
+Trust Krylov (from SciPy)                              :class:`pygmo.scipy`                                                                      S-U
 Ipopt                                                  :class:`pygmo.ipopt`                                                                      S-CU
 SNOPT (in pagmo_plugins_non_free affiliated package)   `pygmo.snopt7 <https://esa.github.io/pagmo_plugins_nonfree/py_snopt7.html>`__             S-CU
 WORHP (in pagmo_plugins_non_free affiliated package)   `pygmo.wohrp <https://esa.github.io/pagmo_plugins_nonfree/py_worhp.html>`__               S-CU
