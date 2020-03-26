@@ -83,6 +83,8 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     virtual bool has_set_seed() const override final;
     virtual thread_safety get_thread_safety() const override final;
     virtual std::type_index get_type_index() const override final;
+    virtual const void *get_void_ptr() const override final;
+    virtual void *get_void_ptr() override final;
     template <typename Archive>
     void save(Archive &, unsigned) const;
     template <typename Archive>

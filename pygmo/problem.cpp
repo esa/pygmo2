@@ -353,6 +353,16 @@ std::type_index prob_inner<py::object>::get_type_index() const
     return std::type_index(typeid(py::object));
 }
 
+const void *prob_inner<py::object>::get_void_ptr() const
+{
+    return &m_value;
+}
+
+void *prob_inner<py::object>::get_void_ptr()
+{
+    return &m_value;
+}
+
 template <typename Archive>
 void prob_inner<py::object>::save(Archive &ar, unsigned) const
 {
