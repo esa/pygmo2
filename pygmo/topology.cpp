@@ -11,6 +11,8 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <typeindex>
+#include <typeinfo>
 #include <utility>
 #include <vector>
 
@@ -152,6 +154,21 @@ bgl_graph_t topo_inner<py::object>::to_bgl() const
                             .c_str());
     }
     return pygmo::networkx_to_bgl_graph_t(m());
+}
+
+std::type_index topo_inner<py::object>::get_type_index() const
+{
+    return std::type_index(typeid(py::object));
+}
+
+const void *topo_inner<py::object>::get_ptr() const
+{
+    return &m_value;
+}
+
+void *topo_inner<py::object>::get_ptr()
+{
+    return &m_value;
 }
 
 #endif
