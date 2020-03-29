@@ -49,6 +49,8 @@ That's easy! To inspect what type of problem pygmo has detected from our UDP we 
 
     >>> print(prob) #doctest: +SKIP
     Problem name: <class 'sphere_function'>
+        C++ class name: ...
+
     	Global dimension:			2
     	Integer dimension:			0
     	Fitness dimension:			1
@@ -99,6 +101,8 @@ and to have a human readable name.
     >>> prob = pg.problem(sphere_function(3))
     >>> print(prob) #doctest: +NORMALIZE_WHITESPACE
     Problem name: Sphere Function
+        C++ class name: ...
+
     	Global dimension:			3
     	Integer dimension:			0
     	Fitness dimension:			1
