@@ -42,6 +42,7 @@ to the channels, and then we can immediately install pygmo:
 .. code-block:: console
 
    $ conda config --add channels conda-forge
+   $ conda config --set channel_priority strict
    $ conda install pygmo
 
 The conda packages for pygmo are maintained by the core development team,
