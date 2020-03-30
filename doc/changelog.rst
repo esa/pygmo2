@@ -24,8 +24,12 @@ New
 Fix
 ~~~
 
+- Build system fixes for recent CMake versions
+  (`#35 <https://github.com/esa/pygmo2/pull/35>`__).
+
 - Various doc fixes
-  (`#34 <https://github.com/esa/pygmo2/pull/34>`__).
+  (`#35 <https://github.com/esa/pygmo2/pull/35>`__,
+  `#34 <https://github.com/esa/pygmo2/pull/34>`__).
 
 2.14.1 (2020-03-06)
 -------------------
