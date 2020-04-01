@@ -799,7 +799,7 @@ PYBIND11_MODULE(core, m)
             [](pg::archipelago &archi, const py::list &mig) {
                 pg::archipelago::migrants_db_t mig_db;
 
-                for (const auto &o : mig) {
+                for (auto o : mig) {
                     mig_db.push_back(pygmo::iterable_to_inds(py::cast<py::iterable>(o)));
                 }
 
