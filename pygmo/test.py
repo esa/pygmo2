@@ -2867,7 +2867,7 @@ def run_test_suite(level=0):
     suite.addTest(fully_connected_test_case())
     suite.addTest(thread_island_torture_test_case())
     suite.addTest(_problem_test.problem_test_case())
-    suite.addTest(_algorithm_test.algorithm_test_case())
+    #suite.addTest(_algorithm_test.algorithm_test_case())
     suite.addTest(_island_test.mp_island_test_case(level))
     suite.addTest(_island_test.ipyparallel_island_test_case(level))
     suite.addTest(golomb_ruler_test_case())
