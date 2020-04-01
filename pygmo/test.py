@@ -858,27 +858,27 @@ class archipelago_test_case(_ut.TestCase):
         self.run_push_back_tests()
         self.run_io_tests()
         self.run_pickle_tests()
-        self.run_champions_tests()
-        self.run_status_tests()
-        self.run_mig_log_db_tests()
-        self.run_get_set_topo_tests()
-        self.run_mt_mh_tests()
-        if self._level > 0:
-            self.run_torture_test_0()
-            # NOTE: skip this test for the time being.
-            # It was copy-pasted from an interactive
-            # python session ages ago, and it's not clear
-            # whether we can control its internal randomness
-            # or not, with the result that it seems to
-            # fail rarely (in the sense that it won't
-            # raise an expected exception, not that it crashes
-            # or anything like that). We'll have to
-            # investigate further if we ever want to
-            # turn it back on.
-            # self.run_torture_test_1()
-            self.run_migration_torture_test()
-            # NOTE: temporarily disable this test due to the mingw failures.
-            # self.run_mo_migration_bug_test()
+        #self.run_champions_tests()
+        #self.run_status_tests()
+        #self.run_mig_log_db_tests()
+        #self.run_get_set_topo_tests()
+        #self.run_mt_mh_tests()
+        #if self._level > 0:
+        #    self.run_torture_test_0()
+        #    # NOTE: skip this test for the time being.
+        #    # It was copy-pasted from an interactive
+        #    # python session ages ago, and it's not clear
+        #    # whether we can control its internal randomness
+        #    # or not, with the result that it seems to
+        #    # fail rarely (in the sense that it won't
+        #    # raise an expected exception, not that it crashes
+        #    # or anything like that). We'll have to
+        #    # investigate further if we ever want to
+        #    # turn it back on.
+        #    # self.run_torture_test_1()
+        #    self.run_migration_torture_test()
+        #    # NOTE: temporarily disable this test due to the mingw failures.
+        #    # self.run_mo_migration_bug_test()
 
     def run_init_tests(self):
         from . import (archipelago, de, rosenbrock, population, null_problem, thread_island,
@@ -2854,7 +2854,7 @@ def run_test_suite(level=0):
     suite.addTest(_bfe_test.mp_bfe_test_case())
     suite.addTest(_bfe_test.ipyparallel_bfe_test_case())
     suite.addTest(_bfe_test.default_bfe_test_case())
-    #suite.addTest(archipelago_test_case(level))
+    suite.addTest(archipelago_test_case(level))
     suite.addTest(_island_test.island_test_case())
     suite.addTest(_s_policy_test.s_policy_test_case())
     suite.addTest(_r_policy_test.r_policy_test_case())
