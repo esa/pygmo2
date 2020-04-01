@@ -113,6 +113,7 @@ class algorithm_test_case(_ut.TestCase):
 
             def evolve(self, pop):
                 return 3
+
         algo = algorithm(a())
         self.assertRaises(RuntimeError, lambda: algo.evolve(
             population(null_problem(), 5)))
@@ -497,7 +498,7 @@ class algorithm_test_case(_ut.TestCase):
 
             for m in methods:
                 popc = pop.__copy__()
-                print(m, ": ", end="")
+                # print(m, ": ", end="")
                 scp = algorithm(scipy(method=m))
                 result = scp.evolve(popc).champion_f
                 self.assertTrue(result[0] <= init[0])
@@ -521,8 +522,52 @@ class algorithm_test_case(_ut.TestCase):
                 self.assertTrue(popc.problem.get_hevals() > 0)
 
         # testing verbosity
-        method_list = ["Nelder-Mead","Powell","CG","BFGS","Newton-CG","L-BFGS-B","TNC","COBYLA","SLSQP","trust-constr","dogleg","trust-ncg","trust-exact","trust-krylov",None]
+        method_list = [
+            "Nelder-Mead",
+            "Powell",
+            "CG",
+            "BFGS",
+            "Newton-CG",
+            "L-BFGS-B",
+            "TNC",
+            "COBYLA",
+            "SLSQP",
+            "trust-constr",
+            "dogleg",
+            "trust-ncg",
+            "trust-exact",
+            "trust-krylov",
+            None,
+        ]
         for m in methods:
             scp = algorithm(scipy(method=m))
             scp.set_verbosity(1)
             scp.get_name()
+
+        # testing gradient wrapper generator
+        prob = problem(luksan_vlcek1(10))
+        prob.gradient([0] * prob.get_nx())
+        for i in range(prob.get_nobj() + prob.get_nc()):
+            f = scipy._generate_gradient_sparsity_wrapper(
+                prob.gradient, i, prob.get_nx(), prob.gradient_sparsity
+            )
+            self.assertEqual(len(f([0] * prob.get_nx())), prob.get_nx())
+
+        # testing incompatible gradient function
+        smallerProb = problem(luksan_vlcek1(8))
+        wrapped_gradient = scipy._generate_gradient_sparsity_wrapper(
+                smallerProb.gradient, 0, prob.get_nx(), prob.gradient_sparsity
+            )
+        self.assertRaises(
+            ValueError,
+            lambda: wrapped_gradient([0]*prob.get_nx())
+        )
+
+        # testing hessian wrapper generator
+        prob = problem(rastrigin(10))
+        f = scipy._generate_hessian_sparsity_wrapper(
+            prob.hessians, 0, (prob.get_nx(), prob.get_nx()), prob.hessians_sparsity
+        )
+        hessian = f([0] * prob.get_nx())
+        self.assertEqual(len(hessian), prob.get_nx())
+        self.assertEqual(len(hessian[0]), prob.get_nx())

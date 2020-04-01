@@ -113,7 +113,7 @@ class scipy:
 
     @staticmethod
     def _generate_gradient_sparsity_wrapper(
-        func, idx: int, shape: Union[Tuple[int], int], sparsity_func, invert_sign=False
+        func, idx: int, dim: int, sparsity_func, invert_sign=False
     ):
         """
         A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
@@ -126,7 +126,7 @@ class scipy:
 
             func: the gradient callable
             idx: the requested dimension.
-            shape: the shape of the result as interpreted by numpy. Should be (dim) for a problem of input dimension dim.
+            dim: number of arguments for callable func and the resulting gradient
             sparsity_func: a callable giving the sparsity pattern. Use problem.gradient_sparsity.
             invert_sign: whether all values of the gradient should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
 
@@ -141,6 +141,7 @@ class scipy:
 
         """
         sparsity_pattern = sparsity_func()
+        # TODO: check whether pattern, dim and idx fit together
 
         def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
@@ -171,7 +172,7 @@ class scipy:
                     + str(len(sparsity_pattern))
                 )
             return scipy._unpack_sparse_gradient(
-                sparse_values, idx, shape, sparsity_pattern, invert_sign
+                sparse_values, idx, dim, sparsity_pattern, invert_sign
             )
 
         return wrapper
@@ -267,7 +268,7 @@ class scipy:
         args=(),
         method: str = None,
         tol: float = None,
-        callback: Optional[Callable[[numpy.ndarray],Any]] = None,
+        callback: Optional[Callable[[numpy.ndarray], Any]] = None,
         options: Optional[MutableMapping[str, Any]] = None,
     ) -> None:
         """
