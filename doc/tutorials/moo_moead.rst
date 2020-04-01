@@ -64,6 +64,8 @@ particular the **weight_generation** kwarg was set to **grid** and the **decompo
 
     >>> print(algo) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Algorithm name: MOEAD: MOEA/D - DE [stochastic]
+        C++ class name: ...
+
     	Thread safety: basic
     <BLANKLINE>
     Extra info:

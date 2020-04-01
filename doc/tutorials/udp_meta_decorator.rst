@@ -54,6 +54,8 @@ be that printing *drb* to screen will tell us that *rb* has been wrapped by a :c
 
    >>> drb #doctest: +NORMALIZE_WHITESPACE
    Problem name: Multidimensional Rosenbrock Function [decorated]
+           C++ class name: ...
+
            Global dimension:                       2
            Integer dimension:                      0
            Fitness dimension:                      1
@@ -117,6 +119,8 @@ The string representation of *drb* will now reflect that the fitness function ha
 
    >>> drb #doctest: +NORMALIZE_WHITESPACE
    Problem name: Multidimensional Rosenbrock Function [decorated]
+           C++ class name: ...
+
            Global dimension:                       2
            Integer dimension:                      0
            Fitness dimension:                      1

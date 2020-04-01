@@ -27,6 +27,7 @@ Let us start:
     >>> algo = pg.algorithm(pg.cmaes(gen = 100, sigma0=0.3))
     >>> print(algo) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
     Algorithm name: CMA-ES: Covariance Matrix Adaptation Evolutionary Strategy [stochastic]
+        C++ class name: ...
     	Thread safety: basic
     <BLANKLINE>
     Extra info:

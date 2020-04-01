@@ -12,10 +12,12 @@
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <typeindex>
 
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
+#include <pagmo/config.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
@@ -55,6 +57,13 @@ struct algo_inner<py::object> final : algo_inner_base, pygmo::common_base {
     virtual std::string get_extra_info() const override final;
     virtual void set_verbosity(unsigned) override final;
     virtual bool has_set_verbosity() const override final;
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+    virtual std::type_index get_type_index() const override final;
+    virtual const void *get_ptr() const override final;
+    virtual void *get_ptr() override final;
+#endif
+
     template <typename Archive>
     void save(Archive &, unsigned) const;
     template <typename Archive>

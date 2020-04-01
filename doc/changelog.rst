@@ -3,6 +3,34 @@
 Changelog
 =========
 
+2.15.0 (unreleased)
+-------------------
+
+New
+~~~
+
+- The topologies implemented on top of the Boost Graph Library
+  now provide a ``get_edge_weight()``
+  function to fetch the weight of an edge
+  (`#34 <https://github.com/esa/pygmo2/pull/34>`__).
+
+- Add the :class:`~pygmo.free_form` topology
+  (`#34 <https://github.com/esa/pygmo2/pull/34>`__).
+
+- User-defined topologies can now (optionally) implement
+  a conversion function to a NetworkX graph object
+  (`#34 <https://github.com/esa/pygmo2/pull/34>`__).
+
+Fix
+~~~
+
+- Build system fixes for recent CMake versions
+  (`#35 <https://github.com/esa/pygmo2/pull/35>`__).
+
+- Various doc fixes
+  (`#35 <https://github.com/esa/pygmo2/pull/35>`__,
+  `#34 <https://github.com/esa/pygmo2/pull/34>`__).
+
 2.14.1 (2020-03-06)
 -------------------
 

@@ -26,9 +26,7 @@ cd install
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
-/opt/python/${PYTHON_DIR}/bin/pip install dill scipy
-
-/opt/python/${PYTHON_DIR}/bin/pip install ipyparallel
+/opt/python/${PYTHON_DIR}/bin/pip install dill networkx ipyparallel
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 
 # Install git (-y avoids a user prompt)
@@ -93,8 +91,8 @@ cd /
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
 export PYGMO_RELEASE_VERSION=`echo "${TRAVIS_TAG}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
-#if [[ "${PYGMO_RELEASE_VERSION}" != "" ]] && [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
-    echo "Release build detected, uploading to PyPi."
-    /opt/python/${PYTHON_DIR}/bin/pip install twine
+if [[ "${PYGMO_RELEASE_VERSION}" != "" ]] && [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
+	echo "Release build detected, uploading to PyPi."
+	/opt/python/${PYTHON_DIR}/bin/pip install twine
 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa /pygmo2/build/wheel/dist2/pygmo*
-#fi
+fi

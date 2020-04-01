@@ -17,6 +17,8 @@ I have the gradient
     >>> algo = pg.algorithm(uda)
     >>> print(algo) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     Algorithm name: NLopt - slsqp: [deterministic]
+        C++ class name: ...
+    <BLANKLINE>
         Thread safety: basic
     <BLANKLINE>
     Extra info:

@@ -15,7 +15,7 @@ export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
-conda_pkgs="cmake boost-cpp python=3.6 numpy cloudpickle dill numba pybind11 pagmo-devel scipy"
+conda_pkgs="cmake boost-cpp python=3.6 numpy cloudpickle networkx dill numba pybind11 pagmo-devel"
 conda create -q -p $deps_dir -y
 source activate $deps_dir
 conda install $conda_pkgs -y
