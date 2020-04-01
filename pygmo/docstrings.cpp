@@ -5920,8 +5920,10 @@ Examples:
     >>> from pygmo import *
     >>> ip = ipopt()
     >>> ip.set_string_option("hessian_approximation","limited-memory")
-    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE
+    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     Algorithm name: Ipopt: Interior Point Optimization [deterministic]
+        C++ class name: ...
+    <BLANKLINE>
         Thread safety: none
     <BLANKLINE>
     Extra info:
@@ -5955,8 +5957,10 @@ Examples:
     >>> from pygmo import *
     >>> ip = ipopt()
     >>> ip.set_string_options({"hessian_approximation":"limited-memory", "limited_memory_initialization":"scalar1"})
-    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE
+    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     Algorithm name: Ipopt: Interior Point Optimization [deterministic]
+            C++ class name: ...
+    <BLANKLINE>
             Thread safety: none
     <BLANKLINE>
     Extra info:
@@ -6028,8 +6032,10 @@ Examples:
     >>> from pygmo import *
     >>> ip = ipopt()
     >>> ip.set_integer_option("print_level",3)
-    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE
+    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     Algorithm name: Ipopt: Interior Point Optimization [deterministic]
+            C++ class name: ...
+    <BLANKLINE>
             Thread safety: none
     <BLANKLINE>
     Extra info:
@@ -6063,8 +6069,10 @@ Examples:
     >>> from pygmo import *
     >>> ip = ipopt()
     >>> ip.set_integer_options({"filter_reset_trigger":4, "print_level":3})
-    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE
+    >>> algorithm(ip) # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     Algorithm name: Ipopt: Interior Point Optimization [deterministic]
+            C++ class name: ...
+    <BLANKLINE>
             Thread safety: none
     <BLANKLINE>
     Extra info:
@@ -6136,8 +6144,10 @@ Examples:
     >>> from pygmo import *
     >>> ip = ipopt()
     >>> ip.set_numeric_option("tol",1E-6)
-    >>> algorithm(ip) # doctest: +SKIP
+    >>> algorithm(ip) # doctest: +SKIP +ELLIPSIS
     Algorithm name: Ipopt: Interior Point Optimization [deterministic]
+            C++ class name: ...
+    <BLANKLINE>
             Thread safety: none
     <BLANKLINE>
     Extra info:
@@ -6171,8 +6181,10 @@ Examples:
     >>> from pygmo import *
     >>> ip = ipopt()
     >>> ip.set_numeric_options({"tol":1E-4, "constr_viol_tol":1E-3})
-    >>> algorithm(ip) # doctest: +SKIP
+    >>> algorithm(ip) # doctest: +SKIP +ELLIPSIS
     Algorithm name: Ipopt: Interior Point Optimization [deterministic]
+            C++ class name: ...
+    <BLANKLINE>
             Thread safety: none
     <BLANKLINE>
     Extra info:

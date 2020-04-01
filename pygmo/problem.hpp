@@ -12,11 +12,13 @@
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <typeindex>
 #include <utility>
 #include <vector>
 
 #include <pybind11/pybind11.h>
 
+#include <pagmo/config.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
@@ -81,6 +83,13 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     virtual void set_seed(unsigned) override final;
     virtual bool has_set_seed() const override final;
     virtual thread_safety get_thread_safety() const override final;
+
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+    virtual std::type_index get_type_index() const override final;
+    virtual const void *get_ptr() const override final;
+    virtual void *get_ptr() override final;
+#endif
+
     template <typename Archive>
     void save(Archive &, unsigned) const;
     template <typename Archive>

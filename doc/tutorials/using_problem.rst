@@ -27,6 +27,8 @@ Let us start:
     >>> prob = pg.problem(pg.rosenbrock(dim = 5))
     >>> print(prob) #doctest: +NORMALIZE_WHITESPACE
     Problem name: Multidimensional Rosenbrock Function
+        C++ class name: ...
+
     	Global dimension:			5
     	Integer dimension:			0
     	Fitness dimension:			1
