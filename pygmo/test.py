@@ -2028,7 +2028,7 @@ class cec2013_test_case(_ut.TestCase):
 
     def runTest(self):
         try:
-            # NOTE: cec2013 is not always present (see MSVC issue).
+            # NOTE: cec2013 is not always present.
             from .core import cec2013, population
         except ImportError:
             return
@@ -2042,7 +2042,7 @@ class cec2014_test_case(_ut.TestCase):
 
     def runTest(self):
         try:
-            # NOTE: cec2014 is not always present (see MSVC issue).
+            # NOTE: cec2014 is not always present.
             from .core import cec2014, population
         except ImportError:
             return
