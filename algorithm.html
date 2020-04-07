@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Algorithm class &mdash; pygmo 2.15.0 documentation</title>
+  <title>Algorithm class &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -208,9 +208,9 @@
 <div class="section" id="algorithm-class">
 <h1>Algorithm class<a class="headerlink" href="#algorithm-class" title="Permalink to this headline">¶</a></h1>
 <img alt="_images/algo_no_text.png" src="_images/algo_no_text.png" />
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.algorithm">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">algorithm</code><span class="sig-paren">(</span><em class="sig-param">uda = null_algorithm()</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">algorithm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uda</span><span class="o">=</span><span class="default_value">null_algorithm()</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Algorithm class.</p>
 <p>This class represents an optimization algorithm. An algorithm can be
 stochastic, deterministic, population based, derivative-free, using hessians,
@@ -250,7 +250,7 @@ methods in the UDA should be implemented and on how they are used by <a class="r
 Note that the exposed C++ algorithms can also be used as UDAs, even if they do not expose any of the
 mandatory or optional methods listed above (see <a class="reference internal" href="overview.html#available-algorithms"><span class="std std-ref">here</span></a> for the
 full list of UDAs already coded in pygmo).</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/algorithm.html#_CPPv4N5pagmo9algorithmE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:algorithm</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/algorithm.html#_CPPv4N5pagmo9algorithmE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:algorithm</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>uda</strong> – a user-defined algorithm, either C++ or Python</p>
@@ -265,9 +265,9 @@ full list of UDAs already coded in pygmo).</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.evolve">
-<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param">pop</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.evolve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.evolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will invoke the <code class="docutils literal notranslate"><span class="pre">evolve()</span></code> method of the UDA. This is where the core of the optimization
 (<em>evolution</em>) is made.</p>
 <dl class="field-list simple">
@@ -287,9 +287,9 @@ full list of UDAs already coded in pygmo).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.extract">
-<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.extract" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.extract" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the user-defined algorithm.</p>
 <p>This method allows to extract a reference to the user-defined algorithm (UDA) stored within this
 <a class="reference internal" href="#pygmo.algorithm" title="pygmo.algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">algorithm</span></code></a> instance. The behaviour of this function depends on the value
@@ -297,7 +297,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDA is <em>t</em>, then a reference to the UDA will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/algorithm.html#_CPPv4I0ENK5pagmo9algorithm7extractEPK1Tv" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:algorithm::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/algorithm.html#_CPPv4I0ENK5pagmo9algorithm7extractEPK1Tv" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:algorithm::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDA is a Python object (as opposed to an
 <a class="reference internal" href="algorithms.html#algorithms-cpp"><span class="std std-ref">exposed C++ algorithm</span></a>), then a reference to the
 UDA will be returned (this allows to extract a Python UDA without knowing its type),</p></li>
@@ -335,7 +335,7 @@ UDA will be returned (this allows to extract a Python UDA without knowing its ty
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.get_extra_info">
 <code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Algorithm’s extra info.</p>
@@ -354,7 +354,7 @@ method. Otherwise, an empty string will be returned.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.get_name">
 <code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Algorithm’s name.</p>
@@ -370,7 +370,7 @@ Otherwise, an implementation-defined name based on the type of the UDA will be r
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.get_thread_safety">
 <code class="sig-name descname">get_thread_safety</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.get_thread_safety" title="Permalink to this definition">¶</a></dt>
 <dd><p>Algorithm’s thread safety level.</p>
@@ -388,7 +388,7 @@ UDAs, the returned value will be unconditionally <code class="docutils literal n
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.has_set_seed">
 <code class="sig-name descname">has_set_seed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.has_set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method is available in the UDA.</p>
@@ -413,7 +413,7 @@ implement the <code class="docutils literal notranslate"><span class="pre">set_s
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.has_set_verbosity">
 <code class="sig-name descname">has_set_verbosity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.has_set_verbosity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the <code class="docutils literal notranslate"><span class="pre">set_verbosity()</span></code> method is available in the UDA.</p>
@@ -438,9 +438,9 @@ implement the <code class="docutils literal notranslate"><span class="pre">set_v
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.is_">
-<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.is_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.is_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the type of the user-defined algorithm.</p>
 <p>This method returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> if <a class="reference internal" href="#pygmo.algorithm.extract" title="pygmo.algorithm.extract"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract(t)</span></code></a> returns
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> otherwise.</p>
@@ -460,15 +460,15 @@ implement the <code class="docutils literal notranslate"><span class="pre">set_v
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.is_stochastic">
 <code class="sig-name descname">is_stochastic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.is_stochastic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#pygmo.algorithm.has_set_seed" title="pygmo.algorithm.has_set_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">has_set_seed()</span></code></a>.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.set_seed">
-<code class="sig-name descname">set_seed</code><span class="sig-paren">(</span><em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.set_seed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_seed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the seed for the stochastic evolution.</p>
 <p>This method will set the seed to be used in the <code class="docutils literal notranslate"><span class="pre">evolve()</span></code> method of the UDA for all stochastic variables. If the UDA
 provides a <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method, then its <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method will be invoked. Otherwise, an error will be
@@ -488,9 +488,9 @@ raised. The <em>seed</em> parameter must be non-negative.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.algorithm.set_verbosity">
-<code class="sig-name descname">set_verbosity</code><span class="sig-paren">(</span><em class="sig-param">level</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.set_verbosity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_verbosity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.algorithm.set_verbosity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the verbosity of logs and screen output.</p>
 <p>This method will set the level of verbosity for the algorithm. If the UDA provides a <code class="docutils literal notranslate"><span class="pre">set_verbosity()</span></code> method,
 then its <code class="docutils literal notranslate"><span class="pre">set_verbosity()</span></code> method will be invoked. Otherwise, an error will be raised.</p>

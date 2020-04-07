@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Generic optimization utilities &mdash; pygmo 2.15.0 documentation</title>
+  <title>Generic optimization utilities &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -203,9 +203,9 @@
 </style>
 <div class="section" id="generic-optimization-utilities">
 <h1>Generic optimization utilities<a class="headerlink" href="#generic-optimization-utilities" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.random_decision_vector">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">random_decision_vector</code><span class="sig-paren">(</span><em class="sig-param">prob</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.random_decision_vector" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">random_decision_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.random_decision_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will generate a decision vector whose values are randomly chosen with uniform probability within
 the lower and upper bounds <span class="math notranslate nohighlight">\(lb\)</span> and <span class="math notranslate nohighlight">\(ub\)</span> of the input <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> <em>prob</em>.</p>
 <p>For the continuous part of the decision vector, the <span class="math notranslate nohighlight">\(i\)</span>-th component of the randomly generated decision
@@ -234,9 +234,9 @@ is guaranteed to be an integral value such that <span class="math notranslate no
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.batch_random_decision_vector">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">batch_random_decision_vector</code><span class="sig-paren">(</span><em class="sig-param">prob</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.batch_random_decision_vector" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">batch_random_decision_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span></em>, <em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.batch_random_decision_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will generate a batch of <em>n</em> decision vectors whose values are randomly chosen with uniform probability within
 the lower and upper bounds <span class="math notranslate nohighlight">\(lb\)</span> and <span class="math notranslate nohighlight">\(ub\)</span> of the input <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> <em>prob</em>.
 The decision vectors are laid out contiguously in the return value: for a problem with dimension <span class="math notranslate nohighlight">\(x\)</span>,
@@ -272,9 +272,9 @@ are guaranteed to be integral values such that <span class="math notranslate noh
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.set_global_rng_seed">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">set_global_rng_seed</code><span class="sig-paren">(</span><em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.set_global_rng_seed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">set_global_rng_seed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.set_global_rng_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>In pygmo it is, in general, possible to control the seed of all random generators by a dedicated <em>seed</em> kwarg passed on via various
 constructors. If no <em>seed</em> is passed pygmo randomly creates a seed for you using its global random number generator.</p>
 <p>This function allows to be able to reset the seed of such a global random number generator. This can be useful to create a deterministic behaviour of pygmo easily.</p>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Gradient and Hessians utilities &mdash; pygmo 2.15.0 documentation</title>
+  <title>Gradient and Hessians utilities &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -203,9 +203,9 @@
 </style>
 <div class="section" id="gradient-and-hessians-utilities">
 <h1>Gradient and Hessians utilities<a class="headerlink" href="#gradient-and-hessians-utilities" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.estimate_sparsity">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">estimate_sparsity</code><span class="sig-paren">(</span><em class="sig-param">callable</em>, <em class="sig-param">x</em>, <em class="sig-param">dx = 1e-8</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.estimate_sparsity" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">estimate_sparsity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callable</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">dx</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.estimate_sparsity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a numerical estimation of the sparsity pattern of same callable object by numerically
 computing it around the input point <em>x</em> and detecting the components that are changed.</p>
 <p>The <em>callable</em> must accept an iterable as input and return an array-like object</p>
@@ -247,9 +247,9 @@ confident the estimate will be correct.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.estimate_gradient">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">estimate_gradient</code><span class="sig-paren">(</span><em class="sig-param">callable</em>, <em class="sig-param">x</em>, <em class="sig-param">dx = 1e-8</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.estimate_gradient" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">estimate_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callable</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">dx</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.estimate_gradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a numerical estimation of the sparsity pattern of same callable object by numerically
 computing it around the input point <em>x</em> and detecting the components that are changed.</p>
 <p>The <em>callable</em> must accept an iterable as input and return an array-like object. The gradient returned will be dense
@@ -290,9 +290,9 @@ and contain, in the lexicographic order requested by <a class="reference interna
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.estimate_gradient_h">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">estimate_gradient_h</code><span class="sig-paren">(</span><em class="sig-param">callable</em>, <em class="sig-param">x</em>, <em class="sig-param">dx = 1e-8</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.estimate_gradient_h" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">estimate_gradient_h</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callable</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">dx</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.estimate_gradient_h" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a numerical estimation of the sparsity pattern of same callable object by numerically
 computing it around the input point <em>x</em> and detecting the components that are changed.</p>
 <p>The <em>callable</em> must accept an iterable as input and return an array-like object. The gradient returned will be dense

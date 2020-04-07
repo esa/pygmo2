@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Batch fitness evaluator &mdash; pygmo 2.15.0 documentation</title>
+  <title>Batch fitness evaluator &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -207,9 +207,9 @@
 </style>
 <div class="section" id="batch-fitness-evaluator">
 <h1>Batch fitness evaluator<a class="headerlink" href="#batch-fitness-evaluator" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.bfe">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">bfe</code><span class="sig-paren">(</span><em class="sig-param">udbfe = default_bfe()</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">bfe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">udbfe</span><span class="o">=</span><span class="default_value">default_bfe()</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch fitness evaluator.</p>
 <p>This class implements the evaluation of decision vectors in batch mode. That is,
 whereas a <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> provides the means to evaluate a single decision
@@ -252,7 +252,7 @@ stored contiguously).</p>
 </div>
 <p>See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDBFE are used by <a class="reference internal" href="#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4N5pagmo3bfeE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:bfe</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4N5pagmo3bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:bfe</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udbfe</strong> – a user-defined batch fitness evaluator, either C++ or Python</p>
@@ -267,9 +267,9 @@ methods in the UDBFE are used by <a class="reference internal" href="#pygmo.bfe"
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.bfe.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param">prob</em>, <em class="sig-param">dvs</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.__call__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span></em>, <em class="sig-param"><span class="n">dvs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call operator.</p>
 <p>The call operator will invoke the internal UDBFE instance to perform the evaluation in batch mode
 of the decision vectors stored in <em>dvs</em> using the input <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> or UDP <em>prob</em>,
@@ -304,9 +304,9 @@ will occupy the range <span class="math notranslate nohighlight">\(\left[f, 2f\r
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.bfe.extract">
-<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.extract" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.extract" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the user-defined batch fitness evaluator (bfe).</p>
 <p>This method allows to extract a reference to the user-defined bfe (UDBFE) stored within this
 <a class="reference internal" href="#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a> instance. The behaviour of this function depends on the value
@@ -314,7 +314,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDBFE is <em>t</em>, then a reference to the UDBFE will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4I0ENK5pagmo3bfe7extractEPK1Tv" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:bfe::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4I0ENK5pagmo3bfe7extractEPK1Tv" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:bfe::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDBFE is a Python object (as opposed to an
 <a class="reference internal" href="bfes.html#bfes-cpp"><span class="std std-ref">exposed C++ bfe</span></a>), then a reference to the
 UDBFE will be returned (this allows to extract a Python UDBFE without knowing its type),</p></li>
@@ -350,7 +350,7 @@ UDBFE will be returned (this allows to extract a Python UDBFE without knowing it
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.bfe.get_extra_info">
 <code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bfe’s extra info.</p>
@@ -369,7 +369,7 @@ method. Otherwise, an empty string will be returned.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.bfe.get_name">
 <code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bfe’s name.</p>
@@ -385,7 +385,7 @@ Otherwise, an implementation-defined name based on the type of the UDBFE will be
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.bfe.get_thread_safety">
 <code class="sig-name descname">get_thread_safety</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_thread_safety" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bfe’s thread safety level.</p>
@@ -403,9 +403,9 @@ UDBFEs, the returned value will be unconditionally <code class="docutils literal
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.bfe.is_">
-<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.is_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.is_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the type of the user-defined batch fitness evaluator.</p>
 <p>This method returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> if <a class="reference internal" href="#pygmo.bfe.extract" title="pygmo.bfe.extract"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract(t)</span></code></a> returns
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> otherwise.</p>

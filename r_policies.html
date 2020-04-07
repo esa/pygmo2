@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of replacement policies &mdash; pygmo 2.15.0 documentation</title>
+  <title>List of replacement policies &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -209,9 +209,9 @@
 <span id="r-policies"></span><h1>List of replacement policies<a class="headerlink" href="#list-of-replacement-policies" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="replacement-policies-exposed-from-c">
 <span id="r-policies-cpp"></span><h2>Replacement policies exposed from C++<a class="headerlink" href="#replacement-policies-exposed-from-c" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.fair_replace">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">fair_replace</code><span class="sig-paren">(</span><em class="sig-param">rate=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fair_replace" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">fair_replace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rate</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fair_replace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fair replacement policy.</p>
 <p>This user-defined replacement policy (UDRP) will replace individuals in
 a group only if the candidate replacement individuals are <em>better</em> than
@@ -236,7 +236,7 @@ a value of 0 means that no individuals will be replaced, a value of 1 means that
 all individuals may be replaced.</p>
 <p>If <em>rate</em> is an integral value, then it represents an <em>absolute</em> migration rate, that is,
 the exact number of individuals that may be replaced in the input population.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/r_policies/fair_replace.html#_CPPv4N5pagmo12fair_replaceE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:fair_replace</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/r_policies/fair_replace.html#_CPPv4N5pagmo12fair_replaceE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:fair_replace</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – the desired migration rate</p>

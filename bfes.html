@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of batch evaluators &mdash; pygmo 2.15.0 documentation</title>
+  <title>List of batch evaluators &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -210,9 +210,9 @@
 <span id="bfes"></span><h1>List of batch evaluators<a class="headerlink" href="#list-of-batch-evaluators" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="batch-evaluators-implemented-in-python">
 <h2>Batch evaluators implemented in Python<a class="headerlink" href="#batch-evaluators-implemented-in-python" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.mp_bfe">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">mp_bfe</code><span class="sig-paren">(</span><em class="sig-param">chunksize=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">mp_bfe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chunksize</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiprocessing batch fitness evaluator.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.13.</span></p>
@@ -268,7 +268,7 @@ submitted to the process pool by the call operator</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.mp_bfe.get_extra_info">
 <code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extra info for this evaluator.</p>
@@ -287,7 +287,7 @@ invoking this function will trigger the creation of a new pool.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.mp_bfe.get_name">
 <code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of this evaluator.</p>
@@ -301,7 +301,7 @@ invoking this function will trigger the creation of a new pool.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.mp_bfe.get_pool_size">
 <em class="property">static </em><code class="sig-name descname">get_pool_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.get_pool_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the size of the process pool.</p>
@@ -320,9 +320,9 @@ function will trigger the creation of a new pool.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.mp_bfe.init_pool">
-<em class="property">static </em><code class="sig-name descname">init_pool</code><span class="sig-paren">(</span><em class="sig-param">processes=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.init_pool" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">init_pool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">processes</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.init_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialise the process pool.</p>
 <p>This method will initialise the process pool backing <a class="reference internal" href="#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">mp_bfe</span></code></a>, if the pool
 has not been initialised yet or if the pool was previously shut down via <a class="reference internal" href="#pygmo.mp_bfe.shutdown_pool" title="pygmo.mp_bfe.shutdown_pool"><code class="xref py py-func docutils literal notranslate"><span class="pre">shutdown_pool()</span></code></a>.
@@ -342,9 +342,9 @@ equal to the number of logical CPUs on the system)</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.mp_bfe.resize_pool">
-<em class="property">static </em><code class="sig-name descname">resize_pool</code><span class="sig-paren">(</span><em class="sig-param">processes</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.resize_pool" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">resize_pool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">processes</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.resize_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resize pool.</p>
 <p>This method will resize the process pool backing <a class="reference internal" href="#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">mp_bfe</span></code></a>.</p>
 <p>If the process pool was previously shut down via <a class="reference internal" href="#pygmo.mp_bfe.shutdown_pool" title="pygmo.mp_bfe.shutdown_pool"><code class="xref py py-func docutils literal notranslate"><span class="pre">shutdown_pool()</span></code></a>, invoking this
@@ -363,7 +363,7 @@ function will trigger the creation of a new pool.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.mp_bfe.shutdown_pool">
 <em class="property">static </em><code class="sig-name descname">shutdown_pool</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.mp_bfe.shutdown_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shutdown pool.</p>
@@ -377,7 +377,7 @@ will raise an error. A new process pool can be created via an explicit call to
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.ipyparallel_bfe">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">ipyparallel_bfe</code><a class="headerlink" href="#pygmo.ipyparallel_bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ipyparallel batch fitness evaluator.</p>
@@ -396,7 +396,7 @@ among all the ipyparallel batch fitness evaluators.</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://ipyparallel.readthedocs.io/en/latest/">https://ipyparallel.readthedocs.io/en/latest/</a></p>
 </div>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ipyparallel_bfe.get_extra_info">
 <code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ipyparallel_bfe.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extra info for this evaluator.</p>
@@ -410,7 +410,7 @@ among all the ipyparallel batch fitness evaluators.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ipyparallel_bfe.get_name">
 <code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ipyparallel_bfe.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the evaluator.</p>
@@ -424,9 +424,9 @@ among all the ipyparallel batch fitness evaluators.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ipyparallel_bfe.init_view">
-<em class="property">static </em><code class="sig-name descname">init_view</code><span class="sig-paren">(</span><em class="sig-param">client_args=[]</em>, <em class="sig-param">client_kwargs={}</em>, <em class="sig-param">view_args=[]</em>, <em class="sig-param">view_kwargs={}</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ipyparallel_bfe.init_view" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">init_view</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client_args</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">client_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">view_args</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">view_kwargs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ipyparallel_bfe.init_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Init the ipyparallel view.</p>
 <p>This method will initialise the <a class="reference external" href="https://ipyparallel.readthedocs.io/en/latest/api/ipyparallel.html#ipyparallel.LoadBalancedView" title="(in ipyparallel v6.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ipyparallel.LoadBalancedView</span></code></a>
 which is used by all ipyparallel evaluators to submit the evaluation tasks
@@ -466,7 +466,7 @@ construction of the view</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ipyparallel_bfe.shutdown_view">
 <em class="property">static </em><code class="sig-name descname">shutdown_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ipyparallel_bfe.shutdown_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the ipyparallel view.</p>
@@ -482,7 +482,7 @@ the <a class="reference internal" href="#pygmo.ipyparallel_bfe.init_view" title=
 </div>
 <div class="section" id="batch-evaluators-exposed-from-c">
 <span id="bfes-cpp"></span><h2>Batch evaluators exposed from C++<a class="headerlink" href="#batch-evaluators-exposed-from-c" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.default_bfe">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">default_bfe</code><a class="headerlink" href="#pygmo.default_bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Default UDBFE.</p>
@@ -501,11 +501,11 @@ guarantee (as established by <a class="reference internal" href="problem.html#py
 otherwise,</p></li>
 <li><p>a <a class="reference internal" href="#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mp_bfe</span></code></a> will be constructed and invoked to produce the return value.</p></li>
 </ul>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/default_bfe.html#_CPPv4N5pagmo11default_bfeE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:default_bfe</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/default_bfe.html#_CPPv4N5pagmo11default_bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:default_bfe</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.thread_bfe">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">thread_bfe</code><a class="headerlink" href="#pygmo.thread_bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Threaded UDBFE.</p>
@@ -513,11 +513,11 @@ otherwise,</p></li>
 construct a <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
 <p><a class="reference internal" href="#pygmo.thread_bfe" title="pygmo.thread_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">thread_bfe</span></code></a> will use multiple threads of execution to parallelise
 the evaluation of the fitnesses of a batch of input decision vectors.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/thread_bfe.html#_CPPv4N5pagmo10thread_bfeE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:thread_bfe</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/thread_bfe.html#_CPPv4N5pagmo10thread_bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:thread_bfe</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.member_bfe">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">member_bfe</code><a class="headerlink" href="#pygmo.member_bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Member UDBFE.</p>
@@ -525,7 +525,7 @@ the evaluation of the fitnesses of a batch of input decision vectors.</p>
 construct a <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
 <p><a class="reference internal" href="#pygmo.member_bfe" title="pygmo.member_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">member_bfe</span></code></a> is a simple wrapper which delegates batch fitness evaluations
 to the input problem’s <a class="reference internal" href="problem.html#pygmo.problem.batch_fitness" title="pygmo.problem.batch_fitness"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.problem.batch_fitness()</span></code></a> method.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/member_bfe.html#_CPPv4N5pagmo10member_bfeE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:member_bfe</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/member_bfe.html#_CPPv4N5pagmo10member_bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:member_bfe</span></code></a>.</p>
 </dd></dl>
 
 </div>

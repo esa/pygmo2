@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Multi-objective optimization utilities &mdash; pygmo 2.15.0 documentation</title>
+  <title>Multi-objective optimization utilities &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -203,9 +203,9 @@
 </style>
 <div class="section" id="multi-objective-optimization-utilities">
 <h1>Multi-objective optimization utilities<a class="headerlink" href="#multi-objective-optimization-utilities" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.fast_non_dominated_sorting">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">fast_non_dominated_sorting</code><span class="sig-paren">(</span><em class="sig-param">points</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fast_non_dominated_sorting" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">fast_non_dominated_sorting</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fast_non_dominated_sorting" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs the fast non dominated sorting algorithm on the input <em>points</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -239,9 +239,9 @@
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.nadir">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">nadir</code><span class="sig-paren">(</span><em class="sig-param">points</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.nadir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">nadir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.nadir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the nadir point of a set of points, i.e objective vectors. The nadir is that point that has the maximum
 value of the objective function in the points of the non-dominated front.</p>
 <p>Complexity is <span class="math notranslate nohighlight">\(\mathcal{O}(MN^2)\)</span> where <span class="math notranslate nohighlight">\(M\)</span> is the number of objectives and <span class="math notranslate nohighlight">\(N\)</span> is the number of points.</p>
@@ -265,9 +265,9 @@ value of the objective function in the points of the non-dominated front.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.ideal">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">ideal</code><span class="sig-paren">(</span><em class="sig-param">points</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ideal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">ideal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ideal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the ideal point of a set of points, i.e objective vectors. The ideal point is that point that has, in each
 component, the minimum value of the objective functions of the input points.</p>
 <p>Complexity is <span class="math notranslate nohighlight">\(\mathcal{O}(MN)\)</span> where <span class="math notranslate nohighlight">\(M\)</span> is the number of objectives and <span class="math notranslate nohighlight">\(N\)</span> is the number of points.</p>
@@ -291,9 +291,9 @@ component, the minimum value of the objective functions of the input points.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.pareto_dominance">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">pareto_dominance</code><span class="sig-paren">(</span><em class="sig-param">obj1</em>, <em class="sig-param">obj2</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.pareto_dominance" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">pareto_dominance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj1</span></em>, <em class="sig-param"><span class="n">obj2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.pareto_dominance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <em>obj1</em> Pareto dominates <em>obj2</em>, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise. Minimization
 is assumed.</p>
 <p>Each pair of corresponding elements in  <em>obj1</em> and <em>obj2</em> is compared: if all
@@ -328,9 +328,9 @@ but at least one is different, <code class="docutils literal notranslate"><span 
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.non_dominated_front_2d">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">non_dominated_front_2d</code><span class="sig-paren">(</span><em class="sig-param">points</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.non_dominated_front_2d" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">non_dominated_front_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.non_dominated_front_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the non dominated front of a set of two dimensional objectives. Complexity is <span class="math notranslate nohighlight">\(\mathcal{O}(N \log N)\)</span>
 and is thus lower than the complexity of calling <a class="reference internal" href="#pygmo.fast_non_dominated_sorting" title="pygmo.fast_non_dominated_sorting"><code class="xref py py-func docutils literal notranslate"><span class="pre">fast_non_dominated_sorting()</span></code></a></p>
 <p>See: Jensen, Mikkel T. “Reducing the run-time complexity of multiobjective EAs: The NSGA-II and other algorithms.”
@@ -361,9 +361,9 @@ IEEE Transactions on Evolutionary Computation 7.5 (2003): 503-515.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.crowding_distance">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">crowding_distance</code><span class="sig-paren">(</span><em class="sig-param">points</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.crowding_distance" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">crowding_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.crowding_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>An implementation of the crowding distance. Complexity is <span class="math notranslate nohighlight">\(O(M N \log N)\)</span> where <span class="math notranslate nohighlight">\(M\)</span> is the number of
 objectives and <span class="math notranslate nohighlight">\(N\)</span> is the number of individuals. The function assumes <em>points</em> contain a non-dominated front.
 Failiure to meet this condition will result in undefined behaviour.</p>
@@ -395,9 +395,9 @@ optimization: NSGA-II.” Parallel problem solving from nature PPSN VI. Springer
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.sort_population_mo">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">sort_population_mo</code><span class="sig-paren">(</span><em class="sig-param">points</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.sort_population_mo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">sort_population_mo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.sort_population_mo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sorts a multi-objective, unconstrained,  population (intended here as a 2D array-like
 containing objective vectors) with respect to the following strict ordering:</p>
 <ul class="simple">
@@ -437,9 +437,9 @@ of size 1, in which case, though, it is more efficient to sort using python buil
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.select_best_N_mo">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">select_best_N_mo</code><span class="sig-paren">(</span><em class="sig-param">points</em>, <em class="sig-param">N</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.select_best_N_mo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">select_best_N_mo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">N</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.select_best_N_mo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns (unordered) the best N individuals out of a multi-objective, unconstrained population, (intended here
 as a 2D array-like containing objective vectors). The strict ordering used is the same as that defined
 in <a class="reference internal" href="#pygmo.sort_population_mo" title="pygmo.sort_population_mo"><code class="xref py py-func docutils literal notranslate"><span class="pre">sort_population_mo()</span></code></a></p>
@@ -478,9 +478,9 @@ non-dominated front containing individuals included in the best N.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.decompose_objectives">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">decompose_objectives</code><span class="sig-paren">(</span><em class="sig-param">objs</em>, <em class="sig-param">weights</em>, <em class="sig-param">ref_point</em>, <em class="sig-param">method</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decompose_objectives" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">decompose_objectives</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">objs</span></em>, <em class="sig-param"><span class="n">weights</span></em>, <em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decompose_objectives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decomposes a vector of objectives.</p>
 <p>A vector of objectives is reduced to one only objective using a decomposition technique.</p>
 <p>Three different possibilities for <em>method</em> are here made available:</p>
@@ -539,9 +539,9 @@ z^*_n)\)</span> an <span class="math notranslate nohighlight">\(n\)</span>-dimen
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="function">
+<dl class="py function">
 <dt id="pygmo.decomposition_weights">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">decomposition_weights</code><span class="sig-paren">(</span><em class="sig-param">n_f</em>, <em class="sig-param">n_w</em>, <em class="sig-param">method</em>, <em class="sig-param">seed</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decomposition_weights" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">decomposition_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_f</span></em>, <em class="sig-param"><span class="n">n_w</span></em>, <em class="sig-param"><span class="n">method</span></em>, <em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decomposition_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates the requested number of weight vectors to be used to decompose a multi-objective problem. Three methods are available:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;grid&quot;</span></code> generates weights on an uniform grid. This method may only be used when the number of requested weights to be genrated is such that a uniform grid is indeed possible.

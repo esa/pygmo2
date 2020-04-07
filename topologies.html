@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of topologies &mdash; pygmo 2.15.0 documentation</title>
+  <title>List of topologies &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -209,23 +209,23 @@
 <span id="topologies"></span><h1>List of topologies<a class="headerlink" href="#list-of-topologies" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="topologies-exposed-from-c">
 <span id="topologies-cpp"></span><h2>Topologies exposed from C++<a class="headerlink" href="#topologies-exposed-from-c" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.unconnected">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">unconnected</code><a class="headerlink" href="#pygmo.unconnected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unconnected topology.</p>
 <p>This user-defined topology (UDT) represents an unconnected graph. This is the default
 UDT used by <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.topology</span></code></a>.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/unconnected.html#_CPPv4N5pagmo11unconnectedE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:unconnected</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/unconnected.html#_CPPv4N5pagmo11unconnectedE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:unconnected</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.ring">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">ring</code><span class="sig-paren">(</span><em class="sig-param">n=0</em>, <em class="sig-param">w=1.</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">ring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">w</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ring topology.</p>
 <p>This user-defined topology (UDT) represents a bidirectional ring (that is, a ring in
 which each node connects to both the previous and the following nodes).</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/ring.html#_CPPv4N5pagmo4ringE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:ring</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/ring.html#_CPPv4N5pagmo4ringE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:ring</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -240,9 +240,9 @@ which each node connects to both the previous and the following nodes).</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.add_edge">
-<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">w=1.</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.add_edge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">w</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.add_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a new edge.</p>
 <p>This method will add a new edge of weight <em>w</em> connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -263,7 +263,7 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.add_vertex">
 <code class="sig-name descname">add_vertex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.add_vertex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a vertex.</p>
@@ -271,9 +271,9 @@ which each node connects to both the previous and the following nodes).</p>
 <p>The newly-added vertex will be disjoint from any other vertex in the topology (i.e., there are no connections to/from the new vertex).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.are_adjacent">
-<code class="sig-name descname">are_adjacent</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.are_adjacent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">are_adjacent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.are_adjacent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if two vertices are adjacent.</p>
 <p>Two vertices <em>i</em> and <em>j</em> are adjacent if there is a directed edge connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -298,9 +298,9 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.get_edge_weight">
-<code class="sig-name descname">get_edge_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.get_edge_weight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_edge_weight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.get_edge_weight" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
 <p><span class="versionmodified added">New in version 2.15.</span></p>
 </div>
@@ -328,7 +328,7 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.get_weight">
 <code class="sig-name descname">get_weight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.get_weight" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -341,7 +341,7 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.num_vertices">
 <code class="sig-name descname">num_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.num_vertices" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -354,9 +354,9 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.remove_edge">
-<code class="sig-name descname">remove_edge</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.remove_edge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.remove_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove an existing edge.</p>
 <p>This method will remove the edge connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -375,9 +375,9 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.set_all_weights">
-<code class="sig-name descname">set_all_weights</code><span class="sig-paren">(</span><em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.set_all_weights" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_all_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.set_all_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will set the weights of all edges in the topology to <em>w</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -389,9 +389,9 @@ which each node connects to both the previous and the following nodes).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.ring.set_weight">
-<code class="sig-name descname">set_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.set_weight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_weight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ring.set_weight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the weight of an edge.</p>
 <p>This method will set to <em>w</em> the weight of the edge connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -415,14 +415,14 @@ which each node connects to both the previous and the following nodes).</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.fully_connected">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">fully_connected</code><span class="sig-paren">(</span><em class="sig-param">n=0</em>, <em class="sig-param">w=1.</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fully_connected" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">fully_connected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">w</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fully_connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fully connected topology.</p>
 <p>This user-defined topology (UDT) represents a <em>complete graph</em> (that is, a topology
 in which all vertices connect to all other vertices). The edge weight is configurable
 at construction, and it will be the same for all the edges in the topology.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/fully_connected.html#_CPPv4N5pagmo15fully_connectedE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:fully_connected</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/fully_connected.html#_CPPv4N5pagmo15fully_connectedE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:fully_connected</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -437,7 +437,7 @@ at construction, and it will be the same for all the edges in the topology.</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.fully_connected.get_weight">
 <code class="sig-name descname">get_weight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fully_connected.get_weight" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -450,7 +450,7 @@ at construction, and it will be the same for all the edges in the topology.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.fully_connected.num_vertices">
 <code class="sig-name descname">num_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.fully_connected.num_vertices" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -466,9 +466,9 @@ at construction, and it will be the same for all the edges in the topology.</p>
 </dd></dl>
 
 <hr class="docutils" />
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.free_form">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">free_form</code><span class="sig-paren">(</span><em class="sig-param">t=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">free_form</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form" title="Permalink to this definition">¶</a></dt>
 <dd><p>Free-form topology.</p>
 <p>This user-defined topology (UDT) represents a graph in which
 vertices and edges can be manipulated freely. Instances
@@ -492,7 +492,7 @@ representation of the input object via the
 <a class="reference internal" href="topology.html#pygmo.topology.to_networkx" title="pygmo.topology.to_networkx"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.topology.to_networkx()</span></code></a> method, and will then
 proceed in the same manner explained in the previous
 paragraph.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/free_form.html#_CPPv4N5pagmo9free_formE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:free_form</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topologies/free_form.html#_CPPv4N5pagmo9free_formE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:free_form</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>t</strong> – the object that will be used for construction</p>
@@ -507,9 +507,9 @@ paragraph.</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.add_edge">
-<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">w=1.</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.add_edge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">w</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.add_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a new edge.</p>
 <p>This method will add a new edge of weight <em>w</em> connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -530,7 +530,7 @@ paragraph.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.add_vertex">
 <code class="sig-name descname">add_vertex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.add_vertex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a vertex.</p>
@@ -538,9 +538,9 @@ paragraph.</p>
 <p>The newly-added vertex will be disjoint from any other vertex in the topology (i.e., there are no connections to/from the new vertex).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.are_adjacent">
-<code class="sig-name descname">are_adjacent</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.are_adjacent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">are_adjacent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.are_adjacent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if two vertices are adjacent.</p>
 <p>Two vertices <em>i</em> and <em>j</em> are adjacent if there is a directed edge connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -565,9 +565,9 @@ paragraph.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.get_edge_weight">
-<code class="sig-name descname">get_edge_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.get_edge_weight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_edge_weight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.get_edge_weight" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
 <p><span class="versionmodified added">New in version 2.15.</span></p>
 </div>
@@ -595,7 +595,7 @@ paragraph.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.num_vertices">
 <code class="sig-name descname">num_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.num_vertices" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -608,9 +608,9 @@ paragraph.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.remove_edge">
-<code class="sig-name descname">remove_edge</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.remove_edge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.remove_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove an existing edge.</p>
 <p>This method will remove the edge connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">
@@ -629,9 +629,9 @@ paragraph.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.set_all_weights">
-<code class="sig-name descname">set_all_weights</code><span class="sig-paren">(</span><em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.set_all_weights" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_all_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.set_all_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will set the weights of all edges in the topology to <em>w</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -643,9 +643,9 @@ paragraph.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.free_form.set_weight">
-<code class="sig-name descname">set_weight</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">j</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.set_weight" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_weight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.free_form.set_weight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the weight of an edge.</p>
 <p>This method will set to <em>w</em> the weight of the edge connecting <em>i</em> to <em>j</em>.</p>
 <dl class="field-list simple">

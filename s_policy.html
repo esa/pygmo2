@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Selection policy &mdash; pygmo 2.15.0 documentation</title>
+  <title>Selection policy &mdash; pygmo 2.16.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.15.0
+                2.16.0
               </div>
             
           
@@ -207,9 +207,9 @@
 </style>
 <div class="section" id="selection-policy">
 <h1>Selection policy<a class="headerlink" href="#selection-policy" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pygmo.s_policy">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">s_policy</code><span class="sig-paren">(</span><em class="sig-param">udsp = select_best()</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">s_policy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">udsp</span><span class="o">=</span><span class="default_value">select_best()</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Selection policy.</p>
 <p>A selection policy establishes
 how, during migration within an <a class="reference internal" href="archipelago.html#pygmo.archipelago" title="pygmo.archipelago"><code class="xref py py-class docutils literal notranslate"><span class="pre">archipelago</span></code></a>,
@@ -264,7 +264,7 @@ and thus they need to provide a certain degree of thread safety. Specifically, t
 <code class="docutils literal notranslate"><span class="pre">select()</span></code> method of the UDSP might be invoked concurrently with
 any other method of the UDSP interface. It is up to the
 authors of user-defined selection policies to ensure that this safety requirement is satisfied.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/s_policy.html#_CPPv4N5pagmo8s_policyE" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:s_policy</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/s_policy.html#_CPPv4N5pagmo8s_policyE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:s_policy</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udsp</strong> – a user-defined selection policy, either C++ or Python</p>
@@ -279,9 +279,9 @@ authors of user-defined selection policies to ensure that this safety requiremen
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.s_policy.extract">
-<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.extract" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.extract" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the user-defined selection policy.</p>
 <p>This method allows to extract a reference to the user-defined selection policy (UDSP) stored within this
 <a class="reference internal" href="#pygmo.s_policy" title="pygmo.s_policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">s_policy</span></code></a> instance. The behaviour of this function depends on the value
@@ -289,7 +289,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDSP is <em>t</em>, then a reference to the UDSP will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/s_policy.html#_CPPv4I0ENK5pagmo8s_policy7extractEPK1Tv" title="(in pagmo v2.15.0)"><code class="docutils literal notranslate"><span class="pre">:s_policy::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/s_policy.html#_CPPv4I0ENK5pagmo8s_policy7extractEPK1Tv" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:s_policy::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDSP is a Python object (as opposed to an
 <a class="reference internal" href="s_policies.html#s-policies-cpp"><span class="std std-ref">exposed C++ selection policy</span></a>), then a reference to the
 UDSP will be returned (this allows to extract a Python UDSP without knowing its type),</p></li>
@@ -308,7 +308,7 @@ UDSP will be returned (this allows to extract a Python UDSP without knowing its 
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.s_policy.get_extra_info">
 <code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Selection policy’s extra info.</p>
@@ -327,7 +327,7 @@ method. Otherwise, an empty string will be returned.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.s_policy.get_name">
 <code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the selection policy.</p>
@@ -343,9 +343,9 @@ Otherwise, an implementation-defined name based on the type of the UDSP will be 
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.s_policy.is_">
-<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.is_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.is_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the type of the user-defined selection policy.</p>
 <p>This method returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> if <a class="reference internal" href="#pygmo.s_policy.extract" title="pygmo.s_policy.extract"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract(t)</span></code></a> returns
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> otherwise.</p>
@@ -365,9 +365,9 @@ Otherwise, an implementation-defined name based on the type of the UDSP will be 
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pygmo.s_policy.select">
-<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">inds</em>, <em class="sig-param">nx</em>, <em class="sig-param">nix</em>, <em class="sig-param">nobj</em>, <em class="sig-param">nec</em>, <em class="sig-param">nic</em>, <em class="sig-param">tol</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.select" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inds</span></em>, <em class="sig-param"><span class="n">nx</span></em>, <em class="sig-param"><span class="n">nix</span></em>, <em class="sig-param"><span class="n">nobj</span></em>, <em class="sig-param"><span class="n">nec</span></em>, <em class="sig-param"><span class="n">nic</span></em>, <em class="sig-param"><span class="n">tol</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.s_policy.select" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select individuals from a group.</p>
 <p>This method will invoke the <code class="docutils literal notranslate"><span class="pre">select()</span></code> method of the UDSP.
 Given a set of individuals, <em>inds</em>, the <code class="docutils literal notranslate"><span class="pre">select()</span></code> method of the UDSP
