@@ -29,7 +29,7 @@
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
-#if defined(PAGMO_ENABLE_CEC2014)
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2014)
 #include <pagmo/problems/cec2014.hpp>
 #endif
 
@@ -190,8 +190,7 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     cec2009_.def(py::init<unsigned, bool, unsigned>(), py::arg("prob_id") = 1u, py::arg("is_constrained") = false,
                  py::arg("dim") = 30u);
 
-#if defined(PAGMO_ENABLE_CEC2014)
-    // See the explanation in pagmo/config.hpp.
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2014)
     auto cec2014_ = expose_problem<pagmo::cec2014>(m, prob, p_module, "cec2014", cec2014_docstring().c_str());
     cec2014_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
 #endif

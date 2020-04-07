@@ -27,7 +27,7 @@
 #include <pagmo/problems/zdt.hpp>
 #include <pagmo/types.hpp>
 
-#if defined(PAGMO_ENABLE_CEC2013)
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2013)
 #include <pagmo/problems/cec2013.hpp>
 #endif
 
@@ -88,8 +88,7 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                   "See :cpp:class:`pagmo::golomb_ruler`.\n\n");
     gr.def(py::init<unsigned, unsigned>(), py::arg("order"), py::arg("upper_bound"));
 
-#if defined(PAGMO_ENABLE_CEC2013)
-    // See the explanation in pagmo/config.hpp.
+#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2013)
     auto cec2013_ = expose_problem<pagmo::cec2013>(m, prob, p_module, "cec2013", cec2013_docstring().c_str());
     cec2013_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
 #endif
