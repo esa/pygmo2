@@ -309,7 +309,10 @@ class island_test_case(_ut.TestCase):
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "Thread island")
-        self.assertTrue(isl.get_extra_info() == "\tUsing pool: yes")
+        if _pagmo_version_major < 3 or (_pagmo_version_major == 3 and _pagmo_version_minor < 16):
+            self.assertTrue(isl.get_extra_info() == "")
+        else:
+            self.assertTrue(isl.get_extra_info() == "\tUsing pool: yes")
         isl = island(algo=de(), prob=rosenbrock(), size=25, udi=_udi_01())
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "udi_01")
