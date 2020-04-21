@@ -266,7 +266,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         "set_string_options",
         [](pagmo::ipopt &ip, const py::dict &d) {
             std::map<std::string, std::string> m;
-            for (const auto &p : d) {
+            for (auto p : d) {
                 m[py::cast<std::string>(p.first)] = py::cast<std::string>(p.second);
             }
             ip.set_string_options(m);
@@ -292,7 +292,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         "set_integer_options",
         [](pagmo::ipopt &ip, const py::dict &d) {
             std::map<std::string, Ipopt::Index> m;
-            for (const auto &p : d) {
+            for (auto p : d) {
                 m[py::cast<std::string>(p.first)] = py::cast<Ipopt::Index>(p.second);
             }
             ip.set_integer_options(m);
@@ -318,7 +318,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         "set_numeric_options",
         [](pagmo::ipopt &ip, const py::dict &d) {
             std::map<std::string, double> m;
-            for (const auto &p : d) {
+            for (auto p : d) {
                 m[py::cast<std::string>(p.first)] = py::cast<double>(p.second);
             }
             ip.set_numeric_options(m);

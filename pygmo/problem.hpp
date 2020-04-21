@@ -59,35 +59,35 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     prob_inner &operator=(const prob_inner &) = delete;
     prob_inner &operator=(prob_inner &&) = delete;
     explicit prob_inner(const py::object &);
-    virtual std::unique_ptr<prob_inner_base> clone() const override final;
+    std::unique_ptr<prob_inner_base> clone() const final;
     // Mandatory methods.
-    virtual vector_double fitness(const vector_double &) const override final;
-    virtual std::pair<vector_double, vector_double> get_bounds() const override final;
+    vector_double fitness(const vector_double &) const final;
+    std::pair<vector_double, vector_double> get_bounds() const final;
     // Optional methods.
-    virtual vector_double batch_fitness(const vector_double &) const override final;
-    virtual bool has_batch_fitness() const override final;
-    virtual vector_double::size_type get_nobj() const override final;
-    virtual vector_double::size_type get_nec() const override final;
-    virtual vector_double::size_type get_nic() const override final;
-    virtual vector_double::size_type get_nix() const override final;
-    virtual std::string get_name() const override final;
-    virtual std::string get_extra_info() const override final;
-    virtual bool has_gradient() const override final;
-    virtual vector_double gradient(const vector_double &) const override final;
-    virtual bool has_gradient_sparsity() const override final;
-    virtual sparsity_pattern gradient_sparsity() const override final;
-    virtual bool has_hessians() const override final;
-    virtual std::vector<vector_double> hessians(const vector_double &) const override final;
-    virtual bool has_hessians_sparsity() const override final;
-    virtual std::vector<sparsity_pattern> hessians_sparsity() const override final;
-    virtual void set_seed(unsigned) override final;
-    virtual bool has_set_seed() const override final;
-    virtual thread_safety get_thread_safety() const override final;
+    vector_double batch_fitness(const vector_double &) const final;
+    bool has_batch_fitness() const final;
+    vector_double::size_type get_nobj() const final;
+    vector_double::size_type get_nec() const final;
+    vector_double::size_type get_nic() const final;
+    vector_double::size_type get_nix() const final;
+    std::string get_name() const final;
+    std::string get_extra_info() const final;
+    bool has_gradient() const final;
+    vector_double gradient(const vector_double &) const final;
+    bool has_gradient_sparsity() const final;
+    sparsity_pattern gradient_sparsity() const final;
+    bool has_hessians() const final;
+    std::vector<vector_double> hessians(const vector_double &) const final;
+    bool has_hessians_sparsity() const final;
+    std::vector<sparsity_pattern> hessians_sparsity() const final;
+    void set_seed(unsigned) final;
+    bool has_set_seed() const final;
+    thread_safety get_thread_safety() const final;
 
 #if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-    virtual std::type_index get_type_index() const override final;
-    virtual const void *get_ptr() const override final;
-    virtual void *get_ptr() override final;
+    std::type_index get_type_index() const final;
+    const void *get_ptr() const final;
+    void *get_ptr() final;
 #endif
 
     template <typename Archive>
@@ -95,6 +95,7 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     template <typename Archive>
     void load(Archive &, unsigned);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     py::object m_value;
 };
 

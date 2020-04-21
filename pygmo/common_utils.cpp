@@ -286,7 +286,7 @@ pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
     }
 
     // Add the edges.
-    for (const auto &t : g.attr("edges").attr("data")()) {
+    for (auto t : g.attr("edges").attr("data")()) {
         auto tup = t.cast<py::tuple>();
 
         if (py::len(tup) != 3u) {

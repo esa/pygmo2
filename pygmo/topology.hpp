@@ -48,19 +48,19 @@ struct topo_inner<py::object> final : topo_inner_base, pygmo::common_base {
     topo_inner &operator=(const topo_inner &) = delete;
     topo_inner &operator=(topo_inner &&) = delete;
     explicit topo_inner(const py::object &);
-    virtual std::unique_ptr<topo_inner_base> clone() const override final;
+    std::unique_ptr<topo_inner_base> clone() const final;
     // Mandatory methods.
-    virtual std::pair<std::vector<std::size_t>, vector_double> get_connections(std::size_t) const override final;
-    virtual void push_back() override final;
+    std::pair<std::vector<std::size_t>, vector_double> get_connections(std::size_t) const final;
+    void push_back() final;
     // Optional methods.
-    virtual std::string get_name() const override final;
-    virtual std::string get_extra_info() const override final;
+    std::string get_name() const final;
+    std::string get_extra_info() const final;
 
 #if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-    virtual bgl_graph_t to_bgl() const override final;
-    virtual std::type_index get_type_index() const override final;
-    virtual const void *get_ptr() const override final;
-    virtual void *get_ptr() override final;
+    bgl_graph_t to_bgl() const final;
+    std::type_index get_type_index() const final;
+    const void *get_ptr() const final;
+    void *get_ptr() final;
 #endif
 
     template <typename Archive>
@@ -68,6 +68,7 @@ struct topo_inner<py::object> final : topo_inner_base, pygmo::common_base {
     template <typename Archive>
     void load(Archive &, unsigned);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     py::object m_value;
 };
 
