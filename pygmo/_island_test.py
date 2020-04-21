@@ -305,7 +305,7 @@ class island_test_case(_ut.TestCase):
         isl.wait()
 
     def run_io_tests(self):
-        from .core import island, de, rosenbrock
+        from .core import island, de, rosenbrock, _pagmo_version_major, _pagmo_version_minor
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "Thread island")
