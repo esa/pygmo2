@@ -22,7 +22,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
@@ -69,7 +68,7 @@ prob_inner<py::object>::prob_inner(const py::object &o)
 std::unique_ptr<prob_inner_base> prob_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return detail::make_unique<prob_inner>(m_value);
+    return std::make_unique<prob_inner>(m_value);
 }
 
 vector_double prob_inner<py::object>::fitness(const vector_double &dv) const

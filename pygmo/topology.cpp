@@ -65,7 +65,7 @@ topo_inner<py::object>::topo_inner(const py::object &o)
 std::unique_ptr<topo_inner_base> topo_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return detail::make_unique<topo_inner>(m_value);
+    return std::make_unique<topo_inner>(m_value);
 }
 
 std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_connections(std::size_t n) const

@@ -7,6 +7,7 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #include <map>
+#include <memory>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -23,7 +24,6 @@
 #include <pagmo/algorithms/mbh.hpp>
 #include <pagmo/algorithms/moead.hpp>
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/rng.hpp>
 #include <pagmo/threading.hpp>
@@ -111,11 +111,11 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     // MBH meta-algo.
     auto mbh_ = expose_algorithm<pagmo::mbh>(m, algo, a_module, "mbh", mbh_docstring().c_str());
     mbh_.def(py::init([](const pagmo::algorithm &a, unsigned stop, const py::array_t<double> &perturb, unsigned seed) {
-        return pagmo::detail::make_unique<pagmo::mbh>(a, stop, ndarr_to_vector<pagmo::vector_double>(perturb), seed);
+        return std::make_unique<pagmo::mbh>(a, stop, ndarr_to_vector<pagmo::vector_double>(perturb), seed);
     }));
     mbh_.def(py::init([](const pagmo::algorithm &a, unsigned stop, const py::array_t<double> &perturb) {
-        return pagmo::detail::make_unique<pagmo::mbh>(a, stop, ndarr_to_vector<pagmo::vector_double>(perturb),
-                                                      pagmo::random_device::next());
+        return std::make_unique<pagmo::mbh>(a, stop, ndarr_to_vector<pagmo::vector_double>(perturb),
+                                            pagmo::random_device::next());
     }));
     mbh_.def("get_seed", &pagmo::mbh::get_seed, mbh_get_seed_docstring().c_str());
     mbh_.def("get_verbosity", &pagmo::mbh::get_verbosity, mbh_get_verbosity_docstring().c_str());
@@ -124,9 +124,8 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         [](pagmo::mbh &a, const py::array_t<double> &o) { a.set_perturb(ndarr_to_vector<pagmo::vector_double>(o)); },
         mbh_set_perturb_docstring().c_str(), py::arg("perturb"));
     expose_algo_log(mbh_, mbh_get_log_docstring().c_str());
-    mbh_.def(
-        "get_perturb", [](const pagmo::mbh &a) { return vector_to_ndarr<py::array_t<double>>(a.get_perturb()); },
-        mbh_get_perturb_docstring().c_str());
+    mbh_.def("get_perturb", [](const pagmo::mbh &a) { return vector_to_ndarr<py::array_t<double>>(a.get_perturb()); },
+             mbh_get_perturb_docstring().c_str());
     mbh_.def_property_readonly(
         "inner_algorithm", [](pagmo::mbh &uda) -> pagmo::algorithm & { return uda.get_inner_algorithm(); },
         py::return_value_policy::reference_internal, generic_uda_inner_algorithm_docstring().c_str());
@@ -157,16 +156,16 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     de1220_.def(
         py::init([](unsigned gen, const py::array_t<unsigned> &allowed_variants, unsigned variant_adptv, double ftol,
                     double xtol, bool memory) {
-            return pagmo::detail::make_unique<pagmo::de1220>(
-                gen, ndarr_to_vector<std::vector<unsigned>>(allowed_variants), variant_adptv, ftol, xtol, memory);
+            return std::make_unique<pagmo::de1220>(gen, ndarr_to_vector<std::vector<unsigned>>(allowed_variants),
+                                                   variant_adptv, ftol, xtol, memory);
         }),
         py::arg("gen") = 1u, py::arg("allowed_variants") = de1220_allowed_variants(), py::arg("variant_adptv") = 1u,
         py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false);
     de1220_.def(
         py::init([](unsigned gen, const py::array_t<unsigned> &allowed_variants, unsigned variant_adptv, double ftol,
                     double xtol, bool memory, unsigned seed) {
-            return pagmo::detail::make_unique<pagmo::de1220>(
-                gen, ndarr_to_vector<std::vector<unsigned>>(allowed_variants), variant_adptv, ftol, xtol, memory, seed);
+            return std::make_unique<pagmo::de1220>(gen, ndarr_to_vector<std::vector<unsigned>>(allowed_variants),
+                                                   variant_adptv, ftol, xtol, memory, seed);
         }),
         py::arg("gen") = 1u, py::arg("allowed_variants") = de1220_allowed_variants(), py::arg("variant_adptv") = 1u,
         py::arg("ftol") = 1e-6, py::arg("xtol") = 1e-6, py::arg("memory") = false, py::arg("seed"));
@@ -194,17 +193,16 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                py::arg("neighbours") = 20u, py::arg("CR") = 1., py::arg("F") = 0.5, py::arg("eta_m") = 20,
                py::arg("realb") = 0.9, py::arg("limit") = 2u, py::arg("preserve_diversity") = true, py::arg("seed"));
     // moead needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    moead_.def(
-        "get_log",
-        [](const pagmo::moead &a) -> py::list {
-            py::list retval;
-            for (const auto &t : a.get_log()) {
-                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
-                                             vector_to_ndarr<py::array_t<double>>(std::get<3>(t))));
-            }
-            return retval;
-        },
-        moead_get_log_docstring().c_str());
+    moead_.def("get_log",
+               [](const pagmo::moead &a) -> py::list {
+                   py::list retval;
+                   for (const auto &t : a.get_log()) {
+                       retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
+                                                    vector_to_ndarr<py::array_t<double>>(std::get<3>(t))));
+                   }
+                   return retval;
+               },
+               moead_get_log_docstring().c_str());
     moead_.def("get_seed", &pagmo::moead::get_seed, generic_uda_get_seed_docstring().c_str());
 
 #if defined(PAGMO_WITH_EIGEN3)
@@ -239,10 +237,10 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     auto cstrs_sa = expose_algorithm<pagmo::cstrs_self_adaptive>(m, algo, a_module, "cstrs_self_adaptive",
                                                                  cstrs_self_adaptive_docstring().c_str());
     cstrs_sa.def(py::init([](unsigned iters, const pagmo::algorithm &a, unsigned seed) {
-        return pagmo::detail::make_unique<pagmo::cstrs_self_adaptive>(iters, a, seed);
+        return std::make_unique<pagmo::cstrs_self_adaptive>(iters, a, seed);
     }));
     cstrs_sa.def(py::init([](unsigned iters, const pagmo::algorithm &a) {
-        return pagmo::detail::make_unique<pagmo::cstrs_self_adaptive>(iters, a, pagmo::random_device::next());
+        return std::make_unique<pagmo::cstrs_self_adaptive>(iters, a, pagmo::random_device::next());
     }));
     expose_algo_log(cstrs_sa, cstrs_self_adaptive_get_log_docstring().c_str());
     cstrs_sa.def_property_readonly(
@@ -255,86 +253,79 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     auto ipopt_ = expose_algorithm<pagmo::ipopt>(m, algo, a_module, "ipopt", ipopt_docstring().c_str());
     expose_not_population_based(ipopt_, "ipopt");
     expose_algo_log(ipopt_, ipopt_get_log_docstring().c_str());
-    ipopt_.def(
-        "get_last_opt_result", [](const pagmo::ipopt &ip) { return static_cast<int>(ip.get_last_opt_result()); },
-        ipopt_get_last_opt_result_docstring().c_str());
+    ipopt_.def("get_last_opt_result", [](const pagmo::ipopt &ip) { return static_cast<int>(ip.get_last_opt_result()); },
+               ipopt_get_last_opt_result_docstring().c_str());
     // Options management.
     // String opts.
     ipopt_.def("set_string_option", &pagmo::ipopt::set_string_option, ipopt_set_string_option_docstring().c_str(),
                py::arg("name"), py::arg("value"));
-    ipopt_.def(
-        "set_string_options",
-        [](pagmo::ipopt &ip, const py::dict &d) {
-            std::map<std::string, std::string> m;
-            for (auto p : d) {
-                m[py::cast<std::string>(p.first)] = py::cast<std::string>(p.second);
-            }
-            ip.set_string_options(m);
-        },
-        ipopt_set_string_options_docstring().c_str(), py::arg("opts"));
-    ipopt_.def(
-        "get_string_options",
-        [](const pagmo::ipopt &ip) -> py::dict {
-            const auto opts = ip.get_string_options();
-            py::dict retval;
-            for (const auto &p : opts) {
-                retval[py::cast(p.first)] = py::cast(p.second);
-            }
-            return retval;
-        },
-        ipopt_get_string_options_docstring().c_str());
+    ipopt_.def("set_string_options",
+               [](pagmo::ipopt &ip, const py::dict &d) {
+                   std::map<std::string, std::string> m;
+                   for (auto p : d) {
+                       m[py::cast<std::string>(p.first)] = py::cast<std::string>(p.second);
+                   }
+                   ip.set_string_options(m);
+               },
+               ipopt_set_string_options_docstring().c_str(), py::arg("opts"));
+    ipopt_.def("get_string_options",
+               [](const pagmo::ipopt &ip) -> py::dict {
+                   const auto opts = ip.get_string_options();
+                   py::dict retval;
+                   for (const auto &p : opts) {
+                       retval[py::cast(p.first)] = py::cast(p.second);
+                   }
+                   return retval;
+               },
+               ipopt_get_string_options_docstring().c_str());
     ipopt_.def("reset_string_options", &pagmo::ipopt::reset_string_options,
                ipopt_reset_string_options_docstring().c_str());
     // Integer options.
     ipopt_.def("set_integer_option", &pagmo::ipopt::set_integer_option, ipopt_set_integer_option_docstring().c_str(),
                py::arg("name"), py::arg("value"));
-    ipopt_.def(
-        "set_integer_options",
-        [](pagmo::ipopt &ip, const py::dict &d) {
-            std::map<std::string, Ipopt::Index> m;
-            for (auto p : d) {
-                m[py::cast<std::string>(p.first)] = py::cast<Ipopt::Index>(p.second);
-            }
-            ip.set_integer_options(m);
-        },
-        ipopt_set_integer_options_docstring().c_str(), py::arg("opts"));
-    ipopt_.def(
-        "get_integer_options",
-        [](const pagmo::ipopt &ip) -> py::dict {
-            const auto opts = ip.get_integer_options();
-            py::dict retval;
-            for (const auto &p : opts) {
-                retval[py::cast(p.first)] = py::cast(p.second);
-            }
-            return retval;
-        },
-        ipopt_get_integer_options_docstring().c_str());
+    ipopt_.def("set_integer_options",
+               [](pagmo::ipopt &ip, const py::dict &d) {
+                   std::map<std::string, Ipopt::Index> m;
+                   for (auto p : d) {
+                       m[py::cast<std::string>(p.first)] = py::cast<Ipopt::Index>(p.second);
+                   }
+                   ip.set_integer_options(m);
+               },
+               ipopt_set_integer_options_docstring().c_str(), py::arg("opts"));
+    ipopt_.def("get_integer_options",
+               [](const pagmo::ipopt &ip) -> py::dict {
+                   const auto opts = ip.get_integer_options();
+                   py::dict retval;
+                   for (const auto &p : opts) {
+                       retval[py::cast(p.first)] = py::cast(p.second);
+                   }
+                   return retval;
+               },
+               ipopt_get_integer_options_docstring().c_str());
     ipopt_.def("reset_integer_options", &pagmo::ipopt::reset_integer_options,
                ipopt_reset_integer_options_docstring().c_str());
     // Numeric options.
     ipopt_.def("set_numeric_option", &pagmo::ipopt::set_numeric_option, ipopt_set_numeric_option_docstring().c_str(),
                py::arg("name"), py::arg("value"));
-    ipopt_.def(
-        "set_numeric_options",
-        [](pagmo::ipopt &ip, const py::dict &d) {
-            std::map<std::string, double> m;
-            for (auto p : d) {
-                m[py::cast<std::string>(p.first)] = py::cast<double>(p.second);
-            }
-            ip.set_numeric_options(m);
-        },
-        ipopt_set_numeric_options_docstring().c_str(), py::arg("opts"));
-    ipopt_.def(
-        "get_numeric_options",
-        [](const pagmo::ipopt &ip) -> py::dict {
-            const auto opts = ip.get_numeric_options();
-            py::dict retval;
-            for (const auto &p : opts) {
-                retval[py::cast(p.first)] = py::cast(p.second);
-            }
-            return retval;
-        },
-        ipopt_get_numeric_options_docstring().c_str());
+    ipopt_.def("set_numeric_options",
+               [](pagmo::ipopt &ip, const py::dict &d) {
+                   std::map<std::string, double> m;
+                   for (auto p : d) {
+                       m[py::cast<std::string>(p.first)] = py::cast<double>(p.second);
+                   }
+                   ip.set_numeric_options(m);
+               },
+               ipopt_set_numeric_options_docstring().c_str(), py::arg("opts"));
+    ipopt_.def("get_numeric_options",
+               [](const pagmo::ipopt &ip) -> py::dict {
+                   const auto opts = ip.get_numeric_options();
+                   py::dict retval;
+                   for (const auto &p : opts) {
+                       retval[py::cast(p.first)] = py::cast(p.second);
+                   }
+                   return retval;
+               },
+               ipopt_get_numeric_options_docstring().c_str());
     ipopt_.def("reset_numeric_options", &pagmo::ipopt::reset_numeric_options,
                ipopt_reset_numeric_options_docstring().c_str());
 #endif

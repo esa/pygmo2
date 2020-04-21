@@ -6,6 +6,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -13,7 +14,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/ackley.hpp>
@@ -129,17 +129,16 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
         // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
         .def(py::init([](const pagmo::problem &p, const py::array_t<double> &weight, const py::array_t<double> &z,
                          const std::string &method, bool adapt_ideal) {
-            return pagmo::detail::make_unique<pagmo::decompose>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(weight),
-                                                                pygmo::ndarr_to_vector<pagmo::vector_double>(z), method,
-                                                                adapt_ideal);
+            return std::make_unique<pagmo::decompose>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(weight),
+                                                      pygmo::ndarr_to_vector<pagmo::vector_double>(z), method,
+                                                      adapt_ideal);
         }))
-        .def(
-            "original_fitness",
-            [](const pagmo::decompose &p, const py::array_t<double> &x) {
-                return pygmo::vector_to_ndarr<py::array_t<double>>(
-                    p.original_fitness(pygmo::ndarr_to_vector<pagmo::vector_double>(x)));
-            },
-            decompose_original_fitness_docstring().c_str(), py::arg("x"))
+        .def("original_fitness",
+             [](const pagmo::decompose &p, const py::array_t<double> &x) {
+                 return pygmo::vector_to_ndarr<py::array_t<double>>(
+                     p.original_fitness(pygmo::ndarr_to_vector<pagmo::vector_double>(x)));
+             },
+             decompose_original_fitness_docstring().c_str(), py::arg("x"))
         .def_property_readonly(
             "z", [](const pagmo::decompose &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_z()); },
             decompose_z_docstring().c_str())
@@ -176,9 +175,8 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     dtlz_p.def("p_distance", [](const pagmo::dtlz &z, const py::array_t<double> &x) {
         return z.p_distance(ndarr_to_vector<pagmo::vector_double>(x));
     });
-    dtlz_p.def(
-        "p_distance", [](const pagmo::dtlz &z, const pagmo::population &pop) { return z.p_distance(pop); },
-        dtlz_p_distance_docstring().c_str());
+    dtlz_p.def("p_distance", [](const pagmo::dtlz &z, const pagmo::population &pop) { return z.p_distance(pop); },
+               dtlz_p_distance_docstring().c_str());
 
     // CEC 2006
     auto cec2006_ = expose_problem<pagmo::cec2006>(m, prob, p_module, "cec2006", cec2006_docstring().c_str());
