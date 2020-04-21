@@ -19,7 +19,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/r_policy.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/types.hpp>
@@ -62,7 +61,7 @@ r_pol_inner<py::object>::r_pol_inner(const py::object &o)
 std::unique_ptr<r_pol_inner_base> r_pol_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return detail::make_unique<r_pol_inner>(m_value);
+    return std::make_unique<r_pol_inner>(m_value);
 }
 
 individuals_group_t

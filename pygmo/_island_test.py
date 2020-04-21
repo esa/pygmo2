@@ -309,7 +309,7 @@ class island_test_case(_ut.TestCase):
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "Thread island")
-        self.assertTrue(isl.get_extra_info() == "")
+        self.assertTrue(isl.get_extra_info() == "\tUsing pool: yes")
         isl = island(algo=de(), prob=rosenbrock(), size=25, udi=_udi_01())
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "udi_01")

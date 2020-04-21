@@ -19,7 +19,6 @@
 
 #include <pagmo/algorithm.hpp>
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/island.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/s11n.hpp>
@@ -53,7 +52,7 @@ isl_inner<py::object>::isl_inner(const py::object &o)
 std::unique_ptr<isl_inner_base> isl_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return detail::make_unique<isl_inner>(m_value);
+    return std::make_unique<isl_inner>(m_value);
 }
 
 void isl_inner<py::object>::run_evolve(island &isl) const

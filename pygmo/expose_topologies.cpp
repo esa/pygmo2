@@ -13,7 +13,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/topologies/fully_connected.hpp>
 #include <pagmo/topologies/ring.hpp>
 #include <pagmo/topologies/unconnected.hpp>
@@ -113,7 +112,7 @@ void expose_topologies(py::module &m, py::class_<pagmo::topology> &topo, py::mod
     // Free-form.
     auto free_form_ = expose_topology<pagmo::free_form>(m, topo, t_module, "free_form", free_form_docstring().c_str());
     free_form_.def(py::init<const pagmo::topology &>()).def(py::init([](const py::object &o) {
-        return pagmo::detail::make_unique<pagmo::free_form>(networkx_to_bgl_graph_t(o));
+        return std::make_unique<pagmo::free_form>(networkx_to_bgl_graph_t(o));
     }));
     detail::expose_base_bgl_topo(free_form_);
 #endif

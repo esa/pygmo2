@@ -13,7 +13,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/ackley.hpp>
@@ -129,7 +128,7 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
         // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
         .def(py::init([](const pagmo::problem &p, const py::array_t<double> &weight, const py::array_t<double> &z,
                          const std::string &method, bool adapt_ideal) {
-            return pagmo::detail::make_unique<pagmo::decompose>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(weight),
+            return std::make_unique<pagmo::decompose>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(weight),
                                                                 pygmo::ndarr_to_vector<pagmo::vector_double>(z), method,
                                                                 adapt_ideal);
         }))
