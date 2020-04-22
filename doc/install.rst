@@ -118,7 +118,7 @@ Installation from source
 
 In order to install pygmo from source, you will need:
 
-* a C++11 capable compiler (any recent version of GCC,
+* a C++17 capable compiler (recent versions of GCC,
   Clang or MSVC should do),
 * a `Python <https://www.python.org/>`__ installation,
 * `pybind11 <https://github.com/pybind/pybind11>`__,
