@@ -45,20 +45,20 @@ struct r_pol_inner<py::object> final : r_pol_inner_base, pygmo::common_base {
     r_pol_inner &operator=(const r_pol_inner &) = delete;
     r_pol_inner &operator=(r_pol_inner &&) = delete;
     explicit r_pol_inner(const py::object &);
-    virtual std::unique_ptr<r_pol_inner_base> clone() const override final;
+    std::unique_ptr<r_pol_inner_base> clone() const final;
     // Mandatory methods.
-    virtual individuals_group_t replace(const individuals_group_t &, const vector_double::size_type &,
-                                        const vector_double::size_type &, const vector_double::size_type &,
-                                        const vector_double::size_type &, const vector_double::size_type &,
-                                        const vector_double &, const individuals_group_t &) const override final;
+    individuals_group_t replace(const individuals_group_t &, const vector_double::size_type &,
+                                const vector_double::size_type &, const vector_double::size_type &,
+                                const vector_double::size_type &, const vector_double::size_type &,
+                                const vector_double &, const individuals_group_t &) const final;
     // Optional methods.
-    virtual std::string get_name() const override final;
-    virtual std::string get_extra_info() const override final;
+    std::string get_name() const final;
+    std::string get_extra_info() const final;
 
 #if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-    virtual std::type_index get_type_index() const override final;
-    virtual const void *get_ptr() const override final;
-    virtual void *get_ptr() override final;
+    std::type_index get_type_index() const final;
+    const void *get_ptr() const final;
+    void *get_ptr() final;
 #endif
 
     template <typename Archive>
@@ -66,6 +66,7 @@ struct r_pol_inner<py::object> final : r_pol_inner_base, pygmo::common_base {
     template <typename Archive>
     void load(Archive &, unsigned);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     py::object m_value;
 };
 

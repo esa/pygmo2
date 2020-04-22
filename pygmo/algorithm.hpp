@@ -46,22 +46,22 @@ struct algo_inner<py::object> final : algo_inner_base, pygmo::common_base {
     algo_inner &operator=(const algo_inner &) = delete;
     algo_inner &operator=(algo_inner &&) = delete;
     explicit algo_inner(const py::object &);
-    virtual std::unique_ptr<algo_inner_base> clone() const override final;
+    std::unique_ptr<algo_inner_base> clone() const final;
     // Mandatory methods.
-    virtual population evolve(const population &) const override final;
+    population evolve(const population &) const final;
     // Optional methods.
-    virtual void set_seed(unsigned) override final;
-    virtual bool has_set_seed() const override final;
-    virtual thread_safety get_thread_safety() const override final;
-    virtual std::string get_name() const override final;
-    virtual std::string get_extra_info() const override final;
-    virtual void set_verbosity(unsigned) override final;
-    virtual bool has_set_verbosity() const override final;
+    void set_seed(unsigned) final;
+    bool has_set_seed() const final;
+    thread_safety get_thread_safety() const final;
+    std::string get_name() const final;
+    std::string get_extra_info() const final;
+    void set_verbosity(unsigned) final;
+    bool has_set_verbosity() const final;
 
 #if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-    virtual std::type_index get_type_index() const override final;
-    virtual const void *get_ptr() const override final;
-    virtual void *get_ptr() override final;
+    std::type_index get_type_index() const final;
+    const void *get_ptr() const final;
+    void *get_ptr() final;
 #endif
 
     template <typename Archive>
@@ -69,6 +69,7 @@ struct algo_inner<py::object> final : algo_inner_base, pygmo::common_base {
     template <typename Archive>
     void load(Archive &, unsigned);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     py::object m_value;
 };
 

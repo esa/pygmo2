@@ -12,10 +12,11 @@ export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge --force
 
+# NOTE: clang<10 is hopefully temporary.
 if [[ "${PYGMO_BUILD_TYPE}" == *pagmo_head ]]; then
-    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang clangdev ipyparallel"
+    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang<10 clangdev<10 ipyparallel"
 else
-    conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang clangdev ipyparallel pagmo-devel"
+    conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang<10 clangdev<10 ipyparallel pagmo-devel"
 fi
 conda create -q -p $deps_dir -y
 source activate $deps_dir
@@ -30,7 +31,7 @@ if [[ "${PYGMO_BUILD_TYPE}" == *pagmo_head ]]; then
     cd pagmo2
     mkdir build
     cd build
-    cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DPAGMO_WITH_EIGEN3=ON -DPAGMO_WITH_IPOPT=ON -DPAGMO_WITH_NLOPT=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DCMAKE_CXX_STANDARD=17
+    cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DPAGMO_WITH_EIGEN3=ON -DPAGMO_WITH_IPOPT=ON -DPAGMO_WITH_NLOPT=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir
     make -j4 install VERBOSE=1
     cd ..
     cd ..
@@ -41,7 +42,7 @@ mkdir build
 cd build
 
 # Build pygmo.
-cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DCMAKE_CXX_STANDARD=17
+cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir
 make -j2 install VERBOSE=1
 cd
 

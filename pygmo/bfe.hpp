@@ -47,18 +47,18 @@ struct bfe_inner<py::object> final : bfe_inner_base, pygmo::common_base {
     bfe_inner &operator=(const bfe_inner &) = delete;
     bfe_inner &operator=(bfe_inner &&) = delete;
     explicit bfe_inner(const py::object &);
-    virtual std::unique_ptr<bfe_inner_base> clone() const override final;
+    std::unique_ptr<bfe_inner_base> clone() const final;
     // Mandatory methods.
-    virtual vector_double operator()(const problem &, const vector_double &) const override final;
+    vector_double operator()(const problem &, const vector_double &) const final;
     // Optional methods.
-    virtual thread_safety get_thread_safety() const override final;
-    virtual std::string get_name() const override final;
-    virtual std::string get_extra_info() const override final;
+    thread_safety get_thread_safety() const final;
+    std::string get_name() const final;
+    std::string get_extra_info() const final;
 
 #if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-    virtual std::type_index get_type_index() const override final;
-    virtual const void *get_ptr() const override final;
-    virtual void *get_ptr() override final;
+    std::type_index get_type_index() const final;
+    const void *get_ptr() const final;
+    void *get_ptr() final;
 #endif
 
     template <typename Archive>
@@ -66,6 +66,7 @@ struct bfe_inner<py::object> final : bfe_inner_base, pygmo::common_base {
     template <typename Archive>
     void load(Archive &, unsigned);
     BOOST_SERIALIZATION_SPLIT_MEMBER()
+
     py::object m_value;
 };
 

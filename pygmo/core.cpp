@@ -28,7 +28,6 @@
 #include <pagmo/bfe.hpp>
 #include <pagmo/config.hpp>
 #include <pagmo/detail/gte_getter.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/exceptions.hpp>
 #include <pagmo/island.hpp>
 #include <pagmo/islands/thread_island.hpp>
@@ -252,7 +251,7 @@ PYBIND11_MODULE(core, m)
               if (algo.get_thread_safety() >= pg::thread_safety::basic
                   && pop.get_problem().get_thread_safety() >= pg::thread_safety::basic) {
                   // Both algo and prob have at least the basic thread safety guarantee. Use the thread island.
-                  ptr = pg::detail::make_unique<pg::detail::isl_inner<pg::thread_island>>();
+                  ptr = std::make_unique<pg::detail::isl_inner<pg::thread_island>>();
               } else {
                   // NOTE: here we are re-implementing a piece of code that normally
                   // is pure C++. We are calling into the Python interpreter, so, in order to handle
@@ -262,7 +261,7 @@ PYBIND11_MODULE(core, m)
                   // it we use the ensurer.
                   pygmo::gil_thread_ensurer gte;
                   auto py_island = py::module::import("pygmo").attr("mp_island");
-                  ptr = pg::detail::make_unique<pg::detail::isl_inner<py::object>>(py_island());
+                  ptr = std::make_unique<pg::detail::isl_inner<py::object>>(py_island());
               }
           };
 
@@ -362,11 +361,11 @@ PYBIND11_MODULE(core, m)
     py::class_<pg::hypervolume> hv_class(m, "hypervolume", "Hypervolume Class");
     hv_class
         .def(py::init([](const py::array_t<double> &points) {
-                 return pg::detail::make_unique<pg::hypervolume>(
+                 return std::make_unique<pg::hypervolume>(
                      pygmo::ndarr_to_vvector<std::vector<pg::vector_double>>(points), true);
              }),
              py::arg("points"), pygmo::hv_init2_docstring().c_str())
-        .def(py::init([](const pg::population &pop) { return pg::detail::make_unique<pg::hypervolume>(pop, true); }),
+        .def(py::init([](const pg::population &pop) { return std::make_unique<pg::hypervolume>(pop, true); }),
              py::arg("pop"), pygmo::hv_init1_docstring().c_str())
         .def(
             "compute",
@@ -799,7 +798,7 @@ PYBIND11_MODULE(core, m)
             [](pg::archipelago &archi, const py::list &mig) {
                 pg::archipelago::migrants_db_t mig_db;
 
-                for (const auto &o : mig) {
+                for (auto o : mig) {
                     mig_db.push_back(pygmo::iterable_to_inds(py::cast<py::iterable>(o)));
                 }
 

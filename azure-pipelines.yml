@@ -66,7 +66,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 15 2017 Win64" ^
-          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
@@ -157,7 +156,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G Ninja ^
-          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
                 -DCMAKE_C_COMPILER=clang-cl ^
                 -DCMAKE_CXX_COMPILER=clang-cl ^
@@ -233,7 +231,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 15 2017 Win64" ^
-          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
@@ -324,7 +321,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G Ninja ^
-          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
                 -DCMAKE_C_COMPILER=clang-cl ^
                 -DCMAKE_CXX_COMPILER=clang-cl ^
@@ -400,7 +396,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G "Visual Studio 15 2017 Win64" ^
-          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
                 -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
                 -DBoost_NO_BOOST_CMAKE=ON
@@ -491,7 +486,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -G Ninja ^
-          	    -DCMAKE_CXX_STANDARD=17 ^
                 -DCMAKE_BUILD_TYPE=RelWithDebInfo ^
                 -DCMAKE_C_COMPILER=clang-cl ^
                 -DCMAKE_CXX_COMPILER=clang-cl ^

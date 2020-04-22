@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3.0)
+cmake_minimum_required(VERSION 3.8.0)
 # NOTE: policy for using the CheckIPOSupported module:
 # https://cmake.org/cmake/help/latest/policy/CMP0069.html
 cmake_policy(SET CMP0069 NEW)
@@ -12,7 +12,7 @@ if(NOT CMAKE_BUILD_TYPE)
 	FORCE)
 endif()
 
-project(pygmo VERSION 2.15.0 LANGUAGES CXX C)
+project(pygmo VERSION 2.16.0 LANGUAGES CXX C)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/yacma")
 

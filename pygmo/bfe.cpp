@@ -19,7 +19,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
@@ -62,7 +61,7 @@ bfe_inner<py::object>::bfe_inner(const py::object &o)
 std::unique_ptr<bfe_inner_base> bfe_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return detail::make_unique<bfe_inner>(m_value);
+    return std::make_unique<bfe_inner>(m_value);
 }
 
 vector_double bfe_inner<py::object>::operator()(const problem &p, const vector_double &dvs) const

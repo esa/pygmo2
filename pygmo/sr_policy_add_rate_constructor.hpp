@@ -13,8 +13,6 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/detail/make_unique.hpp>
-
 #include "common_utils.hpp"
 
 namespace pygmo
@@ -32,9 +30,9 @@ inline void sr_policy_add_rate_constructor(py::class_<Pol> &c)
 {
     c.def(py::init([](const py::object &o) -> std::unique_ptr<Pol> {
               if (py::isinstance(o, builtins().attr("int"))) {
-                  return pagmo::detail::make_unique<Pol>(py::cast<int>(o));
+                  return std::make_unique<Pol>(py::cast<int>(o));
               } else if (py::isinstance(o, builtins().attr("float"))) {
-                  return pagmo::detail::make_unique<Pol>(py::cast<double>(o));
+                  return std::make_unique<Pol>(py::cast<double>(o));
               } else {
                   py_throw(PyExc_TypeError,
                            ("cannot construct a replacement/selection policy from a migration rate of type '"
