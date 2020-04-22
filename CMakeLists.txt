@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3.0)
+cmake_minimum_required(VERSION 3.8.0)
 # NOTE: policy for using the CheckIPOSupported module:
 # https://cmake.org/cmake/help/latest/policy/CMP0069.html
 cmake_policy(SET CMP0069 NEW)

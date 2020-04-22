@@ -18,7 +18,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
@@ -61,7 +60,7 @@ algo_inner<py::object>::algo_inner(const py::object &o)
 std::unique_ptr<algo_inner_base> algo_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return detail::make_unique<algo_inner>(m_value);
+    return std::make_unique<algo_inner>(m_value);
 }
 
 population algo_inner<py::object>::evolve(const population &pop) const

@@ -7,12 +7,12 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #include <string>
+#include <memory>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
-#include <pagmo/detail/make_unique.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/golomb_ruler.hpp>
@@ -53,7 +53,7 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
         // NOTE: An __init__ wrapper on the Python side will take care of cting a pagmo::problem from the input UDP,
         // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
         .def(py::init([](const pagmo::problem &p, const py::array_t<double> &tv) {
-            return pagmo::detail::make_unique<pagmo::translate>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(tv));
+            return std::make_unique<pagmo::translate>(p, pygmo::ndarr_to_vector<pagmo::vector_double>(tv));
         }))
         .def_property_readonly(
             "translation",
@@ -117,7 +117,7 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
     unconstrain_
         .def(py::init([](const pagmo::problem &p, const std::string &method, const py::array_t<double> &weights) {
-            return pagmo::detail::make_unique<pagmo::unconstrain>(p, method,
+            return std::make_unique<pagmo::unconstrain>(p, method,
                                                                   ndarr_to_vector<pagmo::vector_double>(weights));
         }))
         .def_property_readonly(

@@ -9,6 +9,11 @@ Changelog
 Changes
 ~~~~~~~
 
+- pygmo now requires a C++17 capable compiler when building
+  from source
+  (`#46 <https://github.com/esa/pygmo2/pull/46>`__,
+  `#44 <https://github.com/esa/pygmo2/pull/44>`__).
+
 - The CEC2013/CEC2014 problem suites are now available on all platforms
   (`#40 <https://github.com/esa/pygmo2/pull/40>`__).
 
