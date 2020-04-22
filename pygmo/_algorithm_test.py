@@ -28,7 +28,7 @@ class algorithm_test_case(_ut.TestCase):
         self.run_name_info_tests()
         self.run_thread_safety_tests()
         self.run_pickle_tests()
-        self.run_scipy_wrapper_tests()
+        #self.run_scipy_wrapper_tests()
 
     def run_basic_tests(self):
         # Tests for minimal algorithm, and mandatory methods.
