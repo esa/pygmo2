@@ -853,27 +853,16 @@ class archipelago_test_case(_ut.TestCase):
 
     def runTest(self):
         self.run_init_tests()
-        print("Completed run_init_tests")
         self.run_evolve_tests()
-        print("Completed run_evolve_tests")
         self.run_access_tests()
-        print("Completed run_access_tests")
         self.run_push_back_tests()
-        print("Completed run_push_back_tests")
         self.run_io_tests()
-        print("Completed run_io_tests")
         self.run_pickle_tests()
-        print("Completed run_pickle_tests")
         self.run_champions_tests()
-        print("Completed run_champions_tests")
         self.run_status_tests()
-        print("Completed run_status_tests")
         self.run_mig_log_db_tests()
-        print("Completed run_mig_log_db_tests")
         self.run_get_set_topo_tests()
-        print("Completed run_get_set_topo_tests")
         self.run_mt_mh_tests()
-        print("Completed run_mt_mh_tests")
         if self._level > 0:
             self.run_torture_test_0()
             # NOTE: skip this test for the time being.
@@ -890,7 +879,6 @@ class archipelago_test_case(_ut.TestCase):
             self.run_migration_torture_test()
             # NOTE: temporarily disable this test due to the mingw failures.
             # self.run_mo_migration_bug_test()
-            print("Completed torture test")
 
     def run_init_tests(self):
         from . import (archipelago, de, rosenbrock, population, null_problem, thread_island,
