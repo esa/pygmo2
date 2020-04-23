@@ -62,53 +62,9 @@ class scipy:
         try:
             from numba import jit
 
-            return jit(func)
+            return jit(nopython=True)(func)
         except ModuleNotFoundError:
             return func
-
-    @staticmethod
-    @_maybe_jit
-    def _unpack_sparse_gradient(
-        sparse_values: typing.Mapping[int, float],
-        idx: int,
-        shape: typing.Tuple[int],
-        sparsity_pattern,
-        invert_sign: bool = False,
-    ) -> numpy.ndarray:
-        nnz = len(sparse_values)
-        sign = 1
-        if invert_sign:
-            sign = -1
-
-        result = numpy.zeros(shape)
-        for i in range(nnz):
-            # filter for just the dimension we need
-            if sparsity_pattern[i][0] == idx:
-                result[sparsity_pattern[i][1]] = sign * sparse_values[i]
-
-        return result
-
-    @staticmethod
-    @_maybe_jit
-    def _unpack_sparse_hessian(
-        sparse_values: typing.Mapping[int, float],
-        idx: int,
-        shape: typing.Tuple[int, int],
-        sparsity_pattern,
-        invert_sign: bool = False,
-    ) -> numpy.ndarray:
-        nnz = len(sparse_values)
-        sign = 1
-        if invert_sign:
-            sign = -1
-
-        result = numpy.zeros(shape)
-        for i in range(nnz):
-            result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
-                sign * sparse_values[i]
-            )
-
-        return result
 
     @staticmethod
     def _generate_gradient_sparsity_wrapper(
@@ -142,6 +98,27 @@ class scipy:
         sparsity_pattern = sparsity_func()
         # TODO: check whether pattern, dim and idx fit together
 
+        @scipy._maybe_jit
+        def _unpack_sparse_gradient(
+            sparse_values: typing.Mapping[int, float],
+            idx: int,
+            shape: typing.Tuple[int],
+            sparsity_pattern,
+            invert_sign: bool = False,
+        ) -> numpy.ndarray:
+            nnz = len(sparse_values)
+            sign = 1
+            if invert_sign:
+                sign = -1
+
+            result = numpy.zeros(shape)
+            for i in range(nnz):
+                # filter for just the dimension we need
+                if sparsity_pattern[i][0] == idx:
+                    result[sparsity_pattern[i][1]] = sign * sparse_values[i]
+
+            return result
+
         def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
             Calls the gradient callable and returns dense representation along a fixed dimension
@@ -170,7 +147,7 @@ class scipy:
                     + " non-zeros, but sparsity pattern has "
                     + str(len(sparsity_pattern))
                 )
-            return scipy._unpack_sparse_gradient(
+            return _unpack_sparse_gradient(
                 sparse_values, idx, dim, sparsity_pattern, invert_sign
             )
 
@@ -206,9 +183,27 @@ class scipy:
 
         """
         sparsity_pattern = sparsity_func()[idx]
-        sign = 1
-        if invert_sign:
-            sign = -1
+
+        @scipy._maybe_jit
+        def _unpack_sparse_hessian(
+            sparse_values: typing.Mapping[int, float],
+            idx: int,
+            shape: typing.Tuple[int, int],
+            sparsity_pattern,
+            invert_sign: bool = False,
+        ) -> numpy.ndarray:
+            nnz = len(sparse_values)
+            sign = 1
+            if invert_sign:
+                sign = -1
+
+            result = numpy.zeros(shape)
+            for i in range(nnz):
+                result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
+                    sign * sparse_values[i]
+                )
+
+            return result
 
         def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
@@ -239,7 +234,7 @@ class scipy:
                     + str(len(sparsity_pattern))
                 )
 
-            return scipy._unpack_sparse_hessian(
+            return _unpack_sparse_hessian(
                 sparse_values, idx, shape, sparsity_pattern, invert_sign
             )
 
