@@ -65,7 +65,7 @@ class scipy:
 
             return jit(nopython=True)(func)
         except ModuleNotFoundError:
-        return func
+            return func
 
     @staticmethod
     @_maybe_jit
