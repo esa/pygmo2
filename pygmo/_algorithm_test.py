@@ -113,7 +113,6 @@ class algorithm_test_case(_ut.TestCase):
 
             def evolve(self, pop):
                 return 3
-
         algo = algorithm(a())
         self.assertRaises(RuntimeError, lambda: algo.evolve(
             population(null_problem(), 5)))
