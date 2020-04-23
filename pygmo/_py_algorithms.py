@@ -47,7 +47,7 @@ class scipy:
     >>> scp = pg.algorithm(pg.scipy(method="L-BFGS-B"))
     >>> result = scp.evolve(pop).champion_f
     >>> result[0]
-    1.1377074469794883e-11
+    1.13770...
     >>> pop.problem.get_fevals()
     55
     >>> pop.problem.get_gevals()
