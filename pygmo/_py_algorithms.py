@@ -268,8 +268,8 @@ class scipy:
         args=(),
         method: str = None,
         tol: float = None,
-        callback: typing.Optional[typing.Callable[[numpy.ndarray], Any]] = None,
-        options: typing.Optional[typing.MutableMapping[str, Any]] = None,
+        callback: typing.Optional[typing.Callable[[numpy.ndarray], typing.Any]] = None,
+        options: typing.Optional[typing.MutableMapping[str, typing.Any]] = None,
     ) -> None:
         """
             Initialize a wrapper instance for a specific algorithm.
