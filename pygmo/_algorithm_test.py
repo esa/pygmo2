@@ -438,6 +438,7 @@ class algorithm_test_case(_ut.TestCase):
             rosenbrock,
             scipy,
         )
+        from copy import deepcopy
 
         # testing invalid method
         self.assertRaises(ValueError, lambda: scipy(method="foo"))
@@ -449,7 +450,7 @@ class algorithm_test_case(_ut.TestCase):
         init = pop.champion_f
 
         for m in methods:
-            popc = pop.__copy__()
+            popc = deepcopy(pop)
             scp = algorithm(scipy(method=m))
             result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
@@ -462,7 +463,7 @@ class algorithm_test_case(_ut.TestCase):
         init = pop.champion_f
 
         for m in methods:
-            popc = pop.__copy__()
+            popc = deepcopy(pop)
             scp = algorithm(scipy(method=m))
             result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
@@ -478,7 +479,7 @@ class algorithm_test_case(_ut.TestCase):
             init = pop.champion_f
 
             for m in methods:
-                popc = pop.__copy__()
+                popc = deepcopy(pop)
                 scp = algorithm(scipy(method=m))
                 result = scp.evolve(popc).champion_f
                 self.assertTrue(result[0] <= init[0])
@@ -497,7 +498,7 @@ class algorithm_test_case(_ut.TestCase):
             init = pop.champion_f
 
             for m in methods:
-                popc = pop.__copy__()
+                popc = deepcopy(pop)
                 # print(m, ": ", end="")
                 scp = algorithm(scipy(method=m))
                 result = scp.evolve(popc).champion_f
@@ -512,7 +513,7 @@ class algorithm_test_case(_ut.TestCase):
         init = pop.champion_f
 
         for m in methods:
-            popc = pop.__copy__()
+            popc = deepcopy(pop)
             scp = algorithm(scipy(method=m))
             result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
