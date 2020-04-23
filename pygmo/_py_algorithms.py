@@ -7,11 +7,10 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import random
+import typing
 import warnings
 
 import numpy
-
-import typing
 
 
 class scipy:
@@ -60,12 +59,12 @@ class scipy:
         This function tries to import the just-in-time compiler from numba and apply it to the passed function.
         If the import fails, the argument is returned unchanged.
         """
-        try:
-            from numba import jit
-
-            return jit(nopython=True)(func)
-        except ModuleNotFoundError:
-            return func
+#        try:
+#            from numba import jit
+#
+#            return jit(nopython=True)(func)
+#        except ModuleNotFoundError:
+        return func
 
     @staticmethod
     @_maybe_jit

@@ -14,9 +14,9 @@ conda config --add channels conda-forge --force
 
 # NOTE: clang<10 is hopefully temporary.
 if [[ "${PYGMO_BUILD_TYPE}" == *pagmo_head ]]; then
-    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang<10 clangdev<10 ipyparallel"
+    conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang<10 clangdev<10 ipyparallel scipy"
 else
-    conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang<10 clangdev<10 ipyparallel pagmo-devel"
+    conda_pkgs="cmake boost-cpp python=${PYTHON_VERSION} numpy cloudpickle networkx dill numba pybind11 clang<10 clangdev<10 ipyparallel pagmo-devel scipy"
 fi
 conda create -q -p $deps_dir -y
 source activate $deps_dir
