@@ -93,7 +93,6 @@ class scipy_optimize:
         """
         import numpy
         sparsity_pattern = sparsity_func()
-        # TODO: check whether pattern, dim and idx fit together
 
         @scipy_optimize._maybe_jit
         def _unpack_sparse_gradient(
