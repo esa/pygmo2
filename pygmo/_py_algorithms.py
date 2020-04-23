@@ -6,11 +6,7 @@
 # Public License v. 2.0. If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import random
 import typing
-import warnings
-
-import numpy
 
 
 class scipy:
@@ -95,6 +91,7 @@ class scipy:
 
 
         """
+        import numpy
         sparsity_pattern = sparsity_func()
         # TODO: check whether pattern, dim and idx fit together
 
@@ -182,6 +179,7 @@ class scipy:
 
 
         """
+        import numpy
         sparsity_pattern = sparsity_func()[idx]
 
         @scipy._maybe_jit
@@ -262,7 +260,7 @@ class scipy:
         args=(),
         method: str = None,
         tol: float = None,
-        callback: typing.Optional[typing.Callable[[numpy.ndarray], typing.Any]] = None,
+        callback: typing.Optional[typing.Callable[[typing.Any], typing.Any]] = None,
         options: typing.Optional[typing.MutableMapping[str, typing.Any]] = None,
     ) -> None:
         """
@@ -348,6 +346,7 @@ class scipy:
         """
 
         from scipy.optimize import minimize, NonlinearConstraint
+        import random
 
         problem = population.problem
 
@@ -439,6 +438,7 @@ class scipy:
                     )
 
                 if problem.has_hessians():
+                    import warnings
                     warnings.warn(
                         "Problem "
                         + problem.get_name()
