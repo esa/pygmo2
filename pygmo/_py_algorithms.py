@@ -9,7 +9,7 @@
 import typing
 
 
-class scipy:
+class scipy_optimize:
     """
     This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
 
@@ -40,7 +40,7 @@ class scipy:
     >>> pop = pg.population(prob=prob, size=1, seed=0)
     >>> pop.champion_f[0]
     929975.7994682974
-    >>> scp = pg.algorithm(pg.scipy(method="L-BFGS-B"))
+    >>> scp = pg.algorithm(pg.scipy_optimize(method="L-BFGS-B"))
     >>> result = scp.evolve(pop).champion_f
     >>> result[0] # doctest: +ELLIPSIS
     1.13770...
@@ -95,7 +95,7 @@ class scipy:
         sparsity_pattern = sparsity_func()
         # TODO: check whether pattern, dim and idx fit together
 
-        @scipy._maybe_jit
+        @scipy_optimize._maybe_jit
         def _unpack_sparse_gradient(
             sparse_values: typing.Mapping[int, float],
             idx: int,
@@ -182,7 +182,7 @@ class scipy:
         import numpy
         sparsity_pattern = sparsity_func()[idx]
 
-        @scipy._maybe_jit
+        @scipy_optimize._maybe_jit
         def _unpack_sparse_hessian(
             sparse_values: typing.Mapping[int, float],
             idx: int,
@@ -384,12 +384,12 @@ class scipy:
         jac = None
         hess = None
         if problem.has_gradient():
-            jac = scipy._generate_gradient_sparsity_wrapper(
+            jac = scipy_optimize._generate_gradient_sparsity_wrapper(
                 problem.gradient, 0, dim, problem.gradient_sparsity
             )
 
         if problem.has_hessians():
-            hess = scipy._generate_hessian_sparsity_wrapper(
+            hess = scipy_optimize._generate_hessian_sparsity_wrapper(
                 problem.hessians, 0, (dim, dim), problem.hessians_sparsity
             )
 
@@ -401,11 +401,11 @@ class scipy:
                 for i in range(problem.get_nec()):
                     constraint = {
                         "type": "eq",
-                        "fun": scipy._generate_eq_constraint(problem, i),
+                        "fun": scipy_optimize._generate_eq_constraint(problem, i),
                     }
 
                     if problem.has_gradient():
-                        constraint["jac"] = scipy._generate_gradient_sparsity_wrapper(
+                        constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
                             problem.gradient,
                             problem.get_nobj() + i,
                             dim,
@@ -417,11 +417,11 @@ class scipy:
                 for i in range(problem.get_nic()):
                     constraint = {
                         "type": "ineq",
-                        "fun": scipy._generate_neq_constraint(problem, i),
+                        "fun": scipy_optimize._generate_neq_constraint(problem, i),
                     }
 
                     if problem.has_gradient():
-                        constraint["jac"] = scipy._generate_gradient_sparsity_wrapper(
+                        constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
                             problem.gradient,
                             problem.get_nobj() + problem.get_nec() + i,
                             dim,
@@ -452,18 +452,18 @@ class scipy:
 
                     if i < problem.get_nec():
                         # Equality constraint
-                        func = scipy._generate_eq_constraint(problem, i)
+                        func = scipy_optimize._generate_eq_constraint(problem, i)
                         ub = 0
                     else:
                         # Inequality constraint, have to negate the sign
-                        func = scipy._generate_neq_constraint(
+                        func = scipy_optimize._generate_neq_constraint(
                             problem, i - problem.get_nec()
                         )
                         ub = float("inf")
 
                     conGrad = None
                     if problem.has_gradient():
-                        conGrad = scipy._generate_gradient_sparsity_wrapper(
+                        conGrad = scipy_optimize._generate_gradient_sparsity_wrapper(
                             problem.gradient,
                             problem.get_nobj() + i,
                             dim,

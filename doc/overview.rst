@@ -110,18 +110,18 @@ SLSQP (from NLopt)                                     :class:`pygmo.nlopt`     
 Low-storage BFGS (from NLopt)                          :class:`pygmo.nlopt`                                                                      S-U
 Preconditioned truncated Newton (from NLopt)           :class:`pygmo.nlopt`                                                                      S-U
 Shifted limited-memory variable-metric (from NLopt)    :class:`pygmo.nlopt`                                                                      S-U
-Nelder-Mead simplex (from SciPy)                       :class:`pygmo.scipy`                                                                      S-U
-Powell (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-U
-CG (from SciPy)                                        :class:`pygmo.scipy`                                                                      S-U
-BFGS (from SciPy)                                      :class:`pygmo.scipy`                                                                      S-U
-Low-storage BFGS (from SciPy)                          :class:`pygmo.scipy`                                                                      S-U
-COBYLA (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-CU
-SLSQP (from SciPy)                                     :class:`pygmo.scipy`                                                                      S-CU
-Trust Constr (from SciPy)                              :class:`pygmo.scipy`                                                                      S-CU
-Dogleg (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-U
-Trust Ncg (from SciPy)                                 :class:`pygmo.scipy`                                                                      S-U
-Trust exact (from SciPy)                               :class:`pygmo.scipy`                                                                      S-U
-Trust Krylov (from SciPy)                              :class:`pygmo.scipy`                                                                      S-U
+Nelder-Mead simplex (from SciPy)                       :class:`pygmo.scipy_optimize`                                                             S-U
+Powell (from SciPy)                                    :class:`pygmo.scipy_optimize`                                                             S-U
+CG (from SciPy)                                        :class:`pygmo.scipy_optimize`                                                             S-U
+BFGS (from SciPy)                                      :class:`pygmo.scipy_optimize`                                                             S-U
+Low-storage BFGS (from SciPy)                          :class:`pygmo.scipy_optimize`                                                             S-U
+COBYLA (from SciPy)                                    :class:`pygmo.scipy_optimize`                                                             S-CU
+SLSQP (from SciPy)                                     :class:`pygmo.scipy_optimize`                                                             S-CU
+Trust Constr (from SciPy)                              :class:`pygmo.scipy_optimize`                                                             S-CU
+Dogleg (from SciPy)                                    :class:`pygmo.scipy_optimize`                                                             S-U
+Trust Ncg (from SciPy)                                 :class:`pygmo.scipy_optimize`                                                             S-U
+Trust exact (from SciPy)                               :class:`pygmo.scipy_optimize`                                                             S-U
+Trust Krylov (from SciPy)                              :class:`pygmo.scipy_optimize`                                                             S-U
 Ipopt                                                  :class:`pygmo.ipopt`                                                                      S-CU
 SNOPT (in pagmo_plugins_non_free affiliated package)   `pygmo.snopt7 <https://esa.github.io/pagmo_plugins_nonfree/py_snopt7.html>`__             S-CU
 WORHP (in pagmo_plugins_non_free affiliated package)   `pygmo.wohrp <https://esa.github.io/pagmo_plugins_nonfree/py_worhp.html>`__               S-CU

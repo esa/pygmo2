@@ -436,12 +436,12 @@ class algorithm_test_case(_ut.TestCase):
             problem,
             rastrigin,
             rosenbrock,
-            scipy,
+            scipy_optimize,
         )
         from copy import deepcopy
 
         # testing invalid method
-        self.assertRaises(ValueError, lambda: scipy(method="foo"))
+        self.assertRaises(ValueError, lambda: scipy_optimize(method="foo"))
 
         # simple test with ackley, a problem without gradients or constraints
         methods = ["L-BFGS-B", "TNC", "SLSQP", None]
@@ -451,7 +451,7 @@ class algorithm_test_case(_ut.TestCase):
 
         for m in methods:
             popc = deepcopy(pop)
-            scp = algorithm(scipy(method=m))
+            scp = algorithm(scipy_optimize(method=m))
             result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
             self.assertTrue(popc.problem.get_fevals() > 1)
@@ -464,7 +464,7 @@ class algorithm_test_case(_ut.TestCase):
 
         for m in methods:
             popc = deepcopy(pop)
-            scp = algorithm(scipy(method=m))
+            scp = algorithm(scipy_optimize(method=m))
             result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
             self.assertTrue(popc.problem.get_fevals() > 1)
@@ -480,7 +480,7 @@ class algorithm_test_case(_ut.TestCase):
 
             for m in methods:
                 popc = deepcopy(pop)
-                scp = algorithm(scipy(method=m))
+                scp = algorithm(scipy_optimize(method=m))
                 result = scp.evolve(popc).champion_f
                 self.assertTrue(result[0] <= init[0])
                 self.assertTrue(popc.problem.get_fevals() > 1)
@@ -500,7 +500,7 @@ class algorithm_test_case(_ut.TestCase):
             for m in methods:
                 popc = deepcopy(pop)
                 # print(m, ": ", end="")
-                scp = algorithm(scipy(method=m))
+                scp = algorithm(scipy_optimize(method=m))
                 result = scp.evolve(popc).champion_f
                 self.assertTrue(result[0] <= init[0])
                 self.assertTrue(popc.problem.get_fevals() > 1)
@@ -514,7 +514,7 @@ class algorithm_test_case(_ut.TestCase):
 
         for m in methods:
             popc = deepcopy(pop)
-            scp = algorithm(scipy(method=m))
+            scp = algorithm(scipy_optimize(method=m))
             result = scp.evolve(popc).champion_f
             self.assertTrue(result[0] <= init[0])
             self.assertTrue(popc.problem.get_fevals() > 1)
@@ -541,7 +541,7 @@ class algorithm_test_case(_ut.TestCase):
             None,
         ]
         for m in methods:
-            scp = algorithm(scipy(method=m))
+            scp = algorithm(scipy_optimize(method=m))
             scp.set_verbosity(1)
             scp.get_name()
 
@@ -549,14 +549,14 @@ class algorithm_test_case(_ut.TestCase):
         prob = problem(luksan_vlcek1(10))
         prob.gradient([0] * prob.get_nx())
         for i in range(prob.get_nobj() + prob.get_nc()):
-            f = scipy._generate_gradient_sparsity_wrapper(
+            f = scipy_optimize._generate_gradient_sparsity_wrapper(
                 prob.gradient, i, prob.get_nx(), prob.gradient_sparsity
             )
             self.assertEqual(len(f([0] * prob.get_nx())), prob.get_nx())
 
         # testing incompatible gradient function
         smallerProb = problem(luksan_vlcek1(8))
-        wrapped_gradient = scipy._generate_gradient_sparsity_wrapper(
+        wrapped_gradient = scipy_optimize._generate_gradient_sparsity_wrapper(
                 smallerProb.gradient, 0, prob.get_nx(), prob.gradient_sparsity
             )
         self.assertRaises(
@@ -566,7 +566,7 @@ class algorithm_test_case(_ut.TestCase):
 
         # testing hessian wrapper generator
         prob = problem(rastrigin(10))
-        f = scipy._generate_hessian_sparsity_wrapper(
+        f = scipy_optimize._generate_hessian_sparsity_wrapper(
             prob.hessians, 0, (prob.get_nx(), prob.get_nx()), prob.hessians_sparsity
         )
         hessian = f([0] * prob.get_nx())
