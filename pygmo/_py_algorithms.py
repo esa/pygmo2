@@ -11,7 +11,7 @@ import warnings
 
 import numpy
 
-from typing import Any, Callable, Mapping, MutableMapping, Optional, Tuple, Union
+import typing
 
 
 class scipy:
@@ -60,19 +60,19 @@ class scipy:
         This function tries to import the just-in-time compiler from numba and apply it to the passed function.
         If the import fails, the argument is returned unchanged.
         """
-        try:
-            from numba import jit
-
-            return jit(nopython=True)(func)
-        except ModuleNotFoundError:
-            return func
+#        try:
+#            from numba import jit
+#
+#            return jit(nopython=True)(func)
+#        except ModuleNotFoundError:
+        return func
 
     @staticmethod
     @_maybe_jit
     def _unpack_sparse_gradient(
-        sparse_values: Mapping[int, float],
+        sparse_values: typing.Mapping[int, float],
         idx: int,
-        shape: Tuple[int],
+        shape: typing.Tuple[int],
         sparsity_pattern,
         invert_sign: bool = False,
     ) -> numpy.ndarray:
@@ -92,9 +92,9 @@ class scipy:
     @staticmethod
     @_maybe_jit
     def _unpack_sparse_hessian(
-        sparse_values: Mapping[int, float],
+        sparse_values: typing.Mapping[int, float],
         idx: int,
-        shape: Tuple[int, int],
+        shape: typing.Tuple[int, int],
         sparsity_pattern,
         invert_sign: bool = False,
     ) -> numpy.ndarray:
@@ -179,7 +179,7 @@ class scipy:
 
     @staticmethod
     def _generate_hessian_sparsity_wrapper(
-        func, idx: int, shape: Tuple[int, int], sparsity_func, invert_sign=False
+        func, idx: int, shape: typing.Tuple[int, int], sparsity_func, invert_sign=False
     ):
         """
         A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
@@ -268,8 +268,8 @@ class scipy:
         args=(),
         method: str = None,
         tol: float = None,
-        callback: Optional[Callable[[numpy.ndarray], Any]] = None,
-        options: Optional[MutableMapping[str, Any]] = None,
+        callback: typing.Optional[typing.Callable[[numpy.ndarray], Any]] = None,
+        options: typing.Optional[typing.MutableMapping[str, Any]] = None,
     ) -> None:
         """
             Initialize a wrapper instance for a specific algorithm.
