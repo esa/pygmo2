@@ -46,7 +46,7 @@ class scipy:
     929975.7994682974
     >>> scp = pg.algorithm(pg.scipy(method="L-BFGS-B"))
     >>> result = scp.evolve(pop).champion_f
-    >>> result[0]
+    >>> result[0] # doctest: +ELLIPSIS
     1.13770...
     >>> pop.problem.get_fevals()
     55
