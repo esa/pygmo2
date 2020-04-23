@@ -60,11 +60,11 @@ class scipy:
         This function tries to import the just-in-time compiler from numba and apply it to the passed function.
         If the import fails, the argument is returned unchanged.
         """
-#        try:
-#            from numba import jit
-#
-#            return jit(nopython=True)(func)
-#        except ModuleNotFoundError:
+        try:
+            from numba import jit
+
+            return jit(nopython=True)(func)
+        except ModuleNotFoundError:
         return func
 
     @staticmethod
