@@ -98,21 +98,25 @@ Local optimization
 Common Name                                            Docs of the python class                                                                  Capabilities
 ====================================================== ========================================================================================= ===============
 Compass Search (CS)                                    :class:`pygmo.compass_search`                                                             S-CU
-COBYLA (from NLopt or SciPy)                           :class:`pygmo.nlopt`                                                                      S-CU
+COBYLA (from NLopt)                                    :class:`pygmo.nlopt`                                                                      S-CU
 BOBYQA (from NLopt)                                    :class:`pygmo.nlopt`                                                                      S-U
 NEWUOA + bound constraints (from NLopt)                :class:`pygmo.nlopt`                                                                      S-U
 PRAXIS (from NLopt)                                    :class:`pygmo.nlopt`                                                                      S-U
-Nelder-Mead simplex (from NLopt or SciPy)              :class:`pygmo.nlopt`                                                                      S-U
+Nelder-Mead simplex (from NLopt)                       :class:`pygmo.nlopt`                                                                      S-U
 Subplex (from NLopt)                                   :class:`pygmo.nlopt`                                                                      S-U
 MMA (Method of Moving Asymptotes) (from NLopt)         :class:`pygmo.nlopt`                                                                      S-CU
 CCSA (from NLopt)                                      :class:`pygmo.nlopt`                                                                      S-CU
-SLSQP (from NLopt or SciPy)                            :class:`pygmo.nlopt`                                                                      S-CU
-Low-storage BFGS (from NLopt or SciPy)                 :class:`pygmo.nlopt`                                                                      S-U
+SLSQP (from NLopt)                                     :class:`pygmo.nlopt`                                                                      S-CU
+Low-storage BFGS (from NLopt)                          :class:`pygmo.nlopt`                                                                      S-U
 Preconditioned truncated Newton (from NLopt)           :class:`pygmo.nlopt`                                                                      S-U
 Shifted limited-memory variable-metric (from NLopt)    :class:`pygmo.nlopt`                                                                      S-U
+Nelder-Mead simplex (from SciPy)                       :class:`pygmo.scipy`                                                                      S-U
 Powell (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-U
 CG (from SciPy)                                        :class:`pygmo.scipy`                                                                      S-U
 BFGS (from SciPy)                                      :class:`pygmo.scipy`                                                                      S-U
+Low-storage BFGS (from SciPy)                          :class:`pygmo.scipy`                                                                      S-U
+COBYLA (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-CU
+SLSQP (from SciPy)                                     :class:`pygmo.scipy`                                                                      S-CU
 Trust Constr (from SciPy)                              :class:`pygmo.scipy`                                                                      S-CU
 Dogleg (from SciPy)                                    :class:`pygmo.scipy`                                                                      S-U
 Trust Ncg (from SciPy)                                 :class:`pygmo.scipy`                                                                      S-U
