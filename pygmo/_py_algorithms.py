@@ -448,30 +448,19 @@ class scipy_optimize:
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
                 # COBYLYA and SLSQP
-                for i in range(problem.get_nec()):
-                    constraint = {
-                        "type": "eq",
-                        "fun": fitness_wrapper.get_eq_func(i),
-                    }
+                for i in range(problem.get_nec() + problem.get_nic()):
+                    constraint = dict()
+                    if i < problem.get_nec():
+                        constraint["type"] = "eq"
+                        constraint["fun"] = fitness_wrapper.get_eq_func(i)
+                    else:
+                        constraint["type"] = "ineq"
+                        constraint["fun"] = fitness_wrapper.get_neq_func(i-problem.get_nec())
 
                     if problem.has_gradient():
                         # extract gradient of constraint
                         constraint["jac"] = fitness_wrapper._generate_gradient_sparsity_wrapper(
                             problem.get_nobj() + i
-                        )
-
-                    constraints.append(constraint)
-
-                for i in range(problem.get_nic()):
-                    constraint = {
-                        "type": "ineq",
-                        "fun": fitness_wrapper.get_neq_func(i),
-                    }
-
-                    if problem.has_gradient():
-                        # extract gradient of constraint
-                        constraint["jac"] = fitness_wrapper._generate_gradient_sparsity_wrapper(
-                            problem.get_nobj() + problem.get_nec() + i
                         )
 
                     constraints.append(constraint)
@@ -500,7 +489,7 @@ class scipy_optimize:
                         func = fitness_wrapper.get_eq_func(i)
                         ub = 0
                     else:
-                        # Inequality constraint, have to negate the sign
+                        # Inequality constraint
                         func = fitness_wrapper.get_neq_func(i - problem.get_nec())
                         ub = float("inf")
 
@@ -541,6 +530,7 @@ class scipy_optimize:
             fun = [fun]
 
         if problem.get_nc() > 0:
+            # the constraint values are not reported, so we cannot set them
             population.set_x(idx, result.x)
         else:
             population.set_xf(idx, result.x, fun)
