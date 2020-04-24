@@ -62,6 +62,64 @@ class scipy_optimize:
         except ModuleNotFoundError:
             return func
 
+    class _fitness_wrapper:
+
+        def __init__(self, problem):
+            self.problem = problem
+            self.last_x = None
+            self.last_fitness = None
+            self.last_gradient_x = None
+            self.last_gradient_result = None
+
+        def _update_cache(self, x, *args, **kwargs):
+            if self.last_x is None or not all(self.last_x == x):
+                self.last_x = x
+                self.last_fitness = self.problem.fitness(x, *args, **kwargs)
+
+        def _updateGradientCache(self, x, *args, **kwargs):
+            if self.last_gradient_x is None or not all(self.last_gradient_x == x):
+                self.last_gradient_x = x
+                self.last_gradient_result = self.problem.gradient(x, *args, **kwargs)
+
+        def get_fitness_func(self):
+            if self.problem.get_nc() == 0:
+                return self.problem.fitness
+            else:
+
+                def fitness(x, *args, **kwargs):
+                    self._update_cache(x, *args, **kwargs)
+                    result = self.last_fitness[: self.problem.get_nobj()]
+                    return result
+
+                return fitness
+
+        def get_eq_func(self, idx: int):
+            def eq_func(x, *args, **kwargs):
+                self._update_cache(x, *args, **kwargs)
+                result = self.last_fitness[self.problem.get_nobj() + idx]
+                return result
+
+            return eq_func
+
+        def get_neq_func(self, idx: int):
+            def neq_func(x, *args, **kwargs):
+                self._update_cache(x, *args, **kwargs)
+                # In pagmo, inequality constraints have to be negative, in scipy they have to be non-negative.
+                result = -self.last_fitness[
+                    self.problem.get_nobj() + self.problem.get_nec() + idx
+                ]
+                return result
+
+            return neq_func
+
+        def get_gradient_func(self):
+            def gradient_func(x, *args, **kwargs):
+                self._updateGradientCache(x, *args, **kwargs)
+                result = self.last_gradient_result
+                return result
+
+            return gradient_func
+
     @staticmethod
     def _generate_gradient_sparsity_wrapper(
         func, idx: int, dim: int, sparsity_func, invert_sign=False
@@ -92,6 +150,7 @@ class scipy_optimize:
 
         """
         import numpy
+
         sparsity_pattern = sparsity_func()
 
         @scipy_optimize._maybe_jit
@@ -118,7 +177,7 @@ class scipy_optimize:
         def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
             Calls the gradient callable and returns dense representation along a fixed dimension
-            
+
             Args:
 
                 args: arguments for callable
@@ -179,6 +238,7 @@ class scipy_optimize:
 
         """
         import numpy
+
         sparsity_pattern = sparsity_func()[idx]
 
         @scipy_optimize._maybe_jit
@@ -205,7 +265,7 @@ class scipy_optimize:
         def wrapper(*args, **kwargs) -> numpy.ndarray:
             """
             Calls the hessian callable and returns dense representation along a fixed dimension
-            
+
             Args:
 
                 args: arguments for callable
@@ -264,7 +324,7 @@ class scipy_optimize:
     ) -> None:
         """
             Initialize a wrapper instance for a specific algorithm.
-            Construction arguments are those options of scipy.optimize.minimize that are not problem-specific. 
+            Construction arguments are those options of scipy.optimize.minimize that are not problem-specific.
             Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
             are deduced from the problem in the population given to the evolve function.
 
@@ -438,6 +498,7 @@ class scipy_optimize:
 
                 if problem.has_hessians():
                     import warnings
+
                     warnings.warn(
                         "Problem "
                         + problem.get_name()
