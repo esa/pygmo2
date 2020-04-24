@@ -147,7 +147,7 @@ class scipy_optimize:
 
             Raises:
 
-                unspecified: any exception thrown by self.problem.sparsity_func
+                unspecified: any exception thrown by self.problem.gradient_sparsity()
 
 
             """
@@ -213,94 +213,93 @@ class scipy_optimize:
 
             return wrapper
 
-    @staticmethod
-    def _generate_hessian_sparsity_wrapper(
-        func, idx: int, shape: typing.Tuple[int, int], sparsity_func, invert_sign=False
-    ):
-        """
-        A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
-
-        Pygmo convention is to include problem constraints into its fitness function. The same applies to the hessian
-        The scipy.optimize.minimize function expects separate callables for the fitness function and each constraint.
-        This function creates a wrapper that extracts a requested dimension and also transforms the sparse hessian into a dense representation.
-
-        Keyword args:
-
-            func: the hessian callable
-            idx: the requested dimension.
-            shape: the shape of the result as interpreted by numpy. Should be (dim,dim) for a problem of input dimension dim.
-            sparsity_func: a callable giving the sparsity pattern. Use problem.hessians_sparsity.
-            invert_sign: whether all values of the hessian should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
-
-        Returns:
-
-            a callable that passes all arguments to the hessian callable func and returns the dense hessian at dimension idx
-
-        Raises:
-
-            unspecified: any exception thrown by sparsity_func
-
-
-        """
-        import numpy
-
-        sparsity_pattern = sparsity_func()[idx]
-
-        @scipy_optimize._maybe_jit
-        def _unpack_sparse_hessian(
-            sparse_values: typing.Mapping[int, float],
-            idx: int,
-            shape: typing.Tuple[int, int],
-            sparsity_pattern,
-            invert_sign: bool = False,
-        ) -> numpy.ndarray:
-            nnz = len(sparse_values)
-            sign = 1
-            if invert_sign:
-                sign = -1
-
-            result = numpy.zeros(shape)
-            for i in range(nnz):
-                result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
-                    sign * sparse_values[i]
-                )
-
-            return result
-
-        def wrapper(*args, **kwargs) -> numpy.ndarray:
+        def _generate_hessian_sparsity_wrapper(
+            self, idx: int
+        ):
             """
-            Calls the hessian callable and returns dense representation along a fixed dimension
+            A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
 
-            Args:
+            Pygmo convention is to include problem constraints into its fitness function. The same applies to the hessian
+            The scipy.optimize.minimize function expects separate callables for the fitness function and each constraint.
+            This function creates a wrapper that extracts a requested dimension and also transforms the sparse hessian into a dense representation.
 
-                args: arguments for callable
-                kwargs: keyword arguments for callable
+            Keyword args:
+
+                idx: the requested dimension.
 
             Returns:
 
-                dense representation of hessian
+                a callable that passes all arguments to the hessian callable and returns the dense hessian at dimension idx
 
             Raises:
 
-                ValueError: If number of non-zeros in hessian and sparsity pattern disagree
-                unspecified: any exception thrown by wrapped callable
+                unspecified: any exception thrown by self.problem.hessian_sparsity()
+
 
             """
-            sparse_values = func(*args, **kwargs)[idx]
-            nnz = len(sparse_values)
-            if nnz != len(sparsity_pattern):
-                raise ValueError(
-                    "Sparse hessian has "
-                    + str(nnz)
-                    + " non-zeros, but sparsity pattern has "
-                    + str(len(sparsity_pattern))
+            import numpy
+
+            sparsity_pattern = self.problem.hessians_sparsity()[idx]
+            func = self.problem.hessians
+            dim: int = len(self.problem.get_bounds()[0])
+            invert_sign: bool = (idx >= self.problem.get_nobj() + self.problem.get_nec())
+            shape: typing.Tuple[int, int] = (dim, dim)
+
+            @scipy_optimize._maybe_jit
+            def _unpack_sparse_hessian(
+                sparse_values: typing.Mapping[int, float],
+                idx: int,
+                shape: typing.Tuple[int, int],
+                sparsity_pattern,
+                invert_sign: bool = False,
+            ) -> numpy.ndarray:
+                nnz = len(sparse_values)
+                sign = 1
+                if invert_sign:
+                    sign = -1
+
+                result = numpy.zeros(shape)
+                for i in range(nnz):
+                    result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
+                        sign * sparse_values[i]
+                    )
+
+                return result
+
+            def wrapper(*args, **kwargs) -> numpy.ndarray:
+                """
+                Calls the hessian callable and returns dense representation along a fixed dimension
+
+                Args:
+
+                    args: arguments for callable
+                    kwargs: keyword arguments for callable
+
+                Returns:
+
+                    dense representation of hessian
+
+                Raises:
+
+                    ValueError: If number of non-zeros in hessian and sparsity pattern disagree
+                    unspecified: any exception thrown by wrapped callable
+
+                """
+                sparse_values = func(*args, **kwargs)[idx]
+                nnz = len(sparse_values)
+                if nnz != len(sparsity_pattern):
+                    raise ValueError(
+                        "Sparse hessian has "
+                        + str(nnz)
+                        + " non-zeros, but sparsity pattern has "
+                        + str(len(sparsity_pattern))
+                    )
+
+                return _unpack_sparse_hessian(
+                    sparse_values, idx, shape, sparsity_pattern, invert_sign
                 )
 
-            return _unpack_sparse_hessian(
-                sparse_values, idx, shape, sparsity_pattern, invert_sign
-            )
-
-        return wrapper
+            return wrapper
 
     def __init__(
         self,
@@ -436,9 +435,7 @@ class scipy_optimize:
             jac = fitness_wrapper._generate_gradient_sparsity_wrapper(0)
 
         if problem.has_hessians():
-            hess = scipy_optimize._generate_hessian_sparsity_wrapper(
-                problem.hessians, 0, (dim, dim), problem.hessians_sparsity
-            )
+            hess = fitness_wrapper._generate_hessian_sparsity_wrapper(0)
 
         constraints = ()  # default argument, implying an unconstrained problem
 

@@ -563,9 +563,7 @@ class algorithm_test_case(_ut.TestCase):
 
         # testing hessian wrapper generator
         prob = problem(rastrigin(10))
-        f = scipy_optimize._generate_hessian_sparsity_wrapper(
-            prob.hessians, 0, (prob.get_nx(), prob.get_nx()), prob.hessians_sparsity
-        )
+        f = scipy_optimize._fitness_wrapper(prob)._generate_hessian_sparsity_wrapper(0)
         hessian = f(array([0] * prob.get_nx()))
         self.assertEqual(len(hessian), prob.get_nx())
         self.assertEqual(len(hessian[0]), prob.get_nx())
