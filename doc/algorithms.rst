@@ -8,7 +8,7 @@ List of algorithms
 Algorithms implemented in Python
 ---------------------------
 
-.. autoclass:: pygmo.scipy
+.. autoclass:: pygmo.scipy_optimize
    :members:
 
 Algorithms exposed from C++
