@@ -435,10 +435,12 @@ class scipy_optimize:
                 problem.hessians, 0, (dim, dim), problem.hessians_sparsity
             )
 
+        fitness_wrapper = scipy_optimize._fitness_wrapper(problem)
+        constraints = () # default argument, implying an unconstrained problem
+
         idx = random.randint(0, len(population) - 1)
         if problem.get_nc() > 0:
-            fitness_wrapper = scipy_optimize._fitness_wrapper(problem)
-
+            # translate constraints into right format
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
                 # COBYLYA and SLSQP
@@ -449,6 +451,7 @@ class scipy_optimize:
                     }
 
                     if problem.has_gradient():
+                        # extract gradient of constraint
                         constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
                             fitness_wrapper.get_gradient_func(),
                             problem.get_nobj() + i,
@@ -465,6 +468,7 @@ class scipy_optimize:
                     }
 
                     if problem.has_gradient():
+                        # extract gradient of constraint
                         constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
                             fitness_wrapper.get_gradient_func(),
                             problem.get_nobj() + problem.get_nec() + i,
@@ -522,33 +526,21 @@ class scipy_optimize:
 
                     constraints.append(constraint)
 
-            result = minimize(
-                fitness_wrapper.get_fitness_func(),
-                population.get_x()[idx],
-                args=self.args,
-                method=self.method,
-                jac=jac,
-                hess=hess,
-                bounds=bounds_seq,
-                constraints=constraints,
-                tol=self.tol,
-                callback=self.callback,
-                options=self.options,
-            )
-        else:
-            # Case without constraints
-            result = minimize(
-                problem.fitness,
-                population.get_x()[idx],
-                args=self.args,
-                method=self.method,
-                jac=jac,
-                hess=hess,
-                bounds=bounds_seq,
-                tol=self.tol,
-                callback=self.callback,
-                options=self.options,
-            )
+
+        # Call scipy minimizer
+        result = minimize(
+            fitness_wrapper.get_fitness_func(),
+            population.get_x()[idx],
+            args=self.args,
+            method=self.method,
+            jac=jac,
+            hess=hess,
+            bounds=bounds_seq,
+            constraints=constraints,
+            tol=self.tol,
+            callback=self.callback,
+            options=self.options,
+        )
 
         # wrap result in array if necessary
         fun = result.fun
