@@ -32,7 +32,6 @@ class algorithm_test_case(_ut.TestCase):
 
     def run_basic_tests(self):
         # Tests for minimal algorithm, and mandatory methods.
-        from numpy import all, array
         from .core import algorithm, de, population, null_problem, null_algorithm
         from . import thread_safety as ts
         # Def construction.
@@ -540,28 +539,26 @@ class algorithm_test_case(_ut.TestCase):
             "trust-krylov",
             None,
         ]
-        for m in methods:
+        for m in method_list:
             scp = algorithm(scipy_optimize(method=m))
             scp.set_verbosity(1)
             scp.get_name()
 
         # testing gradient wrapper generator
+        from numpy import array
         prob = problem(luksan_vlcek1(10))
         prob.gradient([0] * prob.get_nx())
+        wrapper = scipy_optimize._fitness_wrapper(prob)
         for i in range(prob.get_nobj() + prob.get_nc()):
-            f = scipy_optimize._generate_gradient_sparsity_wrapper(
-                prob.gradient, i, prob.get_nx(), prob.gradient_sparsity
-            )
-            self.assertEqual(len(f([0] * prob.get_nx())), prob.get_nx())
+            f = wrapper._generate_gradient_sparsity_wrapper(i)
+            self.assertEqual(len(f(array([0] * prob.get_nx()))), prob.get_nx())
 
         # testing incompatible gradient function
         smallerProb = problem(luksan_vlcek1(8))
-        wrapped_gradient = scipy_optimize._generate_gradient_sparsity_wrapper(
-                smallerProb.gradient, 0, prob.get_nx(), prob.gradient_sparsity
-            )
+        wrapped_gradient = scipy_optimize._fitness_wrapper(smallerProb)._generate_gradient_sparsity_wrapper(0)
         self.assertRaises(
             ValueError,
-            lambda: wrapped_gradient([0]*prob.get_nx())
+            lambda: wrapped_gradient(array([0]*prob.get_nx()))
         )
 
         # testing hessian wrapper generator
@@ -569,6 +566,6 @@ class algorithm_test_case(_ut.TestCase):
         f = scipy_optimize._generate_hessian_sparsity_wrapper(
             prob.hessians, 0, (prob.get_nx(), prob.get_nx()), prob.hessians_sparsity
         )
-        hessian = f([0] * prob.get_nx())
+        hessian = f(array([0] * prob.get_nx()))
         self.assertEqual(len(hessian), prob.get_nx())
         self.assertEqual(len(hessian[0]), prob.get_nx())

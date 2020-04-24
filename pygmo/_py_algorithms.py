@@ -63,20 +63,26 @@ class scipy_optimize:
             return func
 
     class _fitness_wrapper:
+        """
+        A helper class to prevent redundant evaluations of the fitness function.
 
-        def __init__(self, problem):
+        In pygmo, the constraints of a problem are part of the fitness function, while scipy requires a separate
+        callable for each constraint. This class provides separate callables which use a common cache.
+        """
+
+        def __init__(self, problem) -> None:
             self.problem = problem
             self.last_x = None
             self.last_fitness = None
             self.last_gradient_x = None
             self.last_gradient_result = None
 
-        def _update_cache(self, x, *args, **kwargs):
+        def _update_cache(self, x, *args, **kwargs) -> None:
             if self.last_x is None or not all(self.last_x == x):
                 self.last_x = x.copy()
                 self.last_fitness = self.problem.fitness(x, *args, **kwargs)
 
-        def _updateGradientCache(self, x, *args, **kwargs):
+        def _update_gradient_cache(self, x, *args, **kwargs) -> None:
             if self.last_gradient_x is None or not all(self.last_gradient_x == x):
                 self.last_gradient_x = x.copy()
                 self.last_gradient_result = self.problem.gradient(x, *args, **kwargs)
@@ -113,100 +119,99 @@ class scipy_optimize:
             return neq_func
 
         def get_gradient_func(self):
-            def gradient_func(x, *args, **kwargs):
-                self._updateGradientCache(x, *args, **kwargs)
-                result = self.last_gradient_result
-                return result
+            if self.problem.get_nc() == 0:
+                return self.problem.gradient
+            else:
+                def gradient_func(x, *args, **kwargs):
+                    self._update_gradient_cache(x, *args, **kwargs)
+                    result = self.last_gradient_result
+                    return result
 
-            return gradient_func
+                return gradient_func
 
-    @staticmethod
-    def _generate_gradient_sparsity_wrapper(
-        func, idx: int, dim: int, sparsity_func, invert_sign=False
-    ):
-        """
-        A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
-
-        Pygmo convention is to include problem constraints into its fitness function. The same applies to the gradient.
-        The scipy.optimize.minimize function expects a separate callable for each constraint, this function creates a wrapper that extracts a requested dimension.
-        It also transforms the sparse gradient into a dense representation.
-
-        Args:
-
-            func: the gradient callable
-            idx: the requested dimension.
-            dim: number of arguments for callable func and the resulting gradient
-            sparsity_func: a callable giving the sparsity pattern. Use problem.gradient_sparsity.
-            invert_sign: whether all values of the gradient should be multiplied with -1. This is necessary for inequality constraints, where the feasible side is interpreted the opposite way by scipy and pygmo.
-
-        Returns:
-
-            a callable that passes all arguments to the gradient callable func and returns the dense gradient at dimension idx
-
-        Raises:
-
-            unspecified: any exception thrown by sparsity_func
-
-
-        """
-        import numpy
-
-        sparsity_pattern = sparsity_func()
-
-        @scipy_optimize._maybe_jit
-        def _unpack_sparse_gradient(
-            sparse_values: typing.Mapping[int, float],
-            idx: int,
-            shape: typing.Tuple[int],
-            sparsity_pattern,
-            invert_sign: bool = False,
-        ) -> numpy.ndarray:
-            nnz = len(sparse_values)
-            sign = 1
-            if invert_sign:
-                sign = -1
-
-            result = numpy.zeros(shape)
-            for i in range(nnz):
-                # filter for just the dimension we need
-                if sparsity_pattern[i][0] == idx:
-                    result[sparsity_pattern[i][1]] = sign * sparse_values[i]
-
-            return result
-
-        def wrapper(*args, **kwargs) -> numpy.ndarray:
+        def _generate_gradient_sparsity_wrapper(self, idx: int):
             """
-            Calls the gradient callable and returns dense representation along a fixed dimension
+            A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
+
+            Pygmo convention is to include problem constraints into its fitness function. The same applies to the gradient.
+            The scipy.optimize.minimize function expects a separate callable for each constraint, this function creates a wrapper that extracts a requested dimension.
+            It also transforms the sparse gradient into a dense representation.
 
             Args:
 
-                args: arguments for callable
-                kwargs: keyword arguments for callable
+                idx: the requested dimension.
 
             Returns:
 
-                dense representation of gradient
+                a callable that dense gradient at dimension idx
 
             Raises:
 
-                ValueError: If number of non-zeros in gradient and sparsity pattern disagree
-                unspecified: any exception thrown by wrapped callable
+                unspecified: any exception thrown by self.problem.sparsity_func
+
 
             """
-            sparse_values = func(*args, **kwargs)
-            nnz = len(sparse_values)
-            if nnz != len(sparsity_pattern):
-                raise ValueError(
-                    "Sparse gradient has "
-                    + str(nnz)
-                    + " non-zeros, but sparsity pattern has "
-                    + str(len(sparsity_pattern))
-                )
-            return _unpack_sparse_gradient(
-                sparse_values, idx, dim, sparsity_pattern, invert_sign
-            )
+            import numpy
 
-        return wrapper
+            sparsity_pattern = self.problem.gradient_sparsity()
+            func = self.get_gradient_func()
+            dim: int = len(self.problem.get_bounds()[0])
+            invert_sign: bool = (idx >= self.problem.get_nobj() + self.problem.get_nec())
+
+            @scipy_optimize._maybe_jit
+            def _unpack_sparse_gradient(
+                sparse_values: typing.Mapping[int, float],
+                idx: int,
+                shape: typing.Tuple[int],
+                sparsity_pattern,
+                invert_sign: bool = False,
+            ) -> numpy.ndarray:
+                nnz = len(sparse_values)
+                sign = 1
+                if invert_sign:
+                    sign = -1
+
+                result = numpy.zeros(shape)
+                for i in range(nnz):
+                    # filter for just the dimension we need
+                    if sparsity_pattern[i][0] == idx:
+                        result[sparsity_pattern[i][1]] = sign * sparse_values[i]
+
+                return result
+
+            def wrapper(*args, **kwargs) -> numpy.ndarray:
+                """
+                Calls the gradient callable and returns dense representation along a fixed dimension
+
+                Args:
+
+                    args: arguments for callable
+                    kwargs: keyword arguments for callable
+
+                Returns:
+
+                    dense representation of gradient
+
+                Raises:
+
+                    ValueError: If number of non-zeros in gradient and sparsity pattern disagree
+                    unspecified: any exception thrown by wrapped callable
+
+                """
+                sparse_values = func(*args, **kwargs)
+                nnz = len(sparse_values)
+                if nnz != len(sparsity_pattern):
+                    raise ValueError(
+                        "Sparse gradient has "
+                        + str(nnz)
+                        + " non-zeros, but sparsity pattern has "
+                        + str(len(sparsity_pattern))
+                    )
+                return _unpack_sparse_gradient(
+                    sparse_values, idx, dim, sparsity_pattern, invert_sign
+                )
+
+            return wrapper
 
     @staticmethod
     def _generate_hessian_sparsity_wrapper(
@@ -423,20 +428,19 @@ class scipy_optimize:
         dim = len(bounds[0])
         bounds_seq = [(bounds[0][d], bounds[1][d]) for d in range(dim)]
 
+        fitness_wrapper = scipy_optimize._fitness_wrapper(problem)
+
         jac = None
         hess = None
         if problem.has_gradient():
-            jac = scipy_optimize._generate_gradient_sparsity_wrapper(
-                problem.gradient, 0, dim, problem.gradient_sparsity
-            )
+            jac = fitness_wrapper._generate_gradient_sparsity_wrapper(0)
 
         if problem.has_hessians():
             hess = scipy_optimize._generate_hessian_sparsity_wrapper(
                 problem.hessians, 0, (dim, dim), problem.hessians_sparsity
             )
 
-        fitness_wrapper = scipy_optimize._fitness_wrapper(problem)
-        constraints = () # default argument, implying an unconstrained problem
+        constraints = ()  # default argument, implying an unconstrained problem
 
         idx = random.randint(0, len(population) - 1)
         if problem.get_nc() > 0:
@@ -452,11 +456,8 @@ class scipy_optimize:
 
                     if problem.has_gradient():
                         # extract gradient of constraint
-                        constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
-                            fitness_wrapper.get_gradient_func(),
-                            problem.get_nobj() + i,
-                            dim,
-                            problem.gradient_sparsity,
+                        constraint["jac"] = fitness_wrapper._generate_gradient_sparsity_wrapper(
+                            problem.get_nobj() + i
                         )
 
                     constraints.append(constraint)
@@ -469,12 +470,8 @@ class scipy_optimize:
 
                     if problem.has_gradient():
                         # extract gradient of constraint
-                        constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
-                            fitness_wrapper.get_gradient_func(),
-                            problem.get_nobj() + problem.get_nec() + i,
-                            dim,
-                            problem.gradient_sparsity,
-                            invert_sign=True,
+                        constraint["jac"] = fitness_wrapper._generate_gradient_sparsity_wrapper(
+                            problem.get_nobj() + problem.get_nec() + i
                         )
 
                     constraints.append(constraint)
@@ -497,7 +494,6 @@ class scipy_optimize:
                 for i in range(problem.get_nc()):
                     func = None
                     ub = 0
-                    invert_sign = i >= problem.get_nec()
 
                     if i < problem.get_nec():
                         # Equality constraint
@@ -510,12 +506,8 @@ class scipy_optimize:
 
                     conGrad = None
                     if problem.has_gradient():
-                        conGrad = scipy_optimize._generate_gradient_sparsity_wrapper(
-                            fitness_wrapper.get_gradient_func(),
+                        conGrad = fitness_wrapper._generate_gradient_sparsity_wrapper(
                             problem.get_nobj() + i,
-                            dim,
-                            problem.gradient_sparsity,
-                            invert_sign=invert_sign,
                         )
 
                     # Constructing the actual constraint objects. All constraints in pygmo are treated as nonlinear.
@@ -525,7 +517,6 @@ class scipy_optimize:
                         constraint = NonlinearConstraint(func, 0, 0)
 
                     constraints.append(constraint)
-
 
         # Call scipy minimizer
         result = minimize(
