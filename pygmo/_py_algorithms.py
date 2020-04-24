@@ -73,12 +73,12 @@ class scipy_optimize:
 
         def _update_cache(self, x, *args, **kwargs):
             if self.last_x is None or not all(self.last_x == x):
-                self.last_x = x
+                self.last_x = x.copy()
                 self.last_fitness = self.problem.fitness(x, *args, **kwargs)
 
         def _updateGradientCache(self, x, *args, **kwargs):
             if self.last_gradient_x is None or not all(self.last_gradient_x == x):
-                self.last_gradient_x = x
+                self.last_gradient_x = x.copy()
                 self.last_gradient_result = self.problem.gradient(x, *args, **kwargs)
 
         def get_fitness_func(self):
@@ -297,23 +297,6 @@ class scipy_optimize:
 
         return wrapper
 
-    @staticmethod
-    def _generate_eq_constraint(problem, i: int):
-        def eqFunc(*args, **kwargs):
-            return problem.fitness(*args, **kwargs)[problem.get_nobj() + i]
-
-        return eqFunc
-
-    @staticmethod
-    def _generate_neq_constraint(problem, i: int):
-        def neqFunc(*args, **kwargs):
-            # In pagmo, inequality constraints have to be negative, in scipy they have to be non-negative.
-            return -problem.fitness(*args, **kwargs)[
-                problem.get_nobj() + problem.get_nec() + i
-            ]
-
-        return neqFunc
-
     def __init__(
         self,
         args=(),
@@ -454,18 +437,20 @@ class scipy_optimize:
 
         idx = random.randint(0, len(population) - 1)
         if problem.get_nc() > 0:
+            fitness_wrapper = scipy_optimize._fitness_wrapper(problem)
+
             constraints = []
             if self.method in ["COBYLA", "SLSQP", None]:
                 # COBYLYA and SLSQP
                 for i in range(problem.get_nec()):
                     constraint = {
                         "type": "eq",
-                        "fun": scipy_optimize._generate_eq_constraint(problem, i),
+                        "fun": fitness_wrapper.get_eq_func(i),
                     }
 
                     if problem.has_gradient():
                         constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
-                            problem.gradient,
+                            fitness_wrapper.get_gradient_func(),
                             problem.get_nobj() + i,
                             dim,
                             problem.gradient_sparsity,
@@ -476,12 +461,12 @@ class scipy_optimize:
                 for i in range(problem.get_nic()):
                     constraint = {
                         "type": "ineq",
-                        "fun": scipy_optimize._generate_neq_constraint(problem, i),
+                        "fun": fitness_wrapper.get_neq_func(i),
                     }
 
                     if problem.has_gradient():
                         constraint["jac"] = scipy_optimize._generate_gradient_sparsity_wrapper(
-                            problem.gradient,
+                            fitness_wrapper.get_gradient_func(),
                             problem.get_nobj() + problem.get_nec() + i,
                             dim,
                             problem.gradient_sparsity,
@@ -512,19 +497,17 @@ class scipy_optimize:
 
                     if i < problem.get_nec():
                         # Equality constraint
-                        func = scipy_optimize._generate_eq_constraint(problem, i)
+                        func = fitness_wrapper.get_eq_func(i)
                         ub = 0
                     else:
                         # Inequality constraint, have to negate the sign
-                        func = scipy_optimize._generate_neq_constraint(
-                            problem, i - problem.get_nec()
-                        )
+                        func = fitness_wrapper.get_neq_func(i - problem.get_nec())
                         ub = float("inf")
 
                     conGrad = None
                     if problem.has_gradient():
                         conGrad = scipy_optimize._generate_gradient_sparsity_wrapper(
-                            problem.gradient,
+                            fitness_wrapper.get_gradient_func(),
                             problem.get_nobj() + i,
                             dim,
                             problem.gradient_sparsity,
@@ -540,9 +523,7 @@ class scipy_optimize:
                     constraints.append(constraint)
 
             result = minimize(
-                lambda *args, **kwargs: problem.fitness(*args, **kwargs)[
-                    : problem.get_nobj()
-                ],
+                fitness_wrapper.get_fitness_func(),
                 population.get_x()[idx],
                 args=self.args,
                 method=self.method,
