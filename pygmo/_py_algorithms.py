@@ -8,6 +8,8 @@
 
 import typing
 
+from . import s_policy, select_best
+
 
 class scipy_optimize:
     """
@@ -327,6 +329,7 @@ class scipy_optimize:
         tol: float = None,
         callback: typing.Optional[typing.Callable[[typing.Any], typing.Any]] = None,
         options: typing.Optional[typing.MutableMapping[str, typing.Any]] = None,
+        selection: s_policy = s_policy(select_best(rate=1)),
     ) -> None:
         """
             Initialize a wrapper instance for a specific algorithm.
@@ -341,6 +344,7 @@ class scipy_optimize:
                 tol: optional - tolerance for termination
                 callback: optional - callable that is called in each iteration, independent from the fitness function
                 options: optional - dict of solver-specific options
+                selection: optional - s_policy to select candidate for local optimization
 
             Raises:
 
@@ -387,6 +391,7 @@ class scipy_optimize:
         self.tol = tol
         self.callback = callback
         self.options = options
+        self.selection = selection
 
     def evolve(self, population):
         """
@@ -407,11 +412,10 @@ class scipy_optimize:
             ValueError: If the problem has constraints, but during construction a method was selected that cannot deal with them.
             ValueError: If the problem contains multiple objectives
             ValueError: If the problem is stochastic
-            unspecified: any exception thrown the member functions of the problem
+            unspecified: any exception thrown by the member functions of the problem
         """
 
         from scipy.optimize import minimize, NonlinearConstraint
-        import random
 
         problem = population.problem
 
@@ -464,7 +468,25 @@ class scipy_optimize:
 
         constraints = ()  # default argument, implying an unconstrained problem
 
-        idx = random.randint(0, len(population) - 1)
+        selected = self.selection.select(
+            (population.get_ID(), population.get_x(), population.get_f()),
+            problem.get_nx(),
+            problem.get_nix(),
+            problem.get_nobj(),
+            problem.get_nec(),
+            problem.get_nic(),
+            problem.c_tol,
+        )
+
+        if len(selected[0]) != 1:
+            raise ValueError(
+                "Selection policy returned "
+                + len(selected[0])
+                + " elements, but 1 was needed."
+            )
+
+        idx = list(population.get_ID()).index(selected[0][0])
+
         if problem.get_nc() > 0:
             # translate constraints into right format
             constraints = []
