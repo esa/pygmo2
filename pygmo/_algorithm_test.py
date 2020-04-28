@@ -579,6 +579,22 @@ class algorithm_test_case(_ut.TestCase):
         scp = algorithm(scipy_optimize(selection = s_policy(select_best(rate=2))))
         self.assertRaises(ValueError, lambda: scp.evolve(pop))
 
+        # testing callback
+        class callback_counter:
+
+            value = 0
+
+            def increment(self, *args, **kwargs):
+                callback_counter.value += 1
+                print("Callback:", self.value)
+
+        prob = problem(luksan_vlcek1(10))
+        pop = population(prob=prob, size=10, seed=0)
+        counter = callback_counter()
+        scp = algorithm(scipy_optimize(callback = counter.increment))
+        scp.evolve(pop)
+        self.assertTrue(counter.value > 0)
+
         # testing gradient wrapper generator
         from numpy import array
 
