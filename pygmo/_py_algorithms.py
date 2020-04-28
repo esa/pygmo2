@@ -122,6 +122,7 @@ class scipy_optimize:
             if self.problem.get_nc() == 0:
                 return self.problem.gradient
             else:
+
                 def gradient_func(x, *args, **kwargs):
                     self._update_gradient_cache(x, *args, **kwargs)
                     result = self.last_gradient_result
@@ -157,6 +158,9 @@ class scipy_optimize:
             func = self.get_gradient_func()
             dim: int = len(self.problem.get_bounds()[0])
             invert_sign: bool = (idx >= self.problem.get_nobj() + self.problem.get_nec())
+
+            if idx < 0 or idx >= self.problem.get_nf():
+                raise ValueError("Invalid dimensions index " + str(idx) + " for problem of fitness dimension " + str(self.problem.get_nf()))
 
             @scipy_optimize._maybe_jit
             def _unpack_sparse_gradient(
@@ -213,9 +217,7 @@ class scipy_optimize:
 
             return wrapper
 
-        def _generate_hessian_sparsity_wrapper(
-            self, idx: int
-        ):
+        def _generate_hessian_sparsity_wrapper(self, idx: int):
             """
             A function to extract a hessian gradient from a pygmo problem to a dense hessian expectecd by scipy.
 
@@ -239,11 +241,15 @@ class scipy_optimize:
             """
             import numpy
 
+            if idx < 0 or idx >= self.problem.get_nobj() + self.problem.get_nc():
+                raise ValueError("Invalid dimensions index " + str(idx) + " for problem of dimension " + str(dim))
+
             sparsity_pattern = self.problem.hessians_sparsity()[idx]
             func = self.problem.hessians
             dim: int = len(self.problem.get_bounds()[0])
             invert_sign: bool = (idx >= self.problem.get_nobj() + self.problem.get_nec())
             shape: typing.Tuple[int, int] = (dim, dim)
+
 
             @scipy_optimize._maybe_jit
             def _unpack_sparse_hessian(

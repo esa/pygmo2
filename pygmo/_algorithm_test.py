@@ -10,7 +10,6 @@ import unittest as _ut
 
 
 class _algo(object):
-
     def evolve(self, pop):
         return pop
 
@@ -34,6 +33,7 @@ class algorithm_test_case(_ut.TestCase):
         # Tests for minimal algorithm, and mandatory methods.
         from .core import algorithm, de, population, null_problem, null_algorithm
         from . import thread_safety as ts
+
         # Def construction.
         a = algorithm()
         self.assertTrue(a.extract(null_algorithm) is not None)
@@ -41,19 +41,20 @@ class algorithm_test_case(_ut.TestCase):
 
         # First a few non-algos.
         self.assertRaises(NotImplementedError, lambda: algorithm(1))
-        self.assertRaises(NotImplementedError,
-                          lambda: algorithm("hello world"))
+        self.assertRaises(NotImplementedError, lambda: algorithm("hello world"))
         self.assertRaises(NotImplementedError, lambda: algorithm([]))
         self.assertRaises(TypeError, lambda: algorithm(int))
         # Some algorithms missing methods, wrong arity, etc.
 
         class na0(object):
             pass
+
         self.assertRaises(NotImplementedError, lambda: algorithm(na0()))
 
         class na1(object):
 
             evolve = 45
+
         self.assertRaises(NotImplementedError, lambda: algorithm(na1()))
 
         # The minimal good citizen.
@@ -67,6 +68,7 @@ class algorithm_test_case(_ut.TestCase):
             def evolve(self, pop):
                 self.g.append(1)
                 return pop
+
         a_inst = a(glob)
         algo = algorithm(a_inst)
 
@@ -140,7 +142,7 @@ class algorithm_test_case(_ut.TestCase):
         p.extract(_test_algorithm).set_n(5)
         self.assert_(p.extract(_test_algorithm).get_n() == 5)
         # Chain extracts.
-        t = mbh(_test_algorithm(), stop=5, perturb=[.4])
+        t = mbh(_test_algorithm(), stop=5, perturb=[0.4])
         pt = algorithm(t)
         rc = sys.getrefcount(pt)
         talgo = pt.extract(mbh)
@@ -326,8 +328,7 @@ class algorithm_test_case(_ut.TestCase):
         self.assert_(algorithm(a()).has_set_verbosity())
         algorithm(a()).set_verbosity(0)
         algorithm(a()).set_verbosity(87)
-        self.assertRaises(
-            TypeError, lambda: algorithm(a()).set_verbosity(-1))
+        self.assertRaises(TypeError, lambda: algorithm(a()).set_verbosity(-1))
 
     def run_name_info_tests(self):
         from .core import algorithm
@@ -403,11 +404,12 @@ class algorithm_test_case(_ut.TestCase):
     def run_pickle_tests(self):
         from .core import algorithm, de, mbh
         from pickle import dumps, loads
+
         a_ = algorithm(de())
         a = loads(dumps(a_))
         self.assertEqual(repr(a), repr(a_))
         self.assertTrue(a.is_(de))
-        a_ = algorithm(mbh(de(), 10, .1))
+        a_ = algorithm(mbh(de(), 10, 0.1))
         a = loads(dumps(a_))
         self.assertEqual(repr(a), repr(a_))
         self.assertTrue(a.is_(mbh))
@@ -417,7 +419,7 @@ class algorithm_test_case(_ut.TestCase):
         a = loads(dumps(a_))
         self.assertEqual(repr(a), repr(a_))
         self.assertTrue(a.is_(_algo))
-        a_ = algorithm(mbh(_algo(), 10, .1))
+        a_ = algorithm(mbh(_algo(), 10, 0.1))
         a = loads(dumps(a_))
         self.assertEqual(repr(a), repr(a_))
         self.assertTrue(a.is_(mbh))
@@ -546,6 +548,7 @@ class algorithm_test_case(_ut.TestCase):
 
         # testing gradient wrapper generator
         from numpy import array
+
         prob = problem(luksan_vlcek1(10))
         prob.gradient([0] * prob.get_nx())
         wrapper = scipy_optimize._fitness_wrapper(prob)
@@ -553,12 +556,18 @@ class algorithm_test_case(_ut.TestCase):
             f = wrapper._generate_gradient_sparsity_wrapper(i)
             self.assertEqual(len(f(array([0] * prob.get_nx()))), prob.get_nx())
 
-        # testing incompatible gradient function
-        smallerProb = problem(luksan_vlcek1(8))
-        wrapped_gradient = scipy_optimize._fitness_wrapper(smallerProb)._generate_gradient_sparsity_wrapper(0)
+        # testing invalid index for gradient wrapper
         self.assertRaises(
-            ValueError,
-            lambda: wrapped_gradient(array([0]*prob.get_nx()))
+            ValueError, lambda: wrapper._generate_gradient_sparsity_wrapper(9)
+        )
+
+        # testing gradient function of wrong dimension
+        smallerProb = problem(luksan_vlcek1(8))
+        wrapped_gradient = scipy_optimize._fitness_wrapper(
+            smallerProb
+        )._generate_gradient_sparsity_wrapper(0)
+        self.assertRaises(
+            ValueError, lambda: wrapped_gradient(array([0] * prob.get_nx()))
         )
 
         # testing hessian wrapper generator
@@ -567,3 +576,11 @@ class algorithm_test_case(_ut.TestCase):
         hessian = f(array([0] * prob.get_nx()))
         self.assertEqual(len(hessian), prob.get_nx())
         self.assertEqual(len(hessian[0]), prob.get_nx())
+
+        # testing invalid index for hessian wrapper
+        self.assertRaises(
+            ValueError,
+            lambda: scipy_optimize._fitness_wrapper(
+                prob
+            )._generate_gradient_sparsity_wrapper(5),
+        )
