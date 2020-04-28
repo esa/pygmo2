@@ -157,10 +157,17 @@ class scipy_optimize:
             sparsity_pattern = self.problem.gradient_sparsity()
             func = self.get_gradient_func()
             dim: int = len(self.problem.get_bounds()[0])
-            invert_sign: bool = (idx >= self.problem.get_nobj() + self.problem.get_nec())
+            invert_sign: bool = (
+                idx >= self.problem.get_nobj() + self.problem.get_nec()
+            )
 
             if idx < 0 or idx >= self.problem.get_nf():
-                raise ValueError("Invalid dimensions index " + str(idx) + " for problem of fitness dimension " + str(self.problem.get_nf()))
+                raise ValueError(
+                    "Invalid dimensions index "
+                    + str(idx)
+                    + " for problem of fitness dimension "
+                    + str(self.problem.get_nf())
+                )
 
             @scipy_optimize._maybe_jit
             def _unpack_sparse_gradient(
@@ -241,15 +248,21 @@ class scipy_optimize:
             """
             import numpy
 
-            if idx < 0 or idx >= self.problem.get_nobj() + self.problem.get_nc():
-                raise ValueError("Invalid dimensions index " + str(idx) + " for problem of dimension " + str(dim))
+            if idx < 0 or idx >= self.problem.get_nf():
+                raise ValueError(
+                    "Invalid dimensions index "
+                    + str(idx)
+                    + " for problem fitness dimension "
+                    + str(self.problem.get_nf())
+                )
 
             sparsity_pattern = self.problem.hessians_sparsity()[idx]
             func = self.problem.hessians
             dim: int = len(self.problem.get_bounds()[0])
-            invert_sign: bool = (idx >= self.problem.get_nobj() + self.problem.get_nec())
+            invert_sign: bool = (
+                idx >= self.problem.get_nobj() + self.problem.get_nec()
+            )
             shape: typing.Tuple[int, int] = (dim, dim)
-
 
             @scipy_optimize._maybe_jit
             def _unpack_sparse_hessian(
@@ -429,6 +442,12 @@ class scipy_optimize:
                 + " appears to be stochastic, the wrapped scipy.optimize.minimize cannot deal with it"
             )
 
+        if problem.get_nec() > 0 and self.method == "COBYLA":
+            raise ValueError(
+                problem.get_name()
+                + " has equality constraints, but selected method COBYLA only supports inequality constraints."
+            )
+
         bounds = problem.get_bounds()
         dim = len(bounds[0])
         bounds_seq = [(bounds[0][d], bounds[1][d]) for d in range(dim)]
@@ -458,11 +477,15 @@ class scipy_optimize:
                         constraint["fun"] = fitness_wrapper.get_eq_func(i)
                     else:
                         constraint["type"] = "ineq"
-                        constraint["fun"] = fitness_wrapper.get_neq_func(i-problem.get_nec())
+                        constraint["fun"] = fitness_wrapper.get_neq_func(
+                            i - problem.get_nec()
+                        )
 
                     if problem.has_gradient():
                         # extract gradient of constraint
-                        constraint["jac"] = fitness_wrapper._generate_gradient_sparsity_wrapper(
+                        constraint[
+                            "jac"
+                        ] = fitness_wrapper._generate_gradient_sparsity_wrapper(
                             problem.get_nobj() + i
                         )
 

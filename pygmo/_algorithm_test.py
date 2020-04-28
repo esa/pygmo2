@@ -545,6 +545,7 @@ class algorithm_test_case(_ut.TestCase):
             scp = algorithm(scipy_optimize(method=m))
             scp.set_verbosity(1)
             scp.get_name()
+            scp.set_verbosity(0)
 
         # testing gradient wrapper generator
         from numpy import array
@@ -580,7 +581,29 @@ class algorithm_test_case(_ut.TestCase):
         # testing invalid index for hessian wrapper
         self.assertRaises(
             ValueError,
-            lambda: scipy_optimize._fitness_wrapper(
-                prob
-            )._generate_gradient_sparsity_wrapper(5),
+            lambda: scipy_optimize._fitness_wrapper(prob)
+            ._generate_hessian_sparsity_wrapper(5),
         )
+
+        # testing constrained problem on incompatible methods
+        prob = problem(luksan_vlcek1(10))
+        pop = population(prob=prob, size=1, seed=0)
+
+        methods = [
+            "Nelder-Mead",
+            "Powell",
+            "CG",
+            "BFGS",
+            "Newton-CG",
+            "L-BFGS-B",
+            "TNC",
+            "dogleg",
+            "trust-ncg",
+            "trust-exact",
+            "trust-krylov",
+        ]
+
+        for m in methods:
+            popc = deepcopy(pop)
+            scp = algorithm(scipy_optimize(method=m))
+            self.assertRaises(ValueError, lambda: scp.evolve(popc))
