@@ -437,6 +437,8 @@ class algorithm_test_case(_ut.TestCase):
             problem,
             rastrigin,
             rosenbrock,
+            s_policy,
+            select_best,
             scipy_optimize,
         )
         from copy import deepcopy
@@ -547,6 +549,36 @@ class algorithm_test_case(_ut.TestCase):
             scp.get_name()
             scp.set_verbosity(0)
 
+
+        # testing constrained problem on incompatible methods
+        prob = problem(luksan_vlcek1(10))
+        pop = population(prob=prob, size=1, seed=0)
+
+        methods = [
+            "Nelder-Mead",
+            "Powell",
+            "CG",
+            "BFGS",
+            "Newton-CG",
+            "L-BFGS-B",
+            "TNC",
+            "dogleg",
+            "trust-ncg",
+            "trust-exact",
+            "trust-krylov",
+        ]
+
+        for m in methods:
+            popc = deepcopy(pop)
+            scp = algorithm(scipy_optimize(method=m))
+            self.assertRaises(ValueError, lambda: scp.evolve(popc))
+
+        # testing invalid selection policy
+        prob = problem(luksan_vlcek1(10))
+        pop = population(prob=prob, size=10, seed=0)
+        scp = algorithm(scipy_optimize(selection = s_policy(select_best(rate=2))))
+        self.assertRaises(ValueError, lambda: scp.evolve(pop))
+
         # testing gradient wrapper generator
         from numpy import array
 
@@ -584,26 +616,3 @@ class algorithm_test_case(_ut.TestCase):
             lambda: scipy_optimize._fitness_wrapper(prob)
             ._generate_hessian_sparsity_wrapper(5),
         )
-
-        # testing constrained problem on incompatible methods
-        prob = problem(luksan_vlcek1(10))
-        pop = population(prob=prob, size=1, seed=0)
-
-        methods = [
-            "Nelder-Mead",
-            "Powell",
-            "CG",
-            "BFGS",
-            "Newton-CG",
-            "L-BFGS-B",
-            "TNC",
-            "dogleg",
-            "trust-ncg",
-            "trust-exact",
-            "trust-krylov",
-        ]
-
-        for m in methods:
-            popc = deepcopy(pop)
-            scp = algorithm(scipy_optimize(method=m))
-            self.assertRaises(ValueError, lambda: scp.evolve(popc))

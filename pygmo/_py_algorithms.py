@@ -481,7 +481,7 @@ class scipy_optimize:
         if len(selected[0]) != 1:
             raise ValueError(
                 "Selection policy returned "
-                + len(selected[0])
+                + str(len(selected[0]))
                 + " elements, but 1 was needed."
             )
 
