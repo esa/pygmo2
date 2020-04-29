@@ -284,6 +284,11 @@ class scipy_optimize:
                     result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
                         sign * sparse_values[i]
                     )
+                    # symmetrize matrix. Decided against a check for redundancy,
+                    # since branching within the loop is too expensive
+                    result[sparsity_pattern[i][1]][sparsity_pattern[i][0]] = (
+                        sign * sparse_values[i]
+                    )
 
                 return result
 
@@ -541,14 +546,11 @@ class scipy_optimize:
                         func = fitness_wrapper.get_neq_func(i - problem.get_nec())
                         ub = float("inf")
 
-                    conGrad = None
+                    # Constructing the actual constraint objects. All constraints in pygmo are treated as nonlinear.
                     if problem.has_gradient():
                         conGrad = fitness_wrapper._generate_gradient_sparsity_wrapper(
                             problem.get_nobj() + i,
                         )
-
-                    # Constructing the actual constraint objects. All constraints in pygmo are treated as nonlinear.
-                    if problem.has_gradient():
                         constraint = NonlinearConstraint(func, 0, ub, jac=conGrad)
                     else:
                         constraint = NonlinearConstraint(func, 0, 0)
