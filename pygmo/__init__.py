@@ -61,7 +61,7 @@ del _py_algorithms
 del _item
 
 # Machinery for the setup of the serialization backend.
-_serialization_backend = _cloudpickle
+_serialization_backend = pickle
 
 # Override of the translate meta-problem constructor.
 __original_translate_init = translate.__init__

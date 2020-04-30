@@ -6,10 +6,11 @@
 # Public License v. 2.0. If a copy of the MPL was not distributed
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import numpy
+
 import typing
 
 from . import s_policy, select_best
-
 
 class scipy_optimize:
     """
@@ -51,18 +52,6 @@ class scipy_optimize:
     >>> pop.problem.get_gevals()
     54
     """
-
-    def _maybe_jit(func):
-        """
-        This function tries to import the just-in-time compiler from numba and apply it to the passed function.
-        If the import fails, the argument is returned unchanged.
-        """
-        try:
-            from numba import jit
-
-            return jit(nopython=True)(func)
-        except ModuleNotFoundError:
-            return func
 
     class _fitness_wrapper:
         """
@@ -132,6 +121,40 @@ class scipy_optimize:
 
                 return gradient_func
 
+        def _maybe_jit(func):
+            """
+            This function tries to import the just-in-time compiler from numba and apply it to the passed function.
+            If the import fails, the argument is returned unchanged.
+            """
+            try:
+                from numba import jit
+
+                return jit(nopython=True)(func)
+            except ModuleNotFoundError:
+                return func
+
+        @staticmethod
+        @_maybe_jit
+        def _unpack_sparse_gradient(
+            sparse_values: typing.Mapping[int, float],
+            idx: int,
+            shape: typing.Tuple[int],
+            sparsity_pattern,
+            invert_sign: bool = False,
+        ):
+            nnz = len(sparse_values)
+            sign = 1
+            if invert_sign:
+                sign = -1
+
+            result = numpy.zeros(shape)
+            for i in range(nnz):
+                # filter for just the dimension we need
+                if sparsity_pattern[i][0] == idx:
+                    result[sparsity_pattern[i][1]] = sign * sparse_values[i]
+
+            return result
+
         def _generate_gradient_sparsity_wrapper(self, idx: int):
             """
             A function to extract a sparse gradient from a pygmo problem to a dense gradient expectecd by scipy.
@@ -171,27 +194,6 @@ class scipy_optimize:
                     + str(self.problem.get_nf())
                 )
 
-            @scipy_optimize._maybe_jit
-            def _unpack_sparse_gradient(
-                sparse_values: typing.Mapping[int, float],
-                idx: int,
-                shape: typing.Tuple[int],
-                sparsity_pattern,
-                invert_sign: bool = False,
-            ) -> numpy.ndarray:
-                nnz = len(sparse_values)
-                sign = 1
-                if invert_sign:
-                    sign = -1
-
-                result = numpy.zeros(shape)
-                for i in range(nnz):
-                    # filter for just the dimension we need
-                    if sparsity_pattern[i][0] == idx:
-                        result[sparsity_pattern[i][1]] = sign * sparse_values[i]
-
-                return result
-
             def wrapper(*args, **kwargs) -> numpy.ndarray:
                 """
                 Calls the gradient callable and returns dense representation along a fixed dimension
@@ -220,11 +222,39 @@ class scipy_optimize:
                         + " non-zeros, but sparsity pattern has "
                         + str(len(sparsity_pattern))
                     )
-                return _unpack_sparse_gradient(
+                return scipy_optimize._fitness_wrapper._unpack_sparse_gradient(
                     sparse_values, idx, dim, sparsity_pattern, invert_sign
                 )
 
             return wrapper
+
+        @staticmethod
+        @_maybe_jit
+        def _unpack_sparse_hessian(
+            sparse_values: typing.Mapping[int, float],
+            idx: int,
+            shape: typing.Tuple[int, int],
+            sparsity_pattern,
+            invert_sign: bool = False,
+        ):
+
+            nnz = len(sparse_values)
+            sign = 1
+            if invert_sign:
+                sign = -1
+
+            result = numpy.zeros(shape)
+            for i in range(nnz):
+                result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
+                    sign * sparse_values[i]
+                )
+                # symmetrize matrix. Decided against a check for redundancy,
+                # since branching within the loop is too expensive
+                result[sparsity_pattern[i][1]][sparsity_pattern[i][0]] = (
+                    sign * sparse_values[i]
+                )
+
+            return result
 
         def _generate_hessian_sparsity_wrapper(self, idx: int):
             """
@@ -266,32 +296,6 @@ class scipy_optimize:
             )
             shape: typing.Tuple[int, int] = (dim, dim)
 
-            @scipy_optimize._maybe_jit
-            def _unpack_sparse_hessian(
-                sparse_values: typing.Mapping[int, float],
-                idx: int,
-                shape: typing.Tuple[int, int],
-                sparsity_pattern,
-                invert_sign: bool = False,
-            ) -> numpy.ndarray:
-                nnz = len(sparse_values)
-                sign = 1
-                if invert_sign:
-                    sign = -1
-
-                result = numpy.zeros(shape)
-                for i in range(nnz):
-                    result[sparsity_pattern[i][0]][sparsity_pattern[i][1]] = (
-                        sign * sparse_values[i]
-                    )
-                    # symmetrize matrix. Decided against a check for redundancy,
-                    # since branching within the loop is too expensive
-                    result[sparsity_pattern[i][1]][sparsity_pattern[i][0]] = (
-                        sign * sparse_values[i]
-                    )
-
-                return result
-
             def wrapper(*args, **kwargs) -> numpy.ndarray:
                 """
                 Calls the hessian callable and returns dense representation along a fixed dimension
@@ -321,7 +325,7 @@ class scipy_optimize:
                         + str(len(sparsity_pattern))
                     )
 
-                return _unpack_sparse_hessian(
+                return scipy_optimize._fitness_wrapper._unpack_sparse_hessian(
                     sparse_values, idx, shape, sparsity_pattern, invert_sign
                 )
 
