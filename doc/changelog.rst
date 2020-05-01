@@ -9,6 +9,9 @@ Changelog
 Changes
 ~~~~~~~
 
+- :class:`~pygmo.thread_island` can now use a thread pool
+  (`#47 <https://github.com/esa/pygmo2/pull/47>`__).
+
 - pygmo now requires a C++17 capable compiler when building
   from source
   (`#46 <https://github.com/esa/pygmo2/pull/46>`__,

@@ -794,6 +794,28 @@ class fully_connected_test_case(_ut.TestCase):
         self.assertEqual(topo.get_name(), "Fully connected")
 
 
+class thread_island_test_case(_ut.TestCase):
+    """Testing for thread_island
+
+    """
+
+    def runTest(self):
+        from .core import thread_island, island, algorithm, population, _pagmo_version_major, _pagmo_version_minor
+
+        isl = island(udi=thread_island(), algo=algorithm(), pop=population())
+
+        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 16):
+            return
+
+        self.assertIn("Using pool: yes", isl.get_extra_info())
+        isl = island(udi=thread_island(use_pool=True),
+                     algo=algorithm(), pop=population())
+        self.assertIn("Using pool: yes", isl.get_extra_info())
+        isl = island(udi=thread_island(use_pool=False),
+                     algo=algorithm(), pop=population())
+        self.assertIn("Using pool: no", isl.get_extra_info())
+
+
 class thread_island_torture_test_case(_ut.TestCase):
     """Stress test for thread_island
 
@@ -2865,6 +2887,7 @@ def run_test_suite(level=0):
     suite.addTest(ring_test_case())
     suite.addTest(free_form_test_case())
     suite.addTest(fully_connected_test_case())
+    suite.addTest(thread_island_test_case())
     suite.addTest(thread_island_torture_test_case())
     suite.addTest(_problem_test.problem_test_case())
     suite.addTest(_algorithm_test.algorithm_test_case())
