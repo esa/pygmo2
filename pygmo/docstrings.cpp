@@ -4762,12 +4762,12 @@ Returns:
 
 std::string thread_island_docstring()
 {
-    return R"(__init__()
+    return R"(__init__(use_pool=True)
 
 Thread island.
 
-This class is a user-defined island (UDI) that will run evolutions directly inside
-the separate thread of execution within :class:`pygmo.island`. Evolution tasks running on this
+This class is a user-defined island (UDI) that will run evolutions in
+a separate thread of execution. Evolution tasks running on this
 UDI must involve :class:`~pygmo.algorithm` and :class:`~pygmo.problem` instances
 that provide at least the ``basic`` :class:`~pygmo.thread_safety` guarantee, otherwise
 errors will be raised during the evolution.
@@ -4775,7 +4775,37 @@ errors will be raised during the evolution.
 Note that algorithms and problems implemented in Python are never considered thread safe, and thus
 this UDI can be used only with algorithms and problems implemented in C++.
 
+The *use_pool* flag signals whether or not this island should use a common thread pool
+shared by all islands.
+
+Using a thread pool is more computationally-efficient, for at least
+two reasons:
+
+* it avoids runtime overhead when
+  the number of islands evolving simultaneously is larger than the CPU
+  count (e.g., in a large :class:`~pygmo.archipelago`);
+* because the implementation uses the Intel TBB libraries, it integrates
+  better with other pagmo facilities built on top of TBB (e.g., the
+  :class:`~pygmo.thread_bfe` batch fitness evaluator).
+
+A thread pool however also introduces a serializing behaviour because the number
+of evolutions actually running at the same time is limited by the CPU
+count (whereas without the thread pool an unlimited number of evolutions
+can be active at the same time, albeit with a performance penalty).
+
 See also the documentation of the corresponding C++ class :cpp:class:`pagmo::thread_island`.
+
+.. note::
+
+   The *use_pool* flag is available only if pygmo was compiled
+   with pagmo 2.16.0 or later.
+
+.. versionadded:: 2.16.0
+
+   The *use_pool* flag.
+
+Args:
+     use_pool (:class:`bool`): a boolean flag signalling whether or not a thread pool should be used by the island
 
 )";
 }
