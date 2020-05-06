@@ -99,7 +99,6 @@ class mp_island(object):
     """
 
     # Static variables for the pool.
-    _pickle_lock = _Lock()
     _pool_lock = _Lock()
     _pool = None
     _pool_size = None
@@ -201,8 +200,7 @@ class mp_island(object):
         # than failing in the bootstrap phase of the remote process, which
         # can lead to hangups.
         import pickle
-        with self._pickle_lock:
-            ser_algo_pop = pickle.dumps((algo, pop))
+        ser_algo_pop = pickle.dumps((algo, pop))
 
         if self._use_pool:
             with mp_island._pool_lock:
