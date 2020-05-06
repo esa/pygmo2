@@ -135,12 +135,12 @@ class algorithm_test_case(_ut.TestCase):
         # Verify the refcount of p is increased after extract().
         rc = sys.getrefcount(p)
         tprob = p.extract(_test_algorithm)
-        self.assert_(sys.getrefcount(p) == rc + 1)
+        self.assertTrue(sys.getrefcount(p) == rc + 1)
         del tprob
-        self.assert_(sys.getrefcount(p) == rc)
+        self.assertTrue(sys.getrefcount(p) == rc)
         # Verify we are modifying the inner object.
         p.extract(_test_algorithm).set_n(5)
-        self.assert_(p.extract(_test_algorithm).get_n() == 5)
+        self.assertTrue(p.extract(_test_algorithm).get_n() == 5)
         # Chain extracts.
         t = mbh(_test_algorithm(), stop=5, perturb=[0.4])
         pt = algorithm(t)
@@ -148,23 +148,23 @@ class algorithm_test_case(_ut.TestCase):
         talgo = pt.extract(mbh)
         # Verify that extraction of mbh from the algo
         # increases the refecount of pt.
-        self.assert_(sys.getrefcount(pt) == rc + 1)
+        self.assertTrue(sys.getrefcount(pt) == rc + 1)
         # Extract the _test_algorithm from mbh.
         rc2 = sys.getrefcount(talgo)
         ttalgo = talgo.inner_algorithm.extract(_test_algorithm)
         # The refcount of pt is not affected.
-        self.assert_(sys.getrefcount(pt) == rc + 1)
+        self.assertTrue(sys.getrefcount(pt) == rc + 1)
         # The refcount of talgo has increased.
-        self.assert_(sys.getrefcount(talgo) == rc2 + 1)
+        self.assertTrue(sys.getrefcount(talgo) == rc2 + 1)
         del talgo
         # We can still access ttalgo.
-        self.assert_(ttalgo.get_n() == 1)
-        self.assert_(sys.getrefcount(pt) == rc + 1)
+        self.assertTrue(ttalgo.get_n() == 1)
+        self.assertTrue(sys.getrefcount(pt) == rc + 1)
         del ttalgo
         # Now the refcount of pt decreases, because deleting
         # ttalgo eliminates the last ref to talgo, which in turn
         # decreases the refcount of pt.
-        self.assert_(sys.getrefcount(pt) == rc)
+        self.assertTrue(sys.getrefcount(pt) == rc)
 
         class talgorithm(object):
 
@@ -190,7 +190,7 @@ class algorithm_test_case(_ut.TestCase):
         self.assertTrue(sys.getrefcount(p) == rc)
         self.assertTrue(talgo.get_n() == 1)
         talgo.set_n(12)
-        self.assert_(p.extract(talgorithm).get_n() == 12)
+        self.assertTrue(p.extract(talgorithm).get_n() == 12)
 
         # Check that we can extract Python UDAs also via Python's object type.
         a = algorithm(talgorithm())
@@ -261,7 +261,7 @@ class algorithm_test_case(_ut.TestCase):
             def has_set_seed(self):
                 return True
 
-        self.assert_(algorithm(a()).has_set_seed())
+        self.assertTrue(algorithm(a()).has_set_seed())
         algorithm(a()).set_seed(0)
         algorithm(a()).set_seed(87)
         self.assertRaises(TypeError, lambda: algorithm(a()).set_seed(-1))
@@ -325,7 +325,7 @@ class algorithm_test_case(_ut.TestCase):
             def has_set_verbosity(self):
                 return True
 
-        self.assert_(algorithm(a()).has_set_verbosity())
+        self.assertTrue(algorithm(a()).has_set_verbosity())
         algorithm(a()).set_verbosity(0)
         algorithm(a()).set_verbosity(87)
         self.assertRaises(TypeError, lambda: algorithm(a()).set_verbosity(-1))
@@ -339,8 +339,8 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
         algo = algorithm(a())
-        self.assert_(algo.get_name() != '')
-        self.assert_(algo.get_extra_info() == '')
+        self.assertTrue(algo.get_name() != '')
+        self.assertTrue(algo.get_extra_info() == '')
 
         class a(object):
 
@@ -351,8 +351,8 @@ class algorithm_test_case(_ut.TestCase):
                 return 'pippo'
 
         algo = algorithm(a())
-        self.assert_(algo.get_name() == 'pippo')
-        self.assert_(algo.get_extra_info() == '')
+        self.assertTrue(algo.get_name() == 'pippo')
+        self.assertTrue(algo.get_extra_info() == '')
 
         class a(object):
 
@@ -363,8 +363,8 @@ class algorithm_test_case(_ut.TestCase):
                 return 'pluto'
 
         algo = algorithm(a())
-        self.assert_(algo.get_name() != '')
-        self.assert_(algo.get_extra_info() == 'pluto')
+        self.assertTrue(algo.get_name() != '')
+        self.assertTrue(algo.get_extra_info() == 'pluto')
 
         class a(object):
 
@@ -378,8 +378,8 @@ class algorithm_test_case(_ut.TestCase):
                 return 'pluto'
 
         algo = algorithm(a())
-        self.assert_(algo.get_name() == 'pippo')
-        self.assert_(algo.get_extra_info() == 'pluto')
+        self.assertTrue(algo.get_name() == 'pippo')
+        self.assertTrue(algo.get_extra_info() == 'pluto')
 
     def run_thread_safety_tests(self):
         from .core import algorithm, de, _tu_test_algorithm, mbh
