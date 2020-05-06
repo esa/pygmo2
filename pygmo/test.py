@@ -1108,9 +1108,8 @@ class archipelago_test_case(_ut.TestCase):
             self.fail("The MO migration bug test failed")
 
     def run_evolve_tests(self):
-        from . import archipelago, de, rosenbrock, mp_island, evolve_status, set_serialization_backend
+        from . import archipelago, de, rosenbrock, mp_island, evolve_status
         from copy import deepcopy
-        set_serialization_backend("pickle")
         a = archipelago()
         self.assertTrue(a.status == evolve_status.idle)
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=10)
@@ -1146,7 +1145,6 @@ class archipelago_test_case(_ut.TestCase):
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=3)
         a.evolve()
         self.assertRaises(ValueError, lambda: a.wait_check())
-        set_serialization_backend("cloudpickle")
 
     def run_access_tests(self):
         from . import archipelago, de, rosenbrock
