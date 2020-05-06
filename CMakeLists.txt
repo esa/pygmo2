@@ -133,6 +133,20 @@ if(MINGW)
     list(APPEND PYGMO_CXX_FLAGS_DEBUG "-Wa,-mbig-obj")
     list(APPEND PYGMO_CXX_FLAGS_RELEASE "-Wa,-mbig-obj")
 endif()
+# NOTE: at least up to version 7, GCC is needlessly chatty
+# about the 'override' attribute. Thus, we manually disable
+# the -Wsuggest-override debug flag.
+if(YACMA_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS "8")
+    include(CheckCXXCompilerFlag)
+    set(CMAKE_REQUIRED_QUIET TRUE)
+    check_cxx_compiler_flag("-Wno-suggest-override" _PYGMO_GCC_SUPPORTS_NO_OVERRIDE)
+    unset(CMAKE_REQUIRED_QUIET)
+    if(_PYGMO_GCC_SUPPORTS_NO_OVERRIDE)
+        message(STATUS "Enabling the '-Wno-suggest-override' flag for GCC<8.")
+        list(APPEND PYGMO_CXX_FLAGS_DEBUG "-Wno-suggest-override")
+    endif()
+    unset(_PYGMO_GCC_SUPPORTS_NO_OVERRIDE)
+endif()
 
 # Find the dependencies.
 
