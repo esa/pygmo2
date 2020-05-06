@@ -61,6 +61,7 @@ cmake -DBoost_NO_BOOST_CMAKE=ON \
 	-DPAGMO_WITH_EIGEN3=yes \
 	-DPAGMO_WITH_NLOPT=yes \
 	-DPAGMO_WITH_IPOPT=yes \
+	-DPAGMO_ENABLE_IPO=ON \
 	-DCMAKE_BUILD_TYPE=Release ../;
 make -j4 install
 
@@ -71,6 +72,7 @@ mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \
 	-DCMAKE_BUILD_TYPE=Release \
+	-DPYGMO_ENABLE_IPO=ON \
 	-DPYTHON_EXECUTABLE=/opt/python/${PYTHON_DIR}/bin/python ../;
 make -j2 install
 
