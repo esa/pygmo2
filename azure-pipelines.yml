@@ -48,7 +48,8 @@ jobs:
                         numba ^
                         pybind11 ^
                         ipyparallel ^
-                        pagmo-devel
+                        pagmo-devel ^
+                        scipy
           conda list
         displayName: "Install conda packages"
 
@@ -121,7 +122,8 @@ jobs:
                         ipyparallel ^
                         pagmo-devel ^
                         ninja ^
-                        clangdev
+                        clangdev ^
+                        scipy
           conda list
         displayName: "Install conda packages"
 
@@ -213,7 +215,8 @@ jobs:
                         numba ^
                         pybind11 ^
                         ipyparallel ^
-                        pagmo-devel
+                        pagmo-devel ^
+                        scipy
           conda list
         displayName: "Install conda packages"
 
@@ -286,7 +289,8 @@ jobs:
                         ipyparallel ^
                         pagmo-devel ^
                         ninja ^
-                        clangdev
+                        clangdev ^
+                        scipy
           conda list
         displayName: "Install conda packages"
 
@@ -378,7 +382,8 @@ jobs:
                         numba ^
                         pybind11 ^
                         ipyparallel ^
-                        pagmo-devel
+                        pagmo-devel ^
+                        scipy
           conda list
         displayName: "Install conda packages"
 
@@ -451,7 +456,8 @@ jobs:
                         ipyparallel ^
                         pagmo-devel ^
                         ninja ^
-                        clangdev
+                        clangdev ^
+                        scipy
           conda list
         displayName: "Install conda packages"
 

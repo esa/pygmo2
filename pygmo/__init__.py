@@ -16,6 +16,7 @@ from .plotting import *
 from ._py_islands import *
 from ._py_problems import *
 from ._py_bfes import *
+from ._py_algorithms import *
 # Patch the problem class.
 from . import _patch_problem
 # Patch the algorithm class.
@@ -51,6 +52,11 @@ for _item in dir(_py_bfes):
     if not _item.startswith("_"):
         setattr(batch_evaluators, _item, getattr(_py_bfes, _item))
 del _py_bfes
+
+for _item in dir(_py_algorithms):
+    if not _item.startswith("_"):
+        setattr(algorithms, _item, getattr(_py_algorithms, _item))
+del _py_algorithms
 
 del _item
 

@@ -28,6 +28,7 @@ set(PYGMO_PYTHON_FILES
     _py_bfes.py
     _mp_utils.py
     _py_islands.py
+    _py_algorithms.py
     _algorithm_test.py
     _bfe_test.py
     _island_test.py
