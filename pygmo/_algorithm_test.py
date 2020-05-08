@@ -586,7 +586,6 @@ class algorithm_test_case(_ut.TestCase):
 
             def increment(self, *args, **kwargs):
                 callback_counter.value += 1
-                print("Callback:", self.value)
 
         prob = problem(luksan_vlcek1(10))
         pop = population(prob=prob, size=10, seed=0)
