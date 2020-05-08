@@ -99,6 +99,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="api_reference.html#implemented-user-defined-classes">Implemented user-defined classes</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="problems.html">List of problems</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">List of algorithms</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#algorithms-implemented-in-python">Algorithms implemented in Python</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#algorithms-exposed-from-c">Algorithms exposed from C++</a></li>
 </ul>
 </li>
@@ -207,8 +208,117 @@
 </style>
 <div class="section" id="list-of-algorithms">
 <span id="algorithms"></span><h1>List of algorithms<a class="headerlink" href="#list-of-algorithms" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="algorithms-implemented-in-python">
+<span id="algorithms-cpp"></span><h2>Algorithms implemented in Python<a class="headerlink" href="#algorithms-implemented-in-python" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pygmo.scipy_optimize">
+<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">scipy_optimize</code><span class="sig-paren">(</span><em class="sig-param">args=(), method: str = None, tol: float = None, callback: Optional[Callable[[Any], Any]] = None, options: Optional[MutableMapping[str, Any]] = None, selection: pygmo.core.s_policy = Selection policy name: Select best 	C++ class name: pagmo::select_best  Extra info: 	Absolute migration rate: 1 </em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.scipy_optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.</p>
+<dl class="simple">
+<dt>This wraps several well-known local optimization algorithms:</dt><dd><ul class="simple">
+<li><p>Nelder-Mead</p></li>
+<li><p>Powell</p></li>
+<li><p>CG</p></li>
+<li><p>BFGS</p></li>
+<li><p>Newton-CG</p></li>
+<li><p>L-BFGS-B</p></li>
+<li><p>TNC</p></li>
+<li><p>COBYLA</p></li>
+<li><p>SLSQP</p></li>
+<li><p>trust-constr</p></li>
+<li><p>dogleg</p></li>
+<li><p>trust-ncg</p></li>
+<li><p>trust-exact</p></li>
+<li><p>trust-krylov</p></li>
+</ul>
+</dd>
+</dl>
+<p>These methods are mostly variants of gradient descent. Some of them require a gradient and will throw
+an error if invoked on a problem that does not offer one.
+Constraints are only supported by methods COBYLA, SLSQP and trust-constr.</p>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pygmo</span> <span class="k">as</span> <span class="nn">pg</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">problem</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">rosenbrock</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span><span class="o">.</span><span class="n">champion_f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">929975.7994682974</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scp</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">scipy_optimize</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span><span class="o">.</span><span class="n">champion_f</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+<span class="go">1.13770...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">get_fevals</span><span class="p">()</span>
+<span class="go">55</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">get_gevals</span><span class="p">()</span>
+<span class="go">54</span>
+</pre></div>
+</div>
+<p>This constructor initializes a wrapper instance for a specific algorithm.
+Construction arguments are those options of scipy.optimize.minimize that are not problem-specific.
+Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
+are deduced from the problem in the population given to the evolve function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – optional - extra arguments for fitness callable</p></li>
+<li><p><strong>method</strong> – optional - string specifying the method to be used by scipy. From scipy docs: “If not given, chosen to be one of BFGS, L-BFGS-B, SLSQP, depending if the problem has constraints or bounds.”</p></li>
+<li><p><strong>tol</strong> – optional - tolerance for termination</p></li>
+<li><p><strong>callback</strong> – optional - callable that is called in each iteration, independent from the fitness function</p></li>
+<li><p><strong>options</strong> – optional - dict of solver-specific options</p></li>
+<li><p><strong>selection</strong> – optional - s_policy to select candidate for local optimization</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If method is not one of Nelder-Mead Powell, CG, BFGS, Newton-CG, L-BFGS-B, TNC, COBYLA, SLSQP, trust-constr, dogleg, trust-ncg, trust-exact, trust-krylov or None.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="pygmo.scipy_optimize.evolve">
+<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">population</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.scipy_optimize.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call scipy.optimize.minimize with a random member of the population as start value.</p>
+<p>The problem is extracted from the population and its fitness function gives the objective value for the optimization process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>population</strong> – The population containing the problem and a set of initial solutions.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The changed population.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If the problem has constraints, but during construction a method was selected that cannot deal with them.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If the problem contains multiple objectives</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If the problem is stochastic</p></li>
+<li><p><strong>unspecified</strong> – any exception thrown by the member functions of the problem</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pygmo.scipy_optimize.get_name">
+<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a><a class="headerlink" href="#pygmo.scipy_optimize.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the method name if one was selected, scipy.optimize.minimize otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pygmo.scipy_optimize.set_verbosity">
+<code class="sig-name descname">set_verbosity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a><a class="headerlink" href="#pygmo.scipy_optimize.set_verbosity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies the ‘disp’ parameter in the options dict, which prints out a final convergence message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> – Every verbosity level above zero prints out a convergence message.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – If options dict was given in instance constructor and has options conflicting with verbosity level</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="algorithms-exposed-from-c">
-<span id="algorithms-cpp"></span><h2>Algorithms exposed from C++<a class="headerlink" href="#algorithms-exposed-from-c" title="Permalink to this headline">¶</a></h2>
+<h2>Algorithms exposed from C++<a class="headerlink" href="#algorithms-exposed-from-c" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pygmo.null_algorithm">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">null_algorithm</code><a class="headerlink" href="#pygmo.null_algorithm" title="Permalink to this definition">¶</a></dt>

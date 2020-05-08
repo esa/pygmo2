@@ -13,7 +13,8 @@ Overview
   single and multi-objective algorithms,
   wrappers for third-party solvers (e.g.,
   `NLopt <https://nlopt.readthedocs.io/en/latest/>`__,
-  `Ipopt <https://projects.coin-or.org/Ipopt>`__, etc.).
+  `Ipopt <https://projects.coin-or.org/Ipopt>`__,
+  `SciPy <https://www.scipy.org/>`__, etc.).
 * Comprehensive support for coarse-grained
   parallelisation via the
   `generalised island model <https://link.springer.com/chapter/10.1007/978-3-642-28789-3_7>`__.
@@ -109,6 +110,18 @@ SLSQP (from NLopt)                                     :class:`pygmo.nlopt`     
 Low-storage BFGS (from NLopt)                          :class:`pygmo.nlopt`                                                                      S-U
 Preconditioned truncated Newton (from NLopt)           :class:`pygmo.nlopt`                                                                      S-U
 Shifted limited-memory variable-metric (from NLopt)    :class:`pygmo.nlopt`                                                                      S-U
+Nelder-Mead simplex (from SciPy)                       :class:`pygmo.scipy_optimize`                                                             S-U
+Powell (from SciPy)                                    :class:`pygmo.scipy_optimize`                                                             S-U
+CG (from SciPy)                                        :class:`pygmo.scipy_optimize`                                                             S-U
+BFGS (from SciPy)                                      :class:`pygmo.scipy_optimize`                                                             S-U
+Low-storage BFGS (from SciPy)                          :class:`pygmo.scipy_optimize`                                                             S-U
+COBYLA (from SciPy)                                    :class:`pygmo.scipy_optimize`                                                             S-CU
+SLSQP (from SciPy)                                     :class:`pygmo.scipy_optimize`                                                             S-CU
+Trust Constr (from SciPy)                              :class:`pygmo.scipy_optimize`                                                             S-CU
+Dogleg (from SciPy)                                    :class:`pygmo.scipy_optimize`                                                             S-U
+Trust Ncg (from SciPy)                                 :class:`pygmo.scipy_optimize`                                                             S-U
+Trust exact (from SciPy)                               :class:`pygmo.scipy_optimize`                                                             S-U
+Trust Krylov (from SciPy)                              :class:`pygmo.scipy_optimize`                                                             S-U
 Ipopt                                                  :class:`pygmo.ipopt`                                                                      S-CU
 SNOPT (in pagmo_plugins_non_free affiliated package)   `pygmo.snopt7 <https://esa.github.io/pagmo_plugins_nonfree/py_snopt7.html>`__             S-CU
 WORHP (in pagmo_plugins_non_free affiliated package)   `pygmo.wohrp <https://esa.github.io/pagmo_plugins_nonfree/py_worhp.html>`__               S-CU

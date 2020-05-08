@@ -217,7 +217,8 @@ including global and local solvers, meta-heuristics,
 single and multi-objective algorithms,
 wrappers for third-party solvers (e.g.,
 <a class="reference external" href="https://nlopt.readthedocs.io/en/latest/">NLopt</a>,
-<a class="reference external" href="https://projects.coin-or.org/Ipopt">Ipopt</a>, etc.).</p></li>
+<a class="reference external" href="https://projects.coin-or.org/Ipopt">Ipopt</a>,
+<a class="reference external" href="https://www.scipy.org/">SciPy</a>, etc.).</p></li>
 <li><p>Comprehensive support for coarse-grained
 parallelisation via the
 <a class="reference external" href="https://link.springer.com/chapter/10.1007/978-3-642-28789-3_7">generalised island model</a>.
@@ -421,6 +422,54 @@ and multi-objective problems into single-objective ones.</p>
 </tr>
 <tr class="row-even"><td><p>Shifted limited-memory variable-metric (from NLopt)</p></td>
 <td><p><a class="reference internal" href="algorithms.html#pygmo.nlopt" title="pygmo.nlopt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.nlopt</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-odd"><td><p>Nelder-Mead simplex (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-even"><td><p>Powell (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-odd"><td><p>CG (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-even"><td><p>BFGS (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-odd"><td><p>Low-storage BFGS (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-even"><td><p>COBYLA (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-CU</p></td>
+</tr>
+<tr class="row-odd"><td><p>SLSQP (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-CU</p></td>
+</tr>
+<tr class="row-even"><td><p>Trust Constr (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-CU</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dogleg (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-even"><td><p>Trust Ncg (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trust exact (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
+<td><p>S-U</p></td>
+</tr>
+<tr class="row-even"><td><p>Trust Krylov (from SciPy)</p></td>
+<td><p><a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.scipy_optimize</span></code></a></p></td>
 <td><p>S-U</p></td>
 </tr>
 <tr class="row-odd"><td><p>Ipopt</p></td>
