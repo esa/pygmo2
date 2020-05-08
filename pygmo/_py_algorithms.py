@@ -330,7 +330,7 @@ class scipy_optimize:
         selection: s_policy = s_policy(select_best(rate=1)),
     ) -> None:
         """
-            Initialize a wrapper instance for a specific algorithm.
+            This constructor initializes a wrapper instance for a specific algorithm.
             Construction arguments are those options of scipy.optimize.minimize that are not problem-specific.
             Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
             are deduced from the problem in the population given to the evolve function.

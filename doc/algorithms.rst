@@ -6,7 +6,7 @@ List of algorithms
 .. _algorithms_cpp:
 
 Algorithms implemented in Python
----------------------------
+--------------------------------
 
 .. autoclass:: pygmo.scipy_optimize
    :members:
