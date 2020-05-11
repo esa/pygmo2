@@ -98,21 +98,22 @@
 <li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#unreleased">2.16.0 (unreleased)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new">New</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changes">Changes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">2.15.0 (2020-04-02)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#new">New</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">New</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fix">Fix</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.14.1 (2020-03-06)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id4">Fix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.14.1 (2020-03-06)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Fix</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">2.14.0 (2020-03-04)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id6">New</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">Fix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.14.0 (2020-03-04)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">New</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Fix</a></li>
 </ul>
 </li>
 </ul>
@@ -210,6 +211,14 @@
 <span id="id1"></span><h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="unreleased">
 <h2>2.16.0 (unreleased)<a class="headerlink" href="#unreleased" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new">
+<h3>New<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Add <a class="reference internal" href="algorithms.html#pygmo.scipy_optimize" title="pygmo.scipy_optimize"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy_optimize</span></code></a>, a wrapper
+for SciPy’s local optimisation algorithms
+(<a class="reference external" href="https://github.com/esa/pygmo2/pull/31">#31</a>).</p></li>
+</ul>
+</div>
 <div class="section" id="changes">
 <h3>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -226,8 +235,8 @@ from source
 </div>
 <div class="section" id="id2">
 <h2>2.15.0 (2020-04-02)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="new">
-<h3>New<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>New<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>The topologies implemented on top of the Boost Graph Library
 now provide a <code class="docutils literal notranslate"><span class="pre">get_edge_weight()</span></code>
@@ -251,19 +260,19 @@ a conversion function to a NetworkX graph object
 </ul>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>2.14.1 (2020-03-06)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
-<h3>Fix<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h2>2.14.1 (2020-03-06)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>Fix<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Fix the upload of the binary wheels to pypi.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>2.14.0 (2020-03-04)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id6">
-<h3>New<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h2>2.14.0 (2020-03-04)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>New<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Initial stand-alone version of pygmo. See
 <a class="reference external" href="https://esa.github.io/pagmo2/changelog.html">the pagmo changelog</a>
@@ -274,8 +283,8 @@ of an archipelago
 (<a class="reference external" href="https://github.com/esa/pygmo2/pull/25">#25</a>).</p></li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h3>Fix<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>Fix<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Fix a serialization issue when using ipyparallel
 functionalities in Python 3.8

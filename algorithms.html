@@ -213,9 +213,10 @@
 <dl class="py class">
 <dt id="pygmo.scipy_optimize">
 <em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">scipy_optimize</code><span class="sig-paren">(</span><em class="sig-param">args=(), method: str = None, tol: float = None, callback: Optional[Callable[[Any], Any]] = None, options: Optional[MutableMapping[str, Any]] = None, selection: pygmo.core.s_policy = Selection policy name: Select best 	C++ class name: pagmo::select_best  Extra info: 	Absolute migration rate: 1 </em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.scipy_optimize" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.</p>
-<dl class="simple">
-<dt>This wraps several well-known local optimization algorithms:</dt><dd><ul class="simple">
+<dd><p>This class is a user defined algorithm (UDA) providing a wrapper around the function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.4.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>.</p>
+<p>This wraps several well-known local optimization algorithms:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>Nelder-Mead</p></li>
 <li><p>Powell</p></li>
 <li><p>CG</p></li>
@@ -231,8 +232,7 @@
 <li><p>trust-exact</p></li>
 <li><p>trust-krylov</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p>These methods are mostly variants of gradient descent. Some of them require a gradient and will throw
 an error if invoked on a problem that does not offer one.
 Constraints are only supported by methods COBYLA, SLSQP and trust-constr.</p>
@@ -252,8 +252,8 @@ Constraints are only supported by methods COBYLA, SLSQP and trust-constr.</p>
 <span class="go">54</span>
 </pre></div>
 </div>
-<p>This constructor initializes a wrapper instance for a specific algorithm.
-Construction arguments are those options of scipy.optimize.minimize that are not problem-specific.
+<p>The constructor initializes a wrapper instance for a specific algorithm.
+Construction arguments are those options of <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.4.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> that are not problem-specific.
 Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
 are deduced from the problem in the population given to the evolve function.</p>
 <dl class="field-list simple">
