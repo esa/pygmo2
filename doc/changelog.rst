@@ -6,6 +6,13 @@ Changelog
 2.16.0 (unreleased)
 -------------------
 
+New
+~~~
+
+- Add :class:`~pygmo.scipy_optimize`, a wrapper
+  for SciPy's local optimisation algorithms
+  (`#31 <https://github.com/esa/pygmo2/pull/31>`__).
+
 Changes
 ~~~~~~~
 

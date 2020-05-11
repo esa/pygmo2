@@ -53,6 +53,7 @@ intersphinx_mapping = {'python': (
     'ipyparallel': ('https://ipyparallel.readthedocs.io/en/latest/', None),
     'numpy': ('https://numpy.org/', None),
     'pagmo': ('https://esa.github.io/pagmo2/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None),
     'networkx': ('https://networkx.github.io/documentation/stable/', None)}
 
 # Add any paths that contain templates here, relative to this directory.

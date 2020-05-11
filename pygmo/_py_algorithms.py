@@ -13,9 +13,10 @@ from . import s_policy, select_best
 
 class scipy_optimize:
     """
-    This class is a user defined algorithm (UDA) providing a wrapper around the function scipy.optimize.minimize.
+    This class is a user defined algorithm (UDA) providing a wrapper around the function :func:`scipy.optimize.minimize`.
 
     This wraps several well-known local optimization algorithms:
+
      - Nelder-Mead
      - Powell
      - CG
@@ -75,7 +76,8 @@ class scipy_optimize:
         def _update_gradient_cache(self, x, *args, **kwargs) -> None:
             if self.last_gradient_x is None or not all(self.last_gradient_x == x):
                 self.last_gradient_x = x.copy()
-                self.last_gradient_result = self.problem.gradient(x, *args, **kwargs)
+                self.last_gradient_result = self.problem.gradient(
+                    x, *args, **kwargs)
 
         def get_fitness_func(self):
             if self.problem.get_nc() == 0:
@@ -325,13 +327,15 @@ class scipy_optimize:
         args=(),
         method: str = None,
         tol: float = None,
-        callback: typing.Optional[typing.Callable[[typing.Any], typing.Any]] = None,
-        options: typing.Optional[typing.MutableMapping[str, typing.Any]] = None,
+        callback: typing.Optional[typing.Callable[[
+            typing.Any], typing.Any]] = None,
+        options: typing.Optional[typing.MutableMapping[str,
+                                                       typing.Any]] = None,
         selection: s_policy = s_policy(select_best(rate=1)),
     ) -> None:
         """
-            This constructor initializes a wrapper instance for a specific algorithm.
-            Construction arguments are those options of scipy.optimize.minimize that are not problem-specific.
+            The constructor initializes a wrapper instance for a specific algorithm.
+            Construction arguments are those options of :func:`scipy.optimize.minimize` that are not problem-specific.
             Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
             are deduced from the problem in the population given to the evolve function.
 
@@ -536,7 +540,8 @@ class scipy_optimize:
                         ub = 0
                     else:
                         # Inequality constraint
-                        func = fitness_wrapper.get_neq_func(i - problem.get_nec())
+                        func = fitness_wrapper.get_neq_func(
+                            i - problem.get_nec())
                         ub = float("inf")
 
                     # Constructing the actual constraint objects. All constraints in pygmo are treated as nonlinear.
@@ -544,7 +549,8 @@ class scipy_optimize:
                         conGrad = fitness_wrapper._generate_gradient_sparsity_wrapper(
                             problem.get_nobj() + i,
                         )
-                        constraint = NonlinearConstraint(func, 0, ub, jac=conGrad)
+                        constraint = NonlinearConstraint(
+                            func, 0, ub, jac=conGrad)
                     else:
                         constraint = NonlinearConstraint(func, 0, 0)
 
