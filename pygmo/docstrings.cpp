@@ -476,7 +476,7 @@ the lower bounds vector and the upper bounds vector, which must be represented a
 of a :class:`~pygmo.problem`.
 
 Returns:
-    ``tuple``: a tuple of two 1D NumPy float arrays representing the lower and upper box-bounds of the problem
+    :class:`tuple`: a tuple of two 1D NumPy float arrays representing the lower and upper box-bounds of the problem
 
 Raises:
     unspecified: any exception thrown by the invoked method of the underlying C++ class, or failures at the
@@ -1015,7 +1015,7 @@ Args:
     dv (array-like object): the decision vector whose hessians will be computed
 
 Returns:
-    ``list`` of 1D NumPy float array: the hessians of *dv*
+    :class:`list` of 1D NumPy float array: the hessians of *dv*
 
 Raises:
     ValueError: if the length of *dv* differs from the value returned by :func:`~pygmo.problem.get_nx()`, or
@@ -1083,7 +1083,7 @@ returned object will then be interpreted as a sparsity pattern in the same way a
   containing each exactly 2 elements representing the indices :math:`(i,j)`.
 
 Returns:
-    ``list`` of 2D Numpy int array: the hessians sparsity patterns
+    :class:`list` of 2D Numpy int array: the hessians sparsity patterns
 
 Raises:
     ValueError: if the NumPy arrays returned by the UDP do not satisfy the requirements described above (e.g., invalid
@@ -1631,7 +1631,7 @@ Returns a log containing relevant parameters recorded during the last call to ``
 with an :class:`~pygmo.mbh`. A verbosity level ``N > 0`` will log one line at the end of each call to the inner algorithm.
 
 Returns:
-    ``list`` of ``tuples``: at each call of the inner algorithm, the values ``Fevals``, ``Best``, ``Violated``, ``Viol. Norm`` and ``Trial``, where:
+    :class:`list` of :class:`tuple`: at each call of the inner algorithm, the values ``Fevals``, ``Best``, ``Violated``, ``Viol. Norm`` and ``Trial``, where:
 
     * ``Fevals`` (:class:`int`), the number of fitness evaluations made
     * ``Best`` (:class:`float`), the objective function of the best fitness currently in the population
@@ -1752,7 +1752,7 @@ Returns a log containing relevant parameters recorded during the last call to ``
 with an :class:`~pygmo.cstrs_self_adaptive`. A verbosity level of ``N > 0`` will log one line each ``N`` ``iters``.
 
 Returns:
-    ``list`` of ``tuples``: at each call of the inner algorithm, the values ``Iters``, ``Fevals``, ``Best``, ``Infeasibility``, 
+    :class:`list` of :class:`tuple`: at each call of the inner algorithm, the values ``Iters``, ``Fevals``, ``Best``, ``Infeasibility``, 
     ``Violated``, ``Viol. Norm`` and ``N. Feasible``, where:
 
     * ``Iters`` (:class:`int`), the number of iterations made (i.e. calls to the evolve method of the inner algorithm)
@@ -2097,7 +2097,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.bee_colony`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Current best``, ``Best``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Current best``, ``Best``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2173,7 +2173,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.de`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2235,7 +2235,7 @@ constructed with a :class:`~pygmo.compass_search`. A verbosity larger than 0 imp
 change in the search range.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values``Fevals``, ``Best``, ``Range``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values``Fevals``, ``Best``, ``Range``, where:
 
     * ``Fevals`` (:class:`int`), number of functions evaluation made
     * ``Best`` (:class:`float`), the best fitness function currently in the population
@@ -2345,7 +2345,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.sade`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``F``, ``CR``, ``dx``, ``df``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``F``, ``CR``, ``dx``, ``df``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2428,7 +2428,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.nsga2`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2538,7 +2538,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.gaco`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Kernel``, ``Oracle``, ``dx``, ``dp``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Kernel``, ``Oracle``, ``dx``, ``dp``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2627,7 +2627,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.maco`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2697,7 +2697,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.gwo`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``alpha`` (:class:`float`), fitness function value of alpha
@@ -2765,7 +2765,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.moead`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ADR``, ``ideal_point``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``ADR``, ``ideal_point``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2831,7 +2831,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.cmaes`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, ``sigma``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, ``sigma``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2899,7 +2899,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.xnes`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, ``sigma``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, ``sigma``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -2993,7 +2993,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.de1220`. A verbosity of N implies a log line each N generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``F``, ``CR``, ``Variant``, ``dx``, ``df``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``F``, ``CR``, ``Variant``, ``dx``, ``df``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -3084,7 +3084,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.pso`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``gbest``, ``Mean Vel.``, ``Mean lbest``, ``Avg. Dist.``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``gbest``, ``Mean Vel.``, ``Mean lbest``, ``Avg. Dist.``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -3192,7 +3192,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.pso`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``gbest``, ``Mean Vel.``, ``Mean lbest``, ``Avg. Dist.``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``gbest``, ``Mean Vel.``, ``Mean lbest``, ``Avg. Dist.``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -3263,7 +3263,7 @@ the method :func:`~pygmo.algorithm.set_verbosity()` on an :class:`~pygmo.algorit
 each verbosity fitness evaluations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Fevals``, ``Best``, ``Current``, ``Mean range``, ``Temperature``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Fevals``, ``Best``, ``Current``, ``Mean range``, ``Temperature``, where:
 
     * ``Fevals`` (:class:`int`), number of functions evaluation made
     * ``Best`` (:class:`float`), the best fitness function found so far
@@ -3362,7 +3362,7 @@ parameter (by default nothing is logged) which can be set calling the method :fu
 constructed with a :class:`~pygmo.nspso`. A verbosity of ``N`` implies a log line each ``N`` generations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
     * ``Gen`` (:class:`int`), generation number
     * ``Fevals`` (:class:`int`), number of functions evaluation made
@@ -3471,7 +3471,7 @@ Args:
     seed (:class:`int`): seed used by the internal random number generator
 
 Returns:
-    a tuple of :class:`numpy.ndarray`: containing the two crossovered chromosomes
+    :class:`tuple`:  of :class:`numpy.ndarray`: containing the two crossovered chromosomes
 
 Raises:
     ValueError: if *bounds* *parent1* *parent2* are not of equal length, if lower bounds are not less 
@@ -3479,6 +3479,8 @@ Raises:
       detected in *bounds*, *p_cr* or *eta_c* 
     unspecified: any exception thrown by failiures at the intersection between C++ and Python (e.g.,
       type conversion errors, mismatched function signatures, etc.)
+
+See also the docs of the C++ class :cpp:class:`pagmo::sbx_crossover`.
 
 )";
 }
@@ -3617,10 +3619,10 @@ Raises:
     TypeError: if *points* cannot be converted to a vector of vector floats
 
 Returns:
-    tuple: (*ndf*, *dl*, *dc*, *ndr*), where:
+    :class:`tuple`: (*ndf*, *dl*, *dc*, *ndr*), where:
 
-    * *ndf* (``list`` of 1D NumPy int array): the non dominated fronts
-    * *dl* (``list`` of 1D NumPy int array): the domination list
+    * *ndf* (:class:`list` of 1D NumPy int array): the non dominated fronts
+    * *dl* (:class:`list` of 1D NumPy int array): the domination list
     * *dc* (1D NumPy int array): the domination count
     * *ndr* (1D NumPy int array): the non domination ranks
 
@@ -4004,7 +4006,7 @@ Raises:
     TypeError: if *input_f* cannot be converted to a vector of vector of floats or *tol* cannot be converted to a vector of floats.
 
 Returns:
-    ``list`` of 1D NumPy int array: the indexes of the sorted fitnesses vectors.
+    :class:`list` of 1D NumPy int array: the indexes of the sorted fitnesses vectors.
 
 Examples:
     >>> import pygmo as pg
@@ -4943,7 +4945,7 @@ std::string archipelago_get_champions_f_docstring()
 Get the fitness vectors of the islands' champions.
 
 Returns:
-    ``list`` of 1D NumPy float arrays: the fitness vectors of the islands' champions
+    :class:`list` of 1D NumPy float arrays: the fitness vectors of the islands' champions
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g., type conversion errors,
@@ -4959,7 +4961,7 @@ std::string archipelago_get_champions_x_docstring()
 Get the decision vectors of the islands' champions.
 
 Returns:
-    ``list`` of 1D NumPy float arrays: the decision vectors of the islands' champions
+    :class:`list` of 1D NumPy float arrays: the decision vectors of the islands' champions
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g., type conversion errors,
@@ -5401,7 +5403,7 @@ The optimisation log is a collection of log data lines. A log data line is a tup
 * a boolean flag signalling the feasibility of the current decision vector.
 
 Returns:
-    ``list``: the optimisation log
+    :class:`list`: the optimisation log
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5504,7 +5506,7 @@ A verbosity larger than 1 will produce a log with one entry each verbosity fitne
 A verbosity equal to 1 will produce a log with one entry at each improvement of the fitness.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Improvement``, ``Mutations``
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Improvement``, ``Mutations``
 
     * ``Gen`` (:class:`int`), generation.
     * ``Fevals`` (:class:`int`), number of functions evaluation made.
@@ -5601,7 +5603,7 @@ the method :func:`~pygmo.algorithm.set_verbosity()` on an :class:`~pygmo.algorit
 A verbosity larger than 1 will produce a log with one entry each verbosity fitness evaluations.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Fevals``, ``ppar``, ``bw``, ``dx``, ``df``,  ``Violated``, ``Viol. Norm``,``ideal``
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Fevals``, ``ppar``, ``bw``, ``dx``, ``df``,  ``Violated``, ``Viol. Norm``,``ideal``
 
     * ``Fevals`` (:class:`int`), number of functions evaluation made.
     * ``ppar`` (:class:`float`), the pitch adjustment rate.
@@ -5735,7 +5737,7 @@ A verbosity larger than 1 will produce a log with one entry each verbosity fitne
 A verbosity equal to 1 will produce a log with one entry at each improvement of the fitness.
 
 Returns:
-    ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Improvement``
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Improvement``
 
     ``Gen`` (:class:`int`), generation.
     ``Fevals`` (:class:`int`), number of functions evaluation made.
@@ -5893,7 +5895,7 @@ The optimisation log is a collection of log data lines. A log data line is a tup
 * a boolean flag signalling the feasibility of the current decision vector.
 
 Returns:
-    ``list``: the optimisation log
+    :class:`list`: the optimisation log
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
