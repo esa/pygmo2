@@ -372,8 +372,8 @@ PYBIND11_MODULE(core, m)
             return py::make_tuple(pygmo::vector_to_ndarr<py::array_t<double>>(retval.first),
                                   pygmo::vector_to_ndarr<py::array_t<double>>(retval.second));
         },
-        py::arg("parent1"), py::arg("parent2"), py::arg("bounds"), py::arg("nix"), py::arg("p_cr"), py::arg("eta_c"),
-        py::arg("seed"));
+        pygmo::sbx_crossover_docstring().c_str(), py::arg("parent1"), py::arg("parent2"), py::arg("bounds"),
+        py::arg("nix"), py::arg("p_cr"), py::arg("eta_c"), py::arg("seed"));
 
     m.def(
         "polynomial_mutation",
@@ -386,7 +386,8 @@ PYBIND11_MODULE(core, m)
             pagmo::polynomial_mutation(dv_c, pg_bounds, nix, p_m, eta_m, tmp_rng);
             return pygmo::vector_to_ndarr<py::array_t<double>>(dv_c);
         },
-        py::arg("dv"), py::arg("bounds"), py::arg("nix"), py::arg("p_m"), py::arg("eta_m"), py::arg("seed"));
+        pygmo::polynomial_mutation_docstring().c_str(), py::arg("dv"), py::arg("bounds"), py::arg("nix"),
+        py::arg("p_m"), py::arg("eta_m"), py::arg("seed"));
 
     // Hypervolume class
     py::class_<pg::hypervolume> hv_class(m, "hypervolume", "Hypervolume Class");
