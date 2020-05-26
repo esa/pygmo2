@@ -87,11 +87,11 @@ If the problem is multi-objective one single best is not well defined. In this c
 individuals by calling the :func:`pygmo.sort_population_mo()` function.
 
 Args:
-    tol (``float`` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
+    tol (:class:`float` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
       :attr:`~pygmo.problem.c_tol` attribute from the population's problem is used.
 
 Returns:
-    ``int``: the index of the best individual
+    :class:`float`: the index of the best individual
 
 Raises:
      ValueError: if the problem is multiobjective and thus a best individual is not well defined, or if the population is empty
@@ -112,10 +112,10 @@ If the problem is multi-objective one single worst is not well defined. In this 
 individuals by calling the :func:`pygmo.sort_population_mo()` function.
 
 Args:
-    tol (``float`` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints
+    tol (:class:`float` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints
 
 Returns:
-    ``int``: the index of the worst individual
+    :class:`float`: the index of the worst individual
 
 Raises:
      ValueError: if the problem is multiobjective and thus a worst individual is not well defined, or if the population is empty
@@ -128,7 +128,7 @@ std::string population_champion_x_docstring()
 {
     return R"(Champion's decision vector.
 
-This read-only property contains an array of ``float`` representing the decision vector of the population's champion.
+This read-only property contains an array of :class:`float` representing the decision vector of the population's champion.
 
 .. note::
 
@@ -151,7 +151,7 @@ std::string population_champion_f_docstring()
 {
     return R"(Champion's fitness vector.
 
-This read-only property contains an array of ``float`` representing the fitness vector of the population's champion.
+This read-only property contains an array of :class:`float` representing the fitness vector of the population's champion.
 
 .. note::
 
@@ -298,7 +298,7 @@ std::string population_get_seed_docstring()
 This method will return the random seed of the population.
 
 Returns:
-    ``int``: the random seed of the population
+    :class:`float`: the random seed of the population
 
 )";
 }
@@ -596,13 +596,13 @@ Number of objectives.
 
 This method will return :math:`n_{obj}`, the number of objectives of the problem.
 
-The optional ``get_nobj()`` method of the UDP must return the number of objectives as an ``int``.
+The optional ``get_nobj()`` method of the UDP must return the number of objectives as an :class:`float`.
 If the UDP does not implement the ``get_nobj()`` method, a single-objective optimizaztion problem
 will be assumed. The number of objectives returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
 
 Returns:
-    ``int``: the number of objectives of the problem
+    :class:`float`: the number of objectives of the problem
 
 )";
 }
@@ -617,7 +617,7 @@ This method will return :math:`n_{x}`, the dimension of the problem as establish
 the bounds returned by :func:`~pygmo.problem.get_bounds()`.
 
 Returns:
-    ``int``: the dimension of the problem
+    :class:`float`: the dimension of the problem
 
 )";
 }
@@ -630,13 +630,13 @@ Integer dimension of the problem.
 
 This method will return :math:`n_{ix}`, the integer dimension of the problem.
 
-The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an ``int``.
+The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an :class:`float`.
 If the UDP does not implement the ``get_nix()`` method, a zero integer dimension will be assumed.
 The integer dimension returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
 
 Returns:
-    ``int``: the integer dimension of the problem
+    :class:`float`: the integer dimension of the problem
 
 )";
 }
@@ -650,7 +650,7 @@ Continuous dimension of the problem.
 This method will return :math:`n_{cx}`, the continuous dimension of the problem.
 
 Returns:
-    ``int``: the continuous dimension of the problem
+    :class:`float`: the continuous dimension of the problem
 
 )";
 }
@@ -665,7 +665,7 @@ This method will return :math:`n_{f}`, the dimension of the fitness, which is th
 :math:`n_{obj}`, :math:`n_{ec}` and :math:`n_{ic}`.
 
 Returns:
-    ``int``: the dimension of the fitness
+    :class:`float`: the dimension of the fitness
 
 )";
 }
@@ -678,13 +678,13 @@ Number of equality constraints.
 
 This method will return :math:`n_{ec}`, the number of equality constraints of the problem.
 
-The optional ``get_nec()`` method of the UDP must return the number of equality constraints as an ``int``.
+The optional ``get_nec()`` method of the UDP must return the number of equality constraints as an :class:`float`.
 If the UDP does not implement the ``get_nec()`` method, zero equality constraints will be assumed.
 The number of equality constraints returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
 
 Returns:
-    ``int``: the number of equality constraints of the problem
+    :class:`float`: the number of equality constraints of the problem
 
 )";
 }
@@ -697,13 +697,13 @@ Number of inequality constraints.
 
 This method will return :math:`n_{ic}`, the number of inequality constraints of the problem.
 
-The optional ``get_nic()`` method of the UDP must return the number of inequality constraints as an ``int``.
+The optional ``get_nic()`` method of the UDP must return the number of inequality constraints as an :class:`float`.
 If the UDP does not implement the ``get_nic()`` method, zero inequality constraints will be assumed.
 The number of inequality constraints returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
 
 Returns:
-    ``int``: the number of inequality constraints of the problem
+    :class:`float`: the number of inequality constraints of the problem
 
 )";
 }
@@ -718,7 +718,7 @@ This method will return the sum of the output of :func:`~pygmo.problem.get_nic()
 :func:`~pygmo.problem.get_nec()` (i.e., the total number of constraints).
 
 Returns:
-    ``int``: the total number of constraints of the problem
+    :class:`float`: the total number of constraints of the problem
 
 )";
 }
@@ -727,7 +727,7 @@ std::string problem_c_tol_docstring()
 {
     return R"(Constraints tolerance.
 
-This property contains an array of ``float`` that are used when checking for constraint feasibility.
+This property contains an array of :class:`float` that are used when checking for constraint feasibility.
 The dimension of the array is :math:`n_{ec} + n_{ic}` (i.e., the total number of constraints), and
 the array is zero-filled on problem construction.
 
@@ -769,7 +769,7 @@ is increased by one. The counter is initialised to zero upon problem constructio
 reset. Copy operations copy the counter as well.
 
 Returns:
-    ``int`` : the number of times :func:`~pygmo.problem.fitness()` was successfully called
+    :class:`float` : the number of times :func:`~pygmo.problem.fitness()` was successfully called
 
 )";
 }
@@ -805,7 +805,7 @@ is increased by one. The counter is initialised to zero upon problem constructio
 reset. Copy operations copy the counter as well.
 
 Returns:
-    ``int`` : the number of times :func:`~pygmo.problem.gradient()` was successfully called
+    :class:`float` : the number of times :func:`~pygmo.problem.gradient()` was successfully called
 
 )";
 }
@@ -821,7 +821,7 @@ is increased by one. The counter is initialised to zero upon problem constructio
 reset. Copy operations copy the counter as well.
 
 Returns:
-    ``int`` : the number of times :func:`~pygmo.problem.hessians()` was successfully called
+    :class:`float` : the number of times :func:`~pygmo.problem.hessians()` was successfully called
 
 )";
 }
@@ -1113,7 +1113,7 @@ all stochastic variables. If the UDP provides a ``set_seed()`` method, then
 its ``set_seed()`` method will be invoked. Otherwise, an error will be raised.
 The *seed* parameter must be non-negative.
 
-The ``set_seed()`` method of the UDP must be able to take an ``int`` as input parameter.
+The ``set_seed()`` method of the UDP must be able to take an :class:`float` as input parameter.
 
 Args:
     seed (:class:`int`): the desired seed value
@@ -1206,7 +1206,7 @@ If the UDP provides a ``get_name()`` method, then this method will return the ou
 Otherwise, an implementation-defined name based on the type of the UDP will be returned.
 
 Returns:
-    ``str``: the problem's name
+    :class:`str`: the problem's name
 
 )";
 }
@@ -1221,7 +1221,7 @@ If the UDP provides a ``get_extra_info()`` method, then this method will return 
 method. Otherwise, an empty string will be returned.
 
 Returns:
-  ``str``: extra info about the UDP
+  :class:`str`: extra info about the UDP
 
 Raises:
   unspecified: any exception thrown by the ``get_extra_info()`` method of the UDP
@@ -1274,7 +1274,7 @@ std::string translate_translation_docstring()
 {
     return R"(Translation vector.
 
-This read-only property contains an array of ``float`` representing the translation vector used in the
+This read-only property contains an array of :class:`float` representing the translation vector used in the
 construction of this problem.
 
 Returns:
@@ -1380,7 +1380,7 @@ This method will set the seed to be used in the ``evolve()`` method of the UDA f
 provides a ``set_seed()`` method, then its ``set_seed()`` method will be invoked. Otherwise, an error will be
 raised. The *seed* parameter must be non-negative.
 
-The ``set_seed()`` method of the UDA must be able to take an ``int`` as input parameter.
+The ``set_seed()`` method of the UDA must be able to take an :class:`float` as input parameter.
 
 Args:
     seed (:class:`int`): the random seed
@@ -1429,7 +1429,7 @@ then its ``set_verbosity()`` method will be invoked. Otherwise, an error will be
 
 The exact meaning of the input parameter *level* is dependent on the UDA.
 
-The ``set_verbosity()`` method of the UDA must be able to take an ``int`` as input parameter.
+The ``set_verbosity()`` method of the UDA must be able to take an :class:`float` as input parameter.
 
 Args:
     level (:class:`int`): the desired verbosity level
@@ -1477,7 +1477,7 @@ If the UDA provides a ``get_name()`` method, then this method will return the ou
 Otherwise, an implementation-defined name based on the type of the UDA will be returned.
 
 Returns:
-    ``str``: the algorithm's name
+    :class:`str`: the algorithm's name
 
 )";
 }
@@ -1492,7 +1492,7 @@ If the UDA provides a ``get_extra_info()`` method, then this method will return 
 method. Otherwise, an empty string will be returned.
 
 Returns:
-  ``str``: extra info about the UDA
+  :class:`str`: extra info about the UDA
 
 Raises:
   unspecified: any exception thrown by the ``get_extra_info()`` method of the UDA
@@ -1589,7 +1589,7 @@ std::string mbh_get_seed_docstring()
 Get the seed value that was used for the construction of this :class:`~pygmo.mbh`.
 
 Returns:
-    ``int``: the seed value
+    :class:`float`: the seed value
 
 )";
 }
@@ -1601,7 +1601,7 @@ std::string mbh_get_verbosity_docstring()
 Get the verbosity level value that was used for the construction of this :class:`~pygmo.mbh`.
 
 Returns:
-    ``int``: the verbosity level
+    :class:`float`: the verbosity level
 
 )";
 }
@@ -1872,7 +1872,7 @@ Args:
     pop (:class:`~pygmo.population`): population for which the average p distance is requested
 
 Returns:
-    ``float``: the distance (or average distance) from the Pareto front
+    :class:`float`: the distance (or average distance) from the Pareto front
 
 See also the docs of the C++ class :func:`~pygmo.zdt.p_distance()`
 
@@ -1895,7 +1895,7 @@ Args:
     pop (:class:`~pygmo.population`): population for which the average p distance is requested
 
 Returns:
-    ``float``: the distance (or average distance) from the Pareto front
+    :class:`float`: the distance (or average distance) from the Pareto front
 
 See also the docs of the C++ class :func:`~pygmo.dtlz.p_distance()`
 
@@ -2064,7 +2064,7 @@ std::string generic_uda_get_seed_docstring()
 This method will return the random seed used internally by this uda.
 
 Returns:
-    ``int``: the random seed of the population
+    :class:`float`: the random seed of the population
 )";
 }
 
@@ -4356,7 +4356,7 @@ Args:
     hv_algo (deriving from :class:`~pygmo._hv_algorithm`): hypervolume algorithm to be used
 
 Returns:
-    ``float``: the computed hypervolume assuming *ref_point* as reference point
+    :class:`float`: the computed hypervolume assuming *ref_point* as reference point
 
 Raises:
     ValueError: if *ref_point* is not dominated by the nadir point
@@ -5298,7 +5298,7 @@ or equal to ``stopval`` is found. Defaults to the C constant ``-HUGE_VAL`` (that
 is disabled by default).
 
 Returns:
-    ``float``: the value of the ``stopval`` stopping criterion
+    :class:`float`: the value of the ``stopval`` stopping criterion
 
 Raises:
     ValueError: if, when setting this property, a ``NaN`` is passed
@@ -5317,7 +5317,7 @@ optimum) changes the objective function value by less than ``ftol_rel`` multipli
 function value. Defaults to 0 (that is, this stopping criterion is disabled by default).
 
 Returns:
-    ``float``: the value of the ``ftol_rel`` stopping criterion
+    :class:`float`: the value of the ``ftol_rel`` stopping criterion
 
 Raises:
     ValueError: if, when setting this property, a ``NaN`` is passed
@@ -5336,7 +5336,7 @@ The ``ftol_abs`` stopping criterion instructs the solver to stop when an optimiz
 Defaults to 0 (that is, this stopping criterion is disabled by default).
 
 Returns:
-    ``float``: the value of the ``ftol_abs`` stopping criterion
+    :class:`float`: the value of the ``ftol_abs`` stopping criterion
 
 Raises:
     ValueError: if, when setting this property, a ``NaN`` is passed
@@ -5355,7 +5355,7 @@ optimum) changes every parameter by less than ``xtol_rel`` multiplied by the abs
 Defaults to 1E-8.
 
 Returns:
-    ``float``: the value of the ``xtol_rel`` stopping criterion
+    :class:`float`: the value of the ``xtol_rel`` stopping criterion
 
 Raises:
     ValueError: if, when setting this property, a ``NaN`` is passed
@@ -5374,7 +5374,7 @@ optimum) changes every parameter by less than ``xtol_abs``. Defaults to 0 (that 
 by default).
 
 Returns:
-    ``float``: the value of the ``xtol_abs`` stopping criterion
+    :class:`float`: the value of the ``xtol_abs`` stopping criterion
 
 Raises:
     ValueError: if, when setting this property, a ``NaN`` is passed
@@ -5392,7 +5392,7 @@ The ``maxeval`` stopping criterion instructs the solver to stop when the number 
 ``maxeval``. Defaults to 0 (that is, this stopping criterion is disabled by default).
 
 Returns:
-    ``int``: the value of the ``maxeval`` stopping criterion
+    :class:`float`: the value of the ``maxeval`` stopping criterion
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5409,7 +5409,7 @@ The ``maxtime`` stopping criterion instructs the solver to stop when the optimiz
 ``maxtime``. Defaults to 0 (that is, this stopping criterion is disabled by default).
 
 Returns:
-    ``int``: the value of the ``maxtime`` stopping criterion
+    :class:`float`: the value of the ``maxtime`` stopping criterion
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5449,7 +5449,7 @@ std::string nlopt_get_last_opt_result_docstring()
 Get the result of the last optimisation.
 
 Returns:
-    ``int``: the NLopt return code for the last optimisation run, or ``NLOPT_SUCCESS`` if no optimisations have been run yet
+    :class:`float`: the NLopt return code for the last optimisation run, or ``NLOPT_SUCCESS`` if no optimisations have been run yet
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5465,7 +5465,7 @@ std::string nlopt_get_solver_name_docstring()
 Get the name of the NLopt solver used during construction.
 
 Returns:
-    ``str``: the name of the NLopt solver used during construction
+    :class:`str`: the name of the NLopt solver used during construction
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5825,9 +5825,9 @@ can be configured via the :attr:`~pygmo.ipopt.selection` and :attr:`~pygmo.ipopt
 Ipopt supports a large amount of options for the configuration of the optimisation run. The options
 are divided into three categories:
 
-* *string* options (i.e., the type of the option is ``str``),
-* *integer* options (i.e., the type of the option is ``int``),
-* *numeric* options (i.e., the type of the option is ``float``).
+* *string* options (i.e., the type of the option is :class:`str`),
+* *integer* options (i.e., the type of the option is :class:`float`),
+* *numeric* options (i.e., the type of the option is :class:`float`).
 
 The full list of options is available on the `Ipopt website <https://coin-or.github.io/Ipopt/OPTIONS.html>`__.
 :class:`pygmo.ipopt` allows to configure any Ipopt option via methods such as :func:`~pygmo.ipopt.set_string_options()`,
@@ -5954,7 +5954,7 @@ std::string ipopt_get_last_opt_result_docstring()
 Get the result of the last optimisation.
 
 Returns:
-    ``int``: the Ipopt return code for the last optimisation run, or ``Ipopt::Solve_Succeeded`` if no optimisations have been run yet
+    :class:`float`: the Ipopt return code for the last optimisation run, or ``Ipopt::Solve_Succeeded`` if no optimisations have been run yet
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6017,7 +6017,7 @@ It is equivalent to calling :func:`~pygmo.ipopt.set_string_option()` passing all
 as arguments.
 
 Args:
-    opts (``dict`` of ``str``-``str`` pairs): the name-value map that will be used to set the options
+    opts (:class:`dict` of :class:`str`-:class:`str` pairs): the name-value map that will be used to set the options
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6050,7 +6050,7 @@ std::string ipopt_get_string_options_docstring()
 Get string options.
 
 Returns:
-    ``dict`` of ``str``-``str`` pairs: a name-value dictionary of optimisation string options
+    :class:`dict` of :class:`str`-:class:`str` pairs: a name-value dictionary of optimisation string options
 
 Examples:
     >>> from pygmo import *
@@ -6129,7 +6129,7 @@ It is equivalent to calling :func:`~pygmo.ipopt.set_integer_option()` passing al
 as arguments.
 
 Args:
-    opts (``dict`` of ``str``-``int`` pairs): the name-value map that will be used to set the options
+    opts (:class:`dict` of :class:`str`-:class:`float` pairs): the name-value map that will be used to set the options
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6162,7 +6162,7 @@ std::string ipopt_get_integer_options_docstring()
 Get integer options.
 
 Returns:
-    ``dict`` of ``str``-``int`` pairs: a name-value dictionary of optimisation integer options
+    :class:`dict` of :class:`str`-:class:`float` pairs: a name-value dictionary of optimisation integer options
 
 Examples:
     >>> from pygmo import *
@@ -6241,7 +6241,7 @@ It is equivalent to calling :func:`~pygmo.ipopt.set_numeric_option()` passing al
 as arguments.
 
 Args:
-    opts (``dict`` of ``str``-``float`` pairs): the name-value map that will be used to set the options
+    opts (:class:`dict` of :class:`str`-:class:`float` pairs): the name-value map that will be used to set the options
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6274,7 +6274,7 @@ std::string ipopt_get_numeric_options_docstring()
 Get numeric options.
 
 Returns:
-    ``dict`` of ``str``-``float`` pairs: a name-value dictionary of optimisation numeric options
+    :class:`dict` of :class:`str`-:class:`float` pairs: a name-value dictionary of optimisation numeric options
 
 Examples:
     >>> from pygmo import *
@@ -7417,7 +7417,7 @@ If the attribute is an integer, it represents the index (in the population) of t
 for optimisation.
 
 Returns:
-    ``int`` or ``str``: the individual selection policy or index
+    :class:`float` or :class:`str`: the individual selection policy or index
 
 Raises:
     OverflowError: if the attribute is set to an integer which is negative or too large
@@ -7450,7 +7450,7 @@ If the attribute is an integer, it represents the index (in the population) of t
 replaced by the optimised individual.
 
 Returns:
-    ``int`` or ``str``: the individual replacement policy or index
+    :class:`float` or :class:`str`: the individual replacement policy or index
 
 Raises:
     OverflowError: if the attribute is set to an integer which is negative or too large
