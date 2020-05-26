@@ -3452,6 +3452,37 @@ Raises:
 )";
 }
 
+std::string sbx_crossover_docstring()
+{
+    return R"(sbx_crossover(parent1, parent2, bounds, nix, p_cr, eta_c, seed)
+
+This function will perform a binary crossover on the continuous parts of the two chromosomes
+*parent1* and *parent2* and a two-point crossover on their integer parts. The crossover will
+only happen with a probability *p_cr*. If that is the case, each continuous component of the chromosomes
+will be crossovered with a probability of 0.5. 
+
+Args:
+    parent1 (array-like object): a first chromosome
+    parent2 (array-like object): a second chromosome
+    bounds (2-D array-like object): problem bounds
+    nix (:class:`int`): the integer dimension of the chromosome
+    p_cr (:class:`float`): crossover probability
+    eta_c (:class:`float`): crossover distribution index
+    seed (:class:`int`): seed used by the internal random number generator
+
+Returns:
+    a tuple of :class:`numpy.ndarray`: containing the two crossovered chromosomes
+
+Raises:
+    ValueError: if *bounds* *parent1* *parent2* are not of equal length, if lower bounds are not less 
+      or equal to the upper bounds, if the *nix* is larger than the parent size or if infinite values are
+      detected in *bounds*, *p_cr* or *eta_c* 
+    unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
+      type conversion errors, mismatched function signatures, etc.)
+
+)";
+}
+
 std::string decompose_docstring()
 {
     return R"(The decompose meta-problem.
@@ -3499,29 +3530,6 @@ derivative-free optimization.
 See: "Q. Zhang -- MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition"
 
 See: https://en.wikipedia.org/wiki/Multi-objective_optimization#Scalarizing
-)";
-}
-
-std::string decompose_decompose_fitness_docstring()
-{
-    return R"(decompose_fitness(f, weight, ref_point)
-
-Returns the decomposed fitness vector.
-
-Args:
-    f (array-like object): fitness vector
-    weight (array-like object): the weight to be used in the decomposition
-    ref_point (array-like object): the reference point to be used if either ``'tchebycheff'`` or ``'bi'`` was
-      indicated as a decomposition method (its value is ignored if ``'weighted'`` was indicated)
-
-Returns:
-    1D NumPy float array: the decomposed fitness vector
-
-Raises:
-    ValueError: if *f*, *weight* and *ref_point* have different sizes
-    unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
-      type conversion errors, mismatched function signatures, etc.)
-
 )";
 }
 

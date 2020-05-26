@@ -96,7 +96,6 @@ std::string luksan_vlcek1_docstring();
 std::string translate_docstring();
 std::string translate_translation_docstring();
 std::string decompose_docstring();
-std::string decompose_decompose_fitness_docstring();
 std::string decompose_original_fitness_docstring();
 std::string decompose_z_docstring();
 std::string unconstrain_docstring();
@@ -194,6 +193,9 @@ std::string generic_uda_inner_algorithm_docstring();
 // generic
 std::string random_decision_vector_docstring();
 std::string batch_random_decision_vector_docstring();
+// genetic_operators
+std::string sbx_crossover_docstring();
+std::string polynomial_mutation_docstring();
 // hypervolume
 std::string hv_init1_docstring();
 std::string hv_init2_docstring();
