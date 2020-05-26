@@ -183,7 +183,7 @@ Sets simultaneously the :math:`i`-th individual decision vector and fitness thus
    The user must make sure that the input fitness *f* makes sense as pygmo will only check its dimension.
 
 Args:
-    i (``int``): individual's index in the population
+    i (:class:`int`): individual's index in the population
     x (array-like object): a decision vector (chromosome)
     f (array-like object): a fitness vector
 
@@ -210,7 +210,7 @@ individual's ID remains the same.
    A call to this method triggers one fitness function evaluation.
 
 Args:
-    i (``int``): individual's index in the population
+    i (:class:`int`): individual's index in the population
     x (array-like object): a decision vector (chromosome)
 
 Raises:
@@ -1116,7 +1116,7 @@ The *seed* parameter must be non-negative.
 The ``set_seed()`` method of the UDP must be able to take an ``int`` as input parameter.
 
 Args:
-    seed (``int``): the desired seed value
+    seed (:class:`int`): the desired seed value
 
 Raises:
     NotImplementedError: if the UDP does not provide a ``set_seed()`` method
@@ -1383,7 +1383,7 @@ raised. The *seed* parameter must be non-negative.
 The ``set_seed()`` method of the UDA must be able to take an ``int`` as input parameter.
 
 Args:
-    seed (``int``): the random seed
+    seed (:class:`int`): the random seed
 
 Raises:
     NotImplementedError: if the UDA does not provide a ``set_seed()`` method
@@ -1432,7 +1432,7 @@ The exact meaning of the input parameter *level* is dependent on the UDA.
 The ``set_verbosity()`` method of the UDA must be able to take an ``int`` as input parameter.
 
 Args:
-    level (``int``): the desired verbosity level
+    level (:class:`int`): the desired verbosity level
 
 Raises:
     NotImplementedError: if the UDA does not provide a ``set_verbosity()`` method
@@ -1633,11 +1633,11 @@ with an :class:`~pygmo.mbh`. A verbosity level ``N > 0`` will log one line at th
 Returns:
     ``list`` of ``tuples``: at each call of the inner algorithm, the values ``Fevals``, ``Best``, ``Violated``, ``Viol. Norm`` and ``Trial``, where:
 
-    * ``Fevals`` (``int``), the number of fitness evaluations made
-    * ``Best`` (``float``), the objective function of the best fitness currently in the population
-    * ``Violated`` (``int``), the number of constraints currently violated by the best solution
-    * ``Viol. Norm`` (``float``), the norm of the violation (discounted already by the constraints tolerance)
-    * ``Trial`` (``int``), the trial number (which will determine the algorithm stop)
+    * ``Fevals`` (:class:`int`), the number of fitness evaluations made
+    * ``Best`` (:class:`float`), the objective function of the best fitness currently in the population
+    * ``Violated`` (:class:`int`), the number of constraints currently violated by the best solution
+    * ``Viol. Norm`` (:class:`float`), the norm of the violation (discounted already by the constraints tolerance)
+    * ``Trial`` (:class:`int`), the trial number (which will determine the algorithm stop)
 
 Examples:
     >>> from pygmo import *
@@ -1755,13 +1755,13 @@ Returns:
     ``list`` of ``tuples``: at each call of the inner algorithm, the values ``Iters``, ``Fevals``, ``Best``, ``Infeasibility``, 
     ``Violated``, ``Viol. Norm`` and ``N. Feasible``, where:
 
-    * ``Iters`` (``int``), the number of iterations made (i.e. calls to the evolve method of the inner algorithm)
-    * ``Fevals`` (``int``), the number of fitness evaluations made
-    * ``Best`` (``float``), the objective function of the best fitness currently in the population
-    * ``Infeasibility`` (``float``), the aggregated (and normalized) infeasibility value of ``Best``
-    * ``Violated`` (``int``), the number of constraints currently violated by the best solution
-    * ``Viol. Norm`` (``float``), the norm of the violation (discounted already by the constraints tolerance)
-    * ``N. Feasible`` (``int``), the number of feasible individuals currently in the population.
+    * ``Iters`` (:class:`int`), the number of iterations made (i.e. calls to the evolve method of the inner algorithm)
+    * ``Fevals`` (:class:`int`), the number of fitness evaluations made
+    * ``Best`` (:class:`float`), the objective function of the best fitness currently in the population
+    * ``Infeasibility`` (:class:`float`), the aggregated (and normalized) infeasibility value of ``Best``
+    * ``Violated`` (:class:`int`), the number of constraints currently violated by the best solution
+    * ``Viol. Norm`` (:class:`float`), the norm of the violation (discounted already by the constraints tolerance)
+    * ``N. Feasible`` (:class:`int`), the number of feasible individuals currently in the population.
 
 Examples:
     >>> from pygmo import *
@@ -1807,9 +1807,9 @@ The null problem.
 A problem used in the default-initialization of :class:`pygmo.problem` and of the meta-problems.
 
 Args:
-    nobj (``int``): the number of objectives
-    nec  (``int``): the number of equality constraints
-    nic  (``int``): the number of inequality constraintsctives
+    nobj (:class:`int`): the number of objectives
+    nec  (:class:`int`): the number of equality constraints
+    nic  (:class:`int`): the number of inequality constraintsctives
 
 Raises:
     ValueError: if *nobj*, *nec*, *nic* are negative or greater than an implementation-defined value or if *nobj* is zero
@@ -1826,7 +1826,7 @@ std::string rosenbrock_docstring()
 The Rosenbrock problem.
 
 Args:
-    dim (``int``): problem dimension
+    dim (:class:`int`): problem dimension
 
 Raises:
     OverflowError: if *dim* is negative or greater than an implementation-defined value
@@ -1844,8 +1844,8 @@ std::string minlp_rastrigin_docstring()
 The scalable MINLP Rastrigin problem.
 
 Args:
-    dim_c (``int``): MINLP continuous dimension
-    dim_i (``int``): MINLP integer dimension
+    dim_c (:class:`int`): MINLP continuous dimension
+    dim_i (:class:`int`): MINLP integer dimension
 
 Raises:
     OverflowError: if *dim_c* / *dim_i* is negative or greater than an implementation-defined value
@@ -1909,10 +1909,10 @@ std::string dtlz_docstring()
 The DTLZ problem suite problem.
 
 Args:
-    prob_id (``int``): DTLZ problem id 
-    dim (``int``): problem dimension
-    fdim (``int``): number of objectives
-    alpha (``int``): controls density of solutions (used only by DTLZ4)
+    prob_id (:class:`int`): DTLZ problem id 
+    dim (:class:`int`): problem dimension
+    fdim (:class:`int`): number of objectives
+    alpha (:class:`int`): controls density of solutions (used only by DTLZ4)
 
 Raises:
     OverflowError: if *prob_id*, *dim*, *fdim* or *alpha* are negative or greater than an implementation-defined value
@@ -1930,10 +1930,10 @@ std::string wfg_docstring()
 The WFG problem suite.
 
 Args:
-    prob_id (int): WFG problem id
-    dim_dvs (int): decision vector size
-    dim_obj (int): number of objectives
-    dim_k (int): position parameter
+    prob_id (:class:`int`): WFG problem id
+    dim_dvs (:class:`int`): decision vector size
+    dim_obj (:class:`int`): number of objectives
+    dim_k (:class:`int`): position parameter
 
 Raises:
     OverflowError: if *prob_id*, *dim_dvs*, *dim_obj* or *dim_k* are negative or greater than an implementation-defined value
@@ -1955,8 +1955,8 @@ std::string cec2014_docstring()
 The CEC 2014 problem suite (continuous, box-bounded, single-objective problems)
 
 Args:
-    prob_id (int): problem id (one of [1..30])
-    dim (int): number of dimensions (one of [2, 10, 20, 30, 50, 100])
+    prob_id (:class:`int`): problem id (one of [1..30])
+    dim (:class:`int`): number of dimensions (one of [2, 10, 20, 30, 50, 100])
 
 Raises:
     OverflowError: if *dim* or *prob_id* are negative or greater than an implementation-defined value
@@ -1974,8 +1974,8 @@ std::string cec2013_docstring()
 The CEC 2013 problem suite (continuous, box-bounded, single-objective problems)
 
 Args:
-    prob_id (``int``): problem id (one of [1..28])
-    dim (``int``): number of dimensions (one of [2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    prob_id (:class:`int`): problem id (one of [1..28])
+    dim (:class:`int`): number of dimensions (one of [2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
 
 Raises:
     OverflowError: if *dim* or *prob_id* are negative or greater than an implementation-defined value
@@ -1993,9 +1993,9 @@ std::string cec2009_docstring()
 The CEC 2009 problem suite (continuous, constrained, single-objective problems)
 
 Args:
-    prob_id (``int``): problem id (one of [1..10])
-    is_constrained (``bool``): selects the constrained version of the problems 
-    dim (``int``): problem dimension
+    prob_id (:class:`int`): problem id (one of [1..10])
+    is_constrained (:class:`bool`): selects the constrained version of the problems 
+    dim (:class:`int`): problem dimension
 
 Raises:
     OverflowError: if *prob_id* or *dim* are negative or greater than an implementation-defined value
@@ -2013,7 +2013,7 @@ std::string cec2006_docstring()
 The CEC 2006 problem suite (continuous, constrained, single-objective problems)
 
 Args:
-    prob_id (``int``): problem id (one of [1..24])
+    prob_id (:class:`int`): problem id (one of [1..24])
 
 Raises:
     OverflowError: if *prob_id* is negative or greater than an implementation-defined value
@@ -2047,7 +2047,7 @@ See: Luksan, L., and Jan Vlcek. "Sparse and partially separable test problems fo
 constrained optimization." (1999). http://hdl.handle.net/11104/0123965
 
 Args:
-    dim (``int``): problem dimension
+    dim (:class:`int`): problem dimension
 
 Raises:
     OverflowError: if *dim* is negative or greater than an implementation-defined value
@@ -2075,9 +2075,9 @@ std::string bee_colony_docstring()
 Artificial Bee Colony.
 
 Args:
-    gen (``int``): number of generations
-    limit (``int``): maximum number of trials for abandoning a source
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    limit (:class:`int`): maximum number of trials for abandoning a source
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen*, *limit* or *seed* is negative or greater than an implementation-defined value
@@ -2099,10 +2099,10 @@ constructed with a :class:`~pygmo.bee_colony`. A verbosity of ``N`` implies a lo
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Current best``, ``Best``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Current best`` (``float``), the best fitness currently in the population
-    * ``Best`` (``float``), the best fitness found
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Current best`` (:class:`float`), the best fitness currently in the population
+    * ``Best`` (:class:`float`), the best fitness found
 
 Examples:
     >>> from pygmo import *
@@ -2133,13 +2133,13 @@ std::string de_docstring()
 Differential Evolution
 
 Args:
-    gen (``int``): number of generations
-    F (``float``): weight coefficient (dafault value is 0.8)
-    CR (``float``): crossover probability (dafault value is 0.9)
-    variant (``int``): mutation variant (dafault variant is 2: /rand/1/exp)
-    ftol (``float``): stopping criteria on the f tolerance (default is 1e-6)
-    xtol (``float``): stopping criteria on the x tolerance (default is 1e-6)
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    F (:class:`float`): weight coefficient (dafault value is 0.8)
+    CR (:class:`float`): crossover probability (dafault value is 0.9)
+    variant (:class:`int`): mutation variant (dafault variant is 2: /rand/1/exp)
+    ftol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen*, *variant* or *seed* is negative or greater than an implementation-defined value
@@ -2175,11 +2175,11 @@ constructed with a :class:`~pygmo.de`. A verbosity of ``N`` implies a log line e
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function currently in the population
-    * ``dx`` (``float``), the norm of the distance to the population mean of the mutant vectors
-    * ``df`` (``float``), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function currently in the population
+    * ``dx`` (:class:`float`), the norm of the distance to the population mean of the mutant vectors
+    * ``df`` (:class:`float`), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
 
 Examples:
     >>> from pygmo import *
@@ -2211,10 +2211,10 @@ std::string compass_search_docstring()
 Compass Search
 
 Args:
-    max_fevals (``int``): maximum number of function evaluation
-    start_range (``float``): start range (dafault value is .1)
-    stop_range (``float``): stop range (dafault value is .01)
-    reduction_coeff (``float``): range reduction coefficient (dafault value is .5)
+    max_fevals (:class:`int`): maximum number of function evaluation
+    start_range (:class:`float`): start range (dafault value is .1)
+    stop_range (:class:`float`): stop range (dafault value is .01)
+    reduction_coeff (:class:`float`): range reduction coefficient (dafault value is .5)
 
 Raises:
     OverflowError: if *max_fevals* is negative or greater than an implementation-defined value
@@ -2237,9 +2237,9 @@ change in the search range.
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values``Fevals``, ``Best``, ``Range``, where:
 
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function currently in the population
-    * ``Range`` (``float``), the range used to vary the chromosome (relative to the box bounds width)
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function currently in the population
+    * ``Range`` (:class:`float`), the range used to vary the chromosome (relative to the box bounds width)
 
 Examples:
     >>> from pygmo import *
@@ -2291,13 +2291,13 @@ std::string sade_docstring()
 Self-adaptive Differential Evolution.
 
 Args:
-    gen (``int``): number of generations
-    variant (``int``): mutation variant (dafault variant is 2: /rand/1/exp)
-    variant_adptv (``int``): F and CR parameter adaptation scheme to be used (one of 1..2)
-    ftol (``float``): stopping criteria on the x tolerance (default is 1e-6)
-    xtol (``float``): stopping criteria on the f tolerance (default is 1e-6)
-    memory (``bool``): when true the adapted parameters CR anf F are not reset between successive calls to the evolve method
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    variant (:class:`int`): mutation variant (dafault variant is 2: /rand/1/exp)
+    variant_adptv (:class:`int`): F and CR parameter adaptation scheme to be used (one of 1..2)
+    ftol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    memory (:class:`bool`): when true the adapted parameters CR anf F are not reset between successive calls to the evolve method
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen*, *variant*, *variant_adptv* or *seed* is negative or greater than an implementation-defined value
@@ -2347,13 +2347,13 @@ constructed with a :class:`~pygmo.sade`. A verbosity of ``N`` implies a log line
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``F``, ``CR``, ``dx``, ``df``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function currently in the population
-    * ``F`` (``float``), the value of the adapted paramter F used to create the best so far
-    * ``CR`` (``float``), the value of the adapted paramter CR used to create the best so far
-    * ``dx`` (``float``), the norm of the distance to the population mean of the mutant vectors
-    * ``df`` (``float``), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function currently in the population
+    * ``F`` (:class:`float`), the value of the adapted paramter F used to create the best so far
+    * ``CR`` (:class:`float`), the value of the adapted paramter CR used to create the best so far
+    * ``dx`` (:class:`float`), the norm of the distance to the population mean of the mutant vectors
+    * ``df`` (:class:`float`), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
 
 Examples:
     >>> from pygmo import *
@@ -2402,12 +2402,12 @@ std::string nsga2_docstring()
 Non dominated Sorting Genetic Algorithm (NSGA-II).
 
 Args:
-    gen (``int``): number of generations
-    cr (``float``): crossover probability
-    eta_c (``float``): distribution index for crossover
-    m (``float``): mutation probability
-    eta_m (``float``): distribution index for mutation
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    cr (:class:`float`): crossover probability
+    eta_c (:class:`float`): distribution index for crossover
+    m (:class:`float`): mutation probability
+    eta_m (:class:`float`): distribution index for mutation
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -2430,8 +2430,8 @@ constructed with a :class:`~pygmo.nsga2`. A verbosity of ``N`` implies a log lin
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
     * ``ideal_point`` (1D numpy array), the ideal point of the current population (cropped to max 5 dimensions only in the screen output)
 
 Examples:
@@ -2505,18 +2505,18 @@ optimization, with both continuous and integer variables.
    M. Schlueter, et al. (2009). Extended ant colony optimization for non-convex mixed integer non-linear programming. Computers & Operations Research.
 
 Args:
-    gen (``int``): number of generations
-    ker (``int``): kernel size
-    q (``float``): convergence speed parameter
-    oracle (``float``): oracle parameter
-    acc (``float``): accuracy parameter
-    threshold (``int``): threshold parameter
-    n_gen_mark (``int``): std convergence speed parameter
-    impstop (``int``): improvement stopping criterion
-    evalstop (``int``): evaluation stopping criterion
-    focus (``float``): focus parameter
-    memory (``bool``): memory parameter
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    ker (:class:`int`): kernel size
+    q (:class:`float`): convergence speed parameter
+    oracle (:class:`float`): oracle parameter
+    acc (:class:`float`): accuracy parameter
+    threshold (:class:`int`): threshold parameter
+    n_gen_mark (:class:`int`): std convergence speed parameter
+    impstop (:class:`int`): improvement stopping criterion
+    evalstop (:class:`int`): evaluation stopping criterion
+    focus (:class:`float`): focus parameter
+    memory (:class:`bool`): memory parameter
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -2540,13 +2540,13 @@ constructed with a :class:`~pygmo.gaco`. A verbosity of ``N`` implies a log line
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Kernel``, ``Oracle``, ``dx``, ``dp``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), best fitness function value
-    * ``Kernel`` (``int``), kernel size
-    * ``Oracle`` (``float``), oracle parameter
-    * ``dx`` (``float``), sum of the absolute value of the difference between the variables' values of the best and worst solutions
-    * ``dp`` (``float``), absolute value of the difference between the worst and best solutions' penalty values
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), best fitness function value
+    * ``Kernel`` (:class:`int`), kernel size
+    * ``Oracle`` (:class:`float`), oracle parameter
+    * ``dx`` (:class:`float`), sum of the absolute value of the difference between the variables' values of the best and worst solutions
+    * ``dp`` (:class:`float`), absolute value of the difference between the worst and best solutions' penalty values
 
 Examples:
     >>> import pygmo as pg
@@ -2599,15 +2599,15 @@ std::string maco_docstring()
 Multi-objective Ant Colony Optimizer (MACO).
 
 Args:
-    gen (int): number of generations
-    ker (int): kernel size
-    q (float): convergence speed parameter
-    threshold (int): threshold parameter
-    n_gen_mark (int): std convergence speed parameter
-    evalstop (int): evaluation stopping criterion
-    focus (float): focus parameter
-    memory (bool): memory parameter
-    seed (int): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    ker (:class:`int`): kernel size
+    q (:class:`float`): convergence speed parameter
+    threshold (:class:`int`): threshold parameter
+    n_gen_mark (:class:`int`): std convergence speed parameter
+    evalstop (:class:`int`): evaluation stopping criterion
+    focus (:class:`float`): focus parameter
+    memory (:class:`bool`): memory parameter
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -2629,8 +2629,8 @@ constructed with a :class:`~pygmo.maco`. A verbosity of ``N`` implies a log line
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
     * ``ideal_point`` (1D numpy array), the ideal point of the current population (cropped to max 5 dimensions only in the screen output)
 
 Examples:
@@ -2676,8 +2676,8 @@ This algorithm can be applied to box-bounded single-objective, constrained and u
 optimization, with continuous value.
 
 Args:
-    gen (``int``): number of generations
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -2699,10 +2699,10 @@ constructed with a :class:`~pygmo.gwo`. A verbosity of ``N`` implies a log line 
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``alpha`` (``float``), fitness function value of alpha
-    * ``beta`` (``float``), fitness function value of beta
-    * ``delta`` (``float``), fitness function value of delta
+    * ``Gen`` (:class:`int`), generation number
+    * ``alpha`` (:class:`float`), fitness function value of alpha
+    * ``beta`` (:class:`float`), fitness function value of beta
+    * ``delta`` (:class:`float`), fitness function value of delta
 
 Examples:
     >>> from pygmo import *
@@ -2733,17 +2733,17 @@ std::string moead_docstring()
 Multi Objective Evolutionary Algorithms by Decomposition (the DE variant)
 
 Args:
-    gen (``int``): number of generations
-    weight_generation (``str``): method used to generate the weights, one of "grid", "low discrepancy" or "random"
-    decomposition (``str``): method used to decompose the objectives, one of "tchebycheff", "weighted" or "bi"
-    neighbours (``int``): size of the weight's neighborhood
-    CR (``float``): crossover parameter in the Differential Evolution operator
-    F (``float``): parameter for the Differential Evolution operator
-    eta_m (``float``): distribution index used by the polynomial mutation
-    realb (``float``): chance that the neighbourhood is considered at each generation, rather than the whole population (only if preserve_diversity is true)
-    limit (``int``):  maximum number of copies reinserted in the population  (only if m_preserve_diversity is true)
-    preserve_diversity (``bool``): when true activates diversity preservation mechanisms
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    weight_generation (:class:`str`): method used to generate the weights, one of "grid", "low discrepancy" or "random"
+    decomposition (:class:`str`): method used to decompose the objectives, one of "tchebycheff", "weighted" or "bi"
+    neighbours (:class:`int`): size of the weight's neighborhood
+    CR (:class:`float`): crossover parameter in the Differential Evolution operator
+    F (:class:`float`): parameter for the Differential Evolution operator
+    eta_m (:class:`float`): distribution index used by the polynomial mutation
+    realb (:class:`float`): chance that the neighbourhood is considered at each generation, rather than the whole population (only if preserve_diversity is true)
+    limit (:class:`int`):  maximum number of copies reinserted in the population  (only if m_preserve_diversity is true)
+    preserve_diversity (:class:`bool`): when true activates diversity preservation mechanisms
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen*, *neighbours*, *seed* or *limit* are negative or greater than an implementation-defined value
@@ -2767,9 +2767,9 @@ constructed with a :class:`~pygmo.moead`. A verbosity of ``N`` implies a log lin
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ADR``, ``ideal_point``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``ADF`` (``float``), Average Decomposed Fitness, that is the average across all decomposed problem of the single objective decomposed fitness along the corresponding direction
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``ADF`` (:class:`float`), Average Decomposed Fitness, that is the average across all decomposed problem of the single objective decomposed fitness along the corresponding direction
     * ``ideal_point`` (``array``), the ideal point of the current population (cropped to max 5 dimensions only in the screen output)
 
 Examples:
@@ -2801,17 +2801,17 @@ std::string cmaes_docstring()
 Covariance Matrix Evolutionary Strategy (CMA-ES).
 
 Args:
-    gen (``int``): number of generations
-    cc (``float``): backward time horizon for the evolution path (by default is automatically assigned)
-    cs (``float``): makes partly up for the small variance loss in case the indicator is zero (by default is automatically assigned)
-    c1 (``float``): learning rate for the rank-one update of the covariance matrix (by default is automatically assigned)
-    cmu (``float``): learning rate for the rank-mu  update of the covariance matrix (by default is automatically assigned)
-    sigma0 (``float``): initial step-size
-    ftol (``float``): stopping criteria on the x tolerance
-    xtol (``float``): stopping criteria on the f tolerance
-    memory (``bool``): when true the adapted parameters are not reset between successive calls to the evolve method
-    force_bounds (``bool``): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    cc (:class:`float`): backward time horizon for the evolution path (by default is automatically assigned)
+    cs (:class:`float`): makes partly up for the small variance loss in case the indicator is zero (by default is automatically assigned)
+    c1 (:class:`float`): learning rate for the rank-one update of the covariance matrix (by default is automatically assigned)
+    cmu (:class:`float`): learning rate for the rank-mu  update of the covariance matrix (by default is automatically assigned)
+    sigma0 (:class:`float`): initial step-size
+    ftol (:class:`float`): stopping criteria on the x tolerance
+    xtol (:class:`float`): stopping criteria on the f tolerance
+    memory (:class:`bool`): when true the adapted parameters are not reset between successive calls to the evolve method
+    force_bounds (:class:`bool`): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* is negative or greater than an implementation-defined value
@@ -2833,12 +2833,12 @@ constructed with a :class:`~pygmo.cmaes`. A verbosity of ``N`` implies a log lin
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, ``sigma``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function currently in the population
-    * ``dx`` (``float``), the norm of the distance to the population mean of the mutant vectors
-    * ``df`` (``float``), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
-    * ``sigma`` (``float``), the current step-size
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function currently in the population
+    * ``dx`` (:class:`float`), the norm of the distance to the population mean of the mutant vectors
+    * ``df`` (:class:`float`), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
+    * ``sigma`` (:class:`float`), the current step-size
 
 Examples:
     >>> from pygmo import *
@@ -2870,16 +2870,16 @@ std::string xnes_docstring()
 Exponential Evolution Strategies.
 
 Args:
-    gen (``int``): number of generations
-    eta_mu (``float``): learning rate for mean update (if -1 will be automatically selected to be 1)
-    eta_sigma (``float``): learning rate for step-size update (if -1 will be automatically selected)
-    eta_b (``float``): learning rate for the covariance matrix update (if -1 will be automatically selected)
-    sigma0 (``float``):  the initial search width will be sigma0 * (ub - lb) (if -1 will be automatically selected to be 1)
-    ftol (``float``): stopping criteria on the x tolerance
-    xtol (``float``): stopping criteria on the f tolerance
-    memory (``bool``): when true the adapted parameters are not reset between successive calls to the evolve method
-    force_bounds (``bool``): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    eta_mu (:class:`float`): learning rate for mean update (if -1 will be automatically selected to be 1)
+    eta_sigma (:class:`float`): learning rate for step-size update (if -1 will be automatically selected)
+    eta_b (:class:`float`): learning rate for the covariance matrix update (if -1 will be automatically selected)
+    sigma0 (:class:`float`):  the initial search width will be sigma0 * (ub - lb) (if -1 will be automatically selected to be 1)
+    ftol (:class:`float`): stopping criteria on the x tolerance
+    xtol (:class:`float`): stopping criteria on the f tolerance
+    memory (:class:`bool`): when true the adapted parameters are not reset between successive calls to the evolve method
+    force_bounds (:class:`bool`): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* is negative or greater than an implementation-defined value
@@ -2901,12 +2901,12 @@ constructed with a :class:`~pygmo.xnes`. A verbosity of ``N`` implies a log line
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``dx``, ``df``, ``sigma``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function currently in the population
-    * ``dx`` (``float``), the norm of the distance to the population mean of the mutant vectors
-    * ``df`` (``float``), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
-    * ``sigma`` (``float``), the current step-size
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function currently in the population
+    * ``dx`` (:class:`float`), the norm of the distance to the population mean of the mutant vectors
+    * ``df`` (:class:`float`), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
+    * ``sigma`` (:class:`float`), the current step-size
 
 Examples:
     >>> from pygmo import *
@@ -2939,13 +2939,13 @@ Self-adaptive Differential Evolution, pygmo flavour (pDE).
 The adaptation of the mutation variant is added to :class:`~pygmo.sade`
 
 Args:
-    gen (``int``): number of generations
+    gen (:class:`int`): number of generations
     allowed_variants (array-like object): allowed mutation variants, each one being a number in [1, 18]
-    variant_adptv (``int``): *F* and *CR* parameter adaptation scheme to be used (one of 1..2)
-    ftol (``float``): stopping criteria on the x tolerance (default is 1e-6)
-    xtol (``float``): stopping criteria on the f tolerance (default is 1e-6)
-    memory (``bool``): when true the adapted parameters *CR* anf *F* are not reset between successive calls to the evolve method
-    seed (``int``): seed used by the internal random number generator (default is random)
+    variant_adptv (:class:`int`): *F* and *CR* parameter adaptation scheme to be used (one of 1..2)
+    ftol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    memory (:class:`bool`): when true the adapted parameters *CR* anf *F* are not reset between successive calls to the evolve method
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen*, *variant*, *variant_adptv* or *seed* is negative or greater than an implementation-defined value
@@ -2995,14 +2995,14 @@ constructed with a :class:`~pygmo.de1220`. A verbosity of N implies a log line e
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``F``, ``CR``, ``Variant``, ``dx``, ``df``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function currently in the population
-    * ``F`` (``float``), the value of the adapted paramter F used to create the best so far
-    * ``CR`` (``float``), the value of the adapted paramter CR used to create the best so far
-    * ``Variant`` (``int``), the mutation variant used to create the best so far
-    * ``dx`` (``float``), the norm of the distance to the population mean of the mutant vectors
-    * ``df`` (``float``), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function currently in the population
+    * ``F`` (:class:`float`), the value of the adapted paramter F used to create the best so far
+    * ``CR`` (:class:`float`), the value of the adapted paramter CR used to create the best so far
+    * ``Variant`` (:class:`int`), the mutation variant used to create the best so far
+    * ``dx`` (:class:`float`), the norm of the distance to the population mean of the mutant vectors
+    * ``df`` (:class:`float`), the population flatness evaluated as the distance between the fitness of the best and of the worst individual
 
 Examples:
     >>> from pygmo import *
@@ -3034,16 +3034,16 @@ std::string pso_docstring()
 Particle Swarm Optimization
 
 Args:
-    gen (``int``): number of generations
-    omega (``float``): inertia weight (or constriction factor)
-    eta1 (``float``): social component
-    eta2 (``float``): cognitive component
-    max_vel (``float``): maximum allowed particle velocities (normalized with respect to the bounds width)
-    variant (``int``): algorithmic variant
-    neighb_type (``int``): swarm topology (defining each particle's neighbours)
-    neighb_param (``int``): topology parameter (defines how many neighbours to consider)
-    memory (``bool``): when true the velocities are not reset between successive calls to the evolve method
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    omega (:class:`float`): inertia weight (or constriction factor)
+    eta1 (:class:`float`): social component
+    eta2 (:class:`float`): cognitive component
+    max_vel (:class:`float`): maximum allowed particle velocities (normalized with respect to the bounds width)
+    variant (:class:`int`): algorithmic variant
+    neighb_type (:class:`int`): swarm topology (defining each particle's neighbours)
+    neighb_param (:class:`int`): topology parameter (defines how many neighbours to consider)
+    memory (:class:`bool`): when true the velocities are not reset between successive calls to the evolve method
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* or *seed* is negative or greater than an implementation-defined value
@@ -3086,12 +3086,12 @@ constructed with a :class:`~pygmo.pso`. A verbosity of ``N`` implies a log line 
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``gbest``, ``Mean Vel.``, ``Mean lbest``, ``Avg. Dist.``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``gbest`` (``float``), the best fitness function found so far by the the swarm
-    * ``Mean Vel.`` (``float``), the average particle velocity (normalized)
-    * ``Mean lbest`` (``float``), the average fitness of the current particle locations
-    * ``Avg. Dist.`` (``float``), the average distance between particles (normalized)
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``gbest`` (:class:`float`), the best fitness function found so far by the the swarm
+    * ``Mean Vel.`` (:class:`float`), the average particle velocity (normalized)
+    * ``Mean lbest`` (:class:`float`), the average fitness of the current particle locations
+    * ``Avg. Dist.`` (:class:`float`), the average distance between particles (normalized)
 
 Examples:
     >>> from pygmo import *
@@ -3142,16 +3142,16 @@ at a time. Consequently, the generational PSO algorithm is suited for stochastic
 
 
 Args:
-    gen (``int``): number of generations
-    omega (``float``): inertia weight (or constriction factor)
-    eta1 (``float``): social component
-    eta2 (``float``): cognitive component
-    max_vel (``float``): maximum allowed particle velocities (normalized with respect to the bounds width)
-    variant (``int``): algorithmic variant
-    neighb_type (``int``): swarm topology (defining each particle's neighbours)
-    neighb_param (``int``): topology parameter (defines how many neighbours to consider)
-    memory (``bool``): when true the velocities are not reset between successive calls to the evolve method
-    seed (``int``): seed used by the internal random number generator (default is random)
+    gen (:class:`int`): number of generations
+    omega (:class:`float`): inertia weight (or constriction factor)
+    eta1 (:class:`float`): social component
+    eta2 (:class:`float`): cognitive component
+    max_vel (:class:`float`): maximum allowed particle velocities (normalized with respect to the bounds width)
+    variant (:class:`int`): algorithmic variant
+    neighb_type (:class:`int`): swarm topology (defining each particle's neighbours)
+    neighb_param (:class:`int`): topology parameter (defines how many neighbours to consider)
+    memory (:class:`bool`): when true the velocities are not reset between successive calls to the evolve method
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *gen* or *seed* is negative or greater than an implementation-defined value
@@ -3194,12 +3194,12 @@ constructed with a :class:`~pygmo.pso`. A verbosity of ``N`` implies a log line 
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``gbest``, ``Mean Vel.``, ``Mean lbest``, ``Avg. Dist.``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``gbest`` (``float``), the best fitness function found so far by the the swarm
-    * ``Mean Vel.`` (``float``), the average particle velocity (normalized)
-    * ``Mean lbest`` (``float``), the average fitness of the current particle locations
-    * ``Avg. Dist.`` (``float``), the average distance between particles (normalized)
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``gbest`` (:class:`float`), the best fitness function found so far by the the swarm
+    * ``Mean Vel.`` (:class:`float`), the average particle velocity (normalized)
+    * ``Mean lbest`` (:class:`float`), the average fitness of the current particle locations
+    * ``Avg. Dist.`` (:class:`float`), the average distance between particles (normalized)
 
 Examples:
     >>> from pygmo import *
@@ -3235,13 +3235,13 @@ std::string simulated_annealing_docstring()
 Simulated Annealing (Corana's version)
 
 Args:
-    Ts (``float``): starting temperature
-    Tf (``float``): final temperature
-    n_T_adj (``int``): number of temperature adjustments in the annealing schedule
-    n_range_adj (``int``): number of adjustments of the search range performed at a constant temperature
-    bin_size (``int``): number of mutations that are used to compute the acceptance rate
-    start_range (``float``): starting range for mutating the decision vector
-    seed (``int``): seed used by the internal random number generator (default is random)
+    Ts (:class:`float`): starting temperature
+    Tf (:class:`float`): final temperature
+    n_T_adj (:class:`int`): number of temperature adjustments in the annealing schedule
+    n_range_adj (:class:`int`): number of adjustments of the search range performed at a constant temperature
+    bin_size (:class:`int`): number of mutations that are used to compute the acceptance rate
+    start_range (:class:`float`): starting range for mutating the decision vector
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
 
 Raises:
     OverflowError: if *n_T_adj*, *n_range_adj* or *bin_size* are negative or greater than an implementation-defined value
@@ -3265,11 +3265,11 @@ each verbosity fitness evaluations.
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Fevals``, ``Best``, ``Current``, ``Mean range``, ``Temperature``, where:
 
-    * ``Fevals`` (``int``), number of functions evaluation made
-    * ``Best`` (``float``), the best fitness function found so far
-    * ``Current`` (``float``), last fitness sampled
-    * ``Mean range`` (``float``), the mean search range across the decision vector components (relative to the box bounds width)
-    * ``Temperature`` (``float``), the current temperature
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``Best`` (:class:`float`), the best fitness function found so far
+    * ``Current`` (:class:`float`), last fitness sampled
+    * ``Mean range`` (:class:`float`), the mean search range across the decision vector components (relative to the box bounds width)
+    * ``Temperature`` (:class:`float`), the current temperature
 
 Examples:
     >>> from pygmo import *
@@ -3332,15 +3332,15 @@ std::string nspso_docstring()
 Non dominated Sorting Particle Swarm Optimization (NSPSO).
 
 Args:
-    gen (int): number of generations to evolve
-    omega (float): particles' inertia weight
-    c1 (float): magnitude of the force, applied to the particle's velocity, in the direction of its previous best position.
-    c2 (float): magnitude of the force, applied to the particle's velocity, in the direction of its global best position.
-    chi (float): velocity scaling factor.
-    v_coeff (float): velocity coefficient.
-    leader_selection_range (int): leader selection range.
+    gen (:class:`int`): number of generations to evolve
+    omega (:class:`float`): particles' inertia weight
+    c1 (:class:`float`): magnitude of the force, applied to the particle's velocity, in the direction of its previous best position.
+    c2 (:class:`float`): magnitude of the force, applied to the particle's velocity, in the direction of its global best position.
+    chi (:class:`float`): velocity scaling factor.
+    v_coeff (:class:`float`): velocity coefficient.
+    leader_selection_range (:class:`int`): leader selection range.
     diversity_mechanism (str): leader selection range.
-    memory (bool): memory parameter.
+    memory (:class:`bool`): memory parameter.
 
 
 Raises:
@@ -3364,8 +3364,8 @@ constructed with a :class:`~pygmo.nspso`. A verbosity of ``N`` implies a log lin
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
 
-    * ``Gen`` (``int``), generation number
-    * ``Fevals`` (``int``), number of functions evaluation made
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
     * ``ideal_point`` (1D numpy array), the ideal point of the current population (cropped to max 5 dimensions only in the screen output)
 
 Examples:
@@ -3438,7 +3438,7 @@ For both the continuous and discrete parts of the decision vectors, if :math:`lb
 
 Args:
     prob (:class:`~pygmo.problem`): the input problem
-    n (int): the number of decision vectors that will be generated
+    n (:class:`int`): the number of decision vectors that will be generated
 
 Returns:
     :class:`numpy.ndarray`: a batch of random decision vectors within the problem's bounds, laid out contiguously in a 1D array
@@ -3477,7 +3477,7 @@ Raises:
     ValueError: if *bounds* *parent1* *parent2* are not of equal length, if lower bounds are not less 
       or equal to the upper bounds, if the *nix* is larger than the parent size or if infinite values are
       detected in *bounds*, *p_cr* or *eta_c* 
-    unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
+    unspecified: any exception thrown by failiures at the intersection between C++ and Python (e.g.,
       type conversion errors, mismatched function signatures, etc.)
 
 )";
@@ -3768,7 +3768,7 @@ If N is zero, an empty array will be returned.
 
 Args:
     points (2d-array-like object): the input objective vectors
-    N (int): The size of the returned list of bests.
+    N (:class:`int`): The size of the returned list of bests.
 
 Raises:
     unspecified: all exceptions thrown by :func:`pygmo.fast_non_dominated_sorting()` and :func:`pygmo.crowding_distance()`
@@ -3858,10 +3858,10 @@ Generates the requested number of weight vectors to be used to decompose a multi
    to generate the canonical weights [1,0,0,...], [0,1,0,..], ... first.
  
 Args:
-    n_f (``int``): the objective vectors
-    n_w (``int``): the weights :math:`\boldsymbol \lambda`
+    n_f (:class:`int`): the objective vectors
+    n_w (:class:`int`): the weights :math:`\boldsymbol \lambda`
     method (``string``): the reference point :math:`\mathbf z^*`. It is not used if *method* is ``"weighted"``
-    seed (``int``): the decomposition method: one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``
+    seed (:class:`int`): the decomposition method: one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``
 
 Raises:
     OverflowError: if *n_f*, *n_w* or *seed* are negative or greater than an implementation-defined value
@@ -3951,7 +3951,7 @@ The following strict ordering is used:
 Args:
     f1 (array-like object): the first fitness vector
     f2 (array-like object): the second fitness vector
-    nec (``int``): the number of equality consraints in the fitness vectors
+    nec (:class:`int`): the number of equality consraints in the fitness vectors
     tol (array-like object): tolerances to be accounted for in the constraints
 
 Raises:
@@ -3994,7 +3994,7 @@ The following strict ordering is used (same as the one used in :func:`pygmo.comp
 
 Args:
     input_f (2-D array-like object): the fitness vectors
-    nec (``int``): the number of equality constraints in the fitness vectors
+    nec (:class:`int`): the number of equality constraints in the fitness vectors
     tol (array-like object): tolerances to be accounted for in the constraints
 
 Raises:
@@ -4031,7 +4031,7 @@ confident the estimate will be correct.
 Args:
     callable (a callable object): The function we want to estimate sparsity (typically a fitness).
     x (array-like object): decision vector to use when testing for sparisty.
-    dx (``float``): To detect the sparsity each component of *x* will be changed by :math:`\max(|x_i|,1) dx`.
+    dx (:class:`float`): To detect the sparsity each component of *x* will be changed by :math:`\max(|x_i|,1) dx`.
 
 Raises:
     unspecified: any exception thrown by the *callable* object when called on *x*.
@@ -4073,7 +4073,7 @@ The overall cost, in terms of calls to *callable* will thus be :math:`n` where :
 Args:
     callable (a callable object): The function we want to estimate sparsity (typically a fitness).
     x (array-like object): decision vector to use when testing for sparisty.
-    dx (``float``): To detect the sparsity each component of *x* will be changed by :math:`\max(|x_i|,1) dx`.
+    dx (:class:`float`): To detect the sparsity each component of *x* will be changed by :math:`\max(|x_i|,1) dx`.
 
 Raises:
     unspecified: any exception thrown by the *callable* object when called on *x*.
@@ -4116,7 +4116,7 @@ The overall cost, in terms of calls to *callable* will thus be 6:math:`n` where 
 Args:
     callable (a callable object): The function we want to estimate sparsity (typically a fitness).
     x (array-like object): decision vector to use when testing for sparisty.
-    dx (``float``): To detect the sparsity each component of *x* will be changed by :math:`\max(|x_i|,1) dx`.
+    dx (:class:`float`): To detect the sparsity each component of *x* will be changed by :math:`\max(|x_i|,1) dx`.
 
 Raises:
     unspecified: any exception thrown by the *callable* object when called on *x*.
@@ -4144,7 +4144,7 @@ constructors. If no *seed* is passed pygmo randomly creates a seed for you using
 This function allows to be able to reset the seed of such a global random number generator. This can be useful to create a deterministic behaviour of pygmo easily. 
 
 Args:
-    seed (int): the new global seed for random number generation
+    seed (:class:`int`): the new global seed for random number generation
 
 .. note::
    In complex parallel evolutions obtaining a deterministic behaviour is not possible even setting the global seed as
@@ -4175,7 +4175,7 @@ class :class:`~pygmo.hypervolume` as it derives from the hidden base
 class :class:`~pygmo._hv_algorithm`
 
 Args:
-    stop_dimension (``int``): the input population
+    stop_dimension (:class:`int`): the input population
 
 Raises:
     OverflowError: if *stop_dimension* is negative or greater than an implementation-defined value
@@ -4364,7 +4364,7 @@ std::string hv_exclusive_docstring()
 Computes the exclusive contribution to the hypervolume of a particular point.
 
 Args:
-    idx (``int``): index of the point
+    idx (:class:`int`): index of the point
     ref_point (array-like object): the reference point
     hv_algo (deriving from :class:`~pygmo._hv_algorithm`): hypervolume algorithm to be used
 
@@ -4430,7 +4430,7 @@ This point is different from the one computed by :func:`~pygmo.nadir()` as only 
 in that method (also its complexity is thus higher)
 
 Args:
-    offset (``float``): the reference point
+    offset (:class:`float`): the reference point
 
 Returns:
     1D NumPy float array: the reference point
@@ -4563,7 +4563,7 @@ tasks have been completed, and to fetch exceptions raised during the execution o
 attribute can be used to query the status of the asynchronous operations in the island.
 
 Args:
-     n (int): the number of times the ``run_evolve()`` method of the UDI will be called within the evolution task
+     n (:class:`int`): the number of times the ``run_evolve()`` method of the UDI will be called within the evolution task
         (this corresponds also to the number of times migration can happen, if the island belongs to an archipelago)
 
 Raises:
@@ -4852,7 +4852,7 @@ The :attr:`~pygmo.archipelago.status` attribute can be used to query the status 
 archipelago.
 
 Args:
-     n (``int``): the parameter that will be passed to :func:`pygmo.island.evolve()`
+     n (:class:`int`): the parameter that will be passed to :func:`pygmo.island.evolve()`
 
 Raises:
     unspecified: any exception thrown by :func:`pygmo.island.evolve()`
@@ -5199,7 +5199,7 @@ See also the docs of the C++ class :cpp:class:`pagmo::nlopt`.
    description of each supported solver.
 
 Args:
-    solver (``str``): the name of the NLopt algorithm that will be used by this :class:`~pygmo.nlopt` object
+    solver (:class:`str`): the name of the NLopt algorithm that will be used by this :class:`~pygmo.nlopt` object
 
 Raises:
     RuntimeError: if the NLopt version is not at least 2
@@ -5479,8 +5479,8 @@ std::string sea_docstring()
 (N+1)-ES simple evolutionary algorithm.
 
 Args:
-    gen (``int``): number of generations to consider (each generation will compute the objective function once)
-    seed (``int``): seed used by the internal random number generator
+    gen (:class:`int`): number of generations to consider (each generation will compute the objective function once)
+    seed (:class:`int`): seed used by the internal random number generator
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -5506,11 +5506,11 @@ A verbosity equal to 1 will produce a log with one entry at each improvement of 
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Improvement``, ``Mutations``
 
-    * ``Gen`` (``int``), generation.
-    * ``Fevals`` (``int``), number of functions evaluation made.
-    * ``Best`` (``float``), the best fitness function found so far.
-    * ``Improvement`` (``float``), improvement made by the last mutation.
-    * ``Mutations`` (``float``), number of mutated components for the decision vector.
+    * ``Gen`` (:class:`int`), generation.
+    * ``Fevals`` (:class:`int`), number of functions evaluation made.
+    * ``Best`` (:class:`float`), the best fitness function found so far.
+    * ``Improvement`` (:class:`float`), improvement made by the last mutation.
+    * ``Mutations`` (:class:`float`), number of mutated components for the decision vector.
 
 Examples:
     >>> from pygmo import *
@@ -5570,13 +5570,13 @@ at every iteration, substituting the current worst individual of the population 
    Such extension is original with pygmo.
 
 Args:
-    gen (``int``): number of generations to consider (each generation will compute the objective function once)
-    phmcr (``float``): probability of choosing from memory (similar to a crossover probability)
-    ppar_min (``float``): minimum pitch adjustment rate. (similar to a mutation rate)
-    ppar_max (``float``): maximum pitch adjustment rate. (similar to a mutation rate)
-    bw_min (``float``): minimum distance bandwidth. (similar to a mutation width)
-    bw_max (``float``): maximum distance bandwidth. (similar to a mutation width)
-    seed (``int``): seed used by the internal random number generator
+    gen (:class:`int`): number of generations to consider (each generation will compute the objective function once)
+    phmcr (:class:`float`): probability of choosing from memory (similar to a crossover probability)
+    ppar_min (:class:`float`): minimum pitch adjustment rate. (similar to a mutation rate)
+    ppar_max (:class:`float`): maximum pitch adjustment rate. (similar to a mutation rate)
+    bw_min (:class:`float`): minimum distance bandwidth. (similar to a mutation width)
+    bw_max (:class:`float`): maximum distance bandwidth. (similar to a mutation width)
+    seed (:class:`int`): seed used by the internal random number generator
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -5603,13 +5603,13 @@ A verbosity larger than 1 will produce a log with one entry each verbosity fitne
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Fevals``, ``ppar``, ``bw``, ``dx``, ``df``,  ``Violated``, ``Viol. Norm``,``ideal``
 
-    * ``Fevals`` (``int``), number of functions evaluation made.
-    * ``ppar`` (``float``), the pitch adjustment rate.
-    * ``bw`` (``float``), the distance bandwidth.
-    * ``dx`` (``float``), the population flatness evaluated as the distance between the decisions vector of the best and of the worst individual (or -1 in a multiobjective case).
-    * ``df`` (``float``), the population flatness evaluated as the distance between the fitness of the best and of the worst individual (or -1 in a multiobjective case).
-    * ``Violated`` (``int``), the number of constraints violated by the current decision vector.
-    * ``Viol. Norm`` (``float``), the constraints violation norm for the current decision vector.
+    * ``Fevals`` (:class:`int`), number of functions evaluation made.
+    * ``ppar`` (:class:`float`), the pitch adjustment rate.
+    * ``bw`` (:class:`float`), the distance bandwidth.
+    * ``dx`` (:class:`float`), the population flatness evaluated as the distance between the decisions vector of the best and of the worst individual (or -1 in a multiobjective case).
+    * ``df`` (:class:`float`), the population flatness evaluated as the distance between the fitness of the best and of the worst individual (or -1 in a multiobjective case).
+    * ``Violated`` (:class:`int`), the number of constraints violated by the current decision vector.
+    * ``Viol. Norm`` (:class:`float`), the constraints violation norm for the current decision vector.
     * ``ideal_point`` (1D numpy array), the ideal point of the current population (cropped to max 5 dimensions only in the screen output)
 
 Examples:
@@ -5699,16 +5699,16 @@ all parents and children are put in the same pool and only the best are passed t
    This algorithm will work only for box bounded problems.
 
 Args:
-    gen (``int``): number of generations.
-    cr (``float``): crossover probability.
-    eta_c (``float``): distribution index for ``sbx`` crossover. This parameter is inactive if other types of crossover are selected.
-    m (``float``): mutation probability.
-    param_m (``float``): distribution index (``polynomial`` mutation), gaussian width (``gaussian`` mutation) or inactive (``uniform`` mutation)
-    param_s (``float``): the number of best individuals to use in "truncated" selection or the size of the tournament in ``tournament`` selection.
-    crossover (``str``): the crossover strategy. One of ``exponential``, ``binomial``, ``single`` or ``sbx``
-    mutation (``str``): the mutation strategy. One of ``gaussian``, ``polynomial`` or ``uniform``.
-    selection (``str``): the selection strategy. One of ``tournament``, "truncated".
-    seed (``int``): seed used by the internal random number generator
+    gen (:class:`int`): number of generations.
+    cr (:class:`float`): crossover probability.
+    eta_c (:class:`float`): distribution index for ``sbx`` crossover. This parameter is inactive if other types of crossover are selected.
+    m (:class:`float`): mutation probability.
+    param_m (:class:`float`): distribution index (``polynomial`` mutation), gaussian width (``gaussian`` mutation) or inactive (``uniform`` mutation)
+    param_s (:class:`float`): the number of best individuals to use in "truncated" selection or the size of the tournament in ``tournament`` selection.
+    crossover (:class:`str`): the crossover strategy. One of ``exponential``, ``binomial``, ``single`` or ``sbx``
+    mutation (:class:`str`): the mutation strategy. One of ``gaussian``, ``polynomial`` or ``uniform``.
+    selection (:class:`str`): the selection strategy. One of ``tournament``, "truncated".
+    seed (:class:`int`): seed used by the internal random number generator
 
 Raises:
     OverflowError: if *gen* or *seed* are negative or greater than an implementation-defined value
@@ -5737,10 +5737,10 @@ A verbosity equal to 1 will produce a log with one entry at each improvement of 
 Returns:
     ``list`` of ``tuples``: at each logged epoch, the values ``Gen``, ``Fevals``, ``Best``, ``Improvement``
 
-    ``Gen`` (``int``), generation.
-    ``Fevals`` (``int``), number of functions evaluation made.
-    ``Best`` (``float``), the best fitness function found so far.
-    ``Improvement`` (``float``), improvement made by the last generation.
+    ``Gen`` (:class:`int`), generation.
+    ``Fevals`` (:class:`int`), number of functions evaluation made.
+    ``Best`` (:class:`float`), the best fitness function found so far.
+    ``Improvement`` (:class:`float`), improvement made by the last generation.
 
 Examples:
     >>> from pygmo import *
@@ -5947,8 +5947,8 @@ This method will set the optimisation string option *name* to *value*.
 The optimisation options are passed to the Ipopt API when calling the ``evolve()`` method.
 
 Args:
-    name (``str``): the name of the option
-    value (``str``): the value of the option
+    name (:class:`str`): the name of the option
+    value (:class:`str`): the value of the option
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6059,8 +6059,8 @@ This method will set the optimisation integer option *name* to *value*.
 The optimisation options are passed to the Ipopt API when calling the ``evolve()`` method.
 
 Args:
-    name (``str``): the name of the option
-    value (``int``): the value of the option
+    name (:class:`str`): the name of the option
+    value (:class:`int`): the value of the option
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6171,8 +6171,8 @@ This method will set the optimisation numeric option *name* to *value*.
 The optimisation options are passed to the Ipopt API when calling the ``evolve()`` method.
 
 Args:
-    name (``str``): the name of the option
-    value (``float``): the value of the option
+    name (:class:`str`): the name of the option
+    value (:class:`float`): the value of the option
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -6561,7 +6561,7 @@ a pair of array-like objects containing respectively:
 This method will also run sanity checks on the output of the ``get_connections()`` method of the UDT.
 
 Args:
-    n (int): the index of the vertex whose incoming connections' details will be returned
+    n (:class:`int`): the index of the vertex whose incoming connections' details will be returned
 
 Returns:
     Pair of 1D NumPy arrays: a pair of arrays describing *n*'s incoming connections
@@ -6589,7 +6589,7 @@ of the UDT is expected to add a new vertex to the
 topology, assigning it the next available index and establishing connections to other vertices.
 
 Args:
-    n (int): the number of times the ``push_back()`` method of the UDT will be invoked
+    n (:class:`int`): the number of times the ``push_back()`` method of the UDT will be invoked
 
 Raises:
     OverflowError: if *n* is negative or too large
@@ -6694,8 +6694,8 @@ which each node connects to both the previous and the following nodes).
 See also the docs of the C++ class :cpp:class:`pagmo::ring`.
 
 Args:
-    n (int): the desired number of vertices
-    w (float): the weight of the edges
+    n (:class:`int`): the desired number of vertices
+    w (:class:`float`): the weight of the edges
 
 Raises:
     TypeError: if *n* is negative or too large
@@ -6733,8 +6733,8 @@ Check if two vertices are adjacent.
 Two vertices *i* and *j* are adjacent if there is a directed edge connecting *i* to *j*.
 
 Args:
-    i (int): the first vertex index
-    j (int): the second vertex index
+    i (:class:`int`): the first vertex index
+    j (:class:`int`): the second vertex index
 
 Returns:
     bool: :data:`True` if *i* and *j* are adjacent, :data:`False` otherwise
@@ -6768,9 +6768,9 @@ Add a new edge.
 This method will add a new edge of weight *w* connecting *i* to *j*.
 
 Args:
-    i (int): the first vertex index
-    j (int): the second vertex index
-    w (float): the edge's weight
+    i (:class:`int`): the first vertex index
+    j (:class:`int`): the second vertex index
+    w (:class:`float`): the edge's weight
 
 Raises:
     TypeError: if *i* or *j* are negative or too large
@@ -6789,8 +6789,8 @@ Remove an existing edge.
 This method will remove the edge connecting *i* to *j*.
 
 Args:
-    i (int): the first vertex index
-    j (int): the second vertex index
+    i (:class:`int`): the first vertex index
+    j (:class:`int`): the second vertex index
 
 Raises:
     TypeError: if *i* or *j* are negative or too large
@@ -6808,9 +6808,9 @@ Set the weight of an edge.
 This method will set to *w* the weight of the edge connecting *i* to *j*.
 
 Args:
-    i (int): the first vertex index
-    j (int): the second vertex index
-    w (float): the desired weight
+    i (:class:`int`): the first vertex index
+    j (:class:`int`): the second vertex index
+    w (:class:`float`): the desired weight
 
 Raises:
     TypeError: if *i* or *j* are negative or too large
@@ -6827,7 +6827,7 @@ std::string base_bgl_set_all_weights_docstring()
 This method will set the weights of all edges in the topology to *w*.
 
 Args:
-    w (float): the edges' weight
+    w (:class:`float`): the edges' weight
 
 Raises:
     ValueError: if *w* is not in the :math:`\left[0, 1\right]` range
@@ -6846,8 +6846,8 @@ std::string base_bgl_get_edge_weight_docstring()
 Fetch the weight of the edge connecting *i* to *j*.
 
 Args:
-    i (int): the source vertex index
-    j (int): the destination vertex index
+    i (:class:`int`): the source vertex index
+    j (:class:`int`): the destination vertex index
 
 Returns:
     float: the weight of the edge connecting *i* to *j*
@@ -6875,8 +6875,8 @@ at construction, and it will be the same for all the edges in the topology.
 See also the docs of the C++ class :cpp:class:`pagmo::fully_connected`.
 
 Args:
-    n (int): the desired number of vertices
-    w (float): the weight of the edges
+    n (:class:`int`): the desired number of vertices
+    w (:class:`float`): the weight of the edges
 
 Raises:
     TypeError: if *n* is negative or too large
@@ -7047,11 +7047,11 @@ UDRP.
 
 Args:
     inds (tuple): the original group of individuals
-    nx (int): the dimension of the problem *inds* and *mig* refer to
-    nix (int): the integral dimension of the problem *inds* and *mig* refer to
-    nobj (int): the number of objectives of the problem *inds* and *mig* refer to
-    nec (int): the number of equality constraints of the problem *inds* and *mig* refer to
-    nic (int): the number of inequality constraints of the problem *inds* and *mig* refer to
+    nx (:class:`int`): the dimension of the problem *inds* and *mig* refer to
+    nix (:class:`int`): the integral dimension of the problem *inds* and *mig* refer to
+    nobj (:class:`int`): the number of objectives of the problem *inds* and *mig* refer to
+    nec (:class:`int`): the number of equality constraints of the problem *inds* and *mig* refer to
+    nic (:class:`int`): the number of inequality constraints of the problem *inds* and *mig* refer to
     tol (array-like object): the vector of constraints tolerances of the problem *inds* and *mig* refer to
     mig (tuple): the group of migrants
 
@@ -7259,11 +7259,11 @@ UDSP.
 
 Args:
     inds (tuple): the original group of individuals
-    nx (int): the dimension of the problem *inds* refers to
-    nix (int): the integral dimension of the problem *inds* refers to
-    nobj (int): the number of objectives of the problem *inds* refers to
-    nec (int): the number of equality constraints of the problem *inds* refers to
-    nic (int): the number of inequality constraints of the problem *inds* refers to
+    nx (:class:`int`): the dimension of the problem *inds* refers to
+    nix (:class:`int`): the integral dimension of the problem *inds* refers to
+    nobj (:class:`int`): the number of objectives of the problem *inds* refers to
+    nec (:class:`int`): the number of equality constraints of the problem *inds* refers to
+    nic (:class:`int`): the number of inequality constraints of the problem *inds* refers to
     tol (array-like object): the vector of constraints tolerances of the problem *inds* refers to
 
 Returns:
@@ -7437,7 +7437,7 @@ std::string bls_set_random_sr_seed_docstring(const std::string &algo)
 Set the seed for the ``"random"`` selection/replacement policies.
 
 Args:
-    seed (``int``): the value that will be used to seed the random number generator used by the ``"random"``
+    seed (:class:`int`): the value that will be used to seed the random number generator used by the ``"random"``
       election/replacement policies (see :attr:`~pygmo.)"
            + algo + R"(.selection` and
       :attr:`~pygmo.)"
