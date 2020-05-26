@@ -95,8 +95,8 @@ std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_c
         const auto end = std::end(o);
 
         if (begin == end) {
-            // Empty iteratable.
-            pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
+            // Empty iterable.
+            pygmo::py_throw(PyExc_ValueError, ("the iterable returned by a topology of type '" + topo_name
                                                + "' is empty (it should contain 2 elements)")
                                                   .c_str());
         }
@@ -104,8 +104,8 @@ std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_c
         retval.first = pygmo::ndarr_to_vector<std::vector<std::size_t>>(py::cast<py::array_t<std::size_t>>(*begin));
 
         if (++begin == end) {
-            // Only one element in the iteratable.
-            pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
+            // Only one element in the iterable.
+            pygmo::py_throw(PyExc_ValueError, ("the iterable returned by a topology of type '" + topo_name
                                                + "' has only 1 element (it should contain 2 elements)")
                                                   .c_str());
         }
@@ -114,7 +114,7 @@ std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_c
 
         if (++begin != end) {
             // Too many elements.
-            pygmo::py_throw(PyExc_ValueError, ("the iteratable returned by a topology of type '" + topo_name
+            pygmo::py_throw(PyExc_ValueError, ("the iterable returned by a topology of type '" + topo_name
                                                + "' has more than 2 elements (it should contain 2 elements)")
                                                   .c_str());
         }

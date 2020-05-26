@@ -6559,7 +6559,7 @@ Returns:
     Pair of 1D NumPy arrays: a pair of arrays describing *n*'s incoming connections
 
 Raises:
-    RuntimeError: if the object returned by a pythonic UDT is not iteratable, or it is an iteratable
+    RuntimeError: if the object returned by a pythonic UDT is not iterable, or it is an iterable
        whose number of elements is not exactly 2, or if the invocation of the ``get_connections()``
        method of the UDT raises an exception
     ValueError: if the sizes of the returned arrays differ, or if any element of the second
@@ -7051,7 +7051,7 @@ Returns:
     tuple: a new set of individuals resulting from replacing individuals in *inds* with individuals from *mig*
 
 Raises:
-    RuntimeError: if the object returned by a pythonic UDRP is not iteratable, or it is an iteratable
+    RuntimeError: if the object returned by a pythonic UDRP is not iterable, or it is an iterable
        whose number of elements is not exactly 3, or if the invocation of the ``replace()``
        method of the UDRP raises an exception
     ValueError: if *inds*, *mig* or the return value are not consistent with the problem properties,
@@ -7262,7 +7262,7 @@ Returns:
     tuple: a new set of individuals resulting from selecting individuals in *inds*.
 
 Raises:
-    RuntimeError: if the object returned by a pythonic UDSP is not iteratable, or it is an iteratable
+    RuntimeError: if the object returned by a pythonic UDSP is not iterable, or it is an iterable
        whose number of elements is not exactly 3, or if the invocation of the ``select()``
        method of the UDSP raises an exception
     ValueError: if *inds* or the return value are not consistent with the problem properties,

@@ -178,6 +178,43 @@ py::tuple inds_to_tuple(const pagmo::individuals_group_t &inds)
     return py::make_tuple(std::move(ID_arr), std::move(dv_arr), std::move(fv_arr));
 }
 
+// Convert a Python iterable into problem bounds.
+std::pair<pagmo::vector_double, pagmo::vector_double> iterable_to_bounds(const py::iterable &o)
+{
+    auto begin = std::begin(o);
+    const auto end = std::end(o);
+
+    if (begin == end) {
+        // Empty iterable.
+        py_throw(PyExc_ValueError, "cannot convert an empty iterable into problem bounds");
+    }
+
+    // Try fetching the lower bound
+    auto lb = ndarr_to_vector<std::vector<double>>(py::cast<py::array_t<double>>(*begin));
+
+    if (++begin == end) {
+        // iterable with only 1 element.
+        py_throw(PyExc_ValueError,
+                 "cannot convert an iterable with only 1 element into problem bounds (exactly 2 elements are needed)");
+    }
+
+    // Try fetching the upper bound
+    auto ub = ndarr_to_vector<std::vector<double>>(py::cast<py::array_t<double>>(*begin));
+
+    if (++begin != end) {
+        // iterable with too many elements.
+        py_throw(PyExc_ValueError, "cannot convert an iterable with more than 2 elements into problem bounds "
+                                   "(exactly 2 elements are needed)");
+    }
+
+    if (ub.size() != lb.size()) {
+        // bounds are malformed
+        py_throw(PyExc_ValueError, "cannot convert an iterable into problem bounds: it seems the bounds have unequal length");
+    }
+
+    return std::pair<pagmo::vector_double, pagmo::vector_double>(std::move(lb), std::move(ub));
+}
+
 // Convert a Python iterable into an individuals_group_t.
 pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
 {
@@ -185,16 +222,16 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
     const auto end = std::end(o);
 
     if (begin == end) {
-        // Empty iteratable.
-        py_throw(PyExc_ValueError, "cannot convert an empty iteratable into a pagmo::individuals_group_t");
+        // Empty iterable.
+        py_throw(PyExc_ValueError, "cannot convert an empty iterable into a pagmo::individuals_group_t");
     }
 
     // Try fetching the IDs.
     auto ID_vec = ndarr_to_vector<std::vector<unsigned long long>>(py::cast<py::array_t<unsigned long long>>(*begin));
 
     if (++begin == end) {
-        // Iteratable with only 1 element.
-        py_throw(PyExc_ValueError, "cannot convert an iteratable with only 1 element into a "
+        // iterable with only 1 element.
+        py_throw(PyExc_ValueError, "cannot convert an iterable with only 1 element into a "
                                    "pagmo::individuals_group_t (exactly 3 elements are needed)");
     }
 
@@ -202,8 +239,8 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
     auto dvs_vec = ndarr_to_vvector<std::vector<pagmo::vector_double>>(py::cast<py::array_t<double>>(*begin));
 
     if (++begin == end) {
-        // Iteratable with only 2 elements.
-        py_throw(PyExc_ValueError, "cannot convert an iteratable with only 2 elements into a "
+        // iterable with only 2 elements.
+        py_throw(PyExc_ValueError, "cannot convert an iterable with only 2 elements into a "
                                    "pagmo::individuals_group_t (exactly 3 elements are needed)");
     }
 
@@ -211,8 +248,8 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
     auto fvs_vec = ndarr_to_vvector<std::vector<pagmo::vector_double>>(py::cast<py::array_t<double>>(*begin));
 
     if (++begin != end) {
-        // Iteratable with too many elements.
-        py_throw(PyExc_ValueError, "cannot convert an iteratable with more than 3 elements into a "
+        // iterable with too many elements.
+        py_throw(PyExc_ValueError, "cannot convert an iterable with more than 3 elements into a "
                                    "pagmo::individuals_group_t (exactly 3 elements are needed)");
     }
 
