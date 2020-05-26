@@ -3485,6 +3485,36 @@ See also the docs of the C++ class :cpp:class:`pagmo::sbx_crossover`.
 )";
 }
 
+std::string polynomial_mutation_docstring()
+{
+    return R"(polynomial_mutation(dv, bounds, nix, p_m, eta_m, seed)
+
+This function will perform a polynomial mutation over the continuous part of the chromosme *dv*
+and a uniform mutation on the remaining integer part.
+
+Args:
+    dv (array-like object):the chromosome
+    bounds (2-D array-like object): problem bounds
+    nix (:class:`int`): the integer dimension of the chromosome
+    p_m (:class:`float`): mutation probability
+    eta_m (:class:`float`): mutation distribution index
+    seed (:class:`int`): seed used by the internal random number generator
+
+Returns:
+    :class:`tuple`:  of :class:`numpy.ndarray`: containing the two crossovered chromosomes
+
+Raises:
+    ValueError: if *bounds* and *dv* are not of equal length, if lower bounds are not less 
+      or equal to the upper bounds, if the *nix* is larger than the parent size or if infinite values are
+      detected in *bounds*, *p_m* or *eta_m* 
+    unspecified: any exception thrown by failiures at the intersection between C++ and Python (e.g.,
+      type conversion errors, mismatched function signatures, etc.)
+
+See also the docs of the C++ class :cpp:class:`pagmo::polynomial_mutation`.
+
+)";
+}
+
 std::string decompose_docstring()
 {
     return R"(The decompose meta-problem.
@@ -3823,7 +3853,7 @@ Args:
     objs (array-like object): the objective vectors
     weights (array-like object): the weights :math:`\boldsymbol \lambda`
     ref_point (array-like object): the reference point :math:`\mathbf z^*` . It is not used if *method* is ``"weighted"``
-    method (``string``): the decomposition method: one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``
+    method (:class:`str`): the decomposition method: one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``
 
 Raises:
     ValueError: if *objs*, *weight* and *ref_point* have different sizes or if *method* is not one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``.
@@ -3862,7 +3892,7 @@ Generates the requested number of weight vectors to be used to decompose a multi
 Args:
     n_f (:class:`int`): the objective vectors
     n_w (:class:`int`): the weights :math:`\boldsymbol \lambda`
-    method (``string``): the reference point :math:`\mathbf z^*`. It is not used if *method* is ``"weighted"``
+    method (:class:`str`): the reference point :math:`\mathbf z^*`. It is not used if *method* is ``"weighted"``
     seed (:class:`int`): the decomposition method: one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``
 
 Raises:
