@@ -91,7 +91,7 @@ Args:
       :attr:`~pygmo.problem.c_tol` attribute from the population's problem is used.
 
 Returns:
-    :class:`float`: the index of the best individual
+    :class:`int`: the index of the best individual
 
 Raises:
      ValueError: if the problem is multiobjective and thus a best individual is not well defined, or if the population is empty
@@ -115,7 +115,7 @@ Args:
     tol (:class:`float` or array-like object): scalar tolerance or vector of tolerances to be applied to each constraints
 
 Returns:
-    :class:`float`: the index of the worst individual
+    :class:`int`: the index of the worst individual
 
 Raises:
      ValueError: if the problem is multiobjective and thus a worst individual is not well defined, or if the population is empty
@@ -298,7 +298,7 @@ std::string population_get_seed_docstring()
 This method will return the random seed of the population.
 
 Returns:
-    :class:`float`: the random seed of the population
+    :class:`int`: the random seed of the population
 
 )";
 }
@@ -602,7 +602,7 @@ will be assumed. The number of objectives returned by the UDP is checked upon th
 of a :class:`~pygmo.problem`.
 
 Returns:
-    :class:`float`: the number of objectives of the problem
+    :class:`int`: the number of objectives of the problem
 
 )";
 }
@@ -617,7 +617,7 @@ This method will return :math:`n_{x}`, the dimension of the problem as establish
 the bounds returned by :func:`~pygmo.problem.get_bounds()`.
 
 Returns:
-    :class:`float`: the dimension of the problem
+    :class:`int`: the dimension of the problem
 
 )";
 }
@@ -636,7 +636,7 @@ The integer dimension returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
 
 Returns:
-    :class:`float`: the integer dimension of the problem
+    :class:`int`: the integer dimension of the problem
 
 )";
 }
@@ -650,7 +650,7 @@ Continuous dimension of the problem.
 This method will return :math:`n_{cx}`, the continuous dimension of the problem.
 
 Returns:
-    :class:`float`: the continuous dimension of the problem
+    :class:`int`: the continuous dimension of the problem
 
 )";
 }
@@ -665,7 +665,7 @@ This method will return :math:`n_{f}`, the dimension of the fitness, which is th
 :math:`n_{obj}`, :math:`n_{ec}` and :math:`n_{ic}`.
 
 Returns:
-    :class:`float`: the dimension of the fitness
+    :class:`int`: the dimension of the fitness
 
 )";
 }
@@ -684,7 +684,7 @@ The number of equality constraints returned by the UDP is checked upon the const
 of a :class:`~pygmo.problem`.
 
 Returns:
-    :class:`float`: the number of equality constraints of the problem
+    :class:`int`: the number of equality constraints of the problem
 
 )";
 }
@@ -703,7 +703,7 @@ The number of inequality constraints returned by the UDP is checked upon the con
 of a :class:`~pygmo.problem`.
 
 Returns:
-    :class:`float`: the number of inequality constraints of the problem
+    :class:`int`: the number of inequality constraints of the problem
 
 )";
 }
@@ -718,7 +718,7 @@ This method will return the sum of the output of :func:`~pygmo.problem.get_nic()
 :func:`~pygmo.problem.get_nec()` (i.e., the total number of constraints).
 
 Returns:
-    :class:`float`: the total number of constraints of the problem
+    :class:`int`: the total number of constraints of the problem
 
 )";
 }
@@ -1589,7 +1589,7 @@ std::string mbh_get_seed_docstring()
 Get the seed value that was used for the construction of this :class:`~pygmo.mbh`.
 
 Returns:
-    :class:`float`: the seed value
+    :class:`int`: the seed value
 
 )";
 }
@@ -1601,7 +1601,7 @@ std::string mbh_get_verbosity_docstring()
 Get the verbosity level value that was used for the construction of this :class:`~pygmo.mbh`.
 
 Returns:
-    :class:`float`: the verbosity level
+    :class:`int`: the verbosity level
 
 )";
 }
@@ -2064,7 +2064,7 @@ std::string generic_uda_get_seed_docstring()
 This method will return the random seed used internally by this uda.
 
 Returns:
-    :class:`float`: the random seed of the population
+    :class:`int`: the random seed of the population
 )";
 }
 
@@ -5392,7 +5392,7 @@ The ``maxeval`` stopping criterion instructs the solver to stop when the number 
 ``maxeval``. Defaults to 0 (that is, this stopping criterion is disabled by default).
 
 Returns:
-    :class:`float`: the value of the ``maxeval`` stopping criterion
+    :class:`int`: the value of the ``maxeval`` stopping criterion
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5449,7 +5449,7 @@ std::string nlopt_get_last_opt_result_docstring()
 Get the result of the last optimisation.
 
 Returns:
-    :class:`float`: the NLopt return code for the last optimisation run, or ``NLOPT_SUCCESS`` if no optimisations have been run yet
+    :class:`int`: the NLopt return code for the last optimisation run, or ``NLOPT_SUCCESS`` if no optimisations have been run yet
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -5954,7 +5954,7 @@ std::string ipopt_get_last_opt_result_docstring()
 Get the result of the last optimisation.
 
 Returns:
-    :class:`float`: the Ipopt return code for the last optimisation run, or ``Ipopt::Solve_Succeeded`` if no optimisations have been run yet
+    :class:`int`: the Ipopt return code for the last optimisation run, or ``Ipopt::Solve_Succeeded`` if no optimisations have been run yet
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,

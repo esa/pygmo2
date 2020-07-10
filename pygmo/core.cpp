@@ -357,6 +357,7 @@ PYBIND11_MODULE(core, m)
             return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
         },
         pygmo::batch_random_decision_vector_docstring().c_str(), py::arg("prob"), py::arg("n"));
+#if (PAGMO_VERSION_MAJOR > 2 && PAGMO_VERSION_MINOR >= 15)
 
     // Genetic operators
     m.def(
@@ -388,7 +389,7 @@ PYBIND11_MODULE(core, m)
         },
         pygmo::polynomial_mutation_docstring().c_str(), py::arg("dv"), py::arg("bounds"), py::arg("nix"),
         py::arg("p_m"), py::arg("eta_m"), py::arg("seed"));
-
+#endif
     // Hypervolume class
     py::class_<pg::hypervolume> hv_class(m, "hypervolume", "Hypervolume Class");
     hv_class
