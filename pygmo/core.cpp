@@ -41,7 +41,9 @@
 #include <pagmo/types.hpp>
 #include <pagmo/utils/constrained.hpp>
 #include <pagmo/utils/generic.hpp>
+#if (PAGMO_VERSION_MAJOR > 2 && PAGMO_VERSION_MINOR >= 15)
 #include <pagmo/utils/genetic_operators.hpp>
+#endif
 #include <pagmo/utils/gradients_and_hessians.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_approx.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_fpras.hpp>
