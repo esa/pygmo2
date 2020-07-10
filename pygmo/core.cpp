@@ -41,7 +41,7 @@
 #include <pagmo/types.hpp>
 #include <pagmo/utils/constrained.hpp>
 #include <pagmo/utils/generic.hpp>
-#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR > 15)
 #include <pagmo/utils/genetic_operators.hpp>
 #endif
 #include <pagmo/utils/gradients_and_hessians.hpp>
@@ -359,8 +359,7 @@ PYBIND11_MODULE(core, m)
             return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
         },
         pygmo::batch_random_decision_vector_docstring().c_str(), py::arg("prob"), py::arg("n"));
-        
-#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
+#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR > 15)
     // Genetic operators
     m.def(
         "sbx_crossover",
