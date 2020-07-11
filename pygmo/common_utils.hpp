@@ -235,6 +235,9 @@ py::tuple inds_to_tuple(const pagmo::individuals_group_t &);
 // Convert a Python iterable into an individuals_group_t.
 pagmo::individuals_group_t iterable_to_inds(const py::iterable &);
 
+// Convert a Python iterable into a problem bounds.
+std::pair<pagmo::vector_double, pagmo::vector_double> iterable_to_bounds(const py::iterable &o);
+
 #if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
 
 // Conversion between BGL and NetworkX.
