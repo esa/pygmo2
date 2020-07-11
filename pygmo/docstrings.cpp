@@ -596,7 +596,7 @@ Number of objectives.
 
 This method will return :math:`n_{obj}`, the number of objectives of the problem.
 
-The optional ``get_nobj()`` method of the UDP must return the number of objectives as an :class:`float`.
+The optional ``get_nobj()`` method of the UDP must return the number of objectives as an :class:`int`.
 If the UDP does not implement the ``get_nobj()`` method, a single-objective optimizaztion problem
 will be assumed. The number of objectives returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
@@ -630,7 +630,7 @@ Integer dimension of the problem.
 
 This method will return :math:`n_{ix}`, the integer dimension of the problem.
 
-The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an :class:`float`.
+The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an :class:`int`.
 If the UDP does not implement the ``get_nix()`` method, a zero integer dimension will be assumed.
 The integer dimension returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
@@ -678,7 +678,7 @@ Number of equality constraints.
 
 This method will return :math:`n_{ec}`, the number of equality constraints of the problem.
 
-The optional ``get_nec()`` method of the UDP must return the number of equality constraints as an :class:`float`.
+The optional ``get_nec()`` method of the UDP must return the number of equality constraints as an :class:`int`.
 If the UDP does not implement the ``get_nec()`` method, zero equality constraints will be assumed.
 The number of equality constraints returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
@@ -697,7 +697,7 @@ Number of inequality constraints.
 
 This method will return :math:`n_{ic}`, the number of inequality constraints of the problem.
 
-The optional ``get_nic()`` method of the UDP must return the number of inequality constraints as an :class:`float`.
+The optional ``get_nic()`` method of the UDP must return the number of inequality constraints as an :class:`int`.
 If the UDP does not implement the ``get_nic()`` method, zero inequality constraints will be assumed.
 The number of inequality constraints returned by the UDP is checked upon the construction
 of a :class:`~pygmo.problem`.
@@ -769,7 +769,7 @@ is increased by one. The counter is initialised to zero upon problem constructio
 reset. Copy operations copy the counter as well.
 
 Returns:
-    :class:`float` : the number of times :func:`~pygmo.problem.fitness()` was successfully called
+    :class:`int` : the number of times :func:`~pygmo.problem.fitness()` was successfully called
 
 )";
 }
@@ -805,7 +805,7 @@ is increased by one. The counter is initialised to zero upon problem constructio
 reset. Copy operations copy the counter as well.
 
 Returns:
-    :class:`float` : the number of times :func:`~pygmo.problem.gradient()` was successfully called
+    :class:`int` : the number of times :func:`~pygmo.problem.gradient()` was successfully called
 
 )";
 }
@@ -821,7 +821,7 @@ is increased by one. The counter is initialised to zero upon problem constructio
 reset. Copy operations copy the counter as well.
 
 Returns:
-    :class:`float` : the number of times :func:`~pygmo.problem.hessians()` was successfully called
+    :class:`int` : the number of times :func:`~pygmo.problem.hessians()` was successfully called
 
 )";
 }
@@ -1113,7 +1113,7 @@ all stochastic variables. If the UDP provides a ``set_seed()`` method, then
 its ``set_seed()`` method will be invoked. Otherwise, an error will be raised.
 The *seed* parameter must be non-negative.
 
-The ``set_seed()`` method of the UDP must be able to take an :class:`float` as input parameter.
+The ``set_seed()`` method of the UDP must be able to take an :class:`int` as input parameter.
 
 Args:
     seed (:class:`int`): the desired seed value
@@ -1380,7 +1380,7 @@ This method will set the seed to be used in the ``evolve()`` method of the UDA f
 provides a ``set_seed()`` method, then its ``set_seed()`` method will be invoked. Otherwise, an error will be
 raised. The *seed* parameter must be non-negative.
 
-The ``set_seed()`` method of the UDA must be able to take an :class:`float` as input parameter.
+The ``set_seed()`` method of the UDA must be able to take an :class:`int` as input parameter.
 
 Args:
     seed (:class:`int`): the random seed
@@ -1429,7 +1429,7 @@ then its ``set_verbosity()`` method will be invoked. Otherwise, an error will be
 
 The exact meaning of the input parameter *level* is dependent on the UDA.
 
-The ``set_verbosity()`` method of the UDA must be able to take an :class:`float` as input parameter.
+The ``set_verbosity()`` method of the UDA must be able to take an :class:`int` as input parameter.
 
 Args:
     level (:class:`int`): the desired verbosity level
@@ -5826,7 +5826,7 @@ Ipopt supports a large amount of options for the configuration of the optimisati
 are divided into three categories:
 
 * *string* options (i.e., the type of the option is :class:`str`),
-* *integer* options (i.e., the type of the option is :class:`float`),
+* *integer* options (i.e., the type of the option is :class:`int`),
 * *numeric* options (i.e., the type of the option is :class:`float`).
 
 The full list of options is available on the `Ipopt website <https://coin-or.github.io/Ipopt/OPTIONS.html>`__.
@@ -6129,7 +6129,7 @@ It is equivalent to calling :func:`~pygmo.ipopt.set_integer_option()` passing al
 as arguments.
 
 Args:
-    opts (:class:`dict` of :class:`str`-:class:`float` pairs): the name-value map that will be used to set the options
+    opts (:class:`dict` of :class:`str`-:class:`int` pairs): the name-value map that will be used to set the options
 
 Raises:
     unspecified: any exception thrown by failures at the intersection between C++ and Python (e.g.,
@@ -7417,7 +7417,7 @@ If the attribute is an integer, it represents the index (in the population) of t
 for optimisation.
 
 Returns:
-    :class:`float` or :class:`str`: the individual selection policy or index
+    :class:`int` or :class:`str`: the individual selection policy or index
 
 Raises:
     OverflowError: if the attribute is set to an integer which is negative or too large
@@ -7450,7 +7450,7 @@ If the attribute is an integer, it represents the index (in the population) of t
 replaced by the optimised individual.
 
 Returns:
-    :class:`float` or :class:`str`: the individual replacement policy or index
+    :class:`int` or :class:`str`: the individual replacement policy or index
 
 Raises:
     OverflowError: if the attribute is set to an integer which is negative or too large
