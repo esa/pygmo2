@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -28,16 +33,12 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="List of algorithms" href="algorithms.html" />
@@ -55,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> pygmo
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
           
 
           
@@ -82,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -121,6 +123,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -159,7 +162,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="api_reference.html">API reference</a> &raquo;</li>
         
@@ -338,9 +341,9 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nobj</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the number of objectives</p></li>
-<li><p><strong>nec</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the number of equality constraints</p></li>
-<li><p><strong>nic</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the number of inequality constraintsctives</p></li>
+<li><p><strong>nobj</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of objectives</p></li>
+<li><p><strong>nec</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of equality constraints</p></li>
+<li><p><strong>nic</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of inequality constraintsctives</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -364,8 +367,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – problem id (one of [1..30])</p></li>
-<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – number of dimensions (one of [2, 10, 20, 30, 50, 100])</p></li>
+<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem id (one of [1..30])</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number of dimensions (one of [2, 10, 20, 30, 50, 100])</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -386,8 +389,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prob_id</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem id (one of [1..28])</p></li>
-<li><p><strong>dim</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – number of dimensions (one of [2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])</p></li>
+<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem id (one of [1..28])</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number of dimensions (one of [2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -407,7 +410,7 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dd><p>The CEC 2006 problem suite (continuous, constrained, single-objective problems)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>prob_id</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem id (one of [1..24])</p>
+<dd class="field-odd"><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem id (one of [1..24])</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -441,9 +444,9 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prob_id</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem id (one of [1..10])</p></li>
-<li><p><strong>is_constrained</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) – selects the constrained version of the problems</p></li>
-<li><p><strong>dim</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem dimension</p></li>
+<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem id (one of [1..10])</p></li>
+<li><p><strong>is_constrained</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – selects the constrained version of the problems</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem dimension</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -463,7 +466,7 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dd><p>The Rosenbrock problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dim</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem dimension</p>
+<dd class="field-odd"><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem dimension</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -519,8 +522,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dim_c</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – MINLP continuous dimension</p></li>
-<li><p><strong>dim_i</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – MINLP integer dimension</p></li>
+<li><p><strong>dim_c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – MINLP continuous dimension</p></li>
+<li><p><strong>dim_i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – MINLP integer dimension</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -639,7 +642,7 @@ the pareto front of any DTLZ problem analytically.</p>
 <dd class="field-even"><p>the distance (or average distance) from the Pareto front</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 <p>See also the docs of the C++ class <a class="reference internal" href="#pygmo.zdt.p_distance" title="pygmo.zdt.p_distance"><code class="xref py py-func docutils literal notranslate"><span class="pre">p_distance()</span></code></a></p>
@@ -655,10 +658,10 @@ the pareto front of any DTLZ problem analytically.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prob_id</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – DTLZ problem id</p></li>
-<li><p><strong>dim</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem dimension</p></li>
-<li><p><strong>fdim</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – number of objectives</p></li>
-<li><p><strong>alpha</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – controls density of solutions (used only by DTLZ4)</p></li>
+<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – DTLZ problem id</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem dimension</p></li>
+<li><p><strong>fdim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number of objectives</p></li>
+<li><p><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – controls density of solutions (used only by DTLZ4)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -687,7 +690,7 @@ the pareto front of any DTLZ problem analytically.</p>
 <dd class="field-even"><p>the distance (or average distance) from the Pareto front</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 <p>See also the docs of the C++ class <a class="reference internal" href="#pygmo.dtlz.p_distance" title="pygmo.dtlz.p_distance"><code class="xref py py-func docutils literal notranslate"><span class="pre">p_distance()</span></code></a></p>
@@ -707,13 +710,10 @@ visualized if the problem id is 2,3 or 4.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the current <code class="docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code> instance on the current figure</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code>: the current <code class="docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code> instance on the current figure</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code></p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>pop</em> does not contain a DTLZ problem (veryfied by its name only) or if <em>comp</em> is not of length 3</p>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>pop</em> does not contain a DTLZ problem (veryfied by its name only) or if <em>comp</em> is not of length 3</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -776,7 +776,7 @@ visualized if the problem id is 2,3 or 4.</p>
 constrained optimization.” (1999). <a class="reference external" href="http://hdl.handle.net/11104/0123965">http://hdl.handle.net/11104/0123965</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dim</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – problem dimension</p>
+<dd class="field-odd"><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – problem dimension</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>dim</em> is negative or greater than an implementation-defined value</p>
@@ -832,7 +832,7 @@ are user-defined problems that can be used in the construction of a <a class="re
 <dt id="pygmo.translate.translation">
 <em class="property">property </em><code class="sig-name descname">translation</code><a class="headerlink" href="#pygmo.translate.translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translation vector.</p>
-<p>This read-only property contains an array of <code class="docutils literal notranslate"><span class="pre">float</span></code> representing the translation vector used in the
+<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the translation vector used in the
 construction of this problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1046,10 +1046,10 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – WFG problem id</p></li>
-<li><p><strong>dim_dvs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – decision vector size</p></li>
-<li><p><strong>dim_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – number of objectives</p></li>
-<li><p><strong>dim_k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – position parameter</p></li>
+<li><p><strong>prob_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – WFG problem id</p></li>
+<li><p><strong>dim_dvs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – decision vector size</p></li>
+<li><p><strong>dim_obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number of objectives</p></li>
+<li><p><strong>dim_k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – position parameter</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -1087,11 +1087,19 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, pagmo development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1102,7 +1110,6 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

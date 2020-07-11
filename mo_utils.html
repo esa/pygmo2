@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -28,16 +33,12 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Constrained optimization utilities" href="con_utils.html" />
@@ -55,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> pygmo
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
           
 
           
@@ -82,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -103,6 +105,7 @@
 <li class="toctree-l3"><a class="reference internal" href="con_utils.html">Constrained optimization utilities</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gh_utils.html">Gradient and Hessians utilities</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hv_utils.html">Hypervolume utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="genetic_op_utils.html">Generic optimization utilities</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plotting.html">Plotting utilities</a></li>
 </ul>
 </li>
@@ -116,6 +119,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -154,7 +158,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="api_reference.html">API reference</a> &raquo;</li>
         
@@ -220,15 +224,15 @@
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><p>(<em>ndf</em>, <em>dl</em>, <em>dc</em>, <em>ndr</em>), where:</p>
 <ul class="simple">
-<li><p><em>ndf</em> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of 1D NumPy int array): the non dominated fronts</p></li>
-<li><p><em>dl</em> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of 1D NumPy int array): the domination list</p></li>
+<li><p><em>ndf</em> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of 1D NumPy int array): the non dominated fronts</p></li>
+<li><p><em>dl</em> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of 1D NumPy int array): the domination list</p></li>
 <li><p><em>dc</em> (1D NumPy int array): the domination count</p></li>
 <li><p><em>ndr</em> (1D NumPy int array): the non domination ranks</p></li>
 </ul>
 </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -452,7 +456,7 @@ non-dominated front containing individuals included in the best N.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>points</strong> (<em>2d-array-like object</em>) – the input objective vectors</p></li>
-<li><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The size of the returned list of bests.</p></li>
+<li><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – The size of the returned list of bests.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -510,7 +514,7 @@ z^*_n)\)</span> an <span class="math notranslate nohighlight">\(n\)</span>-dimen
 <li><p><strong>objs</strong> (<em>array-like object</em>) – the objective vectors</p></li>
 <li><p><strong>weights</strong> (<em>array-like object</em>) – the weights <span class="math notranslate nohighlight">\(\boldsymbol \lambda\)</span></p></li>
 <li><p><strong>ref_point</strong> (<em>array-like object</em>) – the reference point <span class="math notranslate nohighlight">\(\mathbf z^*\)</span> . It is not used if <em>method</em> is <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code></p></li>
-<li><p><strong>method</strong> (<code class="docutils literal notranslate"><span class="pre">string</span></code>) – the decomposition method: one of <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tchebycheff&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;bi&quot;</span></code></p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the decomposition method: one of <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tchebycheff&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;bi&quot;</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -558,10 +562,10 @@ to generate the canonical weights [1,0,0,…], [0,1,0,..], … first.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_f</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the objective vectors</p></li>
-<li><p><strong>n_w</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the weights <span class="math notranslate nohighlight">\(\boldsymbol \lambda\)</span></p></li>
-<li><p><strong>method</strong> (<code class="docutils literal notranslate"><span class="pre">string</span></code>) – the reference point <span class="math notranslate nohighlight">\(\mathbf z^*\)</span>. It is not used if <em>method</em> is <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code></p></li>
-<li><p><strong>seed</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the decomposition method: one of <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tchebycheff&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;bi&quot;</span></code></p></li>
+<li><p><strong>n_f</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the objective vectors</p></li>
+<li><p><strong>n_w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the weights <span class="math notranslate nohighlight">\(\boldsymbol \lambda\)</span></p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – the reference point <span class="math notranslate nohighlight">\(\mathbf z^*\)</span>. It is not used if <em>method</em> is <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code></p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the decomposition method: one of <code class="docutils literal notranslate"><span class="pre">&quot;weighted&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tchebycheff&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;bi&quot;</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -613,11 +617,19 @@ to generate the canonical weights [1,0,0,…], [0,1,0,..], … first.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, pagmo development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -628,7 +640,6 @@ to generate the canonical weights [1,0,0,…], [0,1,0,..], … first.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

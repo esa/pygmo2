@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,10 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
@@ -19,7 +22,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -28,19 +33,15 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Plotting utilities" href="plotting.html" />
+    <link rel="next" title="Generic optimization utilities" href="genetic_op_utils.html" />
     <link rel="prev" title="Gradient and Hessians utilities" href="gh_utils.html" /> 
 </head>
 
@@ -55,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> pygmo
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
           
 
           
@@ -82,6 +83,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -103,6 +105,7 @@
 <li class="toctree-l3"><a class="reference internal" href="con_utils.html">Constrained optimization utilities</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gh_utils.html">Gradient and Hessians utilities</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Hypervolume utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="genetic_op_utils.html">Generic optimization utilities</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plotting.html">Plotting utilities</a></li>
 </ul>
 </li>
@@ -116,6 +119,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -154,7 +158,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="api_reference.html">API reference</a> &raquo;</li>
         
@@ -257,7 +261,7 @@ specific for the point dimension.</p>
 <dd class="field-even"><p>the computed hypervolume assuming <em>ref_point</em> as reference point</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not dominated by the nadir point</p>
@@ -299,7 +303,7 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – index of the point</p></li>
+<li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the point</p></li>
 <li><p><strong>ref_point</strong> (<em>array-like object</em>) – the reference point</p></li>
 <li><p><strong>hv_algo</strong> (deriving from <code class="xref py py-class docutils literal notranslate"><span class="pre">_hv_algorithm</span></code>) – hypervolume algorithm to be used</p></li>
 </ul>
@@ -365,7 +369,7 @@ The result is a point that is necessarily dominated by all other points, and thu
 in that method (also its complexity is thus higher)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>offset</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) – the reference point</p>
+<dd class="field-odd"><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the reference point</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the reference point</p>
@@ -389,7 +393,7 @@ class <a class="reference internal" href="#pygmo.hypervolume" title="pygmo.hyper
 class <code class="xref py py-class docutils literal notranslate"><span class="pre">_hv_algorithm</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stop_dimension</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – the input population</p>
+<dd class="field-odd"><p><strong>stop_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the input population</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>stop_dimension</em> is negative or greater than an implementation-defined value</p>
@@ -479,7 +483,7 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="plotting.html" class="btn btn-neutral float-right" title="Plotting utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="genetic_op_utils.html" class="btn btn-neutral float-right" title="Generic optimization utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="gh_utils.html" class="btn btn-neutral float-left" title="Gradient and Hessians utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -491,11 +495,19 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, pagmo development team
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -506,7 +518,6 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
