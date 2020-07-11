@@ -6162,7 +6162,7 @@ std::string ipopt_get_integer_options_docstring()
 Get integer options.
 
 Returns:
-    :class:`dict` of :class:`str`-:class:`float` pairs: a name-value dictionary of optimisation integer options
+    :class:`dict` of :class:`str`-:class:`int` pairs: a name-value dictionary of optimisation integer options
 
 Examples:
     >>> from pygmo import *
