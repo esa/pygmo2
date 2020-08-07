@@ -153,11 +153,9 @@ endif()
 # pagmo.
 # NOTE: put the minimum version in a variable
 # so that we can re-use it below.
-set (_PYGMO_MIN_PAGMO_VERSION 2.13.0)
-find_package(pagmo REQUIRED)
-if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
-    message(FATAL_ERROR "The minimum pagmo version required by pygmo is ${_PYGMO_MIN_PAGMO_VERSION}, but version ${pagmo_VERSION} was found instead.")
-endif()
+set(_PYGMO_MIN_PAGMO_VERSION 2.13.0)
+option(PAGMO_BUILD_STATIC_LIBRARY "" TRUE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/pagmo2 EXCLUDE_FROM_ALL)
 
 # python.
 include(YACMAPythonSetup)
@@ -171,7 +169,7 @@ if(${PYTHON_VERSION_MAJOR} LESS 3 OR (${PYTHON_VERSION_MAJOR} EQUAL 3 AND ${PYTH
 endif()
 
 # pybind11.
-find_package(pybind11 REQUIRED)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/pybind11)
 
 # Configure the sphinx config file.
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)

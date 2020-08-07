@@ -52,7 +52,7 @@ foreach(PYGMO_PYTHON_FILE ${PYGMO_PYTHON_FILES})
 endforeach()
 
 # Core module.
-YACMA_PYTHON_MODULE(core
+PYBIND11_ADD_MODULE(core MODULE
     core.cpp
     common_utils.cpp
     common_base.cpp
@@ -77,9 +77,9 @@ YACMA_PYTHON_MODULE(core
     handle_thread_py_exception.cpp
 )
 
-target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
-target_include_directories(core SYSTEM PRIVATE "${pybind11_INCLUDE_DIR}")
-target_compile_definitions(core PRIVATE "${pybind11_DEFINITIONS}")
+target_include_directories(core SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../ThirdParty/pagmo2/include")
+target_include_directories(core SYSTEM PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/../ThirdParty/pagmo2/include")
+target_link_libraries(core PRIVATE pagmo Boost::boost Boost::serialization pybind11::pybind11)
 target_compile_options(core PRIVATE
     "$<$<CONFIG:Debug>:${PYGMO_CXX_FLAGS_DEBUG}>"
     "$<$<CONFIG:Release>:${PYGMO_CXX_FLAGS_RELEASE}>"
@@ -115,7 +115,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.9.0")
 endif()
 
 # Setup the installation path.
-set(PYGMO_INSTALL_PATH "${YACMA_PYTHON_MODULES_INSTALL_PATH}/pygmo")
+set(PYGMO_INSTALL_PATH .)
 
 # Add submodules directories
 add_subdirectory(plotting)

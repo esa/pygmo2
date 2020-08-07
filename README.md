@@ -1,5 +1,4 @@
-pygmo
-=====
+# pygmo
 
 [![Build Status](https://img.shields.io/circleci/project/github/esa/pygmo2/master.svg?style=for-the-badge)](https://circleci.com/gh/esa/pygmo2)
 [![Build Status](https://img.shields.io/travis/esa/pygmo2/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/esa/pygmo2)
@@ -22,11 +21,23 @@ at [this link](https://doi.org/10.5281/zenodo.1045336).
 
 The full documentation can be found [here](https://esa.github.io/pygmo2/).
 
-Upgrading from pygmo 1.x.x
-==========================
+## Building and installing from source
+
+```
+pip3 install git+https://github.com/esa/pygmo2.git
+```
+
+## Quick testing
+
+```
+python3 -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+```
+
+## Upgrading from pygmo 1.x.x
 
 If you were using the old pygmo, have a look here on some technical data on what and why a completely new API
 and code was developed: https://github.com/esa/pagmo2/wiki/From-1.x-to-2.x
 
 You will find many tutorials in the documentation, we suggest to skim through them to realize the differences.
 The new pygmo (version 2) should be considered (and is) as an entirely different code.
+
