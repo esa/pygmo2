@@ -150,6 +150,22 @@ endif()
 
 # Find the dependencies.
 
+# TBB.
+# TODO This should actually be a submodule of pagmo.
+# The only reason to have it here is to avoid forking pagmo as well.
+set(TBB_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(TBB_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(TBB_BUILD_STATIC ON CACHE BOOL "" FORCE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/tbb EXCLUDE_FROM_ALL)
+set(TBB_FOUND TRUE)
+set(TBB_LIBRARIES tbb_static tbb_interface)
+add_library(TBB::tbb ALIAS tbb_static)
+add_library(TBB::tbb_interface ALIAS tbb_interface)
+install(TARGETS ${TBB_LIBRARIES} EXPORT pagmo_export
+	LIBRARY DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+	ARCHIVE DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+	RUNTIME DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 # pagmo.
 # NOTE: put the minimum version in a variable
 # so that we can re-use it below.

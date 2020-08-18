@@ -4,3 +4,6 @@
 [submodule "ThirdParty/pagmo2"]
 	path = ThirdParty/pagmo2
 	url = https://github.com/esa/pagmo2.git
+[submodule "ThirdParty/tbb"]
+	path = ThirdParty/tbb
+	url = https://github.com/wjakob/tbb.git
