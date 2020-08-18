@@ -159,6 +159,7 @@ set(TBB_BUILD_STATIC ON CACHE BOOL "" FORCE)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/tbb EXCLUDE_FROM_ALL)
 set(TBB_FOUND TRUE)
 set(TBB_LIBRARIES tbb_static tbb_interface)
+set(TBB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/tbb/include)
 add_library(TBB::tbb ALIAS tbb_static)
 add_library(TBB::tbb_interface ALIAS tbb_interface)
 install(TARGETS ${TBB_LIBRARIES} EXPORT pagmo_export
