@@ -41,6 +41,9 @@
 #include <pagmo/types.hpp>
 #include <pagmo/utils/constrained.hpp>
 #include <pagmo/utils/generic.hpp>
+#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR > 15)
+#include <pagmo/utils/genetic_operators.hpp>
+#endif
 #include <pagmo/utils/gradients_and_hessians.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_approx.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_fpras.hpp>
@@ -356,7 +359,38 @@ PYBIND11_MODULE(core, m)
             return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
         },
         pygmo::batch_random_decision_vector_docstring().c_str(), py::arg("prob"), py::arg("n"));
+#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR > 15)
+    // Genetic operators
+    m.def(
+        "sbx_crossover",
+        [](const py::array_t<double> &parent1, const py::array_t<double> &parent2, const py::iterable &bounds,
+           pg::vector_double::size_type nix, const double p_cr, const double eta_c, unsigned seed) {
+            auto pg_bounds = pygmo::iterable_to_bounds(bounds);
+            using reng_t = pg::detail::random_engine_type;
+            reng_t tmp_rng(static_cast<reng_t::result_type>(seed));
+            auto retval = pagmo::sbx_crossover(pygmo::ndarr_to_vector<pg::vector_double>(parent1),
+                                               pygmo::ndarr_to_vector<pg::vector_double>(parent2), pg_bounds, nix, p_cr,
+                                               eta_c, tmp_rng);
+            return py::make_tuple(pygmo::vector_to_ndarr<py::array_t<double>>(retval.first),
+                                  pygmo::vector_to_ndarr<py::array_t<double>>(retval.second));
+        },
+        pygmo::sbx_crossover_docstring().c_str(), py::arg("parent1"), py::arg("parent2"), py::arg("bounds"),
+        py::arg("nix"), py::arg("p_cr"), py::arg("eta_c"), py::arg("seed"));
 
+    m.def(
+        "polynomial_mutation",
+        [](const py::array_t<double> &dv, const py::iterable &bounds, pg::vector_double::size_type nix,
+           const double p_m, const double eta_m, unsigned seed) {
+            auto pg_bounds = pygmo::iterable_to_bounds(bounds);
+            using reng_t = pg::detail::random_engine_type;
+            reng_t tmp_rng(static_cast<reng_t::result_type>(seed));
+            auto dv_c = pygmo::ndarr_to_vector<pg::vector_double>(dv);
+            pagmo::polynomial_mutation(dv_c, pg_bounds, nix, p_m, eta_m, tmp_rng);
+            return pygmo::vector_to_ndarr<py::array_t<double>>(dv_c);
+        },
+        pygmo::polynomial_mutation_docstring().c_str(), py::arg("dv"), py::arg("bounds"), py::arg("nix"),
+        py::arg("p_m"), py::arg("eta_m"), py::arg("seed"));
+#endif
     // Hypervolume class
     py::class_<pg::hypervolume> hv_class(m, "hypervolume", "Hypervolume Class");
     hv_class

@@ -4,6 +4,11 @@ build*
 # Temp files.
 *~
 *.bak
+*.ipynb_checkpoints*
+*__pycache__*
+
+# Editor files
+*.vscode*
 
 # .orig files from patch.
 *.orig

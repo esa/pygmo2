@@ -41,4 +41,5 @@ Utilities
   con_utils
   gh_utils
   hv_utils
+  genetic_op_utils
   plotting
