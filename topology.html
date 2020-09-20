@@ -463,7 +463,7 @@ topology, assigning it the next available index and establishing connections to 
 <p>If the UDT provides a <code class="docutils literal notranslate"><span class="pre">to_networkx()</span></code> method, then this method will invoke it and return
 its output. Otherwise, an error will be raised.</p>
 <p>This method is meant to export a representation of the current state of the topology
-as a NetworkX graph object. The returned object must be a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>
+as a NetworkX graph object. The returned object must be a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>
 in which the edges have a <code class="docutils literal notranslate"><span class="pre">weight</span></code> attribute represented as a floating-point value.</p>
 <p>Note that this method will strip away all node attributes and edge attributes other
 than <code class="docutils literal notranslate"><span class="pre">weight</span></code> from the graph returned by the UDT. It will also redefine the nodes
@@ -475,12 +475,12 @@ nodes numbered 0, 1 and 2).</p>
 <dd class="field-odd"><p>a graph representation of the UDT</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.4)">networkx.DiGraph</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.5)">networkx.DiGraph</a></p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.8)"><strong>NotImplementedError</strong></a> – if the UDT does not provide a <code class="docutils literal notranslate"><span class="pre">to_networkx()</span></code> method</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if the object returned by the UDT is not a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if the object returned by the UDT is not a <a class="reference external" href="https://networkx.github.io/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a></p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the edges of the returned graph do not all have a <code class="docutils literal notranslate"><span class="pre">weight</span></code> attribute</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by the <code class="docutils literal notranslate"><span class="pre">to_networkx()</span></code> method of the UDT</p></li>
 </ul>
