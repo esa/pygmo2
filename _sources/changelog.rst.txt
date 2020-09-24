@@ -9,6 +9,9 @@ Changelog
 New
 ~~~
 
+- The genetic operators from pagmo are now available in pygmo
+  (`#51 <https://github.com/esa/pygmo2/pull/51>`__).
+
 - Add :class:`~pygmo.scipy_optimize`, a wrapper
   for SciPy's local optimisation algorithms
   (`#31 <https://github.com/esa/pygmo2/pull/31>`__).
