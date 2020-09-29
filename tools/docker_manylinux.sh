@@ -6,8 +6,8 @@ set -x
 # Exit on error.
 set -e
 
-PAGMO_LATEST="2.14.0"
-PYBIND11_VERSION="2.4.3"
+PAGMO_LATEST="2.16.0"
+PYBIND11_VERSION="2.5.0"
 
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
