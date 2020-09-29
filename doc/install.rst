@@ -22,7 +22,9 @@ dependencies:
 * `Matplotlib <https://matplotlib.org/>`__, which is used by a few
   plotting utilities,
 * `NetworkX <https://networkx.github.io/>`__, which is used for
-  importing/exporting topologies as graphs.
+  importing/exporting topologies as graphs,
+* `SciPy <https://www.scipy.org/>`__, which is used in the implementation
+  of the :class:`~pygmo.scipy_optimize` algorithm wrapper.
 
 Packages
 --------
