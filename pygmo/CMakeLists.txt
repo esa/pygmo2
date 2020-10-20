@@ -52,7 +52,10 @@ foreach(PYGMO_PYTHON_FILE ${PYGMO_PYTHON_FILES})
 endforeach()
 
 # Core module.
-PYBIND11_ADD_MODULE(core MODULE
+# Note that LTO causes link time errors with GCC.
+# To avoid this, we disable LTO for pybind using NO_EXTRAS.
+# For more details, see e.g. https://github.com/BlueBrain/nmodl/issues/266
+PYBIND11_ADD_MODULE(core MODULE NO_EXTRAS
     core.cpp
     common_utils.cpp
     common_base.cpp
