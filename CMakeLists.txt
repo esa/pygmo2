@@ -150,14 +150,29 @@ endif()
 
 # Find the dependencies.
 
+# TBB.
+# TODO This should actually be a submodule of pagmo.
+# The only reason to have it here is to avoid forking pagmo as well.
+set(TBB_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(TBB_BUILD_SHARED ON CACHE BOOL "" FORCE)
+set(TBB_BUILD_STATIC OFF CACHE BOOL "" FORCE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/tbb EXCLUDE_FROM_ALL)
+set(TBB_FOUND TRUE)
+set(TBB_LIBRARIES tbb tbb_interface)
+set(TBB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/tbb/include)
+add_library(TBB::tbb ALIAS tbb)
+add_library(TBB::tbb_interface ALIAS tbb_interface)
+install(TARGETS ${TBB_LIBRARIES} EXPORT pagmo_export
+	LIBRARY DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+	ARCHIVE DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+	RUNTIME DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 # pagmo.
 # NOTE: put the minimum version in a variable
 # so that we can re-use it below.
-set (_PYGMO_MIN_PAGMO_VERSION 2.13.0)
-find_package(pagmo REQUIRED)
-if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
-    message(FATAL_ERROR "The minimum pagmo version required by pygmo is ${_PYGMO_MIN_PAGMO_VERSION}, but version ${pagmo_VERSION} was found instead.")
-endif()
+set(_PYGMO_MIN_PAGMO_VERSION 2.13.0)
+option(PAGMO_BUILD_STATIC_LIBRARY "" TRUE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/pagmo2 EXCLUDE_FROM_ALL)
 
 # python.
 include(YACMAPythonSetup)
@@ -171,7 +186,7 @@ if(${PYTHON_VERSION_MAJOR} LESS 3 OR (${PYTHON_VERSION_MAJOR} EQUAL 3 AND ${PYTH
 endif()
 
 # pybind11.
-find_package(pybind11 REQUIRED)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/pybind11)
 
 # Configure the sphinx config file.
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)
