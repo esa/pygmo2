@@ -123,25 +123,10 @@ jobs:
                         pagmo-devel ^
                         ninja ^
                         clangdev ^
+                        pybind11 ^
                         scipy
           conda list
         displayName: "Install conda packages"
-
-      # Install pybind11.
-      - script: |
-          setlocal EnableDelayedExpansion
-          git clone https://github.com/pybind/pybind11.git
-          cd pybind11
-          mkdir build
-          cd build
-          cmake .. -G "Visual Studio 15 2017" -A x64 ^
-                   -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
-                   -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
-                   -DPYBIND11_TEST=NO
-          cmake --build . --config Release --target install
-          cd ..
-          cd ..
-        displayName: "Install pybind11"
 
       - script: |
           cd tools
@@ -290,25 +275,10 @@ jobs:
                         pagmo-devel ^
                         ninja ^
                         clangdev ^
+                        pybind11 ^
                         scipy
           conda list
         displayName: "Install conda packages"
-
-      # Install pybind11.
-      - script: |
-          setlocal EnableDelayedExpansion
-          git clone https://github.com/pybind/pybind11.git
-          cd pybind11
-          mkdir build
-          cd build
-          cmake .. -G "Visual Studio 15 2017" -A x64 ^
-                   -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
-                   -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
-                   -DPYBIND11_TEST=NO
-          cmake --build . --config Release --target install
-          cd ..
-          cd ..
-        displayName: "Install pybind11"
 
       - script: |
           cd tools
@@ -457,25 +427,10 @@ jobs:
                         pagmo-devel ^
                         ninja ^
                         clangdev ^
+                        pybind11 ^
                         scipy
           conda list
         displayName: "Install conda packages"
-
-      # Install pybind11.
-      - script: |
-          setlocal EnableDelayedExpansion
-          git clone https://github.com/pybind/pybind11.git
-          cd pybind11
-          mkdir build
-          cd build
-          cmake .. -G "Visual Studio 15 2017" -A x64 ^
-                   -DCMAKE_PREFIX_PATH=C:\tools\miniconda3\Library ^
-                   -DCMAKE_INSTALL_PREFIX=C:\tools\miniconda3\Library ^
-                   -DPYBIND11_TEST=NO
-          cmake --build . --config Release --target install
-          cd ..
-          cd ..
-        displayName: "Install pybind11"
 
       - script: |
           cd tools
