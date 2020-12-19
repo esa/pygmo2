@@ -7,7 +7,7 @@ set -x
 set -e
 
 PAGMO_LATEST="2.16.0"
-PYBIND11_VERSION="2.5.0"
+PYBIND11_VERSION="2.6.1"
 
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
