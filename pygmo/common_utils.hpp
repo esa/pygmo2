@@ -140,7 +140,7 @@ inline Vector ndarr_to_vector(const py::array_t<T, ExtraFlags> &a)
 template <typename Array, typename T, typename Allocator>
 inline Array vector_to_ndarr(const std::vector<T, Allocator> &v)
 {
-    return Array(v.size(), v.data());
+    return Array(boost::numeric_cast<py::ssize_t>(v.size()), v.data());
 }
 
 // Convert a numpy array into a sparsity pattern.
