@@ -78,6 +78,8 @@ YACMA_PYTHON_MODULE(core
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
+# NOTE: quench warnings from Boost when building the library.
+target_compile_definitions(core PRIVATE BOOST_ALLOW_DEPRECATED_HEADERS)
 target_include_directories(core SYSTEM PRIVATE "${pybind11_INCLUDE_DIR}")
 target_compile_definitions(core PRIVATE "${pybind11_DEFINITIONS}")
 target_compile_options(core PRIVATE
