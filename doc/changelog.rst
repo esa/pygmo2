@@ -3,6 +3,24 @@
 Changelog
 =========
 
+2.16.1 (unreleased)
+-------------------
+
+Changes
+~~~~~~~
+
+- pygmo now requires pybind11 >= 2.6 when compiling
+  from source
+  (`#66 <https://github.com/esa/pygmo2/pull/66>`__).
+
+Fix
+~~~
+
+- Various doc and build system fixes
+  (`#66 <https://github.com/esa/pygmo2/pull/66>`__,
+  `#60 <https://github.com/esa/pygmo2/pull/60>`__).
+
+
 2.16.0 (2020-09-25)
 -------------------
 

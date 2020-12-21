@@ -172,6 +172,9 @@ endif()
 
 # pybind11.
 find_package(pybind11 REQUIRED)
+if(${pybind11_VERSION} VERSION_LESS "2.6")
+    message(FATAL_ERROR "pybind11 >= 2.6 is required, but version ${pybind11_VERSION} was found instead.")
+endif()
 
 # Configure the sphinx config file.
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)
