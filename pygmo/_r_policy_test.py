@@ -143,7 +143,7 @@ class r_policy_test_case(_ut.TestCase):
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return 1
         r_pol = r_policy(r())
-        self.assertRaises(RuntimeError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(TypeError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))))
 
         class r(object):

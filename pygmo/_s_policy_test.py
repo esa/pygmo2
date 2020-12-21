@@ -143,7 +143,7 @@ class s_policy_test_case(_ut.TestCase):
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return 1
         s_pol = s_policy(r())
-        self.assertRaises(RuntimeError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
+        self.assertRaises(TypeError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
             [1.1], [2.2]]), 2, 0, 1, 0, 0, []))
 
         class r(object):

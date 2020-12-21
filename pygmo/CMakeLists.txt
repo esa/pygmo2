@@ -78,6 +78,8 @@ YACMA_PYTHON_MODULE(core
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
+# NOTE: quench warnings from Boost when building the library.
+target_compile_definitions(core PRIVATE BOOST_ALLOW_DEPRECATED_HEADERS)
 target_include_directories(core SYSTEM PRIVATE "${pybind11_INCLUDE_DIR}")
 target_compile_definitions(core PRIVATE "${pybind11_DEFINITIONS}")
 target_compile_options(core PRIVATE
@@ -88,15 +90,10 @@ target_compile_options(core PRIVATE
 )
 set_target_properties(core PROPERTIES CXX_VISIBILITY_PRESET hidden)
 set_target_properties(core PROPERTIES VISIBILITY_INLINES_HIDDEN TRUE)
-if(NOT CMAKE_CXX_STANDARD)
-    # The user did not provide the CMAKE_CXX_STANDARD variable,
-    # go with the default (C++17).
-    message(STATUS "Setting the C++ standard version to the default value (17).")
-    set_property(TARGET core PROPERTY CXX_STANDARD 17)
-else()
-    message(STATUS "Using the manually-specified value for the C++ standard version (${CMAKE_CXX_STANDARD}).")
-endif()
-set_property(TARGET core PROPERTY CXX_STANDARD_REQUIRED YES)
+# Set the minimum C++ standard to C++17 when building
+# the core module.
+target_compile_features(core PRIVATE cxx_std_17)
+# Enforce vanilla C++ when compiling.
 set_property(TARGET core PROPERTY CXX_EXTENSIONS NO)
 
 if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.9.0")
