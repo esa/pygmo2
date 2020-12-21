@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hypervolume utilities &mdash; pygmo 2.17.0 documentation</title>
+  <title>Hypervolume utilities &mdash; pygmo 2.16.1 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                2.17.0
+                2.16.1
               </div>
             
           
@@ -217,7 +216,7 @@
 <dd class="field-odd"><p><strong>points</strong> (<em>2d array-like object</em>) – the points</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>points</em> is inconsistent</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>points</em> is inconsistent</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -226,7 +225,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hv</span> <span class="o">=</span> <span class="n">hypervolume</span><span class="p">(</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
 <p>__init__(pop)</p>
 <p>Constructor from population</p>
 <dl class="field-list simple">
@@ -234,7 +233,7 @@
 <dd class="field-odd"><p><strong>pop</strong> (<a class="reference internal" href="population.html#pygmo.population" title="pygmo.population"><code class="xref py py-class docutils literal notranslate"><span class="pre">population</span></code></a>) – the input population</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>pop</em> contains a single-objective or a constrained problem</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>pop</em> contains a single-objective or a constrained problem</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -243,7 +242,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hv</span> <span class="o">=</span> <span class="n">hypervolume</span><span class="p">(</span><span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
 <dl class="py method">
 <dt id="pygmo.hypervolume.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">hv_algo</span><span class="o">=</span><span class="default_value">auto</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.compute" title="Permalink to this definition">¶</a></dt>
@@ -261,13 +260,13 @@ specific for the point dimension.</p>
 <dd class="field-even"><p>the computed hypervolume assuming <em>ref_point</em> as reference point</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not dominated by the nadir point</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not dominated by the nadir point</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume7computeERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::compute()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume7computeERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::compute()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -290,10 +289,10 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 <dd class="field-odd"><p>1D NumPy float array</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume13contributionsERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::contributions()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume13contributionsERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::contributions()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -303,7 +302,7 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the point</p></li>
+<li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the point</p></li>
 <li><p><strong>ref_point</strong> (<em>array-like object</em>) – the reference point</p></li>
 <li><p><strong>hv_algo</strong> (deriving from <code class="xref py py-class docutils literal notranslate"><span class="pre">_hv_algorithm</span></code>) – hypervolume algorithm to be used</p></li>
 </ul>
@@ -316,12 +315,12 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable or if <em>idx</em> is out of bounds</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>idx</em> is negative or greater than an implementation-defined value</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable or if <em>idx</em> is out of bounds</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.9)"><strong>OverflowError</strong></a> – if <em>idx</em> is negative or greater than an implementation-defined value</p></li>
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume9exclusiveEjRK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::exclusive()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume9exclusiveEjRK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::exclusive()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -336,10 +335,10 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume20greatest_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::greatest_contributor()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume20greatest_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::greatest_contributor()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -354,10 +353,10 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume17least_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::least_contributor()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume17least_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::least_contributor()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -369,7 +368,7 @@ The result is a point that is necessarily dominated by all other points, and thu
 in that method (also its complexity is thus higher)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the reference point</p>
+<dd class="field-odd"><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the reference point</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the reference point</p>
@@ -378,7 +377,7 @@ in that method (also its complexity is thus higher)</p>
 <dd class="field-odd"><p>1D NumPy float array</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume8refpointEd" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::refpoint()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume8refpointEd" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::refpoint()</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -393,10 +392,10 @@ class <a class="reference internal" href="#pygmo.hypervolume" title="pygmo.hyper
 class <code class="xref py py-class docutils literal notranslate"><span class="pre">_hv_algorithm</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stop_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the input population</p>
+<dd class="field-odd"><p><strong>stop_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the input population</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – if <em>stop_dimension</em> is negative or greater than an implementation-defined value</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.9)"><strong>OverflowError</strong></a> – if <em>stop_dimension</em> is negative or greater than an implementation-defined value</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>

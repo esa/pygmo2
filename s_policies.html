@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of selection policies &mdash; pygmo 2.17.0 documentation</title>
+  <title>List of selection policies &mdash; pygmo 2.16.1 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                2.17.0
+                2.16.1
               </div>
             
           
@@ -238,16 +237,16 @@ a value of 0 means that no individuals will be selected, a value of 1 means that
 all individuals will be selected.</p>
 <p>If <em>rate</em> is an integral value, then it represents an <em>absolute</em> migration rate, that is,
 the exact number of individuals that will be selected from the input population.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/s_policies/select_best.html#_CPPv4N5pagmo11select_bestE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:select_best</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/s_policies/select_best.html#_CPPv4N5pagmo11select_bestE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:select_best</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – the desired migration rate</p>
+<dd class="field-odd"><p><strong>rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – the desired migration rate</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the supplied fractional migration rate is not finite
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the supplied fractional migration rate is not finite
     or not in the <span class="math notranslate nohighlight">\(\left[0,1\right]\)</span> range</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>rate</em> is not an instance of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>rate</em> is not an instance of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p></li>
 <li><p><strong>unspecified</strong> – any exception raised by the invoked C++ constructor</p></li>
 </ul>
 </dd>

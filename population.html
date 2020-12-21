@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Population class &mdash; pygmo 2.17.0 documentation</title>
+  <title>Population class &mdash; pygmo 2.16.1 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                2.17.0
+                2.16.1
               </div>
             
           
@@ -227,25 +226,25 @@ equality constraints and inequality constraints if present.</p></li>
 is called <em>champion</em> and its decision vector and fitness vector are automatically kept updated. The <em>champion</em> is not necessarily
 an individual currently in the population. The <em>champion</em> is only defined and accessible via the population interface if the
 <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> currently contained in the <a class="reference internal" href="#pygmo.population" title="pygmo.population"><code class="xref py py-class docutils literal notranslate"><span class="pre">population</span></code></a> is single objective.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/population.html#_CPPv4N5pagmo10populationE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:population</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/population.html#_CPPv4N5pagmo10populationE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:population</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prob</strong> – a user-defined problem (either Python or C++), or an instance of <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a>
-(if <em>prob</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a default-constructed <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> will be used
+(if <em>prob</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a default-constructed <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> will be used
 in its stead)</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of individuals</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of individuals</p></li>
 <li><p><strong>b</strong> – a user-defined batch fitness evaluator (either Python or C++), or an instance of <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>
-(if <em>b</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, the evaluation of the population’s individuals will be performed
+(if <em>b</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, the evaluation of the population’s individuals will be performed
 in sequential mode)</p></li>
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the random seed (if <em>seed</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a randomly-generated value will be used
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the random seed (if <em>seed</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a randomly-generated value will be used
 in its stead)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>size</em> is not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <em>seed</em> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> and not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – is <em>size</em> or <em>seed</em> are negative</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>size</em> is not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <em>seed</em> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> and not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.9)"><strong>OverflowError</strong></a> – is <em>size</em> or <em>seed</em> are negative</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by the invoked C++ constructors, by the constructor of
     <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a>, or the constructor of <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>, or by failures at
     the intersection between C++ and
@@ -263,19 +262,19 @@ If the problem is multi-objective one single best is not well defined. In this c
 individuals by calling the <a class="reference internal" href="mo_utils.html#pygmo.sort_population_mo" title="pygmo.sort_population_mo"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_mo()</span></code></a> function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
+<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
 <a class="reference internal" href="problem.html#pygmo.problem.c_tol" title="pygmo.problem.c_tol"><code class="xref py py-attr docutils literal notranslate"><span class="pre">c_tol</span></code></a> attribute from the population’s problem is used.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the index of the best individual</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a best individual is not well defined, or if the population is empty</p></li>
-<li><p><strong>unspecified</strong> – any exception thrown by <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/constrained.html#_CPPv4N5pagmo19sort_population_conERKNSt6vectorI13vector_doubleEEN13vector_double9size_typeEd" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:sort_population_con()</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a best individual is not well defined, or if the population is empty</p></li>
+<li><p><strong>unspecified</strong> – any exception thrown by <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/constrained.html#_CPPv4N5pagmo19sort_population_conERKNSt6vectorI13vector_doubleEEN13vector_double9size_typeEd" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:sort_population_con()</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -285,7 +284,7 @@ individuals by calling the <a class="reference internal" href="mo_utils.html#pyg
 <dt id="pygmo.population.champion_f">
 <em class="property">property </em><code class="sig-name descname">champion_f</code><a class="headerlink" href="#pygmo.population.champion_f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Champion’s fitness vector.</p>
-<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the fitness vector of the population’s champion.</p>
+<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the fitness vector of the population’s champion.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the problem is stochastic, the champion is the individual that had the lowest fitness for
@@ -301,7 +300,7 @@ fitness.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -313,7 +312,7 @@ fitness.</p>
 <dt id="pygmo.population.champion_x">
 <em class="property">property </em><code class="sig-name descname">champion_x</code><a class="headerlink" href="#pygmo.population.champion_x" title="Permalink to this definition">¶</a></dt>
 <dd><p>Champion’s decision vector.</p>
-<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the decision vector of the population’s champion.</p>
+<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the decision vector of the population’s champion.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the problem is stochastic the champion is the individual that had the lowest fitness for
@@ -329,7 +328,7 @@ fitness.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -386,7 +385,7 @@ population.</p>
 <dd class="field-odd"><p>the random seed of the population</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,7 +439,7 @@ It is the user’s responsibility to ensure that <em>f</em> actually corresponds
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the dimensions of <em>x</em> or <em>f</em> (if provided) are incompatible with the population’s problem</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the dimensions of <em>x</em> or <em>f</em> (if provided) are incompatible with the population’s problem</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="problem.html#pygmo.problem.fitness" title="pygmo.problem.fitness"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.problem.fitness()</span></code></a> or by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -478,13 +477,13 @@ individual’s ID remains the same.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – a decision vector (chromosome)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> has the wrong dimensions (i.e., the dimension is
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> has the wrong dimensions (i.e., the dimension is
     inconsistent with the problem’s properties)</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
@@ -505,14 +504,14 @@ individual’s ID remains the same.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – a decision vector (chromosome)</p></li>
 <li><p><strong>f</strong> (<em>array-like object</em>) – a fitness vector</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> or <em>f</em> have the wrong dimensions (i.e., their dimensions are
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> or <em>f</em> have the wrong dimensions (i.e., their dimensions are
     inconsistent with the problem’s properties)</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
@@ -531,17 +530,17 @@ If the problem is multi-objective one single worst is not well defined. In this 
 individuals by calling the <a class="reference internal" href="mo_utils.html#pygmo.sort_population_mo" title="pygmo.sort_population_mo"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_mo()</span></code></a> function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints</p>
+<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the index of the worst individual</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a worst individual is not well defined, or if the population is empty</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a worst individual is not well defined, or if the population is empty</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="con_utils.html#pygmo.sort_population_con" title="pygmo.sort_population_con"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_con()</span></code></a></p></li>
 </ul>
 </dd>

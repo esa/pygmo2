@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Generic optimization utilities &mdash; pygmo 2.17.0 documentation</title>
+  <title>Generic optimization utilities &mdash; pygmo 2.16.1 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                2.17.0
+                2.16.1
               </div>
             
           
@@ -229,7 +228,7 @@ is guaranteed to be an integral value such that <span class="math notranslate no
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the problem’s bounds are not finite or larger than an implementation-defined limit</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the problem’s bounds are not finite or larger than an implementation-defined limit</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and Python (e.g.,
     type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -255,7 +254,7 @@ are guaranteed to be integral values such that <span class="math notranslate noh
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prob</strong> (<a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a>) – the input problem</p></li>
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of decision vectors that will be generated</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of decision vectors that will be generated</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -266,8 +265,8 @@ are guaranteed to be integral values such that <span class="math notranslate noh
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.8)"><strong>OverflowError</strong></a> – in case of (unlikely) overflows</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the problem’s bounds are not finite or larger than an implementation-defined limit</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.9)"><strong>OverflowError</strong></a> – in case of (unlikely) overflows</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the problem’s bounds are not finite or larger than an implementation-defined limit</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and Python (e.g.,
     type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -284,7 +283,7 @@ constructors. If no <em>seed</em> is passed pygmo randomly creates a seed for yo
 <p>This function allows to be able to reset the seed of such a global random number generator. This can be useful to create a deterministic behaviour of pygmo easily.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the new global seed for random number generation</p>
+<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the new global seed for random number generation</p>
 </dd>
 </dl>
 <div class="admonition note">

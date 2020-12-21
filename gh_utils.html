@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Gradient and Hessians utilities &mdash; pygmo 2.17.0 documentation</title>
+  <title>Gradient and Hessians utilities &mdash; pygmo 2.16.1 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                2.17.0
+                2.16.1
               </div>
             
           
@@ -221,13 +220,13 @@ confident the estimate will be correct.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>callable</strong> (<em>a callable object</em>) – The function we want to estimate sparsity (typically a fitness).</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – decision vector to use when testing for sparisty.</p></li>
-<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – To detect the sparsity each component of <em>x</em> will be changed by <span class="math notranslate nohighlight">\(\max(|x_i|,1) dx\)</span>.</p></li>
+<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – To detect the sparsity each component of <em>x</em> will be changed by <span class="math notranslate nohighlight">\(\max(|x_i|,1) dx\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>unspecified</strong> – any exception thrown by the <em>callable</em> object when called on <em>x</em>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>x</em> cannot be converted to a vector of floats or <em>callable</em> is not callable.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>x</em> cannot be converted to a vector of floats or <em>callable</em> is not callable.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns</dt>
@@ -267,13 +266,13 @@ and contain, in the lexicographic order requested by <a class="reference interna
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>callable</strong> (<em>a callable object</em>) – The function we want to estimate sparsity (typically a fitness).</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – decision vector to use when testing for sparisty.</p></li>
-<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – To detect the sparsity each component of <em>x</em> will be changed by <span class="math notranslate nohighlight">\(\max(|x_i|,1) dx\)</span>.</p></li>
+<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – To detect the sparsity each component of <em>x</em> will be changed by <span class="math notranslate nohighlight">\(\max(|x_i|,1) dx\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>unspecified</strong> – any exception thrown by the <em>callable</em> object when called on <em>x</em>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>x</em> cannot be converted to a vector of floats or <em>callable</em> is not callable.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>x</em> cannot be converted to a vector of floats or <em>callable</em> is not callable.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns</dt>
@@ -313,13 +312,13 @@ and contain, in the lexicographic order requested by <a class="reference interna
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>callable</strong> (<em>a callable object</em>) – The function we want to estimate sparsity (typically a fitness).</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – decision vector to use when testing for sparisty.</p></li>
-<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – To detect the sparsity each component of <em>x</em> will be changed by <span class="math notranslate nohighlight">\(\max(|x_i|,1) dx\)</span>.</p></li>
+<li><p><strong>dx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – To detect the sparsity each component of <em>x</em> will be changed by <span class="math notranslate nohighlight">\(\max(|x_i|,1) dx\)</span>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>unspecified</strong> – any exception thrown by the <em>callable</em> object when called on <em>x</em>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>x</em> cannot be converted to a vector of floats or <em>callable</em> is not callable.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>x</em> cannot be converted to a vector of floats or <em>callable</em> is not callable.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns</dt>

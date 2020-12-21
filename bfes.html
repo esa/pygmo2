@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>List of batch evaluators &mdash; pygmo 2.17.0 documentation</title>
+  <title>List of batch evaluators &mdash; pygmo 2.16.1 documentation</title>
   
 
   
@@ -31,7 +31,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -66,7 +65,7 @@
             
             
               <div class="version">
-                2.17.0
+                2.16.1
               </div>
             
           
@@ -223,9 +222,9 @@
 <p>This user-defined batch fitness evaluator (UDBFE) will dispatch
 the fitness evaluation in batch mode of a set of decision vectors
 to a process pool created and managed via the facilities of the
-standard Python <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> module.</p>
+standard Python <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.9)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> module.</p>
 <p>The evaluations of the decision vectors are dispatched to the processes
-of a global <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pool</span></code></a> shared between
+of a global <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pool</span></code></a> shared between
 different instances of <a class="reference internal" href="#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">mp_bfe</span></code></a>. The pool is created
 either implicitly by the construction of the first <a class="reference internal" href="#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">mp_bfe</span></code></a>
 object or explicitly via the <a class="reference internal" href="#pygmo.mp_bfe.init_pool" title="pygmo.mp_bfe.init_pool"><code class="xref py py-func docutils literal notranslate"><span class="pre">init_pool()</span></code></a>
@@ -259,14 +258,14 @@ are advised to explicitly call <a class="reference internal" href="#pygmo.mp_bfe
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>chunksize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – if not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, this positive integral represents
+<dd class="field-odd"><p><strong>chunksize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>) – if not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, this positive integral represents
 the approximate number of decision vectors that are processed by each task
 submitted to the process pool by the call operator</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>chunksize</em> is neither <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> nor a value of an integral type</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if <em>chunksize</em> is not strictly positive</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>chunksize</em> is neither <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> nor a value of an integral type</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>chunksize</em> is not strictly positive</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="#pygmo.mp_bfe.init_pool" title="pygmo.mp_bfe.init_pool"><code class="xref py py-func docutils literal notranslate"><span class="pre">init_pool()</span></code></a></p></li>
 </ul>
 </dd>
@@ -282,7 +281,7 @@ invoking this function will trigger the creation of a new pool.</p>
 <dd class="field-odd"><p>a string containing information about the number of processes in the pool</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="#pygmo.mp_bfe.get_pool_size" title="pygmo.mp_bfe.get_pool_size"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_pool_size()</span></code></a></p>
@@ -299,7 +298,7 @@ invoking this function will trigger the creation of a new pool.</p>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;Multiprocessing</span> <span class="pre">batch</span> <span class="pre">fitness</span> <span class="pre">evaluator&quot;</span></code></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -315,7 +314,7 @@ function will trigger the creation of a new pool.</p>
 <dd class="field-odd"><p>the current size of the pool</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="#pygmo.mp_bfe.init_pool" title="pygmo.mp_bfe.init_pool"><code class="xref py py-func docutils literal notranslate"><span class="pre">init_pool()</span></code></a></p>
@@ -332,14 +331,14 @@ has not been initialised yet or if the pool was previously shut down via <a clas
 Otherwise, this method will have no effects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> or an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the size of the pool (if <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, the size of the pool will be
+<dd class="field-odd"><p><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> or an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the size of the pool (if <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, the size of the pool will be
 equal to the number of logical CPUs on the system)</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the pool does not exist yet and the function is being called from a thread different
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the pool does not exist yet and the function is being called from a thread different
     from the main one, or if <em>processes</em> is a non-positive value</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if <em>processes</em> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> and not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>processes</em> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> and not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -354,12 +353,12 @@ equal to the number of logical CPUs on the system)</p>
 function will trigger the creation of a new pool.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the desired number of processes in the pool</p>
+<dd class="field-odd"><p><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the desired number of processes in the pool</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – if the <em>processes</em> argument is not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – if the <em>processes</em> argument is not strictly positive</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if the <em>processes</em> argument is not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the <em>processes</em> argument is not strictly positive</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="#pygmo.mp_bfe.init_pool" title="pygmo.mp_bfe.init_pool"><code class="xref py py-func docutils literal notranslate"><span class="pre">init_pool()</span></code></a></p></li>
 </ul>
 </dd>
@@ -408,7 +407,7 @@ among all the ipyparallel batch fitness evaluators.</p>
 <dd class="field-odd"><p>a string with extra information about the status of the evaluator</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -422,7 +421,7 @@ among all the ipyparallel batch fitness evaluators.</p>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;Ipyparallel</span> <span class="pre">batch</span> <span class="pre">fitness</span> <span class="pre">evaluator&quot;</span></code></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -452,13 +451,13 @@ objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>client_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – the positional arguments used for the
+<li><p><strong>client_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – the positional arguments used for the
 construction of the client</p></li>
-<li><p><strong>client_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – the keyword arguments used for the
+<li><p><strong>client_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – the keyword arguments used for the
 construction of the client</p></li>
-<li><p><strong>view_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – the positional arguments used for the
+<li><p><strong>view_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>) – the positional arguments used for the
 construction of the view</p></li>
-<li><p><strong>view_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – the keyword arguments used for the
+<li><p><strong>view_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>) – the keyword arguments used for the
 construction of the view</p></li>
 </ul>
 </dd>
@@ -504,7 +503,7 @@ guarantee (as established by <a class="reference internal" href="problem.html#py
 otherwise,</p></li>
 <li><p>a <a class="reference internal" href="#pygmo.mp_bfe" title="pygmo.mp_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.mp_bfe</span></code></a> will be constructed and invoked to produce the return value.</p></li>
 </ul>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/default_bfe.html#_CPPv4N5pagmo11default_bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:default_bfe</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/default_bfe.html#_CPPv4N5pagmo11default_bfeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:default_bfe</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
@@ -516,7 +515,7 @@ otherwise,</p></li>
 construct a <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
 <p><a class="reference internal" href="#pygmo.thread_bfe" title="pygmo.thread_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">thread_bfe</span></code></a> will use multiple threads of execution to parallelise
 the evaluation of the fitnesses of a batch of input decision vectors.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/thread_bfe.html#_CPPv4N5pagmo10thread_bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:thread_bfe</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/thread_bfe.html#_CPPv4N5pagmo10thread_bfeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:thread_bfe</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
@@ -528,7 +527,7 @@ the evaluation of the fitnesses of a batch of input decision vectors.</p>
 construct a <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
 <p><a class="reference internal" href="#pygmo.member_bfe" title="pygmo.member_bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">member_bfe</span></code></a> is a simple wrapper which delegates batch fitness evaluations
 to the input problem’s <a class="reference internal" href="problem.html#pygmo.problem.batch_fitness" title="pygmo.problem.batch_fitness"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.problem.batch_fitness()</span></code></a> method.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/member_bfe.html#_CPPv4N5pagmo10member_bfeE" title="(in pagmo v2.16.0)"><code class="docutils literal notranslate"><span class="pre">:member_bfe</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/batch_evaluators/member_bfe.html#_CPPv4N5pagmo10member_bfeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:member_bfe</span></code></a>.</p>
 </dd></dl>
 
 </div>
