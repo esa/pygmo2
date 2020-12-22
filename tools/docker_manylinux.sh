@@ -6,7 +6,7 @@ set -x
 # Exit on error.
 set -e
 
-PAGMO_LATEST="2.16.0"
+PAGMO_LATEST="2.16.1"
 PYBIND11_VERSION="2.6.1"
 
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
