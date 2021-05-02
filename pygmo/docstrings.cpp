@@ -3890,19 +3890,19 @@ Generates the requested number of weight vectors to be used to decompose a multi
    to generate the canonical weights [1,0,0,...], [0,1,0,..], ... first.
  
 Args:
-    n_f (:class:`int`): the objective vectors
-    n_w (:class:`int`): the weights :math:`\boldsymbol \lambda`
-    method (:class:`str`): the reference point :math:`\mathbf z^*`. It is not used if *method* is ``"weighted"``
-    seed (:class:`int`): the decomposition method: one of ``"weighted"``, ``"tchebycheff"`` or ``"bi"``
+    n_f (:class:`int`): number of the objective vectors
+    n_w (:class:`int`): number of the weights :math:`\boldsymbol \lambda`
+    method (:class:`str`): the weight generation method: one of ``"grid"``, ``"random"``, or ``"low discrepancy"``
+    seed (:class:`int`): seed used by the internal random number generator
 
 Raises:
     OverflowError: if *n_f*, *n_w* or *seed* are negative or greater than an implementation-defined value
     ValueError: if *n_f* and *n_w* are not compatible with the selected weight generation method or if *method* is not
-    one of ``"grid"``, ``"random"`` or ``"low discrepancy"``
+      one of ``"grid"``, ``"random"`` or ``"low discrepancy"``
 
 
 Returns:
-    1D NumPy float array:  the weights
+    2D NumPy float array: the generated weights
 
 Examples:
     >>> import pygmo as pg
