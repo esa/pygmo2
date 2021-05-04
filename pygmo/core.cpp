@@ -17,6 +17,7 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <pybind11/iostream.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
@@ -210,11 +211,20 @@ py::object test_object_serialization(const py::object &o)
 
 } // namespace pygmo
 
+std::unique_ptr<py::scoped_ostream_redirect> stream_redirect_ptr;
+
 PYBIND11_MODULE(core, m)
 {
     // This function needs to be called before doing anything with threads.
     // https://docs.python.org/3/c-api/init.html
     PyEval_InitThreads();
+
+    // We activate the unique pointer
+    // stream_redirect_ptr.reset(new py::scoped_ostream_redirect(std::cout,                               //
+    // std::ostream&
+    //                                                           py::module::import("sys").attr("stdout") // Python
+    //                                                           output
+    //                                                           ));
 
     // Disable automatic function signatures in the docs.
     // NOTE: the 'options' object needs to stay alive
@@ -1011,7 +1021,15 @@ PYBIND11_MODULE(core, m)
         // UDA extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::algorithm>)
         // Algorithm methods.
-        .def("evolve", &pg::algorithm::evolve, pygmo::algorithm_evolve_docstring().c_str(), py::arg("pop"))
+        .def(
+            "evolve",
+            [](const pagmo::algorithm &instance, pagmo::population pop) {
+                py::scoped_ostream_redirect stream(std::cout,                               // std::ostream&
+                                                   py::module::import("sys").attr("stdout") // Python output
+                );
+                return instance.evolve(pop);
+            },
+            pygmo::algorithm_evolve_docstring().c_str(), py::arg("pop"))
         .def("set_seed", &pg::algorithm::set_seed, pygmo::algorithm_set_seed_docstring().c_str(), py::arg("seed"))
         .def("has_set_seed", &pg::algorithm::has_set_seed, pygmo::algorithm_has_set_seed_docstring().c_str())
         .def("set_verbosity", &pg::algorithm::set_verbosity, pygmo::algorithm_set_verbosity_docstring().c_str(),
@@ -1212,4 +1230,8 @@ PYBIND11_MODULE(core, m)
 
     // Finalize.
     topology_class.def(py::init<const py::object &>(), py::arg("udt"));
+
+    // Resetting the stream redirection pointer.
+    // auto atexit = py::module::import("atexit");
+    // atexit.attr("register")(py::cpp_function([]() { stream_redirect_ptr.reset(); }));
 }
