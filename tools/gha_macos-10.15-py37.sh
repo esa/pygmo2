@@ -6,9 +6,6 @@ set -x
 # Exit on error.
 set -e
 
-# Core deps.
-sudo apt-get install wget
-
 # Install conda+deps.
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh
 export deps_dir=$HOME/local
