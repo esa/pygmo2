@@ -48,14 +48,7 @@ python circleci_additional_tests.py
 
 # Build the documentation.
 cd ~/project/doc
-export SPHINX_OUTPUT=`make html linkcheck 2>&1 |grep -v Warning  > /dev/null`;
-
-if [[ "${SPHINX_OUTPUT}" != "" ]]; then
-    echo "Sphinx encountered some problem:";
-    echo "${SPHINX_OUTPUT}";
-    exit 1;
-fi
-echo "Sphinx ran successfully";
+make html linkcheck
 
 # Run the doctests.
 make doctest;
