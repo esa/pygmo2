@@ -73,14 +73,4 @@ struct isl_inner<py::object> final : isl_inner_base, pygmo::common_base {
 // Register the isl_inner specialisation for py::object.
 PAGMO_S11N_ISLAND_EXPORT_KEY(pybind11::object)
 
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-py::tuple island_pickle_getstate(const pagmo::island &);
-pagmo::island island_pickle_setstate(py::tuple);
-
-} // namespace pygmo
-
 #endif

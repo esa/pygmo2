@@ -80,14 +80,4 @@ struct algo_inner<py::object> final : algo_inner_base, pygmo::common_base {
 // Register the algo_inner specialisation for py::object.
 PAGMO_S11N_ALGORITHM_EXPORT_KEY(pybind11::object)
 
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-py::tuple algorithm_pickle_getstate(const pagmo::algorithm &);
-pagmo::algorithm algorithm_pickle_setstate(py::tuple);
-
-} // namespace pygmo
-
 #endif

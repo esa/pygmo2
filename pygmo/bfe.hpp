@@ -77,14 +77,4 @@ struct bfe_inner<py::object> final : bfe_inner_base, pygmo::common_base {
 // Register the bfe_inner specialisation for py::object.
 PAGMO_S11N_BFE_EXPORT_KEY(pybind11::object)
 
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-py::tuple bfe_pickle_getstate(const pagmo::bfe &);
-pagmo::bfe bfe_pickle_setstate(py::tuple);
-
-} // namespace pygmo
-
 #endif

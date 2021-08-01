@@ -10,9 +10,13 @@
 #define PYGMO_S11N_WRAPPERS_HPP
 
 #include <cstddef>
+#include <sstream>
+#include <string>
 #include <type_traits>
 #include <vector>
 
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/binary_object.hpp>
@@ -77,6 +81,45 @@ inline void inner_class_load(Archive &ar, Derived &d)
     // Deserialise and assign.
     auto b = py::bytes(tmp.data(), boost::numeric_cast<py::size_t>(size));
     d.m_value = py::module::import("pygmo").attr("get_serialization_backend")().attr("loads")(b);
+}
+
+// Helpers to implement pickling on top of Boost.Serialization.
+template <typename T>
+inline py::tuple pickle_getstate_wrapper(const T &x)
+{
+    std::ostringstream oss;
+    {
+        boost::archive::binary_oarchive oa(oss);
+        oa << x;
+    }
+
+    return py::make_tuple(py::bytes(oss.str()));
+}
+
+template <typename T>
+inline T pickle_setstate_wrapper(py::tuple state)
+{
+    if (py::len(state) != 1) {
+        py_throw(PyExc_ValueError, ("The state tuple passed to the deserialization wrapper "
+                                    "must have 1 element, but instead it has "
+                                    + std::to_string(py::len(state)) + " element(s)")
+                                       .c_str());
+    }
+
+    auto ptr = PyBytes_AsString(state[0].ptr());
+    if (!ptr) {
+        py_throw(PyExc_TypeError, "A bytes object is needed in the deserialization wrapper");
+    }
+
+    std::istringstream iss;
+    iss.str(std::string(ptr, ptr + py::len(state[0])));
+    T x;
+    {
+        boost::archive::binary_iarchive iarchive(iss);
+        iarchive >> x;
+    }
+
+    return x;
 }
 
 } // namespace pygmo

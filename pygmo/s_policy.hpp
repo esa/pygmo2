@@ -77,14 +77,4 @@ struct s_pol_inner<py::object> final : s_pol_inner_base, pygmo::common_base {
 // Register the s_pol_inner specialisation for py::object.
 PAGMO_S11N_S_POLICY_EXPORT_KEY(pybind11::object)
 
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-py::tuple s_policy_pickle_getstate(const pagmo::s_policy &);
-pagmo::s_policy s_policy_pickle_setstate(py::tuple);
-
-} // namespace pygmo
-
 #endif

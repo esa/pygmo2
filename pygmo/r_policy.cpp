@@ -7,14 +7,9 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #include <memory>
-#include <sstream>
 #include <string>
 #include <typeindex>
 #include <typeinfo>
-
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -144,53 +139,3 @@ void r_pol_inner<py::object>::load(Archive &ar, unsigned)
 } // namespace pagmo
 
 PAGMO_S11N_R_POLICY_IMPLEMENT(pybind11::object)
-
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-// Serialization support for the r_policy class.
-py::tuple r_policy_pickle_getstate(const pagmo::r_policy &r)
-{
-    // The idea here is that first we extract a char array
-    // into which r has been serialized, then we turn
-    // this object into a Python bytes object and return that.
-    std::ostringstream oss;
-    {
-        boost::archive::binary_oarchive oarchive(oss);
-        oarchive << r;
-    }
-    auto s = oss.str();
-    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
-}
-
-pagmo::r_policy r_policy_pickle_setstate(py::tuple state)
-{
-    // Similarly, first we extract a bytes object from the Python state,
-    // and then we build a C++ string from it. The string is then used
-    // to deserialized the object.
-    if (py::len(state) != 1) {
-        pygmo::py_throw(PyExc_ValueError, ("the state tuple passed for replacement policy deserialization "
-                                           "must have 1 element, but instead it has "
-                                           + std::to_string(py::len(state)) + " element(s)")
-                                              .c_str());
-    }
-
-    auto ptr = PyBytes_AsString(state[0].ptr());
-    if (!ptr) {
-        pygmo::py_throw(PyExc_TypeError, "a bytes object is needed to deserialize a replacement policy");
-    }
-
-    std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len(state[0])));
-    pagmo::r_policy r;
-    {
-        boost::archive::binary_iarchive iarchive(iss);
-        iarchive >> r;
-    }
-
-    return r;
-}
-
-} // namespace pygmo
