@@ -4835,11 +4835,6 @@ can be active at the same time, albeit with a performance penalty).
 
 See also the documentation of the corresponding C++ class :cpp:class:`pagmo::thread_island`.
 
-.. note::
-
-   The *use_pool* flag is available only if pygmo was compiled
-   with pagmo 2.16.0 or later.
-
 .. versionadded:: 2.16.0
 
    The *use_pool* flag.
@@ -6547,11 +6542,6 @@ Additional optional methods can be implemented in a UDT:
      ...
    def to_networkx(self):
      ...
-
-.. note::
-
-   The ``to_networkx()`` method is available only if pygmo was compiled
-   with pagmo 2.15.0 or later.
 
 See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDT are used by :class:`~pygmo.topology`.
