@@ -111,9 +111,12 @@ struct py_wait_locks {
 
 PYBIND11_MODULE(core, m)
 {
+#if PY_MAJOR_VERSION == 3 && PY_MINOR_VERSION < 9
     // This function needs to be called before doing anything with threads.
     // https://docs.python.org/3/c-api/init.html
+    // NOTE: this is deprecated and does nothing since Python 3.9.
     PyEval_InitThreads();
+#endif
 
     // Disable automatic function signatures in the docs.
     // NOTE: the 'options' object needs to stay alive
