@@ -23,3 +23,19 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build
         run: bash tools/gha_macos-10.15-py37.sh
+  macos-10_15-py38:
+    # The type of runner that the job will run on
+    runs-on: macos-10.15
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: bash tools/gha_macos-10.15-py38.sh
+  macos-10_15-py39:
+    # The type of runner that the job will run on
+    runs-on: macos-10.15
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: bash tools/gha_macos-10.15-py39.sh
