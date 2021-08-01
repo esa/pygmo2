@@ -14,11 +14,10 @@ wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O mi
 export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
-conda config --add channels conda-forge --force
-conda_pkgs="c-compiler cxx-compiler cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.8 numpy cloudpickle networkx dill numba pybind11 sphinx nbsphinx sphinx_rtd_theme scipy"
-conda create -q -p $deps_dir -y
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.8 numpy cloudpickle networkx dill numba pybind11 scipy
 source activate $deps_dir
-conda install $conda_pkgs -y
 
 # Install pagmo.
 git clone https://github.com/esa/pagmo2.git
