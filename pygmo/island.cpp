@@ -11,8 +11,9 @@
 #include <string>
 #include <typeindex>
 #include <typeinfo>
-#include <vector>
 
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/pybind11.h>
@@ -21,12 +22,11 @@
 #include <pagmo/config.hpp>
 #include <pagmo/island.hpp>
 #include <pagmo/population.hpp>
-#include <pagmo/s11n.hpp>
 
 #include "common_utils.hpp"
 #include "handle_thread_py_exception.hpp"
 #include "island.hpp"
-#include "object_serialization.hpp"
+#include "s11n_wrappers.hpp"
 
 namespace pagmo
 {
@@ -152,17 +152,13 @@ void *isl_inner<py::object>::get_ptr()
 template <typename Archive>
 void isl_inner<py::object>::save(Archive &ar, unsigned) const
 {
-    ar << boost::serialization::base_object<isl_inner_base>(*this);
-    ar << pygmo::object_to_vchar(m_value);
+    pygmo::inner_class_save<isl_inner_base>(ar, *this);
 }
 
 template <typename Archive>
 void isl_inner<py::object>::load(Archive &ar, unsigned)
 {
-    ar >> boost::serialization::base_object<isl_inner_base>(*this);
-    std::vector<char> v;
-    ar >> v;
-    m_value = pygmo::vchar_to_object(v);
+    pygmo::inner_class_load<isl_inner_base>(ar, *this);
 }
 
 } // namespace detail

@@ -65,7 +65,6 @@
 #include "expose_s_policies.hpp"
 #include "expose_topologies.hpp"
 #include "island.hpp"
-#include "object_serialization.hpp"
 #include "problem.hpp"
 #include "r_policy.hpp"
 #include "s_policy.hpp"
@@ -181,29 +180,6 @@ pg::archipelago archipelago_pickle_setstate(py::tuple state)
     return archi;
 }
 
-// Test that the serialization of pybind11 objects works as expected.
-// The object returned by this function should be identical to the input
-// object.
-py::object test_object_serialization(const py::object &o)
-{
-    std::ostringstream oss;
-    {
-        boost::archive::binary_oarchive oarchive(oss);
-        oarchive << object_to_vchar(o);
-    }
-    const std::string tmp_str = oss.str();
-    std::istringstream iss;
-    iss.str(tmp_str);
-    py::object retval;
-    {
-        boost::archive::binary_iarchive iarchive(iss);
-        std::vector<char> tmp;
-        iarchive >> tmp;
-        retval = vchar_to_object(tmp);
-    }
-    return retval;
-}
-
 } // namespace
 
 } // namespace detail
@@ -234,7 +210,6 @@ PYBIND11_MODULE(core, m)
     m.def("_type", &pygmo::type);
     m.def("_builtins", &pygmo::builtins);
     m.def("_deepcopy", &pygmo::deepcopy);
-    m.def("_test_object_serialization", &pygmo::detail::test_object_serialization);
     m.def("_max_unsigned", []() {
         // Small helper function to get the max value of unsigned.
         return std::numeric_limits<unsigned>::max();

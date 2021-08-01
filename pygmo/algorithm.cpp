@@ -11,20 +11,20 @@
 #include <string>
 #include <typeindex>
 #include <typeinfo>
-#include <vector>
 
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
 #include <pagmo/population.hpp>
-#include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
 
 #include "algorithm.hpp"
 #include "common_utils.hpp"
-#include "object_serialization.hpp"
+#include "s11n_wrappers.hpp"
 
 namespace pagmo
 {
@@ -159,17 +159,13 @@ void *algo_inner<py::object>::get_ptr()
 template <typename Archive>
 void algo_inner<py::object>::save(Archive &ar, unsigned) const
 {
-    ar << boost::serialization::base_object<algo_inner_base>(*this);
-    ar << pygmo::object_to_vchar(m_value);
+    pygmo::inner_class_save<algo_inner_base>(ar, *this);
 }
 
 template <typename Archive>
 void algo_inner<py::object>::load(Archive &ar, unsigned)
 {
-    ar >> boost::serialization::base_object<algo_inner_base>(*this);
-    std::vector<char> v;
-    ar >> v;
-    m_value = pygmo::vchar_to_object(v);
+    pygmo::inner_class_load<algo_inner_base>(ar, *this);
 }
 
 } // namespace detail

@@ -56,7 +56,6 @@ YACMA_PYTHON_MODULE(core
     core.cpp
     common_utils.cpp
     common_base.cpp
-    object_serialization.cpp
     island.cpp
     docstrings.cpp
     problem.cpp
