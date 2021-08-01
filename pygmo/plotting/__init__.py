@@ -45,7 +45,7 @@ def plot_non_dominated_fronts(points, marker='o', comp=[0, 1], axes=None):
         axes (matplotlib.axes.Axes): plot axes (if :data:`None`, new axes will be created)
 
     Returns:
-        matplotlib.axes.Axes: the input *axes* or a new :class:`matplotlib.axes.Axes` instance
+        matplotlib.axes.Axes: the input *axes* or a new axes instance
 
     Examples:
         >>> from pygmo import *
