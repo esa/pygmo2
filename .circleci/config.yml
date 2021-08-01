@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 jobs:
   bionic_gcc7_pagmo_head_38:
@@ -9,14 +9,6 @@ jobs:
     - run:
         name: Build and test
         command: bash ./tools/circleci_bionic_gcc7_pagmo_head_38.sh
-  bionic_gcc7_pagmo_latest_38:
-    docker:
-    - image: circleci/buildpack-deps:bionic
-    steps:
-    - checkout
-    - run:
-        name: Build and test
-        command: bash ./tools/circleci_bionic_gcc7_pagmo_latest_38.sh
   bionic_gcc7_pagmo_head_37:
     docker:
     - image: circleci/buildpack-deps:bionic
@@ -25,14 +17,6 @@ jobs:
     - run:
         name: Build and test
         command: bash ./tools/circleci_bionic_gcc7_pagmo_head_37.sh
-  bionic_gcc7_pagmo_latest_37:
-    docker:
-    - image: circleci/buildpack-deps:bionic
-    steps:
-    - checkout
-    - run:
-        name: Build and test
-        command: bash ./tools/circleci_bionic_gcc7_pagmo_latest_37.sh
   bionic_gcc7_pagmo_head_36:
     docker:
     - image: circleci/buildpack-deps:bionic
@@ -41,22 +25,11 @@ jobs:
     - run:
         name: Build and test
         command: bash ./tools/circleci_bionic_gcc7_pagmo_head_36.sh
-  bionic_gcc7_pagmo_latest_36:
-    docker:
-    - image: circleci/buildpack-deps:bionic
-    steps:
-    - checkout
-    - run:
-        name: Build and test
-        command: bash ./tools/circleci_bionic_gcc7_pagmo_latest_36.sh
 
 workflows:
-  version: 2
+  version: 2.1
   all_builds:
     jobs:
     - bionic_gcc7_pagmo_head_38
-    - bionic_gcc7_pagmo_latest_38
     - bionic_gcc7_pagmo_head_37
-    - bionic_gcc7_pagmo_latest_37
     - bionic_gcc7_pagmo_head_36
-    - bionic_gcc7_pagmo_latest_36
