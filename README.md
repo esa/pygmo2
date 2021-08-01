@@ -2,8 +2,7 @@ pygmo
 =====
 
 [![Build Status](https://img.shields.io/circleci/project/github/esa/pygmo2/master.svg?style=for-the-badge)](https://circleci.com/gh/esa/pygmo2)
-[![Build Status](https://img.shields.io/travis/esa/pygmo2/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/esa/pygmo2)
-[![Build Status](https://img.shields.io/azure-devops/build/bluescarni/00914570-450b-4bd6-a575-d8c64fc25d1e/5?style=for-the-badge)](https://dev.azure.com/bluescarni/pygmo/_build)
+[![Build Status](https://img.shields.io/travis/esa/pygmo2/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.com/esa/pygmo2)
 
 [![Anaconda-Server Badge](https://img.shields.io/conda/vn/conda-forge/pygmo.svg?style=for-the-badge)](https://anaconda.org/conda-forge/pygmo)
 [![PyPI](https://img.shields.io/pypi/v/pygmo.svg?style=for-the-badge)](https://pypi.python.org/pypi/pygmo)
