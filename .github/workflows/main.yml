@@ -48,3 +48,33 @@ jobs:
       - name: Build
         run: .\tools\gha_windows-2016.ps1
         shell: powershell
+  windows-2016-py38:
+    runs-on: windows-2016
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.8
+          channels: conda-forge
+          channel-priority: strict
+      - name: Build
+        run: .\tools\gha_windows-2016.ps1
+        shell: powershell
+  windows-2016-py39:
+    runs-on: windows-2016
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: 3.9
+          channels: conda-forge
+          channel-priority: strict
+      - name: Build
+        run: .\tools\gha_windows-2016.ps1
+        shell: powershell
