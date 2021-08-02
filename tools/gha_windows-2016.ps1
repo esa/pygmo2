@@ -23,8 +23,8 @@ cmake `
     ..
 
 cmake --build . --config Release --target install
-cd ..
-cd ..
+cd ../
+cd ../
 
 mkdir build
 cd build
