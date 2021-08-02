@@ -317,7 +317,7 @@ Clang or MSVC should do),</p></li>
 <li><p><a class="reference external" href="https://github.com/pybind/pybind11">pybind11</a> (version &gt;= 2.6),</p></li>
 <li><p>the <a class="reference external" href="https://esa.github.io/pagmo2/">pagmo C++ library</a>,</p></li>
 <li><p>the <a class="reference external" href="https://www.boost.org/">Boost libraries</a>,</p></li>
-<li><p><a class="reference external" href="https://cmake.org/">CMake</a>, version 3.8 or later.</p></li>
+<li><p><a class="reference external" href="https://cmake.org/">CMake</a>, version 3.17 or later.</p></li>
 </ul>
 <p>After making sure the dependencies are installed on your system, you can
 download the pygmo source code from the
@@ -344,46 +344,22 @@ such as:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_BUILD_TYPE</span></code>: the build type (<code class="docutils literal notranslate"><span class="pre">Release</span></code>, <code class="docutils literal notranslate"><span class="pre">Debug</span></code>, etc.),
 defaults to <code class="docutils literal notranslate"><span class="pre">Release</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code>: the path into which pygmo will be installed
-(e.g., this defaults to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> on Unix-like platforms).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_PREFIX_PATH</span></code>: additional paths that will be searched by CMake
 when looking for dependencies.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYGMO_INSTALL_PATH</span></code>: the path into which the pygmo module
+will be installed. If left empty (the default), pygmo will be installed
+in the global modules directory of your Python installation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYGMO_ENABLE_IPO</span></code>: set this flag to <code class="docutils literal notranslate"><span class="pre">ON</span></code> to compile pygmo
+with link-time optimisations. Requires compiler support,
+defaults to <code class="docutils literal notranslate"><span class="pre">OFF</span></code>.</p></li>
 </ul>
 <p>Please consult <a class="reference external" href="https://cmake.org/cmake/help/latest/">CMake’s documentation</a>
 for more details about CMake’s variables and options.</p>
-<p>A critical setting for a pygmo installation is the
-value of the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> variable. The pygmo
-build system will attempt to construct an appropriate
-installation path for the Python module by combining
-the value of <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> with the directory
-paths of the Python installation in use in a platform-dependent
-manner.</p>
-<p>For instance, on a typical Linux installation
-of Python 3.6,
-<code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> will be set by default to
-<code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>, and the pygmo build system will
-append <code class="docutils literal notranslate"><span class="pre">lib/python3.6/site-packages</span></code> to the install prefix.
-Thus, the overall install path for the pygmo module will be
-<code class="docutils literal notranslate"><span class="pre">/usr/local/lib/python3.6/site-packages</span></code>. If you want
-to avoid system-wide installations (which require root
-privileges), on Unix-like system it is possible to set
-the <code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> variable to the directory
-<code class="docutils literal notranslate"><span class="pre">.local</span></code> in your <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">/home/username/.local</span></code>).
-The pygmo install path will then be, in this case,
-<code class="docutils literal notranslate"><span class="pre">/home/username/.local/lib/python3.6/site-packages</span></code>,
-a path which is normally recognised by Python installations
-without the need to modify the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> variable.
-If you install pygmo in non-standard prefixes, you may
-have to tweak your Python installation in order for the
-Python interpreter to find the pygmo module.</p>
-<p>A typical CMake invocation for pygmo may then
-look something like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake ../ -DCMAKE_INSTALL_PREFIX<span class="o">=</span>~/.local
-</pre></div>
-</div>
-<p>That is, we will be installing pygmo into our home
-directory into the <code class="docutils literal notranslate"><span class="pre">.local</span></code>
-subdirectory. If CMake runs without errors, we can then proceed to actually
+<p>The <code class="docutils literal notranslate"><span class="pre">PYGMO_INSTALL_PATH</span></code> option is particularly important. If you
+want to install pygmo locally instead of globally (which is in general
+a good idea), you can set this variable to the output of
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">site</span> <span class="pre">--user-site</span></code>.</p>
+<p>After configuring the build with CMake, we can then proceed to actually
 building pygmo:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake --build .
 </pre></div>
@@ -427,7 +403,7 @@ or by opening an issue report on <a class="reference external" href="https://git
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, pagmo development team.
+        &#169; Copyright 2021, pagmo development team.
 
     </p>
   </div>
