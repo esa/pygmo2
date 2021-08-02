@@ -6,6 +6,12 @@ Changelog
 2.18.0 (unreleased)
 -------------------
 
+New
+~~~
+
+- pygmo now officially supports 64-bit ARM and PowerPC processors
+  (`#82 <https://github.com/esa/pygmo2/pull/82>`__).
+
 Changes
 ~~~~~~~
 
