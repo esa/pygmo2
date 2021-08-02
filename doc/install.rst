@@ -158,51 +158,24 @@ such as:
 
 * ``CMAKE_BUILD_TYPE``: the build type (``Release``, ``Debug``, etc.),
   defaults to ``Release``.
-* ``CMAKE_INSTALL_PREFIX``: the path into which pygmo will be installed
-  (e.g., this defaults to ``/usr/local`` on Unix-like platforms).
 * ``CMAKE_PREFIX_PATH``: additional paths that will be searched by CMake
   when looking for dependencies.
+* ``PYGMO_INSTALL_PATH``: the path into which the pygmo module
+  will be installed. If left empty (the default), pygmo will be installed
+  in the global modules directory of your Python installation.
+* ``PYGMO_ENABLE_IPO``: set this flag to ``ON`` to compile pygmo
+  with link-time optimisations. Requires compiler support,
+  defaults to ``OFF``.
 
 Please consult `CMake's documentation <https://cmake.org/cmake/help/latest/>`_
 for more details about CMake's variables and options.
 
-A critical setting for a pygmo installation is the
-value of the ``CMAKE_INSTALL_PREFIX`` variable. The pygmo
-build system will attempt to construct an appropriate
-installation path for the Python module by combining
-the value of ``CMAKE_INSTALL_PREFIX`` with the directory
-paths of the Python installation in use in a platform-dependent
-manner.
+The ``PYGMO_INSTALL_PATH`` option is particularly important. If you
+want to install pygmo locally instead of globally (which is in general
+a good idea), you can set this variable to the output of
+``python -m site --user-site``.
 
-For instance, on a typical Linux installation
-of Python 3.6,
-``CMAKE_INSTALL_PREFIX`` will be set by default to
-``/usr/local``, and the pygmo build system will
-append ``lib/python3.6/site-packages`` to the install prefix.
-Thus, the overall install path for the pygmo module will be
-``/usr/local/lib/python3.6/site-packages``. If you want
-to avoid system-wide installations (which require root
-privileges), on Unix-like system it is possible to set
-the ``CMAKE_INSTALL_PREFIX`` variable to the directory
-``.local`` in your ``$HOME`` (e.g., ``/home/username/.local``).
-The pygmo install path will then be, in this case,
-``/home/username/.local/lib/python3.6/site-packages``,
-a path which is normally recognised by Python installations
-without the need to modify the ``PYTHONPATH`` variable.
-If you install pygmo in non-standard prefixes, you may
-have to tweak your Python installation in order for the
-Python interpreter to find the pygmo module.
-
-A typical CMake invocation for pygmo may then
-look something like this:
-
-.. code-block:: console
-
-   $ cmake ../ -DCMAKE_INSTALL_PREFIX=~/.local
-
-That is, we will be installing pygmo into our home
-directory into the ``.local``
-subdirectory. If CMake runs without errors, we can then proceed to actually
+After configuring the build with CMake, we can then proceed to actually
 building pygmo:
 
 .. code-block:: console
