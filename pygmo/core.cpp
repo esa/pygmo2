@@ -111,6 +111,8 @@ struct py_wait_locks {
 
 PYBIND11_MODULE(core, m)
 {
+    using namespace pybind11::literals;
+
 #if PY_MAJOR_VERSION == 3 && PY_MINOR_VERSION < 9
     // This function needs to be called before doing anything with threads.
     // https://docs.python.org/3/c-api/init.html
@@ -583,7 +585,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::population>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::population>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::population>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::population>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::population>,
                         &pygmo::pickle_setstate_wrapper<pg::population>))
@@ -678,7 +680,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::archipelago>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::archipelago>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::archipelago>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::archipelago>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::archipelago>,
                         &pygmo::pickle_setstate_wrapper<pg::archipelago>))
@@ -778,7 +780,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::problem>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::problem>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::problem>, &pygmo::pickle_setstate_wrapper<pg::problem>))
         // UDP extraction.
@@ -908,7 +910,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::algorithm>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::algorithm>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::algorithm>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::algorithm>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::algorithm>, &pygmo::pickle_setstate_wrapper<pg::algorithm>))
         // UDA extraction.
@@ -944,7 +946,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::bfe>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::bfe>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::bfe>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::bfe>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::bfe>, &pygmo::pickle_setstate_wrapper<pg::bfe>))
         // UDBFE extraction.
@@ -976,7 +978,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::island>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::island>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::island>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::island>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::island>, &pygmo::pickle_setstate_wrapper<pg::island>))
         // UDI extraction.
@@ -1014,7 +1016,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::r_policy>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::r_policy>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::r_policy>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::r_policy>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::r_policy>, &pygmo::pickle_setstate_wrapper<pg::r_policy>))
         // UDRP extraction.
@@ -1050,7 +1052,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::s_policy>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::s_policy>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::s_policy>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::s_policy>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::s_policy>, &pygmo::pickle_setstate_wrapper<pg::s_policy>))
         // UDSP extraction.
@@ -1085,7 +1087,7 @@ PYBIND11_MODULE(core, m)
         .def("__repr__", &pygmo::ostream_repr<pg::topology>)
         // Copy and deepcopy.
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::topology>)
-        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::topology>)
+        .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::topology>, "memo"_a)
         // Pickle support.
         .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::topology>, &pygmo::pickle_setstate_wrapper<pg::topology>))
         // UDT extraction.
