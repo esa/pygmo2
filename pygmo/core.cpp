@@ -10,12 +10,9 @@
 #include <exception>
 #include <limits>
 #include <memory>
-#include <sstream>
 #include <string>
 #include <tuple>
 #include <vector>
-
-#include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -34,7 +31,6 @@
 #include <pagmo/population.hpp>
 #include <pagmo/r_policy.hpp>
 #include <pagmo/rng.hpp>
-#include <pagmo/s11n.hpp>
 #include <pagmo/s_policy.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/topology.hpp>
@@ -65,9 +61,9 @@
 #include "expose_s_policies.hpp"
 #include "expose_topologies.hpp"
 #include "island.hpp"
-#include "object_serialization.hpp"
 #include "problem.hpp"
 #include "r_policy.hpp"
+#include "s11n_wrappers.hpp"
 #include "s_policy.hpp"
 #include "topology.hpp"
 
@@ -107,103 +103,6 @@ struct py_wait_locks {
     gil_releaser gr;
 };
 
-// Serialization helpers for population.
-py::tuple population_pickle_getstate(const pg::population &pop)
-{
-    std::ostringstream oss;
-    {
-        boost::archive::binary_oarchive oarchive(oss);
-        oarchive << pop;
-    }
-    auto s = oss.str();
-    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
-}
-
-pg::population population_pickle_setstate(py::tuple state)
-{
-    if (py::len(state) != 1) {
-        py_throw(PyExc_ValueError, ("the state tuple passed for population deserialization "
-                                    "must have 1 element, but instead it has "
-                                    + std::to_string(py::len(state)) + " element(s)")
-                                       .c_str());
-    }
-
-    auto ptr = PyBytes_AsString(state[0].ptr());
-    if (!ptr) {
-        py_throw(PyExc_TypeError, "a bytes object is needed to deserialize a population");
-    }
-
-    std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len(state[0])));
-    pg::population pop;
-    {
-        boost::archive::binary_iarchive iarchive(iss);
-        iarchive >> pop;
-    }
-
-    return pop;
-}
-
-// Serialization helpers for archi.
-py::tuple archipelago_pickle_getstate(const pg::archipelago &archi)
-{
-    std::ostringstream oss;
-    {
-        boost::archive::binary_oarchive oarchive(oss);
-        oarchive << archi;
-    }
-    auto s = oss.str();
-    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
-}
-
-pg::archipelago archipelago_pickle_setstate(py::tuple state)
-{
-    if (py::len(state) != 1) {
-        py_throw(PyExc_ValueError, ("the state tuple passed for archipelago deserialization "
-                                    "must have 1 element, but instead it has "
-                                    + std::to_string(py::len(state)) + " element(s)")
-                                       .c_str());
-    }
-
-    auto ptr = PyBytes_AsString(state[0].ptr());
-    if (!ptr) {
-        py_throw(PyExc_TypeError, "a bytes object is needed to deserialize an archipelago");
-    }
-
-    std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len(state[0])));
-    pg::archipelago archi;
-    {
-        boost::archive::binary_iarchive iarchive(iss);
-        iarchive >> archi;
-    }
-
-    return archi;
-}
-
-// Test that the serialization of pybind11 objects works as expected.
-// The object returned by this function should be identical to the input
-// object.
-py::object test_object_serialization(const py::object &o)
-{
-    std::ostringstream oss;
-    {
-        boost::archive::binary_oarchive oarchive(oss);
-        oarchive << object_to_vchar(o);
-    }
-    const std::string tmp_str = oss.str();
-    std::istringstream iss;
-    iss.str(tmp_str);
-    py::object retval;
-    {
-        boost::archive::binary_iarchive iarchive(iss);
-        std::vector<char> tmp;
-        iarchive >> tmp;
-        retval = vchar_to_object(tmp);
-    }
-    return retval;
-}
-
 } // namespace
 
 } // namespace detail
@@ -212,9 +111,12 @@ py::object test_object_serialization(const py::object &o)
 
 PYBIND11_MODULE(core, m)
 {
+#if PY_MAJOR_VERSION == 3 && PY_MINOR_VERSION < 9
     // This function needs to be called before doing anything with threads.
     // https://docs.python.org/3/c-api/init.html
+    // NOTE: this is deprecated and does nothing since Python 3.9.
     PyEval_InitThreads();
+#endif
 
     // Disable automatic function signatures in the docs.
     // NOTE: the 'options' object needs to stay alive
@@ -234,7 +136,6 @@ PYBIND11_MODULE(core, m)
     m.def("_type", &pygmo::type);
     m.def("_builtins", &pygmo::builtins);
     m.def("_deepcopy", &pygmo::deepcopy);
-    m.def("_test_object_serialization", &pygmo::detail::test_object_serialization);
     m.def("_max_unsigned", []() {
         // Small helper function to get the max value of unsigned.
         return std::numeric_limits<unsigned>::max();
@@ -684,7 +585,8 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::population>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::population>)
         // Pickle support.
-        .def(py::pickle(&pygmo::detail::population_pickle_getstate, &pygmo::detail::population_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::population>,
+                        &pygmo::pickle_setstate_wrapper<pg::population>))
         .def(
             "push_back",
             [](pg::population &pop, const py::array_t<double> &x, const py::object &f) {
@@ -778,7 +680,8 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::archipelago>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::archipelago>)
         // Pickle support.
-        .def(py::pickle(&pygmo::detail::archipelago_pickle_getstate, &pygmo::detail::archipelago_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::archipelago>,
+                        &pygmo::pickle_setstate_wrapper<pg::archipelago>))
         // Size.
         .def("__len__", &pg::archipelago::size)
         .def(
@@ -877,7 +780,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::problem>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::problem>)
         // Pickle support.
-        .def(py::pickle(&pygmo::problem_pickle_getstate, &pygmo::problem_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::problem>, &pygmo::pickle_setstate_wrapper<pg::problem>))
         // UDP extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::problem>)
         // Problem methods.
@@ -1007,7 +910,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::algorithm>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::algorithm>)
         // Pickle support.
-        .def(py::pickle(&pygmo::algorithm_pickle_getstate, &pygmo::algorithm_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::algorithm>, &pygmo::pickle_setstate_wrapper<pg::algorithm>))
         // UDA extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::algorithm>)
         // Algorithm methods.
@@ -1043,7 +946,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::bfe>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::bfe>)
         // Pickle support.
-        .def(py::pickle(&pygmo::bfe_pickle_getstate, &pygmo::bfe_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::bfe>, &pygmo::pickle_setstate_wrapper<pg::bfe>))
         // UDBFE extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::bfe>)
         // Bfe methods.
@@ -1075,7 +978,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::island>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::island>)
         // Pickle support.
-        .def(py::pickle(&pygmo::island_pickle_getstate, &pygmo::island_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::island>, &pygmo::pickle_setstate_wrapper<pg::island>))
         // UDI extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::island>)
         .def(
@@ -1113,7 +1016,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::r_policy>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::r_policy>)
         // Pickle support.
-        .def(py::pickle(&pygmo::r_policy_pickle_getstate, &pygmo::r_policy_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::r_policy>, &pygmo::pickle_setstate_wrapper<pg::r_policy>))
         // UDRP extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::r_policy>)
         // r_policy methods.
@@ -1149,7 +1052,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::s_policy>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::s_policy>)
         // Pickle support.
-        .def(py::pickle(&pygmo::s_policy_pickle_getstate, &pygmo::s_policy_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::s_policy>, &pygmo::pickle_setstate_wrapper<pg::s_policy>))
         // UDSP extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::s_policy>)
         // s_policy methods.
@@ -1184,7 +1087,7 @@ PYBIND11_MODULE(core, m)
         .def("__copy__", &pygmo::generic_copy_wrapper<pg::topology>)
         .def("__deepcopy__", &pygmo::generic_deepcopy_wrapper<pg::topology>)
         // Pickle support.
-        .def(py::pickle(&pygmo::topology_pickle_getstate, &pygmo::topology_pickle_setstate))
+        .def(py::pickle(&pygmo::pickle_getstate_wrapper<pg::topology>, &pygmo::pickle_setstate_wrapper<pg::topology>))
         // UDT extraction.
         .def("_py_extract", &pygmo::generic_py_extract<pg::topology>)
         // Topology methods.

@@ -7,18 +7,17 @@ set -x
 set -e
 
 # Core deps.
-sudo apt-get install build-essential wget
+sudo apt-get install wget
 
 # Install conda+deps.
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
-conda config --add channels conda-forge --force
-conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle networkx dill numba pybind11 sphinx nbsphinx sphinx_rtd_theme scipy"
-conda create -q -p $deps_dir -y
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.7 numpy cloudpickle networkx dill numba pybind11 sphinx nbsphinx sphinx_rtd_theme scipy
 source activate $deps_dir
-conda install $conda_pkgs -y
 
 # Install pagmo.
 git clone https://github.com/esa/pagmo2.git
@@ -48,14 +47,7 @@ python circleci_additional_tests.py
 
 # Build the documentation.
 cd ~/project/doc
-export SPHINX_OUTPUT=`make html linkcheck 2>&1 |grep -v Warning  > /dev/null`;
-
-if [[ "${SPHINX_OUTPUT}" != "" ]]; then
-    echo "Sphinx encountered some problem:";
-    echo "${SPHINX_OUTPUT}";
-    exit 1;
-fi
-echo "Sphinx ran successfully";
+make html linkcheck
 
 # Run the doctests.
 make doctest;

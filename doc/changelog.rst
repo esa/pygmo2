@@ -3,6 +3,25 @@
 Changelog
 =========
 
+2.18.0 (unreleased)
+-------------------
+
+Changes
+~~~~~~~
+
+- Various internal changes to the pickling implementation
+  (`#79 <https://github.com/esa/pygmo2/pull/79>`__).
+- pygmo now requires pagmo >= 2.18
+  (`#79 <https://github.com/esa/pygmo2/pull/79>`__).
+
+Fix
+~~~
+
+- Fix build in debug mode with Python >= 3.9
+  (`#79 <https://github.com/esa/pygmo2/pull/79>`__).
+- Various doc and build system fixes
+  (`#79 <https://github.com/esa/pygmo2/pull/79>`__).
+
 2.16.1 (2020-12-22)
 -------------------
 

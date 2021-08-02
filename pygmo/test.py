@@ -46,7 +46,7 @@ class core_test_case(_ut.TestCase):
 
     def runTest(self):
         from numpy import random, all, array
-        from .core import _builtins, _type, _str, _callable, _deepcopy, _test_object_serialization as tos
+        from .core import _builtins, _type, _str, _callable, _deepcopy
         from . import __version__
         self.assertTrue(__version__ != "")
         import builtins as b
@@ -58,11 +58,6 @@ class core_test_case(_ut.TestCase):
         l = [1, 2, 3, ["abc"]]
         self.assert_(id(l) != id(_deepcopy(l)))
         self.assert_(id(l[3]) != id(_deepcopy(l)[3]))
-        self.assertEqual(tos(l), l)
-        self.assertEqual(tos({'a': l, 3: "Hello world"}),
-                         {'a': l, 3: "Hello world"})
-        a = random.rand(3, 2)
-        self.assert_(all(tos(a) == a))
 
         # Run the tests for the selection of the serialization backend.
         self.run_s11n_test()

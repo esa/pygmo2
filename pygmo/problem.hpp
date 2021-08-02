@@ -106,14 +106,4 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
 // Register the prob_inner specialisation for py::object.
 PAGMO_S11N_PROBLEM_EXPORT_KEY(pybind11::object)
 
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-py::tuple problem_pickle_getstate(const pagmo::problem &);
-pagmo::problem problem_pickle_setstate(py::tuple);
-
-} // namespace pygmo
-
 #endif

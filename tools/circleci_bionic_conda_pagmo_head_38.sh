@@ -7,18 +7,17 @@ set -x
 set -e
 
 # Core deps.
-sudo apt-get install build-essential wget
+sudo apt-get install wget
 
 # Install conda+deps.
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
-conda config --add channels conda-forge --force
-conda_pkgs="cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.6 numpy cloudpickle networkx dill numba pybind11 scipy"
-conda create -q -p $deps_dir -y
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.8 numpy cloudpickle networkx dill numba pybind11 scipy
 source activate $deps_dir
-conda install $conda_pkgs -y
 
 # Install pagmo.
 git clone https://github.com/esa/pagmo2.git
@@ -41,6 +40,10 @@ cd
 
 # Run the test suite.
 python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
+
+# Run the additional tests.
+cd ~/project/tools
+python circleci_additional_tests.py
 
 set +e
 set +x

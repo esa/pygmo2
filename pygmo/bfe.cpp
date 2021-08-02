@@ -7,26 +7,21 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #include <memory>
-#include <sstream>
 #include <string>
 #include <typeindex>
 #include <typeinfo>
-#include <vector>
-
-#include <boost/numeric/conversion/cast.hpp>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <pagmo/config.hpp>
 #include <pagmo/problem.hpp>
-#include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
 
 #include "bfe.hpp"
 #include "common_utils.hpp"
-#include "object_serialization.hpp"
+#include "s11n_wrappers.hpp"
 
 namespace pagmo
 {
@@ -107,17 +102,13 @@ void *bfe_inner<py::object>::get_ptr()
 template <typename Archive>
 void bfe_inner<py::object>::save(Archive &ar, unsigned) const
 {
-    ar << boost::serialization::base_object<bfe_inner_base>(*this);
-    ar << pygmo::object_to_vchar(m_value);
+    pygmo::inner_class_save<bfe_inner_base>(ar, *this);
 }
 
 template <typename Archive>
 void bfe_inner<py::object>::load(Archive &ar, unsigned)
 {
-    ar >> boost::serialization::base_object<bfe_inner_base>(*this);
-    std::vector<char> v;
-    ar >> v;
-    m_value = pygmo::vchar_to_object(v);
+    pygmo::inner_class_load<bfe_inner_base>(ar, *this);
 }
 
 } // namespace detail
@@ -125,53 +116,3 @@ void bfe_inner<py::object>::load(Archive &ar, unsigned)
 } // namespace pagmo
 
 PAGMO_S11N_BFE_IMPLEMENT(pybind11::object)
-
-namespace pygmo
-{
-
-namespace py = pybind11;
-
-// Serialization support for the bfe class.
-py::tuple bfe_pickle_getstate(const pagmo::bfe &b)
-{
-    // The idea here is that first we extract a char array
-    // into which b has been serialized, then we turn
-    // this object into a Python bytes object and return that.
-    std::ostringstream oss;
-    {
-        boost::archive::binary_oarchive oarchive(oss);
-        oarchive << b;
-    }
-    auto s = oss.str();
-    return py::make_tuple(py::bytes(s.data(), boost::numeric_cast<py::size_t>(s.size())));
-}
-
-pagmo::bfe bfe_pickle_setstate(py::tuple state)
-{
-    // Similarly, first we extract a bytes object from the Python state,
-    // and then we build a C++ string from it. The string is then used
-    // to deserialized the object.
-    if (py::len(state) != 1) {
-        pygmo::py_throw(PyExc_ValueError, ("the state tuple passed for bfe deserialization "
-                                           "must have 1 element, but instead it has "
-                                           + std::to_string(py::len(state)) + " element(s)")
-                                              .c_str());
-    }
-
-    auto ptr = PyBytes_AsString(state[0].ptr());
-    if (!ptr) {
-        pygmo::py_throw(PyExc_TypeError, "a bytes object is needed to deserialize a bfe");
-    }
-
-    std::istringstream iss;
-    iss.str(std::string(ptr, ptr + py::len(state[0])));
-    pagmo::bfe b;
-    {
-        boost::archive::binary_iarchive iarchive(iss);
-        iarchive >> b;
-    }
-
-    return b;
-}
-
-} // namespace pygmo
