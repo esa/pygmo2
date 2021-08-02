@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Island class &mdash; pygmo 2.16.1 documentation</title>
+  <title>Island class &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +59,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +69,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +94,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
@@ -156,6 +160,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -169,7 +175,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/island.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -211,8 +217,8 @@
 <h1>Island class<a class="headerlink" href="#island-class" title="Permalink to this headline">¶</a></h1>
 <img alt="_images/island_no_text.png" src="_images/island_no_text.png" />
 <dl class="py class">
-<dt id="pygmo.island">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">island</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">island</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island" title="Permalink to this definition">¶</a></dt>
 <dd><p>Island class.</p>
 <p>In the pygmo jargon, an island is a class that encapsulates the following entities:</p>
 <ul class="simple">
@@ -290,7 +296,7 @@ island’s algorithm and population, the UDI, if not specified, will be chosen a
 and the replacement/selection policies are given by <em>r_pol</em> and <em>s_pol</em>).</p></li>
 </ul>
 <p>If the keyword arguments list is invalid, a <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.9)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> exception will be raised.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/island.html#_CPPv4N5pagmo6islandE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:island</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/island.html#_CPPv4N5pagmo6islandE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:island</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -316,8 +322,8 @@ and the replacement/selection policies are given by <em>r_pol</em> and <em>s_pol
 </dd>
 </dl>
 <dl class="py method">
-<dt id="pygmo.island.evolve">
-<code class="sig-name descname">evolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.evolve" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.evolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Launch evolution.</p>
 <p>This method will evolve the island’s <a class="reference internal" href="population.html#pygmo.population" title="pygmo.population"><code class="xref py py-class docutils literal notranslate"><span class="pre">population</span></code></a> using the island’s <a class="reference internal" href="algorithm.html#pygmo.algorithm" title="pygmo.algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">algorithm</span></code></a>.
 The evolution happens asynchronously: a call to <a class="reference internal" href="#pygmo.island.evolve" title="pygmo.island.evolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">evolve()</span></code></a> will create an evolution task that
@@ -360,8 +366,8 @@ attribute can be used to query the status of the asynchronous operations in the 
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.extract">
-<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.extract" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.extract" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the user-defined island.</p>
 <p>This method allows to extract a reference to the user-defined island (UDI) stored within this
 <a class="reference internal" href="#pygmo.island" title="pygmo.island"><code class="xref py py-class docutils literal notranslate"><span class="pre">island</span></code></a> instance. The behaviour of this function depends on the value
@@ -369,7 +375,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDI is <em>t</em>, then a reference to the UDI will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/island.html#_CPPv4I0ENK5pagmo6island7extractEPK1Tv" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:island::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/island.html#_CPPv4I0ENK5pagmo6island7extractEPK1Tv" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:island::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDI is a Python object (as opposed to an
 <a class="reference internal" href="islands.html#islands-cpp"><span class="std std-ref">exposed C++ island</span></a>), then a reference to the
 UDI will be returned (this allows to extract a Python UDI without knowing its type),</p></li>
@@ -408,8 +414,8 @@ UDI will be returned (this allows to extract a Python UDI without knowing its ty
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.get_algorithm">
-<code class="sig-name descname">get_algorithm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_algorithm" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.get_algorithm">
+<span class="sig-name descname"><span class="pre">get_algorithm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_algorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the algorithm.</p>
 <p>It is safe to call this method while the island is evolving.</p>
 <dl class="field-list simple">
@@ -426,8 +432,8 @@ UDI will be returned (this allows to extract a Python UDI without knowing its ty
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.get_extra_info">
-<code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_extra_info" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.get_extra_info">
+<span class="sig-name descname"><span class="pre">get_extra_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Island’s extra info.</p>
 <p>If the UDI provides a <code class="docutils literal notranslate"><span class="pre">get_extra_info()</span></code> method, then this method will return the output of its <code class="docutils literal notranslate"><span class="pre">get_extra_info()</span></code>
 method. Otherwise, an empty string will be returned.</p>
@@ -446,8 +452,8 @@ method. Otherwise, an empty string will be returned.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.get_name">
-<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Island’s name.</p>
 <p>If the UDI provides a <code class="docutils literal notranslate"><span class="pre">get_name()</span></code> method, then this method will return the output of its <code class="docutils literal notranslate"><span class="pre">get_name()</span></code> method.
 Otherwise, an implementation-defined name based on the type of the UDI will be returned.</p>
@@ -466,8 +472,8 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.get_population">
-<code class="sig-name descname">get_population</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_population" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.get_population">
+<span class="sig-name descname"><span class="pre">get_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_population" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the population.</p>
 <p>It is safe to call this method while the island is evolving.</p>
 <dl class="field-list simple">
@@ -484,8 +490,8 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.get_r_policy">
-<code class="sig-name descname">get_r_policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_r_policy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.get_r_policy">
+<span class="sig-name descname"><span class="pre">get_r_policy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_r_policy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the replacement policy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -498,8 +504,8 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.get_s_policy">
-<code class="sig-name descname">get_s_policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_s_policy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.get_s_policy">
+<span class="sig-name descname"><span class="pre">get_s_policy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.get_s_policy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the selection policy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -512,8 +518,8 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.is_">
-<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.is_" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.is_">
+<span class="sig-name descname"><span class="pre">is_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.is_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the type of the user-defined island.</p>
 <p>This method returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> if <a class="reference internal" href="#pygmo.island.extract" title="pygmo.island.extract"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract(t)</span></code></a> returns
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> otherwise.</p>
@@ -534,8 +540,8 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.set_algorithm">
-<code class="sig-name descname">set_algorithm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algo</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.set_algorithm" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.set_algorithm">
+<span class="sig-name descname"><span class="pre">set_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.set_algorithm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the algorithm.</p>
 <p>It is safe to call this method while the island is evolving.</p>
 <dl class="field-list simple">
@@ -549,8 +555,8 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.set_population">
-<code class="sig-name descname">set_population</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.set_population" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.set_population">
+<span class="sig-name descname"><span class="pre">set_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.set_population" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the population.</p>
 <p>It is safe to call this method while the island is evolving.</p>
 <dl class="field-list simple">
@@ -563,9 +569,9 @@ Otherwise, an implementation-defined name based on the type of the UDI will be r
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pygmo.island.status">
-<em class="property">property </em><code class="sig-name descname">status</code><a class="headerlink" href="#pygmo.island.status" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.island.status">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#pygmo.island.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Status of the island.</p>
 <p>This read-only property will return an <a class="reference internal" href="misc.html#pygmo.evolve_status" title="pygmo.evolve_status"><code class="xref py py-class docutils literal notranslate"><span class="pre">evolve_status</span></code></a> flag indicating the current status of
 asynchronous operations in the island. The flag will be:</p>
@@ -593,8 +599,8 @@ will always return either <code class="docutils literal notranslate"><span class
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.wait">
-<code class="sig-name descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.wait" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.wait">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will block until all the evolution tasks enqueued via <a class="reference internal" href="#pygmo.island.evolve" title="pygmo.island.evolve"><code class="xref py py-func docutils literal notranslate"><span class="pre">evolve()</span></code></a> have been completed.
 Exceptions thrown by the enqueued tasks can be re-raised via <a class="reference internal" href="#pygmo.island.wait_check" title="pygmo.island.wait_check"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait_check()</span></code></a>: they will <strong>not</strong> be
 re-thrown by this method. Also, contrary to <a class="reference internal" href="#pygmo.island.wait_check" title="pygmo.island.wait_check"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait_check()</span></code></a>, this method will <strong>not</strong> reset the
@@ -603,8 +609,8 @@ either the <code class="docutils literal notranslate"><span class="pre">idle</sp
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.island.wait_check">
-<code class="sig-name descname">wait_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.wait_check" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.island.wait_check">
+<span class="sig-name descname"><span class="pre">wait_check</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.island.wait_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>Block until evolution ends and re-raise the first stored exception.</p>
 <p>If one task enqueued after the last call to <a class="reference internal" href="#pygmo.island.wait_check" title="pygmo.island.wait_check"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait_check()</span></code></a> threw an exception, the exception will be re-thrown
 by this method. If more than one task enqueued after the last call to <a class="reference internal" href="#pygmo.island.wait_check" title="pygmo.island.wait_check"><code class="xref py py-func docutils literal notranslate"><span class="pre">wait_check()</span></code></a> threw an exception,
@@ -628,37 +634,29 @@ from all the other tasks that threw will be ignored.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="archipelago.html" class="btn btn-neutral float-right" title="Archipelago class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="population.html" class="btn btn-neutral float-left" title="Population class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="archipelago.html" class="btn btn-neutral float-right" title="Archipelago class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="population.html" class="btn btn-neutral float-left" title="Population class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

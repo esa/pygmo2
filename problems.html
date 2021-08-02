@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>List of problems &mdash; pygmo 2.16.1 documentation</title>
+  <title>List of problems &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +61,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +71,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +96,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
@@ -157,6 +163,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -170,7 +178,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/problems.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -213,8 +221,8 @@
 <div class="section" id="problems-implemented-in-python">
 <span id="problems-py"></span><h2>Problems implemented in Python<a class="headerlink" href="#problems-implemented-in-python" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="pygmo.decorator_problem">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">decorator_problem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decorator_problem" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.decorator_problem">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">decorator_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decorator_problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorator meta-problem.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.9.</span></p>
@@ -277,8 +285,8 @@ read-only property.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="pygmo.decorator_problem.get_decorator">
-<code class="sig-name descname">get_decorator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fname</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decorator_problem.get_decorator" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.decorator_problem.get_decorator">
+<span class="sig-name descname"><span class="pre">get_decorator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decorator_problem.get_decorator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the decorator for the function called <em>fname</em>.</p>
 <p>This method will return a copy of the decorator that has been registered upon construction
 for the function called <em>fname</em>. If no decorator for <em>fname</em> has been specified during
@@ -312,9 +320,9 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pygmo.decorator_problem.inner_problem">
-<em class="property">property </em><code class="sig-name descname">inner_problem</code><a class="headerlink" href="#pygmo.decorator_problem.inner_problem" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.decorator_problem.inner_problem">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">inner_problem</span></span><a class="headerlink" href="#pygmo.decorator_problem.inner_problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inner problem of the meta-problem.</p>
 <p>This read-only property gives direct access to the <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> stored within this meta-problem.</p>
 <dl class="field-list simple">
@@ -333,8 +341,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <div class="section" id="problems-exposed-from-c">
 <span id="problems-cpp"></span><h2>Problems exposed from C++<a class="headerlink" href="#problems-exposed-from-c" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="pygmo.null_problem">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">null_problem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nobj</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">nec</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">nic</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.null_problem" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.null_problem">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">null_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nobj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.null_problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>The null problem.</p>
 <p>A problem used in the default-initialization of <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> and of the meta-problems.</p>
 <dl class="field-list simple">
@@ -357,8 +365,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.cec2014">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">cec2014</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob_id</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2014" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.cec2014">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">cec2014</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2014" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
 <p><span class="versionmodified added">New in version 2.8.</span></p>
 </div>
@@ -377,13 +385,13 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2014.html#_CPPv4N5pagmo7cec2014E" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:cec2014</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2014.html#_CPPv4N5pagmo7cec2014E" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:cec2014</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.cec2013">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">cec2013</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob_id</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2013" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.cec2013">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">cec2013</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2013" title="Permalink to this definition">¶</a></dt>
 <dd><p>The CEC 2013 problem suite (continuous, box-bounded, single-objective problems)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -399,13 +407,13 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2013.html#_CPPv4N5pagmo7cec2013E" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:cec2013</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2013.html#_CPPv4N5pagmo7cec2013E" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:cec2013</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.cec2006">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">cec2006</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob_id</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2006" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.cec2006">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">cec2006</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2006" title="Permalink to this definition">¶</a></dt>
 <dd><p>The CEC 2006 problem suite (continuous, constrained, single-objective problems)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -418,10 +426,10 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2006.html#_CPPv4N5pagmo7cec2006E" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:cec2006</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2006.html#_CPPv4N5pagmo7cec2006E" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:cec2006</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.cec2006.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2006.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.cec2006.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2006.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the CEC 2006 problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -437,8 +445,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.cec2009">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">cec2009</code><span class="sig-paren">(</span><em class="sig-param">prob_id = 1</em>, <em class="sig-param">is_constrained = false</em>, <em class="sig-param">dim = 30u</em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2009" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.cec2009">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">cec2009</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">prob_id</span> <span class="pre">=</span> <span class="pre">1</span></em>, <em class="sig-param"><span class="pre">is_constrained</span> <span class="pre">=</span> <span class="pre">false</span></em>, <em class="sig-param"><span class="pre">dim</span> <span class="pre">=</span> <span class="pre">30u</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cec2009" title="Permalink to this definition">¶</a></dt>
 <dd><p>The CEC 2009 problem suite (continuous, constrained, single-objective problems)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -455,13 +463,13 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2009.html#_CPPv4N5pagmo7cec2009E" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:cec2009</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/cec2009.html#_CPPv4N5pagmo7cec2009E" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:cec2009</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.rosenbrock">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">rosenbrock</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rosenbrock" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.rosenbrock">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">rosenbrock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rosenbrock" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Rosenbrock problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -474,10 +482,10 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/rosenbrock.html#_CPPv4N5pagmo10rosenbrockE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:rosenbrock</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/rosenbrock.html#_CPPv4N5pagmo10rosenbrockE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:rosenbrock</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.rosenbrock.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rosenbrock.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.rosenbrock.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rosenbrock.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the Rosenbrock problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -493,13 +501,13 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.rastrigin">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">rastrigin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rastrigin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.rastrigin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">rastrigin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rastrigin" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Rastrigin problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/rastrigin.html#_CPPv4N5pagmo9rastriginE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:rastrigin</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/rastrigin.html#_CPPv4N5pagmo9rastriginE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:rastrigin</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.rastrigin.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rastrigin.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.rastrigin.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.rastrigin.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the Rastrigin problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -515,8 +523,8 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.minlp_rastrigin">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">minlp_rastrigin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim_c</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dim_i</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.minlp_rastrigin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.minlp_rastrigin">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">minlp_rastrigin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.minlp_rastrigin" title="Permalink to this definition">¶</a></dt>
 <dd><p>The scalable MINLP Rastrigin problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -532,18 +540,18 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/minlp_rastrigin.html#_CPPv4N5pagmo15minlp_rastriginE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:minlp_rastrigin</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/minlp_rastrigin.html#_CPPv4N5pagmo15minlp_rastriginE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:minlp_rastrigin</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.schwefel">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">schwefel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.schwefel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.schwefel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">schwefel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.schwefel" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Schwefel problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/schwefel.html#_CPPv4N5pagmo8schwefelE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:schwefel</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/schwefel.html#_CPPv4N5pagmo8schwefelE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:schwefel</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.schwefel.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.schwefel.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.schwefel.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.schwefel.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the Schwefel problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -559,13 +567,13 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.ackley">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">ackley</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ackley" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.ackley">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">ackley</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ackley" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Ackley problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/ackley.html#_CPPv4N5pagmo6ackleyE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:ackley</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/ackley.html#_CPPv4N5pagmo6ackleyE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:ackley</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.ackley.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ackley.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.ackley.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.ackley.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the Ackley problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -581,13 +589,13 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.griewank">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">griewank</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.griewank" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.griewank">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">griewank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.griewank" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Griewank problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/griewank.html#_CPPv4N5pagmo8griewankE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:griewank</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/griewank.html#_CPPv4N5pagmo8griewankE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:griewank</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.griewank.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.griewank.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.griewank.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.griewank.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the Griewank problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -603,29 +611,29 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.lennard_jones">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">lennard_jones</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">atoms</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.lennard_jones" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.lennard_jones">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">lennard_jones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.lennard_jones" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Lennard Jones Cluster problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/lennard_jones.html#_CPPv4N5pagmo13lennard_jonesE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:lennard_jones</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/lennard_jones.html#_CPPv4N5pagmo13lennard_jonesE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:lennard_jones</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.golomb_ruler">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">golomb_ruler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">order</span></em>, <em class="sig-param"><span class="n">upper_bound</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.golomb_ruler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.golomb_ruler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">golomb_ruler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.golomb_ruler" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Golomb Ruler Problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/golomb_ruler.html#_CPPv4N5pagmo12golomb_rulerE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:golomb_ruler</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/golomb_ruler.html#_CPPv4N5pagmo12golomb_rulerE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:golomb_ruler</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.zdt">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">zdt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob_id</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">param</span><span class="o">=</span><span class="default_value">30</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.zdt" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.zdt">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">zdt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.zdt" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ZDT problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/zdt.html#_CPPv4N5pagmo3zdtE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:zdt</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/zdt.html#_CPPv4N5pagmo3zdtE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:zdt</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.zdt.p_distance">
-<code class="sig-name descname">p_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.zdt.p_distance" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.zdt.p_distance">
+<span class="sig-name descname"><span class="pre">p_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.zdt.p_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>p_distance(pop)</p>
 <p>Convergence metric for decision vectors (0 = on the optimal front)</p>
 <p>Introduced by Martens and Izzo, this metric is able to measure “a distance” of any point from
@@ -651,8 +659,8 @@ the pareto front of any DTLZ problem analytically.</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.dtlz">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">dtlz</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob_id</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">fdim</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.dtlz" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.dtlz">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">dtlz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fdim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.dtlz" title="Permalink to this definition">¶</a></dt>
 <dd><p>The DTLZ problem suite problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -670,10 +678,10 @@ the pareto front of any DTLZ problem analytically.</p>
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/dtlz.html#_CPPv4N5pagmo4dtlzE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:dtlz</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/dtlz.html#_CPPv4N5pagmo4dtlzE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:dtlz</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.dtlz.p_distance">
-<code class="sig-name descname">p_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.dtlz.p_distance" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.dtlz.p_distance">
+<span class="sig-name descname"><span class="pre">p_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.dtlz.p_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>p_distance(pop)</p>
 <p>Convergence metric for decision vectors (0 = on the optimal front)</p>
 <p>Introduced by Martens and Izzo, this metric is able to measure “a distance” of any point from
@@ -696,8 +704,8 @@ the pareto front of any DTLZ problem analytically.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.dtlz.plot">
-<code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span></em>, <em class="sig-param"><span class="n">az</span><span class="o">=</span><span class="default_value">40</span></em>, <em class="sig-param"><span class="n">comp</span><span class="o">=</span><span class="default_value">[0, 1, 2]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.dtlz.plot" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.dtlz.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">az</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.dtlz.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots solutions to the DTLZ problems in three dimensions. The Pareto Front is also
 visualized if the problem id is 2,3 or 4.</p>
 <dl class="field-list simple">
@@ -709,13 +717,10 @@ visualized if the problem id is 2,3 or 4.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the current <code class="docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code> instance on the current figure</p>
+<dd class="field-even"><p>the current axes instance on the current figure</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code></p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>pop</em> does not contain a DTLZ problem (veryfied by its name only) or if <em>comp</em> is not of length 3</p>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>pop</em> does not contain a DTLZ problem (veryfied by its name only) or if <em>comp</em> is not of length 3</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -731,21 +736,21 @@ visualized if the problem id is 2,3 or 4.</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.inventory">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">inventory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">weeks</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">sample_size</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">random</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.inventory" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.inventory">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">inventory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weeks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">random</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.inventory" title="Permalink to this definition">¶</a></dt>
 <dd><p>The inventory problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/inventory.html#_CPPv4N5pagmo9inventoryE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:inventory</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/inventory.html#_CPPv4N5pagmo9inventoryE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:inventory</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.hock_schittkowsky_71">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">hock_schittkowsky_71</code><a class="headerlink" href="#pygmo.hock_schittkowsky_71" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hock_schittkowsky_71">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">hock_schittkowsky_71</span></span><a class="headerlink" href="#pygmo.hock_schittkowsky_71" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Hock-Schittkowsky 71 problem.</p>
-<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/hock_schittkowsky_71.html#_CPPv4N5pagmo20hock_schittkowsky_71E" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hock_schittkowsky_71</span></code></a>.</p>
+<p>See <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/hock_schittkowsky_71.html#_CPPv4N5pagmo20hock_schittkowsky_71E" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hock_schittkowsky_71</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.hock_schittkowsky_71.best_known">
-<code class="sig-name descname">best_known</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hock_schittkowsky_71.best_known" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hock_schittkowsky_71.best_known">
+<span class="sig-name descname"><span class="pre">best_known</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hock_schittkowsky_71.best_known" title="Permalink to this definition">¶</a></dt>
 <dd><p>The best known solution for the Hock-Schittkowsky 71 problem.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -761,8 +766,8 @@ visualized if the problem id is 2,3 or 4.</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.luksan_vlcek1">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">luksan_vlcek1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.luksan_vlcek1" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.luksan_vlcek1">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">luksan_vlcek1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.luksan_vlcek1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implementation of Example 5.1 in the report from Luksan and Vlcek.</p>
 <p>The problem is also known as the Chained Rosenbrock function with trigonometric-exponential constraints.</p>
 <p>Its formulation in pygmo is written as:</p>
@@ -784,13 +789,13 @@ constrained optimization.” (1999). <a class="reference external" href="http://
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.9)"><strong>OverflowError</strong></a> – if <em>dim</em> is negative or greater than an implementation-defined value</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/luksan_vlcek1.html#_CPPv4N5pagmo13luksan_vlcek1E" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:luksan_vlcek1</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/luksan_vlcek1.html#_CPPv4N5pagmo13luksan_vlcek1E" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:luksan_vlcek1</span></code></a>.</p>
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.translate">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">translation</span><span class="o">=</span><span class="default_value">[0.0]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.translate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.translate">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.translate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The translate meta-problem.</p>
 <p>This meta-problem translates the whole search space of an input <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> or
 user-defined problem (UDP) by a fixed translation vector. <a class="reference internal" href="#pygmo.translate" title="pygmo.translate"><code class="xref py py-class docutils literal notranslate"><span class="pre">translate</span></code></a> objects
@@ -815,9 +820,9 @@ are user-defined problems that can be used in the construction of a <a class="re
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="pygmo.translate.inner_problem">
-<em class="property">property </em><code class="sig-name descname">inner_problem</code><a class="headerlink" href="#pygmo.translate.inner_problem" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.translate.inner_problem">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">inner_problem</span></span><a class="headerlink" href="#pygmo.translate.inner_problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inner problem of the meta-problem.</p>
 <p>This read-only property gives direct access to the <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> stored within this meta-problem.</p>
 <dl class="field-list simple">
@@ -830,9 +835,9 @@ are user-defined problems that can be used in the construction of a <a class="re
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pygmo.translate.translation">
-<em class="property">property </em><code class="sig-name descname">translation</code><a class="headerlink" href="#pygmo.translate.translation" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.translate.translation">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#pygmo.translate.translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translation vector.</p>
 <p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the translation vector used in the
 construction of this problem.</p>
@@ -850,8 +855,8 @@ construction of this problem.</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.decompose">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">decompose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">weight</span><span class="o">=</span><span class="default_value">[0.5, 0.5]</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">[0.0, 0.0]</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'weighted'</span></em>, <em class="sig-param"><span class="n">adapt_ideal</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decompose" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.decompose">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">decompose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.5,</span> <span class="pre">0.5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.0,</span> <span class="pre">0.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weighted'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapt_ideal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decompose" title="Permalink to this definition">¶</a></dt>
 <dd><p>The decompose meta-problem.</p>
 <p>This meta-problem <em>decomposes</em> a multi-objective input user-defined problem,
 resulting in a single-objective user-defined problem with a fitness function combining the
@@ -917,9 +922,9 @@ to be the ideal point</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="pygmo.decompose.inner_problem">
-<em class="property">property </em><code class="sig-name descname">inner_problem</code><a class="headerlink" href="#pygmo.decompose.inner_problem" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.decompose.inner_problem">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">inner_problem</span></span><a class="headerlink" href="#pygmo.decompose.inner_problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inner problem of the meta-problem.</p>
 <p>This read-only property gives direct access to the <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> stored within this meta-problem.</p>
 <dl class="field-list simple">
@@ -933,8 +938,8 @@ to be the ideal point</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.decompose.original_fitness">
-<code class="sig-name descname">original_fitness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decompose.original_fitness" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.decompose.original_fitness">
+<span class="sig-name descname"><span class="pre">original_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.decompose.original_fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fitness of the original problem.</p>
 <p>Returns the fitness of the original multi-objective problem used to construct the decomposed problem.</p>
 <dl class="field-list simple">
@@ -954,9 +959,9 @@ to be the ideal point</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pygmo.decompose.z">
-<em class="property">property </em><code class="sig-name descname">z</code><a class="headerlink" href="#pygmo.decompose.z" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.decompose.z">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#pygmo.decompose.z" title="Permalink to this definition">¶</a></dt>
 <dd><p>Current reference point.</p>
 <p>This read-only property contains the reference point to be used for the decomposition. This is only
 used for Tchebycheff and boundary interception decomposition methods.</p>
@@ -979,8 +984,8 @@ used for Tchebycheff and boundary interception decomposition methods.</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.unconstrain">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">unconstrain</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'death penalty'</span></em>, <em class="sig-param"><span class="n">weights</span><span class="o">=</span><span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.unconstrain" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.unconstrain">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">unconstrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'death</span> <span class="pre">penalty'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.unconstrain" title="Permalink to this definition">¶</a></dt>
 <dd><p>The unconstrain meta-problem.</p>
 <p>This meta-problem transforms a constrained problem into an unconstrained problem applying one of the following methods:</p>
 <ul class="simple">
@@ -1023,9 +1028,9 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="pygmo.unconstrain.inner_problem">
-<em class="property">property </em><code class="sig-name descname">inner_problem</code><a class="headerlink" href="#pygmo.unconstrain.inner_problem" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.unconstrain.inner_problem">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">inner_problem</span></span><a class="headerlink" href="#pygmo.unconstrain.inner_problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inner problem of the meta-problem.</p>
 <p>This read-only property gives direct access to the <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> stored within this meta-problem.</p>
 <dl class="field-list simple">
@@ -1042,8 +1047,8 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.wfg">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">wfg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob_id</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">dim_dvs</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">dim_obj</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">dim_k</span><span class="o">=</span><span class="default_value">4</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.wfg" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.wfg">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">wfg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_dvs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.wfg" title="Permalink to this definition">¶</a></dt>
 <dd><p>The WFG problem suite.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1063,7 +1068,7 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/wfg.html#_CPPv4N5pagmo3wfgE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:wfg</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problems/wfg.html#_CPPv4N5pagmo3wfgE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:wfg</span></code></a>.</p>
 </dd></dl>
 
 </div>
@@ -1074,37 +1079,29 @@ Proceedings 6th European Congress on Intelligent Techniques &amp; Soft Computing
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="algorithms.html" class="btn btn-neutral float-right" title="List of algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="misc.html" class="btn btn-neutral float-left" title="Miscellanea" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="algorithms.html" class="btn btn-neutral float-right" title="List of algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="misc.html" class="btn btn-neutral float-left" title="Miscellanea" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

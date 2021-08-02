@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Hypervolume utilities &mdash; pygmo 2.16.1 documentation</title>
+  <title>Hypervolume utilities &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +59,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +69,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +94,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
@@ -153,6 +157,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -166,7 +172,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/hv_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -207,8 +213,8 @@
 <div class="section" id="hypervolume-utilities">
 <h1>Hypervolume utilities<a class="headerlink" href="#hypervolume-utilities" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="pygmo.hypervolume">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">hypervolume</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">hypervolume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hypervolume Class</p>
 <p>Constructor from points</p>
 <dl class="field-list simple">
@@ -225,7 +231,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hv</span> <span class="o">=</span> <span class="n">hypervolume</span><span class="p">(</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
 <p>__init__(pop)</p>
 <p>Constructor from population</p>
 <dl class="field-list simple">
@@ -242,10 +248,10 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hv</span> <span class="o">=</span> <span class="n">hypervolume</span><span class="p">(</span><span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4N5pagmo11hypervolumeE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume</span></code></a>.</p>
 <dl class="py method">
-<dt id="pygmo.hypervolume.compute">
-<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">hv_algo</span><span class="o">=</span><span class="default_value">auto</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.compute" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hv_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">auto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the hypervolume with the supplied algorithm. If no algorithm
 is supplied,  then an exact hypervolume algorithm is automatically selected
 specific for the point dimension.</p>
@@ -266,12 +272,12 @@ specific for the point dimension.</p>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not dominated by the nadir point</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume7computeERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::compute()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume7computeERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::compute()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.hypervolume.contributions">
-<code class="sig-name descname">contributions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">hv_algo</span><span class="o">=</span><span class="default_value">auto</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.contributions" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume.contributions">
+<span class="sig-name descname"><span class="pre">contributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hv_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">auto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.contributions" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the exclusive contribution to the hypervolume of every point.
 According to <em>hv_algo</em> this computation can be implemented optimally (as opposed to calling
 for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pygmo.hypervolume.exclusive"><code class="xref py py-func docutils literal notranslate"><span class="pre">exclusive()</span></code></a> in a loop).</p>
@@ -292,12 +298,12 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume13contributionsERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::contributions()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume13contributionsERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::contributions()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.hypervolume.exclusive">
-<code class="sig-name descname">exclusive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">idx</span></em>, <em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">hv_algo</span><span class="o">=</span><span class="default_value">auto</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.exclusive" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume.exclusive">
+<span class="sig-name descname"><span class="pre">exclusive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hv_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">auto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.exclusive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the exclusive contribution to the hypervolume of a particular point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -320,12 +326,12 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 </ul>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume9exclusiveEjRK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::exclusive()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume9exclusiveEjRK13vector_doubleR12hv_algorithm" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::exclusive()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.hypervolume.greatest_contributor">
-<code class="sig-name descname">greatest_contributor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">hv_algo</span><span class="o">=</span><span class="default_value">auto</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.greatest_contributor" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume.greatest_contributor">
+<span class="sig-name descname"><span class="pre">greatest_contributor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hv_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">auto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.greatest_contributor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the point contributing the most to the total hypervolume.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -338,12 +344,12 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume20greatest_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::greatest_contributor()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume20greatest_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::greatest_contributor()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.hypervolume.least_contributor">
-<code class="sig-name descname">least_contributor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ref_point</span></em>, <em class="sig-param"><span class="n">hv_algo</span><span class="o">=</span><span class="default_value">auto</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.least_contributor" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume.least_contributor">
+<span class="sig-name descname"><span class="pre">least_contributor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hv_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">auto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.least_contributor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the point contributing the least to the total hypervolume.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -356,12 +362,12 @@ for <a class="reference internal" href="#pygmo.hypervolume.exclusive" title="pyg
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>ref_point</em> is not suitable</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume17least_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::least_contributor()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume17least_contributorERK13vector_doubleR12hv_algorithm" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::least_contributor()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.hypervolume.refpoint">
-<code class="sig-name descname">refpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">offset</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.refpoint" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hypervolume.refpoint">
+<span class="sig-name descname"><span class="pre">refpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hypervolume.refpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a mock refpoint by taking the maximum in each dimension over all points saved in the hypervolume object.
 The result is a point that is necessarily dominated by all other points, and thus can be used for hypervolume computations.</p>
 <p>This point is different from the one computed by <a class="reference internal" href="mo_utils.html#pygmo.nadir" title="pygmo.nadir"><code class="xref py py-func docutils literal notranslate"><span class="pre">nadir()</span></code></a> as only the non dominated front is considered
@@ -377,15 +383,15 @@ in that method (also its complexity is thus higher)</p>
 <dd class="field-odd"><p>1D NumPy float array</p>
 </dd>
 </dl>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume8refpointEd" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::refpoint()</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/hypervolume.html#_CPPv4NK5pagmo11hypervolume8refpointEd" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:hypervolume::refpoint()</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.hvwfg">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">hvwfg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stop_dimension</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hvwfg" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hvwfg">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">hvwfg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.hvwfg" title="Permalink to this definition">¶</a></dt>
 <dd><p>The hypervolume algorithm from the Walking Fish Group (2011 version).</p>
 <p>This object can be passed as parameter to the various methods of the
 class <a class="reference internal" href="#pygmo.hypervolume" title="pygmo.hypervolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">hypervolume</span></code></a> as it derives from the hidden base
@@ -408,8 +414,8 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.hv2d">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">hv2d</code><a class="headerlink" href="#pygmo.hv2d" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hv2d">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">hv2d</span></span><a class="headerlink" href="#pygmo.hv2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exact hypervolume algorithm for two dimensional points.</p>
 <p>This object can be passed as parameter to the various methods of the
 class <a class="reference internal" href="#pygmo.hypervolume" title="pygmo.hypervolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">hypervolume</span></code></a> as it derives from the hidden base
@@ -424,8 +430,8 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.hv3d">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">hv3d</code><a class="headerlink" href="#pygmo.hv3d" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.hv3d">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">hv3d</span></span><a class="headerlink" href="#pygmo.hv3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exact hypervolume algorithm for three dimensional points.</p>
 <p>This object can be passed as parameter to the various methods of the
 class <a class="reference internal" href="#pygmo.hypervolume" title="pygmo.hypervolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">hypervolume</span></code></a> as it derives from the hidden base
@@ -440,8 +446,8 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.bf_fpras">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">bf_fpras</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">random</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bf_fpras" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bf_fpras">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">bf_fpras</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">random</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bf_fpras" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bringmann-Friedrich approximation method. Implementation of the Bringmann-Friedrich approximation scheme (FPRAS),
 reduced to the special case of approximating the hypervolume indicator.</p>
 <p>This object can be passed as parameter to the various methods of the
@@ -457,8 +463,8 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="pygmo.bf_approx">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">bf_approx</code><a class="headerlink" href="#pygmo.bf_approx" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bf_approx">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">bf_approx</span></span><a class="headerlink" href="#pygmo.bf_approx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bringmann-Friedrich approximation method. Implementation of the Bringmann-Friedrich approximation scheme (FPRAS),
 reduced to the special case of approximating the least contributor.</p>
 <p>This object can be passed as parameter to the various methods of the
@@ -479,37 +485,29 @@ class <code class="xref py py-class docutils literal notranslate"><span class="p
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="genetic_op_utils.html" class="btn btn-neutral float-right" title="Generic optimization utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="gh_utils.html" class="btn btn-neutral float-left" title="Gradient and Hessians utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="genetic_op_utils.html" class="btn btn-neutral float-right" title="Generic optimization utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="gh_utils.html" class="btn btn-neutral float-left" title="Gradient and Hessians utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

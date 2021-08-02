@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Generic optimization utilities &mdash; pygmo 2.16.1 documentation</title>
+  <title>Generic optimization utilities &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +59,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +69,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +94,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
@@ -153,6 +157,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -166,7 +172,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/genetic_op_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -207,8 +213,8 @@
 <div class="section" id="generic-optimization-utilities">
 <h1>Generic optimization utilities<a class="headerlink" href="#generic-optimization-utilities" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="pygmo.sbx_crossover">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">sbx_crossover</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parent1</span></em>, <em class="sig-param"><span class="n">parent2</span></em>, <em class="sig-param"><span class="n">bounds</span></em>, <em class="sig-param"><span class="n">nix</span></em>, <em class="sig-param"><span class="n">p_cr</span></em>, <em class="sig-param"><span class="n">eta_c</span></em>, <em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.sbx_crossover" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.sbx_crossover">
+<span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">sbx_crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.sbx_crossover" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will perform a binary crossover on the continuous parts of the two chromosomes
 <em>parent1</em> and <em>parent2</em> and a two-point crossover on their integer parts. The crossover will
 only happen with a probability <em>p_cr</em>. If that is the case, each continuous component of the chromosomes
@@ -226,7 +232,7 @@ will be crossovered with a probability of 0.5.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>: containing the two crossovered chromosomes</p>
+<dd class="field-even"><p>of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: containing the two crossovered chromosomes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
@@ -246,8 +252,8 @@ will be crossovered with a probability of 0.5.</p>
 
 <hr class="docutils" />
 <dl class="py function">
-<dt id="pygmo.polynomial_mutation">
-<code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">polynomial_mutation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dv</span></em>, <em class="sig-param"><span class="n">bounds</span></em>, <em class="sig-param"><span class="n">nix</span></em>, <em class="sig-param"><span class="n">p_m</span></em>, <em class="sig-param"><span class="n">eta_m</span></em>, <em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.polynomial_mutation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.polynomial_mutation">
+<span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">polynomial_mutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.polynomial_mutation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will perform a polynomial mutation over the continuous part of the chromosme <em>dv</em>
 and a uniform mutation on the remaining integer part.</p>
 <dl class="field-list simple">
@@ -262,7 +268,7 @@ and a uniform mutation on the remaining integer part.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>: containing the two crossovered chromosomes</p>
+<dd class="field-even"><p>of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: containing the two crossovered chromosomes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
@@ -287,37 +293,29 @@ and a uniform mutation on the remaining integer part.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="plotting.html" class="btn btn-neutral float-right" title="Plotting utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="hv_utils.html" class="btn btn-neutral float-left" title="Hypervolume utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="plotting.html" class="btn btn-neutral float-right" title="Plotting utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="hv_utils.html" class="btn btn-neutral float-left" title="Hypervolume utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

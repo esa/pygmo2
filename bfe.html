@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Batch fitness evaluator &mdash; pygmo 2.16.1 documentation</title>
+  <title>Batch fitness evaluator &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +61,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +71,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +96,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
@@ -156,6 +162,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -169,7 +177,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/bfe.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -210,8 +218,8 @@
 <div class="section" id="batch-fitness-evaluator">
 <h1>Batch fitness evaluator<a class="headerlink" href="#batch-fitness-evaluator" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="pygmo.bfe">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">bfe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">udbfe</span><span class="o">=</span><span class="default_value">default_bfe()</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">bfe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">udbfe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_bfe()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch fitness evaluator.</p>
 <p>This class implements the evaluation of decision vectors in batch mode. That is,
 whereas a <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> provides the means to evaluate a single decision
@@ -254,7 +262,7 @@ stored contiguously).</p>
 </div>
 <p>See the documentation of the corresponding methods in this class for details on how the optional
 methods in the UDBFE are used by <a class="reference internal" href="#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4N5pagmo3bfeE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:bfe</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4N5pagmo3bfeE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:bfe</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udbfe</strong> – a user-defined batch fitness evaluator, either C++ or Python</p>
@@ -270,8 +278,8 @@ methods in the UDBFE are used by <a class="reference internal" href="#pygmo.bfe"
 </dd>
 </dl>
 <dl class="py method">
-<dt id="pygmo.bfe.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prob</span></em>, <em class="sig-param"><span class="n">dvs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.__call__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dvs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call operator.</p>
 <p>The call operator will invoke the internal UDBFE instance to perform the evaluation in batch mode
 of the decision vectors stored in <em>dvs</em> using the input <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> or UDP <em>prob</em>,
@@ -307,8 +315,8 @@ will occupy the range <span class="math notranslate nohighlight">\(\left[f, 2f\r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.bfe.extract">
-<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.extract" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.extract" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the user-defined batch fitness evaluator (bfe).</p>
 <p>This method allows to extract a reference to the user-defined bfe (UDBFE) stored within this
 <a class="reference internal" href="#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a> instance. The behaviour of this function depends on the value
@@ -316,7 +324,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDBFE is <em>t</em>, then a reference to the UDBFE will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4I0ENK5pagmo3bfe7extractEPK1Tv" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:bfe::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/bfe.html#_CPPv4I0ENK5pagmo3bfe7extractEPK1Tv" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:bfe::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDBFE is a Python object (as opposed to an
 <a class="reference internal" href="bfes.html#bfes-cpp"><span class="std std-ref">exposed C++ bfe</span></a>), then a reference to the
 UDBFE will be returned (this allows to extract a Python UDBFE without knowing its type),</p></li>
@@ -353,8 +361,8 @@ UDBFE will be returned (this allows to extract a Python UDBFE without knowing it
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.bfe.get_extra_info">
-<code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_extra_info" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe.get_extra_info">
+<span class="sig-name descname"><span class="pre">get_extra_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bfe’s extra info.</p>
 <p>If the UDBFE provides a <code class="docutils literal notranslate"><span class="pre">get_extra_info()</span></code> method, then this method will return the output of its <code class="docutils literal notranslate"><span class="pre">get_extra_info()</span></code>
 method. Otherwise, an empty string will be returned.</p>
@@ -372,8 +380,8 @@ method. Otherwise, an empty string will be returned.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.bfe.get_name">
-<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bfe’s name.</p>
 <p>If the UDBFE provides a <code class="docutils literal notranslate"><span class="pre">get_name()</span></code> method, then this method will return the output of its <code class="docutils literal notranslate"><span class="pre">get_name()</span></code> method.
 Otherwise, an implementation-defined name based on the type of the UDBFE will be returned.</p>
@@ -388,8 +396,8 @@ Otherwise, an implementation-defined name based on the type of the UDBFE will be
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.bfe.get_thread_safety">
-<code class="sig-name descname">get_thread_safety</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_thread_safety" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe.get_thread_safety">
+<span class="sig-name descname"><span class="pre">get_thread_safety</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.get_thread_safety" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bfe’s thread safety level.</p>
 <p>This method will return a value of the enum <a class="reference internal" href="misc.html#pygmo.thread_safety" title="pygmo.thread_safety"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.thread_safety</span></code></a> which indicates the thread safety level
 of the UDBFE. Unlike in C++, in Python it is not possible to re-implement this method in the UDBFE. That is, for C++
@@ -406,8 +414,8 @@ UDBFEs, the returned value will be unconditionally <code class="docutils literal
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.bfe.is_">
-<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.is_" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.bfe.is_">
+<span class="sig-name descname"><span class="pre">is_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.bfe.is_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the type of the user-defined batch fitness evaluator.</p>
 <p>This method returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> if <a class="reference internal" href="#pygmo.bfe.extract" title="pygmo.bfe.extract"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract(t)</span></code></a> returns
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> otherwise.</p>
@@ -436,37 +444,29 @@ UDBFEs, the returned value will be unconditionally <code class="docutils literal
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="topology.html" class="btn btn-neutral float-right" title="Topology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="archipelago.html" class="btn btn-neutral float-left" title="Archipelago class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="topology.html" class="btn btn-neutral float-right" title="Topology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="archipelago.html" class="btn btn-neutral float-left" title="Archipelago class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

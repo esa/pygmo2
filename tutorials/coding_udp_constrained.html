@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Coding a User Defined Problem with constraints (NLP) &mdash; pygmo 2.16.1 documentation</title>
+  <title>Coding a User Defined Problem with constraints (NLP) &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="../_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -55,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="../index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +71,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +96,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Capabilities</a></li>
@@ -159,6 +165,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -172,7 +180,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/tutorials/coding_udp_constrained.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -330,7 +338,7 @@ Consider the following script:</p>
 3696 times the gradient (each corresponding to 6 fitness evaluations in our case, since <a class="reference internal" href="../gh_utils.html#pygmo.estimate_gradient_h" title="pygmo.estimate_gradient_h"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.estimate_gradient_h()</span></code></a>) is used
 to estimate the gradient numerically.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#METHOD B</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="n">uda</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">mbh</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">nlopt</span><span class="p">(</span><span class="s2">&quot;slsqp&quot;</span><span class="p">),</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">perturb</span> <span class="o">=</span> <span class="o">.</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="n">uda</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">mbh</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">nlopt</span><span class="p">(</span><span class="s2">&quot;slsqp&quot;</span><span class="p">),</span> <span class="n">stop</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">perturb</span> <span class="o">=</span> <span class="mf">.2</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># in this case this correspond to logs each 1 call to slsqp</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">prob</span> <span class="o">=</span> <span class="n">my_constrained_udp</span><span class="p">(),</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">c_tol</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1E-6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
@@ -401,7 +409,7 @@ Consider here only one case: the problem <code class="docutils literal notransla
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Start adding the numerical gradient (low-precision) to the UDP</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">problem</span><span class="p">(</span><span class="n">add_gradient</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">cec2006</span><span class="p">(</span><span class="n">prob_id</span> <span class="o">=</span> <span class="mi">7</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Define a solution strategy (SQP method)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="n">uda</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">mbh</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">nlopt</span><span class="p">(</span><span class="s2">&quot;slsqp&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="o">.</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">algo</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">algorithm</span><span class="p">(</span><span class="n">uda</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">mbh</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">nlopt</span><span class="p">(</span><span class="s2">&quot;slsqp&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">.2</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Solve the problem</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pop</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span> 
@@ -427,37 +435,29 @@ for constrained real-parameter optimization.” Evolutionary Computation, 2006. 
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="coding_udp_minlp.html" class="btn btn-neutral float-right" title="Coding a User Defined Problem with an integer part (MINLP)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="coding_udp_simple.html" class="btn btn-neutral float-left" title="Coding a simple User Defined Problem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="coding_udp_minlp.html" class="btn btn-neutral float-right" title="Coding a User Defined Problem with an integer part (MINLP)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="coding_udp_simple.html" class="btn btn-neutral float-left" title="Coding a simple User Defined Problem" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

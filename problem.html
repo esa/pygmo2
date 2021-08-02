@@ -3,22 +3,27 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Problem class &mdash; pygmo 2.16.1 documentation</title>
+  <title>Problem class &mdash; pygmo 2.18.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
   
+
   
+  
+
   
 
   
@@ -28,12 +33,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -55,7 +61,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> pygmo
+            <a href="index.html" class="icon icon-home"> pygmo
           
 
           
@@ -65,7 +71,7 @@
             
             
               <div class="version">
-                2.16.1
+                2.18.0
               </div>
             
           
@@ -90,7 +96,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
@@ -156,6 +162,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -169,7 +177,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/problem.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -211,8 +219,8 @@
 <h1>Problem class<a class="headerlink" href="#problem-class" title="Permalink to this headline">¶</a></h1>
 <img alt="_images/prob_no_text.png" src="_images/prob_no_text.png" />
 <dl class="py class">
-<dt id="pygmo.problem">
-<em class="property">class </em><code class="sig-prename descclassname">pygmo.</code><code class="sig-name descname">problem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">udp</span><span class="o">=</span><span class="default_value">null_problem()</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">udp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">null_problem()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Problem class.</p>
 <p>This class represents a generic <em>mathematical programming</em> or <em>evolutionary optimization</em> problem in the form:</p>
 <div class="math notranslate nohighlight">
@@ -300,7 +308,7 @@ methods in the UDP should be implemented and on how they are used by <a class="r
 Note that the exposed C++ problems can also be used as UDPs, even if they do not expose any of the
 mandatory or optional methods listed above (see <a class="reference internal" href="problems.html#problems"><span class="std std-ref">here</span></a> for the
 full list of UDPs already coded in pygmo).</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4N5pagmo7problemE" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:problem</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4N5pagmo7problemE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:problem</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udp</strong> – a user-defined problem, either C++ or Python</p>
@@ -322,8 +330,8 @@ full list of UDPs already coded in pygmo).</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="pygmo.problem.batch_fitness">
-<code class="sig-name descname">batch_fitness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dvs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.batch_fitness" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.batch_fitness">
+<span class="sig-name descname"><span class="pre">batch_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dvs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.batch_fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method implements the evaluation of multiple decision vectors in batch mode
 by invoking the <code class="docutils literal notranslate"><span class="pre">batch_fitness()</span></code> method of the UDP. The <code class="docutils literal notranslate"><span class="pre">batch_fitness()</span></code>
 method of the UDP accepts in input a batch of decision vectors, <em>dvs</em>, stored contiguously:
@@ -362,9 +370,9 @@ and it must return the fitness vectors as an iterable Python object (e.g., 1D Nu
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pygmo.problem.c_tol">
-<em class="property">property </em><code class="sig-name descname">c_tol</code><a class="headerlink" href="#pygmo.problem.c_tol" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pygmo.problem.c_tol">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">c_tol</span></span><a class="headerlink" href="#pygmo.problem.c_tol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constraints tolerance.</p>
 <p>This property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> that are used when checking for constraint feasibility.
 The dimension of the array is <span class="math notranslate nohighlight">\(n_{ec} + n_{ic}\)</span> (i.e., the total number of constraints), and
@@ -395,7 +403,7 @@ will be set to the provided scalar value.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">c_tol</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">c_tol</span>
 <span class="go">array([1., 2.])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">c_tol</span> <span class="o">=</span> <span class="o">.</span><span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">c_tol</span> <span class="o">=</span> <span class="mf">.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">c_tol</span>
 <span class="go">array([0.5, 0.5])</span>
 </pre></div>
@@ -403,8 +411,8 @@ will be set to the provided scalar value.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.extract">
-<code class="sig-name descname">extract</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.extract" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.extract" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract the user-defined problem.</p>
 <p>This method allows to extract a reference to the user-defined problem (UDP) stored within this
 <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> instance. The behaviour of this function depends on the value
@@ -412,7 +420,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDP is <em>t</em>, then a reference to the UDP will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4I0ENK5pagmo7problem7extractEPK1Tv" title="(in pagmo v2.16.1)"><code class="docutils literal notranslate"><span class="pre">:problem::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/problem.html#_CPPv4I0ENK5pagmo7problem7extractEPK1Tv" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:problem::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDP is a Python object (as opposed to an
 <a class="reference internal" href="problems.html#problems-cpp"><span class="std std-ref">exposed C++ problem</span></a>), then a reference to the
 UDP will be returned (this allows to extract a Python UDP without knowing its type),</p></li>
@@ -453,8 +461,8 @@ UDP will be returned (this allows to extract a Python UDP without knowing its ty
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.feasibility_f">
-<code class="sig-name descname">feasibility_f</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.feasibility_f" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.feasibility_f">
+<span class="sig-name descname"><span class="pre">feasibility_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.feasibility_f" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will check the feasibility of a fitness vector <em>f</em> against the tolerances returned by
 <a class="reference internal" href="#pygmo.problem.c_tol" title="pygmo.problem.c_tol"><code class="xref py py-attr docutils literal notranslate"><span class="pre">c_tol</span></code></a>.</p>
 <dl class="field-list simple">
@@ -475,8 +483,8 @@ UDP will be returned (this allows to extract a Python UDP without knowing its ty
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.feasibility_x">
-<code class="sig-name descname">feasibility_x</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.feasibility_x" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.feasibility_x">
+<span class="sig-name descname"><span class="pre">feasibility_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.feasibility_x" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method will check the feasibility of the fitness corresponding to a decision vector <em>x</em> against
 the tolerances returned by <a class="reference internal" href="#pygmo.problem.c_tol" title="pygmo.problem.c_tol"><code class="xref py py-attr docutils literal notranslate"><span class="pre">c_tol</span></code></a>.</p>
 <p>This will cause one fitness evaluation.</p>
@@ -498,8 +506,8 @@ the tolerances returned by <a class="reference internal" href="#pygmo.problem.c_
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.fitness">
-<code class="sig-name descname">fitness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dv</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.fitness" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.fitness">
+<span class="sig-name descname"><span class="pre">fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fitness.</p>
 <p>This method will invoke the <code class="docutils literal notranslate"><span class="pre">fitness()</span></code> method of the UDP to compute the fitness of the
 input decision vector <em>dv</em>. The return value of the <code class="docutils literal notranslate"><span class="pre">fitness()</span></code> method of the UDP is expected to have a
@@ -534,8 +542,8 @@ return the fitness vector as an iterable Python object (e.g., 1D NumPy array, li
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_bounds">
-<code class="sig-name descname">get_bounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_bounds" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_bounds">
+<span class="sig-name descname"><span class="pre">get_bounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Box-bounds.</p>
 <p>This method will return the box-bounds <span class="math notranslate nohighlight">\((\mathbf{lb}, \mathbf{ub})\)</span> of the problem,
 as returned by the <code class="docutils literal notranslate"><span class="pre">get_bounds()</span></code> method of the UDP. Infinities in the bounds are allowed.</p>
@@ -558,8 +566,8 @@ of a <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_extra_info">
-<code class="sig-name descname">get_extra_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_extra_info" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_extra_info">
+<span class="sig-name descname"><span class="pre">get_extra_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_extra_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Problem’s extra info.</p>
 <p>If the UDP provides a <code class="docutils literal notranslate"><span class="pre">get_extra_info()</span></code> method, then this method will return the output of its <code class="docutils literal notranslate"><span class="pre">get_extra_info()</span></code>
 method. Otherwise, an empty string will be returned.</p>
@@ -577,8 +585,8 @@ method. Otherwise, an empty string will be returned.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_fevals">
-<code class="sig-name descname">get_fevals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_fevals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_fevals">
+<span class="sig-name descname"><span class="pre">get_fevals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_fevals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of fitness evaluations.</p>
 <p>Each time a call to <a class="reference internal" href="#pygmo.problem.fitness" title="pygmo.problem.fitness"><code class="xref py py-func docutils literal notranslate"><span class="pre">fitness()</span></code></a> successfully completes, an internal counter
 is increased by one. The counter is initialised to zero upon problem construction and it is never
@@ -594,8 +602,8 @@ reset. Copy operations copy the counter as well.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_gevals">
-<code class="sig-name descname">get_gevals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_gevals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_gevals">
+<span class="sig-name descname"><span class="pre">get_gevals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_gevals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of gradient evaluations.</p>
 <p>Each time a call to <a class="reference internal" href="#pygmo.problem.gradient" title="pygmo.problem.gradient"><code class="xref py py-func docutils literal notranslate"><span class="pre">gradient()</span></code></a> successfully completes, an internal counter
 is increased by one. The counter is initialised to zero upon problem construction and it is never
@@ -611,8 +619,8 @@ reset. Copy operations copy the counter as well.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_hevals">
-<code class="sig-name descname">get_hevals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_hevals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_hevals">
+<span class="sig-name descname"><span class="pre">get_hevals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_hevals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of hessians evaluations.</p>
 <p>Each time a call to <a class="reference internal" href="#pygmo.problem.hessians" title="pygmo.problem.hessians"><code class="xref py py-func docutils literal notranslate"><span class="pre">hessians()</span></code></a> successfully completes, an internal counter
 is increased by one. The counter is initialised to zero upon problem construction and it is never
@@ -628,8 +636,8 @@ reset. Copy operations copy the counter as well.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_lb">
-<code class="sig-name descname">get_lb</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_lb" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_lb">
+<span class="sig-name descname"><span class="pre">get_lb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_lb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lower box-bounds.</p>
 <p>This method will return the lower box-bounds for this problem. See <a class="reference internal" href="#pygmo.problem.get_bounds" title="pygmo.problem.get_bounds"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bounds()</span></code></a>
 for a detailed explanation of how the bounds are determined.</p>
@@ -648,8 +656,8 @@ for a detailed explanation of how the bounds are determined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_name">
-<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Problem’s name.</p>
 <p>If the UDP provides a <code class="docutils literal notranslate"><span class="pre">get_name()</span></code> method, then this method will return the output of its <code class="docutils literal notranslate"><span class="pre">get_name()</span></code> method.
 Otherwise, an implementation-defined name based on the type of the UDP will be returned.</p>
@@ -664,8 +672,8 @@ Otherwise, an implementation-defined name based on the type of the UDP will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nc">
-<code class="sig-name descname">get_nc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nc" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nc">
+<span class="sig-name descname"><span class="pre">get_nc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total number of constraints.</p>
 <p>This method will return the sum of the output of <a class="reference internal" href="#pygmo.problem.get_nic" title="pygmo.problem.get_nic"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_nic()</span></code></a> and
 <a class="reference internal" href="#pygmo.problem.get_nec" title="pygmo.problem.get_nec"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_nec()</span></code></a> (i.e., the total number of constraints).</p>
@@ -680,8 +688,8 @@ Otherwise, an implementation-defined name based on the type of the UDP will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_ncx">
-<code class="sig-name descname">get_ncx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_ncx" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_ncx">
+<span class="sig-name descname"><span class="pre">get_ncx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_ncx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Continuous dimension of the problem.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{cx}\)</span>, the continuous dimension of the problem.</p>
 <dl class="field-list simple">
@@ -695,8 +703,8 @@ Otherwise, an implementation-defined name based on the type of the UDP will be r
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nec">
-<code class="sig-name descname">get_nec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nec" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nec">
+<span class="sig-name descname"><span class="pre">get_nec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of equality constraints.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{ec}\)</span>, the number of equality constraints of the problem.</p>
 <p>The optional <code class="docutils literal notranslate"><span class="pre">get_nec()</span></code> method of the UDP must return the number of equality constraints as an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.
@@ -714,8 +722,8 @@ of a <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nf">
-<code class="sig-name descname">get_nf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nf" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nf">
+<span class="sig-name descname"><span class="pre">get_nf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dimension of the fitness.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{f}\)</span>, the dimension of the fitness, which is the sum of
 <span class="math notranslate nohighlight">\(n_{obj}\)</span>, <span class="math notranslate nohighlight">\(n_{ec}\)</span> and <span class="math notranslate nohighlight">\(n_{ic}\)</span>.</p>
@@ -730,8 +738,8 @@ of a <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nic">
-<code class="sig-name descname">get_nic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nic" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nic">
+<span class="sig-name descname"><span class="pre">get_nic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of inequality constraints.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{ic}\)</span>, the number of inequality constraints of the problem.</p>
 <p>The optional <code class="docutils literal notranslate"><span class="pre">get_nic()</span></code> method of the UDP must return the number of inequality constraints as an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.
@@ -749,8 +757,8 @@ of a <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nix">
-<code class="sig-name descname">get_nix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nix" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nix">
+<span class="sig-name descname"><span class="pre">get_nix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Integer dimension of the problem.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{ix}\)</span>, the integer dimension of the problem.</p>
 <p>The optional <code class="docutils literal notranslate"><span class="pre">get_nix()</span></code> method of the UDP must return the problem’s integer dimension as an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.
@@ -768,8 +776,8 @@ of a <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nobj">
-<code class="sig-name descname">get_nobj</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nobj" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nobj">
+<span class="sig-name descname"><span class="pre">get_nobj</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nobj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of objectives.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{obj}\)</span>, the number of objectives of the problem.</p>
 <p>The optional <code class="docutils literal notranslate"><span class="pre">get_nobj()</span></code> method of the UDP must return the number of objectives as an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>.
@@ -787,8 +795,8 @@ of a <a class="reference internal" href="#pygmo.problem" title="pygmo.problem"><
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_nx">
-<code class="sig-name descname">get_nx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nx" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_nx">
+<span class="sig-name descname"><span class="pre">get_nx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_nx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dimension of the problem.</p>
 <p>This method will return <span class="math notranslate nohighlight">\(n_{x}\)</span>, the dimension of the problem as established by the length of
 the bounds returned by <a class="reference internal" href="#pygmo.problem.get_bounds" title="pygmo.problem.get_bounds"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bounds()</span></code></a>.</p>
@@ -803,8 +811,8 @@ the bounds returned by <a class="reference internal" href="#pygmo.problem.get_bo
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_thread_safety">
-<code class="sig-name descname">get_thread_safety</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_thread_safety" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_thread_safety">
+<span class="sig-name descname"><span class="pre">get_thread_safety</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_thread_safety" title="Permalink to this definition">¶</a></dt>
 <dd><p>Problem’s thread safety level.</p>
 <p>This method will return a value of the enum <a class="reference internal" href="misc.html#pygmo.thread_safety" title="pygmo.thread_safety"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.thread_safety</span></code></a> which indicates the thread safety level
 of the UDP. Unlike in C++, in Python it is not possible to re-implement this method in the UDP. That is, for C++
@@ -821,8 +829,8 @@ UDPs, the returned value will be unconditionally <code class="docutils literal n
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.get_ub">
-<code class="sig-name descname">get_ub</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_ub" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.get_ub">
+<span class="sig-name descname"><span class="pre">get_ub</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.get_ub" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upper box-bounds.</p>
 <p>This method will return the upper box-bounds for this problem. See <a class="reference internal" href="#pygmo.problem.get_bounds" title="pygmo.problem.get_bounds"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_bounds()</span></code></a>
 for a detailed explanation of how the bounds are determined.</p>
@@ -841,8 +849,8 @@ for a detailed explanation of how the bounds are determined.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.gradient">
-<code class="sig-name descname">gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dv</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.gradient" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.gradient">
+<span class="sig-name descname"><span class="pre">gradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.gradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gradient.</p>
 <p>This method will compute the gradient of the input decision vector <em>dv</em> by invoking
 the <code class="docutils literal notranslate"><span class="pre">gradient()</span></code> method of the UDP. The <code class="docutils literal notranslate"><span class="pre">gradient()</span></code> method of the UDP must return
@@ -882,8 +890,8 @@ list, tuple, etc.).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.gradient_sparsity">
-<code class="sig-name descname">gradient_sparsity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.gradient_sparsity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.gradient_sparsity">
+<span class="sig-name descname"><span class="pre">gradient_sparsity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.gradient_sparsity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gradient sparsity pattern.</p>
 <p>This method will return the gradient sparsity pattern of the problem. The gradient sparsity pattern is a lexicographically sorted
 collection of the indices <span class="math notranslate nohighlight">\((i,j)\)</span> of the non-zero elements of <span class="math notranslate nohighlight">\(g_{ij} = \frac{\partial f_i}{\partial x_j}\)</span>.</p>
@@ -925,8 +933,8 @@ containing each exactly 2 elements representing the indices <span class="math no
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.has_batch_fitness">
-<code class="sig-name descname">has_batch_fitness</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_batch_fitness" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.has_batch_fitness">
+<span class="sig-name descname"><span class="pre">has_batch_fitness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_batch_fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the <code class="docutils literal notranslate"><span class="pre">batch_fitness()</span></code> method is available in the UDP.</p>
 <p>This method will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the <code class="docutils literal notranslate"><span class="pre">batch_fitness()</span></code> method is available in the UDP, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>The availability of the <code class="docutils literal notranslate"><span class="pre">batch_fitness()</span></code> method is determined as follows:</p>
@@ -950,8 +958,8 @@ implement the <code class="docutils literal notranslate"><span class="pre">batch
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.has_gradient">
-<code class="sig-name descname">has_gradient</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_gradient" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.has_gradient">
+<span class="sig-name descname"><span class="pre">has_gradient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_gradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the gradient is available in the UDP.</p>
 <p>This method will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the gradient is available in the UDP, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>The availability of the gradient is determined as follows:</p>
@@ -975,8 +983,8 @@ implement the <code class="docutils literal notranslate"><span class="pre">gradi
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.has_gradient_sparsity">
-<code class="sig-name descname">has_gradient_sparsity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_gradient_sparsity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.has_gradient_sparsity">
+<span class="sig-name descname"><span class="pre">has_gradient_sparsity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_gradient_sparsity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the gradient sparsity is available in the UDP.</p>
 <p>This method will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the gradient sparsity is available in the UDP, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>The availability of the gradient sparsity is determined as follows:</p>
@@ -1006,8 +1014,8 @@ pattern of the gradient is dense. See <a class="reference internal" href="#pygmo
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.has_hessians">
-<code class="sig-name descname">has_hessians</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_hessians" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.has_hessians">
+<span class="sig-name descname"><span class="pre">has_hessians</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_hessians" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the hessians are available in the UDP.</p>
 <p>This method will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the hessians are available in the UDP, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>The availability of the hessians is determined as follows:</p>
@@ -1031,8 +1039,8 @@ implement the <code class="docutils literal notranslate"><span class="pre">hessi
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.has_hessians_sparsity">
-<code class="sig-name descname">has_hessians_sparsity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_hessians_sparsity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.has_hessians_sparsity">
+<span class="sig-name descname"><span class="pre">has_hessians_sparsity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_hessians_sparsity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the hessians sparsity is available in the UDP.</p>
 <p>This method will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the hessians sparsity is available in the UDP, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>The availability of the hessians sparsity is determined as follows:</p>
@@ -1062,8 +1070,8 @@ pattern of the hessians is dense. See <a class="reference internal" href="#pygmo
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.has_set_seed">
-<code class="sig-name descname">has_set_seed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_set_seed" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.has_set_seed">
+<span class="sig-name descname"><span class="pre">has_set_seed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.has_set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if the <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method is available in the UDP.</p>
 <p>This method will return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method is available in the UDP, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <p>The availability of the <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method is determined as follows:</p>
@@ -1087,8 +1095,8 @@ implement the <code class="docutils literal notranslate"><span class="pre">set_s
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.hessians">
-<code class="sig-name descname">hessians</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dv</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.hessians" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.hessians">
+<span class="sig-name descname"><span class="pre">hessians</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.hessians" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hessians.</p>
 <p>This method will compute the hessians of the input decision vector <em>dv</em> by invoking
 the <code class="docutils literal notranslate"><span class="pre">hessians()</span></code> method of the UDP. The <code class="docutils literal notranslate"><span class="pre">hessians()</span></code> method of the UDP must return
@@ -1128,8 +1136,8 @@ array, and it must return the hessians vector as an iterable Python object (e.g.
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.hessians_sparsity">
-<code class="sig-name descname">hessians_sparsity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.hessians_sparsity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.hessians_sparsity">
+<span class="sig-name descname"><span class="pre">hessians_sparsity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.hessians_sparsity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hessians sparsity pattern.</p>
 <p>This method will return the hessians sparsity pattern of the problem. Each component <span class="math notranslate nohighlight">\(l\)</span> of the hessians
 sparsity pattern is a lexicographically sorted collection of the indices <span class="math notranslate nohighlight">\((i,j)\)</span> of the non-zero elements of
@@ -1173,8 +1181,8 @@ containing each exactly 2 elements representing the indices <span class="math no
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.increment_fevals">
-<code class="sig-name descname">increment_fevals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.increment_fevals" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.increment_fevals">
+<span class="sig-name descname"><span class="pre">increment_fevals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.increment_fevals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Increment the number of fitness evaluations.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.13.</span></p>
@@ -1192,8 +1200,8 @@ containing each exactly 2 elements representing the indices <span class="math no
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.is_">
-<code class="sig-name descname">is_</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.is_" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.is_">
+<span class="sig-name descname"><span class="pre">is_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.is_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the type of the user-defined problem.</p>
 <p>This method returns <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> if <a class="reference internal" href="#pygmo.problem.extract" title="pygmo.problem.extract"><code class="xref py py-func docutils literal notranslate"><span class="pre">extract(t)</span></code></a> returns
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> otherwise.</p>
@@ -1214,14 +1222,14 @@ containing each exactly 2 elements representing the indices <span class="math no
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.is_stochastic">
-<code class="sig-name descname">is_stochastic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.is_stochastic" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.is_stochastic">
+<span class="sig-name descname"><span class="pre">is_stochastic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.is_stochastic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#pygmo.problem.has_set_seed" title="pygmo.problem.has_set_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">has_set_seed()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="pygmo.problem.set_seed">
-<code class="sig-name descname">set_seed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.set_seed" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pygmo.problem.set_seed">
+<span class="sig-name descname"><span class="pre">set_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.problem.set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the seed for the stochastic variables.</p>
 <p>This method will set the seed to be used in the fitness function to instantiate
 all stochastic variables. If the UDP provides a <code class="docutils literal notranslate"><span class="pre">set_seed()</span></code> method, then
@@ -1252,37 +1260,29 @@ The <em>seed</em> parameter must be non-negative.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="population.html" class="btn btn-neutral float-right" title="Population class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="algorithm.html" class="btn btn-neutral float-left" title="Algorithm class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="population.html" class="btn btn-neutral float-right" title="Population class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="algorithm.html" class="btn btn-neutral float-left" title="Algorithm class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, pagmo development team
+        &#169; Copyright 2020, pagmo development team.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
