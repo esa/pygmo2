@@ -42,10 +42,10 @@ def plot_non_dominated_fronts(points, marker='o', comp=[0, 1], axes=None):
         points (2d array-like): points to plot
         marker (str): matplotlib marker used to plot the *points*
         comp (list): Components to be considered in the two dimensional plot (useful in many-objectives cases)
-        axes (matplotlib.axes.Axes): plot axes (if :data:`None`, new axes will be created)
+        axes: plot axes (if :data:`None`, new axes will be created)
 
     Returns:
-        matplotlib.axes.Axes: the input *axes* or a new axes instance
+        the input *axes* or a new axes instance
 
     Examples:
         >>> from pygmo import *
@@ -99,7 +99,7 @@ def _dtlz_plot(self, pop, az=40, comp=[0, 1, 2]):
         comp (``list``): indexes the fitness dimension for x,y and z axis in that order
 
     Returns:
-        ``matplotlib.axes.Axes``: the current ``matplotlib.axes.Axes`` instance on the current figure
+        the current axes instance on the current figure
 
     Raises:
         ValueError: if *pop* does not contain a DTLZ problem (veryfied by its name only) or if *comp* is not of length 3
