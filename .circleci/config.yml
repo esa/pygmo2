@@ -25,6 +25,15 @@ jobs:
     - run:
         name: Build and test
         command: bash ./tools/circleci_bionic_conda_pagmo_head_39.sh
+  ubuntu_arm64:
+    machine:
+      image: ubuntu-2004:202101-01
+    resource_class: arm.medium
+    steps:
+    - checkout
+    - run:
+        name: Build and test
+        command: bash ./tools/circleci_ubuntu_arm64.sh
 
 workflows:
   version: 2.1
@@ -33,3 +42,4 @@ workflows:
     - bionic_conda_pagmo_head_38
     - bionic_conda_pagmo_head_37
     - bionic_conda_pagmo_head_39
+    - ubuntu_arm64
