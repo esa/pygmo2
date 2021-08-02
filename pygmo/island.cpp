@@ -14,7 +14,6 @@
 #include <pybind11/pybind11.h>
 
 #include <pagmo/algorithm.hpp>
-#include <pagmo/config.hpp>
 #include <pagmo/island.hpp>
 #include <pagmo/population.hpp>
 
@@ -125,8 +124,6 @@ std::string isl_inner<py::object>::get_extra_info() const
     return getter_wrapper<std::string>(m_value, "get_extra_info", std::string{});
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::type_index isl_inner<py::object>::get_type_index() const
 {
     return std::type_index(typeid(py::object));
@@ -141,8 +138,6 @@ void *isl_inner<py::object>::get_ptr()
 {
     return &m_value;
 }
-
-#endif
 
 template <typename Archive>
 void isl_inner<py::object>::save(Archive &ar, unsigned) const

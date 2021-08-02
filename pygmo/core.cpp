@@ -37,9 +37,7 @@
 #include <pagmo/types.hpp>
 #include <pagmo/utils/constrained.hpp>
 #include <pagmo/utils/generic.hpp>
-#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR > 15)
 #include <pagmo/utils/genetic_operators.hpp>
-#endif
 #include <pagmo/utils/gradients_and_hessians.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_approx.hpp>
 #include <pagmo/utils/hv_algos/hv_bf_fpras.hpp>
@@ -262,7 +260,6 @@ PYBIND11_MODULE(core, m)
             return pygmo::vector_to_ndarr<py::array_t<double>>(retval);
         },
         pygmo::batch_random_decision_vector_docstring().c_str(), py::arg("prob"), py::arg("n"));
-#if (PAGMO_VERSION_MAJOR > 2) || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR > 15)
     // Genetic operators
     m.def(
         "sbx_crossover",
@@ -293,7 +290,6 @@ PYBIND11_MODULE(core, m)
         },
         pygmo::polynomial_mutation_docstring().c_str(), py::arg("dv"), py::arg("bounds"), py::arg("nix"),
         py::arg("p_m"), py::arg("eta_m"), py::arg("seed"));
-#endif
     // Hypervolume class
     py::class_<pg::hypervolume> hv_class(m, "hypervolume", "Hypervolume Class");
     hv_class
@@ -731,7 +727,6 @@ PYBIND11_MODULE(core, m)
                 return retval;
             },
             pygmo::archipelago_get_migrants_db_docstring().c_str())
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 14)
         .def(
             "set_migrants_db",
             [](pg::archipelago &archi, const py::list &mig) {
@@ -744,7 +739,6 @@ PYBIND11_MODULE(core, m)
                 archi.set_migrants_db(mig_db);
             },
             pygmo::archipelago_set_migrants_db_docstring().c_str())
-#endif
         .def(
             "get_migration_log",
             [](const pg::archipelago &archi) -> py::list {
@@ -1104,11 +1098,9 @@ PYBIND11_MODULE(core, m)
         .def(
             "push_back", [](pg::topology &t, unsigned n) { t.push_back(n); },
             pygmo::topology_push_back_docstring().c_str(), py::arg("n") = std::size_t(1))
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
         .def(
             "to_networkx", [](const pg::topology &t) { return pygmo::bgl_graph_t_to_networkx(t.to_bgl()); },
             pygmo::topology_to_networkx_docstring().c_str())
-#endif
         .def("get_name", &pg::topology::get_name, pygmo::topology_get_name_docstring().c_str())
         .def("get_extra_info", &pg::topology::get_extra_info, pygmo::topology_get_extra_info_docstring().c_str());
 

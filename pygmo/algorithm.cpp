@@ -13,7 +13,6 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/threading.hpp>
 
@@ -132,8 +131,6 @@ bool algo_inner<py::object>::has_set_verbosity() const
     return py::cast<bool>(hsv());
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::type_index algo_inner<py::object>::get_type_index() const
 {
     return std::type_index(typeid(py::object));
@@ -148,8 +145,6 @@ void *algo_inner<py::object>::get_ptr()
 {
     return &m_value;
 }
-
-#endif
 
 template <typename Archive>
 void algo_inner<py::object>::save(Archive &ar, unsigned) const

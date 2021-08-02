@@ -305,14 +305,11 @@ class island_test_case(_ut.TestCase):
         isl.wait()
 
     def run_io_tests(self):
-        from .core import island, de, rosenbrock, _pagmo_version_major, _pagmo_version_minor
+        from .core import island, de, rosenbrock
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "Thread island")
-        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 16):
-            self.assertTrue(isl.get_extra_info() == "")
-        else:
-            self.assertTrue(isl.get_extra_info() == "\tUsing pool: yes")
+        self.assertTrue(isl.get_extra_info() == "\tUsing pool: yes")
         isl = island(algo=de(), prob=rosenbrock(), size=25, udi=_udi_01())
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "udi_01")

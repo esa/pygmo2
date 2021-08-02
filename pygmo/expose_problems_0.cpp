@@ -13,12 +13,12 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/problems/ackley.hpp>
 #include <pagmo/problems/cec2006.hpp>
 #include <pagmo/problems/cec2009.hpp>
+#include <pagmo/problems/cec2014.hpp>
 #include <pagmo/problems/decompose.hpp>
 #include <pagmo/problems/dtlz.hpp>
 #include <pagmo/problems/griewank.hpp>
@@ -28,10 +28,6 @@
 #include <pagmo/problems/null_problem.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2014)
-#include <pagmo/problems/cec2014.hpp>
-#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -133,12 +129,13 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                       pygmo::ndarr_to_vector<pagmo::vector_double>(z), method,
                                                       adapt_ideal);
         }))
-        .def("original_fitness",
-             [](const pagmo::decompose &p, const py::array_t<double> &x) {
-                 return pygmo::vector_to_ndarr<py::array_t<double>>(
-                     p.original_fitness(pygmo::ndarr_to_vector<pagmo::vector_double>(x)));
-             },
-             decompose_original_fitness_docstring().c_str(), py::arg("x"))
+        .def(
+            "original_fitness",
+            [](const pagmo::decompose &p, const py::array_t<double> &x) {
+                return pygmo::vector_to_ndarr<py::array_t<double>>(
+                    p.original_fitness(pygmo::ndarr_to_vector<pagmo::vector_double>(x)));
+            },
+            decompose_original_fitness_docstring().c_str(), py::arg("x"))
         .def_property_readonly(
             "z", [](const pagmo::decompose &p) { return pygmo::vector_to_ndarr<py::array_t<double>>(p.get_z()); },
             decompose_z_docstring().c_str())
@@ -175,8 +172,9 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     dtlz_p.def("p_distance", [](const pagmo::dtlz &z, const py::array_t<double> &x) {
         return z.p_distance(ndarr_to_vector<pagmo::vector_double>(x));
     });
-    dtlz_p.def("p_distance", [](const pagmo::dtlz &z, const pagmo::population &pop) { return z.p_distance(pop); },
-               dtlz_p_distance_docstring().c_str());
+    dtlz_p.def(
+        "p_distance", [](const pagmo::dtlz &z, const pagmo::population &pop) { return z.p_distance(pop); },
+        dtlz_p_distance_docstring().c_str());
 
     // CEC 2006
     auto cec2006_ = expose_problem<pagmo::cec2006>(m, prob, p_module, "cec2006", cec2006_docstring().c_str());
@@ -188,10 +186,8 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     cec2009_.def(py::init<unsigned, bool, unsigned>(), py::arg("prob_id") = 1u, py::arg("is_constrained") = false,
                  py::arg("dim") = 30u);
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2014)
     auto cec2014_ = expose_problem<pagmo::cec2014>(m, prob, p_module, "cec2014", cec2014_docstring().c_str());
     cec2014_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
-#endif
 
     // Griewank.
     auto griew = expose_problem<pagmo::griewank>(m, prob, p_module, "griewank",

@@ -18,7 +18,6 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/topology.hpp>
 #include <pagmo/types.hpp>
 
@@ -137,8 +136,6 @@ std::string topo_inner<py::object>::get_extra_info() const
     return getter_wrapper<std::string>(m_value, "get_extra_info", std::string{});
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 bgl_graph_t topo_inner<py::object>::to_bgl() const
 {
     auto m = pygmo::callable_attribute(m_value, "to_networkx");
@@ -166,8 +163,6 @@ void *topo_inner<py::object>::get_ptr()
 {
     return &m_value;
 }
-
-#endif
 
 template <typename Archive>
 void topo_inner<py::object>::save(Archive &ar, unsigned) const

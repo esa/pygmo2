@@ -19,7 +19,6 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/topology.hpp>
 #include <pagmo/types.hpp>
@@ -56,12 +55,10 @@ struct topo_inner<py::object> final : topo_inner_base, pygmo::common_base {
     std::string get_name() const final;
     std::string get_extra_info() const final;
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
     bgl_graph_t to_bgl() const final;
     std::type_index get_type_index() const final;
     const void *get_ptr() const final;
     void *get_ptr() final;
-#endif
 
     template <typename Archive>
     void save(Archive &, unsigned) const;

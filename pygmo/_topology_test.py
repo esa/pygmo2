@@ -323,14 +323,11 @@ class topology_test_case(_ut.TestCase):
         self.assertTrue(t.is_(_topo))
 
     def run_to_networkx_tests(self):
-        from .core import _pagmo_version_major, _pagmo_version_minor, topology
+        from .core import topology
 
         try:
             import networkx as nx
         except ImportError:
-            return
-
-        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 15):
             return
 
         g = nx.DiGraph()

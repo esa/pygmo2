@@ -6,8 +6,6 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#include <pagmo/config.hpp>
-
 #include <cassert>
 #include <initializer_list>
 #include <iterator>
@@ -16,27 +14,17 @@
 #include <utility>
 #include <vector>
 
-#include <boost/numeric/conversion/cast.hpp>
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/iterator/transform_iterator.hpp>
 #include <boost/iterator/zip_iterator.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 #include <boost/tuple/tuple.hpp>
-
-#endif
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/types.hpp>
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 #include <pagmo/topology.hpp>
-
-#endif
+#include <pagmo/types.hpp>
 
 #include "common_utils.hpp"
 
@@ -209,7 +197,8 @@ std::pair<pagmo::vector_double, pagmo::vector_double> iterable_to_bounds(const p
 
     if (ub.size() != lb.size()) {
         // bounds are malformed
-        py_throw(PyExc_ValueError, "cannot convert an iterable into problem bounds: it seems the bounds have unequal length");
+        py_throw(PyExc_ValueError,
+                 "cannot convert an iterable into problem bounds: it seems the bounds have unequal length");
     }
 
     return std::pair<pagmo::vector_double, pagmo::vector_double>(std::move(lb), std::move(ub));
@@ -255,8 +244,6 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &o)
 
     return pagmo::individuals_group_t(std::move(ID_vec), std::move(dvs_vec), std::move(fvs_vec));
 }
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
 
 py::object bgl_graph_t_to_networkx(const pagmo::bgl_graph_t &g)
 {
@@ -352,7 +339,5 @@ pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &g)
 
     return ret;
 }
-
-#endif
 
 } // namespace pygmo
