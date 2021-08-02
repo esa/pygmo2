@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -124,8 +124,9 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         [](pagmo::mbh &a, const py::array_t<double> &o) { a.set_perturb(ndarr_to_vector<pagmo::vector_double>(o)); },
         mbh_set_perturb_docstring().c_str(), py::arg("perturb"));
     expose_algo_log(mbh_, mbh_get_log_docstring().c_str());
-    mbh_.def("get_perturb", [](const pagmo::mbh &a) { return vector_to_ndarr<py::array_t<double>>(a.get_perturb()); },
-             mbh_get_perturb_docstring().c_str());
+    mbh_.def(
+        "get_perturb", [](const pagmo::mbh &a) { return vector_to_ndarr<py::array_t<double>>(a.get_perturb()); },
+        mbh_get_perturb_docstring().c_str());
     mbh_.def_property_readonly(
         "inner_algorithm", [](pagmo::mbh &uda) -> pagmo::algorithm & { return uda.get_inner_algorithm(); },
         py::return_value_policy::reference_internal, generic_uda_inner_algorithm_docstring().c_str());
@@ -193,16 +194,17 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                py::arg("neighbours") = 20u, py::arg("CR") = 1., py::arg("F") = 0.5, py::arg("eta_m") = 20,
                py::arg("realb") = 0.9, py::arg("limit") = 2u, py::arg("preserve_diversity") = true, py::arg("seed"));
     // moead needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    moead_.def("get_log",
-               [](const pagmo::moead &a) -> py::list {
-                   py::list retval;
-                   for (const auto &t : a.get_log()) {
-                       retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
-                                                    vector_to_ndarr<py::array_t<double>>(std::get<3>(t))));
-                   }
-                   return retval;
-               },
-               moead_get_log_docstring().c_str());
+    moead_.def(
+        "get_log",
+        [](const pagmo::moead &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<3>(t))));
+            }
+            return retval;
+        },
+        moead_get_log_docstring().c_str());
     moead_.def("get_seed", &pagmo::moead::get_seed, generic_uda_get_seed_docstring().c_str());
 
 #if defined(PAGMO_WITH_EIGEN3)
@@ -253,79 +255,86 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
     auto ipopt_ = expose_algorithm<pagmo::ipopt>(m, algo, a_module, "ipopt", ipopt_docstring().c_str());
     expose_not_population_based(ipopt_, "ipopt");
     expose_algo_log(ipopt_, ipopt_get_log_docstring().c_str());
-    ipopt_.def("get_last_opt_result", [](const pagmo::ipopt &ip) { return static_cast<int>(ip.get_last_opt_result()); },
-               ipopt_get_last_opt_result_docstring().c_str());
+    ipopt_.def(
+        "get_last_opt_result", [](const pagmo::ipopt &ip) { return static_cast<int>(ip.get_last_opt_result()); },
+        ipopt_get_last_opt_result_docstring().c_str());
     // Options management.
     // String opts.
     ipopt_.def("set_string_option", &pagmo::ipopt::set_string_option, ipopt_set_string_option_docstring().c_str(),
                py::arg("name"), py::arg("value"));
-    ipopt_.def("set_string_options",
-               [](pagmo::ipopt &ip, const py::dict &d) {
-                   std::map<std::string, std::string> m;
-                   for (auto p : d) {
-                       m[py::cast<std::string>(p.first)] = py::cast<std::string>(p.second);
-                   }
-                   ip.set_string_options(m);
-               },
-               ipopt_set_string_options_docstring().c_str(), py::arg("opts"));
-    ipopt_.def("get_string_options",
-               [](const pagmo::ipopt &ip) -> py::dict {
-                   const auto opts = ip.get_string_options();
-                   py::dict retval;
-                   for (const auto &p : opts) {
-                       retval[py::cast(p.first)] = py::cast(p.second);
-                   }
-                   return retval;
-               },
-               ipopt_get_string_options_docstring().c_str());
+    ipopt_.def(
+        "set_string_options",
+        [](pagmo::ipopt &ip, const py::dict &d) {
+            std::map<std::string, std::string> m;
+            for (auto p : d) {
+                m[py::cast<std::string>(p.first)] = py::cast<std::string>(p.second);
+            }
+            ip.set_string_options(m);
+        },
+        ipopt_set_string_options_docstring().c_str(), py::arg("opts"));
+    ipopt_.def(
+        "get_string_options",
+        [](const pagmo::ipopt &ip) -> py::dict {
+            const auto opts = ip.get_string_options();
+            py::dict retval;
+            for (const auto &p : opts) {
+                retval[py::cast(p.first)] = py::cast(p.second);
+            }
+            return retval;
+        },
+        ipopt_get_string_options_docstring().c_str());
     ipopt_.def("reset_string_options", &pagmo::ipopt::reset_string_options,
                ipopt_reset_string_options_docstring().c_str());
     // Integer options.
     ipopt_.def("set_integer_option", &pagmo::ipopt::set_integer_option, ipopt_set_integer_option_docstring().c_str(),
                py::arg("name"), py::arg("value"));
-    ipopt_.def("set_integer_options",
-               [](pagmo::ipopt &ip, const py::dict &d) {
-                   std::map<std::string, Ipopt::Index> m;
-                   for (auto p : d) {
-                       m[py::cast<std::string>(p.first)] = py::cast<Ipopt::Index>(p.second);
-                   }
-                   ip.set_integer_options(m);
-               },
-               ipopt_set_integer_options_docstring().c_str(), py::arg("opts"));
-    ipopt_.def("get_integer_options",
-               [](const pagmo::ipopt &ip) -> py::dict {
-                   const auto opts = ip.get_integer_options();
-                   py::dict retval;
-                   for (const auto &p : opts) {
-                       retval[py::cast(p.first)] = py::cast(p.second);
-                   }
-                   return retval;
-               },
-               ipopt_get_integer_options_docstring().c_str());
+    ipopt_.def(
+        "set_integer_options",
+        [](pagmo::ipopt &ip, const py::dict &d) {
+            std::map<std::string, Ipopt::Index> m;
+            for (auto p : d) {
+                m[py::cast<std::string>(p.first)] = py::cast<Ipopt::Index>(p.second);
+            }
+            ip.set_integer_options(m);
+        },
+        ipopt_set_integer_options_docstring().c_str(), py::arg("opts"));
+    ipopt_.def(
+        "get_integer_options",
+        [](const pagmo::ipopt &ip) -> py::dict {
+            const auto opts = ip.get_integer_options();
+            py::dict retval;
+            for (const auto &p : opts) {
+                retval[py::cast(p.first)] = py::cast(p.second);
+            }
+            return retval;
+        },
+        ipopt_get_integer_options_docstring().c_str());
     ipopt_.def("reset_integer_options", &pagmo::ipopt::reset_integer_options,
                ipopt_reset_integer_options_docstring().c_str());
     // Numeric options.
     ipopt_.def("set_numeric_option", &pagmo::ipopt::set_numeric_option, ipopt_set_numeric_option_docstring().c_str(),
                py::arg("name"), py::arg("value"));
-    ipopt_.def("set_numeric_options",
-               [](pagmo::ipopt &ip, const py::dict &d) {
-                   std::map<std::string, double> m;
-                   for (auto p : d) {
-                       m[py::cast<std::string>(p.first)] = py::cast<double>(p.second);
-                   }
-                   ip.set_numeric_options(m);
-               },
-               ipopt_set_numeric_options_docstring().c_str(), py::arg("opts"));
-    ipopt_.def("get_numeric_options",
-               [](const pagmo::ipopt &ip) -> py::dict {
-                   const auto opts = ip.get_numeric_options();
-                   py::dict retval;
-                   for (const auto &p : opts) {
-                       retval[py::cast(p.first)] = py::cast(p.second);
-                   }
-                   return retval;
-               },
-               ipopt_get_numeric_options_docstring().c_str());
+    ipopt_.def(
+        "set_numeric_options",
+        [](pagmo::ipopt &ip, const py::dict &d) {
+            std::map<std::string, double> m;
+            for (auto p : d) {
+                m[py::cast<std::string>(p.first)] = py::cast<double>(p.second);
+            }
+            ip.set_numeric_options(m);
+        },
+        ipopt_set_numeric_options_docstring().c_str(), py::arg("opts"));
+    ipopt_.def(
+        "get_numeric_options",
+        [](const pagmo::ipopt &ip) -> py::dict {
+            const auto opts = ip.get_numeric_options();
+            py::dict retval;
+            for (const auto &p : opts) {
+                retval[py::cast(p.first)] = py::cast(p.second);
+            }
+            return retval;
+        },
+        ipopt_get_numeric_options_docstring().c_str());
     ipopt_.def("reset_numeric_options", &pagmo::ipopt::reset_numeric_options,
                ipopt_reset_numeric_options_docstring().c_str());
 #endif

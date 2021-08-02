@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -7,8 +7,6 @@
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 #include <string>
-
-#include <pagmo/config.hpp>
 
 #include "docstrings.hpp"
 
@@ -6653,8 +6651,6 @@ Raises:
 )";
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::string topology_to_networkx_docstring()
 {
     return R"(to_networkx()
@@ -6687,8 +6683,6 @@ Raises:
 
 )";
 }
-
-#endif
 
 std::string unconnected_docstring()
 {
@@ -6857,8 +6851,6 @@ Raises:
 )";
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::string base_bgl_get_edge_weight_docstring()
 {
     return R"(get_edge_weight(i, j)
@@ -6881,8 +6873,6 @@ Raises:
 
 )";
 }
-
-#endif
 
 std::string fully_connected_docstring()
 {
@@ -6917,8 +6907,6 @@ std::string fully_connected_num_vertices_docstring()
     return base_bgl_num_vertices_docstring();
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::string free_form_docstring()
 {
     return R"(Free-form topology.
@@ -6952,8 +6940,6 @@ See also the docs of the C++ class :cpp:class:`pagmo::free_form`.
 
 )";
 }
-
-#endif
 
 std::string r_policy_docstring()
 {

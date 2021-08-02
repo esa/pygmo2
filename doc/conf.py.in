@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'pygmo'
-copyright = '2020, pagmo development team'
+copyright = '2021, pagmo development team'
 author = 'pagmo development team'
 
 # The version info for the project you're documenting, acts as replacement for

@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -8,7 +8,6 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/island.hpp>
 #include <pagmo/islands/thread_island.hpp>
 
@@ -56,9 +55,7 @@ void expose_islands(py::module &m, py::class_<pagmo::island> &isl, py::module &i
     // Thread island.
     auto thread_island_
         = expose_island<pagmo::thread_island>(m, isl, isl_module, "thread_island", thread_island_docstring().c_str());
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16)
     thread_island_.def(py::init<bool>(), py::arg("use_pool") = true);
-#endif
 }
 
 } // namespace pygmo

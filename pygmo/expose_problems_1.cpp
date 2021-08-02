@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -6,15 +6,15 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#include <string>
 #include <memory>
+#include <string>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/problem.hpp>
+#include <pagmo/problems/cec2013.hpp>
 #include <pagmo/problems/golomb_ruler.hpp>
 #include <pagmo/problems/luksan_vlcek1.hpp>
 #include <pagmo/problems/minlp_rastrigin.hpp>
@@ -26,10 +26,6 @@
 #include <pagmo/problems/wfg.hpp>
 #include <pagmo/problems/zdt.hpp>
 #include <pagmo/types.hpp>
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2013)
-#include <pagmo/problems/cec2013.hpp>
-#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -88,10 +84,8 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
                                                   "See :cpp:class:`pagmo::golomb_ruler`.\n\n");
     gr.def(py::init<unsigned, unsigned>(), py::arg("order"), py::arg("upper_bound"));
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 16) || defined(PAGMO_ENABLE_CEC2013)
     auto cec2013_ = expose_problem<pagmo::cec2013>(m, prob, p_module, "cec2013", cec2013_docstring().c_str());
     cec2013_.def(py::init<unsigned, unsigned>(), py::arg("prob_id") = 1, py::arg("dim") = 2);
-#endif
 
     // Luksan Vlcek 1
     auto lv_
@@ -117,8 +111,7 @@ void expose_problems_1(py::module &m, py::class_<pagmo::problem> &prob, py::modu
     // and then invoke this ctor. This way we avoid having to expose a different ctor for every exposed C++ prob.
     unconstrain_
         .def(py::init([](const pagmo::problem &p, const std::string &method, const py::array_t<double> &weights) {
-            return std::make_unique<pagmo::unconstrain>(p, method,
-                                                                  ndarr_to_vector<pagmo::vector_double>(weights));
+            return std::make_unique<pagmo::unconstrain>(p, method, ndarr_to_vector<pagmo::vector_double>(weights));
         }))
         .def_property_readonly(
             "inner_problem", [](pagmo::unconstrain &udp) -> pagmo::problem & { return udp.get_inner_problem(); },

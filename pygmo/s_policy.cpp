@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -14,7 +14,6 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/s_policy.hpp>
 #include <pagmo/types.hpp>
 
@@ -102,8 +101,6 @@ std::string s_pol_inner<py::object>::get_extra_info() const
     return getter_wrapper<std::string>(m_value, "get_extra_info", std::string{});
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::type_index s_pol_inner<py::object>::get_type_index() const
 {
     return std::type_index(typeid(py::object));
@@ -118,8 +115,6 @@ void *s_pol_inner<py::object>::get_ptr()
 {
     return &m_value;
 }
-
-#endif
 
 template <typename Archive>
 void s_pol_inner<py::object>::save(Archive &ar, unsigned) const

@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -13,18 +13,12 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
+#include <pagmo/topologies/free_form.hpp>
 #include <pagmo/topologies/fully_connected.hpp>
 #include <pagmo/topologies/ring.hpp>
 #include <pagmo/topologies/unconnected.hpp>
 #include <pagmo/topology.hpp>
 #include <pagmo/types.hpp>
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
-#include <pagmo/topologies/free_form.hpp>
-
-#endif
 
 #include "common_utils.hpp"
 #include "docstrings.hpp"
@@ -75,10 +69,8 @@ void expose_base_bgl_topo(py::class_<Topo> &c)
     c.def("set_weight", &Topo::set_weight, pygmo::base_bgl_set_weight_docstring().c_str(), py::arg("i"), py::arg("j"),
           py::arg("w"));
     c.def("set_all_weights", &Topo::set_all_weights, pygmo::base_bgl_set_all_weights_docstring().c_str(), py::arg("w"));
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
     c.def("get_edge_weight", &Topo::get_edge_weight, pygmo::base_bgl_get_edge_weight_docstring().c_str(), py::arg("i"),
           py::arg("j"));
-#endif
 }
 
 } // namespace
@@ -109,14 +101,12 @@ void expose_topologies(py::module &m, py::class_<pagmo::topology> &topo, py::mod
         .def("num_vertices", &pagmo::fully_connected::num_vertices,
              pygmo::fully_connected_num_vertices_docstring().c_str());
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
     // Free-form.
     auto free_form_ = expose_topology<pagmo::free_form>(m, topo, t_module, "free_form", free_form_docstring().c_str());
     free_form_.def(py::init<const pagmo::topology &>()).def(py::init([](const py::object &o) {
         return std::make_unique<pagmo::free_form>(networkx_to_bgl_graph_t(o));
     }));
     detail::expose_base_bgl_topo(free_form_);
-#endif
 }
 
 } // namespace pygmo

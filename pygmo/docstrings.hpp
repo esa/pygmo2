@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -10,8 +10,6 @@
 #define PYGMO_DOCSTRINGS_HPP
 
 #include <string>
-
-#include <pagmo/config.hpp>
 
 namespace pygmo
 {
@@ -284,9 +282,7 @@ std::string topology_get_connections_docstring();
 std::string topology_push_back_docstring();
 std::string topology_get_name_docstring();
 std::string topology_get_extra_info_docstring();
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
 std::string topology_to_networkx_docstring();
-#endif
 
 // udt.
 std::string unconnected_docstring();
@@ -297,17 +293,13 @@ std::string base_bgl_add_edge_docstring();
 std::string base_bgl_remove_edge_docstring();
 std::string base_bgl_set_weight_docstring();
 std::string base_bgl_set_all_weights_docstring();
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
 std::string base_bgl_get_edge_weight_docstring();
-#endif
 std::string ring_docstring();
 std::string ring_get_weight_docstring();
 std::string fully_connected_docstring();
 std::string fully_connected_get_weight_docstring();
 std::string fully_connected_num_vertices_docstring();
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
 std::string free_form_docstring();
-#endif
 
 // r_policy.
 std::string r_policy_docstring();

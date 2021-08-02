@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -18,7 +18,6 @@
 
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/s11n.hpp>
 #include <pagmo/threading.hpp>
@@ -84,11 +83,9 @@ struct prob_inner<py::object> final : prob_inner_base, pygmo::common_base {
     bool has_set_seed() const final;
     thread_safety get_thread_safety() const final;
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
     std::type_index get_type_index() const final;
     const void *get_ptr() const final;
     void *get_ptr() final;
-#endif
 
     template <typename Archive>
     void save(Archive &, unsigned) const;

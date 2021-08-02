@@ -52,7 +52,7 @@ foreach(PYGMO_PYTHON_FILE ${PYGMO_PYTHON_FILES})
 endforeach()
 
 # Core module.
-YACMA_PYTHON_MODULE(core
+Python3_add_library(core MODULE WITH_SOABI
     core.cpp
     common_utils.cpp
     common_base.cpp
@@ -95,33 +95,39 @@ target_compile_features(core PRIVATE cxx_std_17)
 # Enforce vanilla C++ when compiling.
 set_property(TARGET core PROPERTY CXX_EXTENSIONS NO)
 
-if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.9.0")
-    if (PYGMO_ENABLE_IPO)
-        include(CheckIPOSupported)
-        check_ipo_supported(RESULT _PYGMO_IPO_RESULT OUTPUT _PYGMO_IPO_OUTPUT)
-        if (_PYGMO_IPO_RESULT)
-            message(STATUS "IPO requested and supported, enabling.")
-            set_property(TARGET core PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-        else()
-            message(STATUS "IPO requested, but it is not supported by the compiler:\n${_PYGMO_IPO_OUTPUT}")
-        endif()
-        unset(_PYGMO_IPO_RESULT)
-        unset(_PYGMO_IPO_OUTPUT)
+if (PYGMO_ENABLE_IPO)
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT _PYGMO_IPO_RESULT OUTPUT _PYGMO_IPO_OUTPUT)
+    if (_PYGMO_IPO_RESULT)
+        message(STATUS "IPO requested and supported, enabling.")
+        set_property(TARGET core PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    else()
+        message(STATUS "IPO requested, but it is not supported by the compiler:\n${_PYGMO_IPO_OUTPUT}")
     endif()
+    unset(_PYGMO_IPO_RESULT)
+    unset(_PYGMO_IPO_OUTPUT)
 endif()
 
-# Setup the installation path.
-set(PYGMO_INSTALL_PATH "${YACMA_PYTHON_MODULES_INSTALL_PATH}/pygmo")
+# Installation setup.
+if(PYGMO_INSTALL_PATH STREQUAL "")
+    message(STATUS "pygmo will be installed in the default location: ${Python3_SITEARCH}")
+    set(_PYGMO_INSTALL_DIR "${Python3_SITEARCH}/pygmo")
+else()
+    message(STATUS "pygmo will be installed in the custom location: ${PYGMO_INSTALL_PATH}")
+    set(_PYGMO_INSTALL_DIR "${PYGMO_INSTALL_PATH}/pygmo")
+endif()
 
 # Add submodules directories
 add_subdirectory(plotting)
 
 # Install the core module.
 install(TARGETS core
-    RUNTIME DESTINATION ${PYGMO_INSTALL_PATH}
-    LIBRARY DESTINATION ${PYGMO_INSTALL_PATH}
+    RUNTIME DESTINATION ${_PYGMO_INSTALL_DIR}
+    LIBRARY DESTINATION ${_PYGMO_INSTALL_DIR}
 )
 
 # Install the Python files.
 install(FILES ${PYGMO_PYTHON_FILES} "${CMAKE_CURRENT_BINARY_DIR}/_version.py"
-    DESTINATION ${PYGMO_INSTALL_PATH})
+    DESTINATION ${_PYGMO_INSTALL_DIR})
+
+unset(_PYGMO_INSTALL_DIR)

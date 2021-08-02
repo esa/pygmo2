@@ -1,4 +1,4 @@
-# Copyright 2020 PaGMO development team
+# Copyright 2020, 2021 PaGMO development team
 #
 # This file is part of the pygmo library.
 #
@@ -625,10 +625,7 @@ class ring_test_case(_ut.TestCase):
         self.run_get_edge_weight_tests()
 
     def run_get_edge_weight_tests(self):
-        from .core import _pagmo_version_major, _pagmo_version_minor, ring
-
-        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 15):
-            return
+        from .core import ring
 
         t = ring(5)
         self.assertEqual(t.get_edge_weight(0, 1), 1.)
@@ -795,12 +792,9 @@ class thread_island_test_case(_ut.TestCase):
     """
 
     def runTest(self):
-        from .core import thread_island, island, algorithm, population, _pagmo_version_major, _pagmo_version_minor
+        from .core import thread_island, island, algorithm, population
 
         isl = island(udi=thread_island(), algo=algorithm(), pop=population())
-
-        if _pagmo_version_major < 2 or (_pagmo_version_major == 2 and _pagmo_version_minor < 16):
-            return
 
         self.assertIn("Using pool: yes", isl.get_extra_info())
         isl = island(udi=thread_island(use_pool=True),

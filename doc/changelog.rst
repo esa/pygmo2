@@ -9,6 +9,8 @@ Changelog
 Changes
 ~~~~~~~
 
+- pygmo now requires CMake >= 3.17
+  (`#81 <https://github.com/esa/pygmo2/pull/81>`__).
 - Various internal changes to the pickling implementation
   (`#79 <https://github.com/esa/pygmo2/pull/79>`__).
 - pygmo now requires pagmo >= 2.18

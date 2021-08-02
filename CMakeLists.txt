@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.8.0)
-# NOTE: policy for using the CheckIPOSupported module:
-# https://cmake.org/cmake/help/latest/policy/CMP0069.html
-cmake_policy(SET CMP0069 NEW)
+# NOTE: FindPython3 supported since CMake 3.12.0, but we use
+# options that appear in 3.17.
+cmake_minimum_required(VERSION 3.17.0)
 
 # Set default build type to "Release".
 # NOTE: this should be done before the project command since the latter can set
@@ -19,33 +18,11 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_CURRE
 message(STATUS "System name: ${CMAKE_SYSTEM_NAME}")
 message(STATUS "pygmo version: ${pygmo_VERSION}")
 
-option(PYGMO_ENABLE_IPO "Enable IPO (requires CMake >= 3.9 and compiler support)." OFF)
+option(PYGMO_ENABLE_IPO "Enable IPO (requires compiler support)." OFF)
 mark_as_advanced(PYGMO_ENABLE_IPO)
 
 # Run the YACMA compiler setup.
 include(YACMACompilerLinkerSettings)
-
-# NOTE: on Unix systems, the correct library installation path
-# could be something other than just "lib", such as "lib64",
-# "lib32", etc., depending on platform/configuration. Apparently,
-# CMake provides this information via the GNUInstallDirs module.
-# Let's enable this for now on all Unixes except OSX.
-# NOTE: potentially, this could be applicable to Cygwin as well.
-#
-# https://cmake.org/cmake/help/v3.15/module/GNUInstallDirs.html
-# https://cmake.org/pipermail/cmake/2013-July/055375.html
-if(UNIX AND NOT APPLE)
-    include(GNUInstallDirs)
-    set(_PYGMO_INSTALL_LIBDIR_DEFAULT "${CMAKE_INSTALL_LIBDIR}")
-else()
-    set(_PYGMO_INSTALL_LIBDIR_DEFAULT "lib")
-endif()
-if(NOT PYGMO_INSTALL_LIBDIR)
-    set(PYGMO_INSTALL_LIBDIR "${_PYGMO_INSTALL_LIBDIR_DEFAULT}" CACHE STRING
-        "Library installation directory." FORCE)
-endif()
-mark_as_advanced(PYGMO_INSTALL_LIBDIR)
-message(STATUS "Library installation directory: ${PYGMO_INSTALL_LIBDIR}")
 
 # Assemble the flags.
 set(PYGMO_CXX_FLAGS_DEBUG ${YACMA_CXX_FLAGS} ${YACMA_CXX_FLAGS_DEBUG})
@@ -160,15 +137,14 @@ if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
 endif()
 
 # python.
-include(YACMAPythonSetup)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+message(STATUS "Python3 interpreter: ${Python3_EXECUTABLE}")
+message(STATUS "Python3 installation directory: ${Python3_SITEARCH}")
+set(PYGMO_INSTALL_PATH "" CACHE STRING "pygmo module installation path")
+mark_as_advanced(PYGMO_INSTALL_PATH)
 
 # Boost setup.
 include(PygmoFindBoost)
-
-# python version check.
-if(${PYTHON_VERSION_MAJOR} LESS 3 OR (${PYTHON_VERSION_MAJOR} EQUAL 3 AND ${PYTHON_VERSION_MINOR} LESS 4))
-    message(FATAL_ERROR "Minimum supported python version is 3.4.")
-endif()
 
 # pybind11.
 find_package(pybind11 REQUIRED)

@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -19,7 +19,6 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
 #include <pagmo/problem.hpp>
 #include <pagmo/threading.hpp>
 #include <pagmo/types.hpp>
@@ -345,8 +344,6 @@ thread_safety prob_inner<py::object>::get_thread_safety() const
     return thread_safety::none;
 }
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 std::type_index prob_inner<py::object>::get_type_index() const
 {
     return std::type_index(typeid(py::object));
@@ -361,8 +358,6 @@ void *prob_inner<py::object>::get_ptr()
 {
     return &m_value;
 }
-
-#endif
 
 template <typename Archive>
 void prob_inner<py::object>::save(Archive &ar, unsigned) const

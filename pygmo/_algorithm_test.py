@@ -1,4 +1,4 @@
-# Copyright 2020 PaGMO development team
+# Copyright 2020, 2021 PaGMO development team
 #
 # This file is part of the pygmo library.
 #
@@ -41,7 +41,8 @@ class algorithm_test_case(_ut.TestCase):
 
         # First a few non-algos.
         self.assertRaises(NotImplementedError, lambda: algorithm(1))
-        self.assertRaises(NotImplementedError, lambda: algorithm("hello world"))
+        self.assertRaises(NotImplementedError,
+                          lambda: algorithm("hello world"))
         self.assertRaises(NotImplementedError, lambda: algorithm([]))
         self.assertRaises(TypeError, lambda: algorithm(int))
         # Some algorithms missing methods, wrong arity, etc.
@@ -549,7 +550,6 @@ class algorithm_test_case(_ut.TestCase):
             scp.get_name()
             scp.set_verbosity(0)
 
-
         # testing constrained problem on incompatible methods
         prob = problem(luksan_vlcek1(10))
         pop = population(prob=prob, size=1, seed=0)
@@ -576,7 +576,8 @@ class algorithm_test_case(_ut.TestCase):
         # testing invalid selection policy
         prob = problem(luksan_vlcek1(10))
         pop = population(prob=prob, size=10, seed=0)
-        scp = algorithm(scipy_optimize(selection = s_policy(select_best(rate=2))))
+        scp = algorithm(scipy_optimize(
+            selection=s_policy(select_best(rate=2))))
         self.assertRaises(ValueError, lambda: scp.evolve(pop))
 
         # testing callback
@@ -590,7 +591,7 @@ class algorithm_test_case(_ut.TestCase):
         prob = problem(luksan_vlcek1(10))
         pop = population(prob=prob, size=10, seed=0)
         counter = callback_counter()
-        scp = algorithm(scipy_optimize(callback = counter.increment))
+        scp = algorithm(scipy_optimize(callback=counter.increment))
         scp.evolve(pop)
         self.assertTrue(counter.value > 0)
 
@@ -620,7 +621,8 @@ class algorithm_test_case(_ut.TestCase):
 
         # testing hessian wrapper generator
         prob = problem(rastrigin(10))
-        f = scipy_optimize._fitness_wrapper(prob)._generate_hessian_sparsity_wrapper(0)
+        f = scipy_optimize._fitness_wrapper(
+            prob)._generate_hessian_sparsity_wrapper(0)
         hessian = f(array([0] * prob.get_nx()))
         self.assertEqual(len(hessian), prob.get_nx())
         self.assertEqual(len(hessian[0]), prob.get_nx())

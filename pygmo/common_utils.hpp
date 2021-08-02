@@ -1,4 +1,4 @@
-// Copyright 2020 PaGMO development team
+// Copyright 2020, 2021 PaGMO development team
 //
 // This file is part of the pygmo library.
 //
@@ -19,14 +19,8 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include <pagmo/config.hpp>
-#include <pagmo/types.hpp>
-
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 #include <pagmo/topology.hpp>
-
-#endif
+#include <pagmo/types.hpp>
 
 namespace pygmo
 {
@@ -238,13 +232,9 @@ pagmo::individuals_group_t iterable_to_inds(const py::iterable &);
 // Convert a Python iterable into a problem bounds.
 std::pair<pagmo::vector_double, pagmo::vector_double> iterable_to_bounds(const py::iterable &o);
 
-#if PAGMO_VERSION_MAJOR > 2 || (PAGMO_VERSION_MAJOR == 2 && PAGMO_VERSION_MINOR >= 15)
-
 // Conversion between BGL and NetworkX.
 py::object bgl_graph_t_to_networkx(const pagmo::bgl_graph_t &);
 pagmo::bgl_graph_t networkx_to_bgl_graph_t(const py::object &);
-
-#endif
 
 } // namespace pygmo
 
