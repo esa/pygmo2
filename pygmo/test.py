@@ -2591,7 +2591,7 @@ class constant_arguments_problem_test_case(_ut.TestCase):
         rb = rosenbrock()
         pr = problem(rb)
         c = cp(prob=rb, fixed_arguments=[], fixed_flags=[False, False])
-        self.assertEqual(type(c.problem.extract(rosenbrock)), rosenbrock)
+        self.assertEqual(type(c._problem.extract(rosenbrock)), rosenbrock)
         self.assertTrue((pr.get_bounds()[0] == c.get_bounds()[0]).all())
         self.assertTrue((pr.get_bounds()[1] == c.get_bounds()[1]).all())
         self.assertEqual(pr.get_nec(), c.get_nec())
@@ -2599,10 +2599,10 @@ class constant_arguments_problem_test_case(_ut.TestCase):
         self.assertEqual(pr.get_nix(), c.get_nix())
         self.assertEqual(pr.get_nobj(), c.get_nobj())
         # Check that we made a copy of rb on construction.
-        self.assertTrue(id(c.problem.extract(rosenbrock)) != id(rb))
+        self.assertTrue(id(c._problem.extract(rosenbrock)) != id(rb))
         # Try construction from a problem object.
         c = cp(prob=pr, fixed_arguments=[], fixed_flags=[False, False])
-        self.assertEqual(type(d.problem.extract(rosenbrock)), rosenbrock)
+        self.assertEqual(type(c._problem.extract(rosenbrock)), rosenbrock)
         self.assertTrue((pr.get_bounds()[0] == c.get_bounds()[0]).all())
         self.assertTrue((pr.get_bounds()[1] == c.get_bounds()[1]).all())
         self.assertEqual(pr.get_nec(), c.get_nec())
@@ -2610,7 +2610,7 @@ class constant_arguments_problem_test_case(_ut.TestCase):
         self.assertEqual(pr.get_nix(), c.get_nix())
         self.assertEqual(pr.get_nobj(), c.get_nobj())
         # Check that we made a copy of pr on construction.
-        self.assertTrue(id(c.problem) != id(pr))
+        self.assertTrue(id(c._problem) != id(pr))
 
         # Check that inconsistent lengths are rejected
         self.assertRaises(ValueError, lambda: cp(
