@@ -265,3 +265,141 @@ class decorator_problem(object):
                 "The input parameter 'fname' must be a string, but it is of type '{}' instead.".format(type(fname)))
         from copy import deepcopy
         return deepcopy(self._decors.get(fname))
+
+class constant_arguments():
+    """Meta problem that sets some arguments of the original problem to constants
+
+    .. versionadded:: 2.19
+
+    If good values for some of the dimensions of a problem are known, this
+    wrapper allows to reduce the dimensions of the search space and is an alternative
+    to restricting a value using identical lower and upper bounds.
+
+    We can construct an instance of this problem by passing the original problem,
+    the list of fixed arguments and a list of boolean flags, denoting for each argument
+    of the original dimensions whether it is fixed or not:
+
+    >>> from pygmo import constant_arguments, problem, rosenbrock
+    >>> cprob = problem(constant_arguments(rosenbrock(dim=5), fixed_arguments=[1,1], fixed_flag=[True, False, False, True, False]))
+    
+    We now see that the new problem has three dimensions, since the original problem had five and we fixed two:
+
+    >>> cprob.get_nx()
+    3
+
+    """
+    
+    def __init__(self, prob, fixed_arguments: List[float], fixed_flag: List[bool]):
+        """
+        Args:
+
+           prob: a :class:`~pygmo.problem` or a user-defined problem, either C++ or Python (if
+              *prob* is :data:`None`, a :class:`~pygmo.null_problem` will be used in its stead)
+           fixed_arguments: a list of floats, one for each argument that should be fixed.
+           fixed_flag: a list of boolean values, one for each dimension of the wrapped problem.
+              The number of True values must be the same as the length of fixed_arguments.
+
+        Raises:
+
+           ValueError: if the number of fixed flags differs from the number of dimensions of the wrapped problem
+           ValueError: if the number of true fixed flags differs from the length of fixed_arguments
+           ValueError: if any of the fixed arguments violate the bounds of the wrapped problem
+           unspecified: any exception thrown by the constructor of :class:`~pygmo.problem` or the deep copy
+              of *prob*
+        """
+
+        from . import problem, null_problem
+        from copy import deepcopy
+        if prob is None:
+            prob = null_problem()
+        if type(prob) == problem:
+            # If prob is a pygmo problem, we will make a copy
+            # and store it. The copy is to ensure consistent behaviour
+            # with the other meta problems and with the constructor
+            # from a UDP (which will end up making a deep copy of
+            # the input object).
+            self.problem = deepcopy(prob)
+        else:
+            # Otherwise, we attempt to create a problem from it. This will
+            # work if prob is an exposed C++ problem or a Python UDP.
+            self.problem = problem(prob)
+        
+        minBound, maxBound = prob.get_bounds()
+        
+        dim = len(minBound)
+        self.full_dim = dim
+        if len(maxBound) != dim:
+            raise ValueError("Problem bounds inconsistent!")
+
+        if len(fixed_flag) != dim:
+            raise ValueError("Got " + str(len(fixed_flag)) + " boolean array for problem of dimension " + str(dim))
+            
+        if sum(fixed_flag) != len(fixed_arguments):
+            raise ValueError(str(sum(fixed_flag)) + " positions marked as fixed, but " + str(len(fixed_arguments)) + " arguments supplied.")
+            
+        j = 0
+        for i in range(dim):
+            if fixed_flag[i]:
+                arg = fixed_arguments[j]
+                j += 1
+
+                if not arg >= minBound[i]:
+                    raise ValueError("Fixed argument " + str(arg) + " violates min bound " + str(minBound[i]))
+                if not arg <= maxBound[i]:
+                    raise ValueError("Fixed argument " + str(arg) + " violates max bound " + str(maxBound[i]))
+        
+        self.problem = prob
+        self.fixed_arguments = fixed_arguments
+        self.fixed_flag = fixed_flag
+        
+        self.minBound = []
+        self.maxBound = []
+        
+        for i in range(dim):
+            if fixed_flag[i]:
+                pass
+            else:
+                self.minBound.append(minBound[i])
+                self.maxBound.append(maxBound[i])
+                
+        assert(len(self.minBound) + sum(fixed_flag) == dim)
+        
+    def get_bounds(self):
+        return (self.minBound, self.maxBound)
+    
+    def get_nobj(self):
+        return self.problem.get_nobj()
+    
+    def get_nic(self):
+        return self.problem.get_nic()
+    
+    def get_nc(self):
+        return self.problem.get_nc()
+
+    def get_nx(self):
+        return len(self.minBound)
+    
+    def fitness(self, x) -> List[float]:
+        return self.problem.fitness(self.get_full_x(x))
+    
+    def get_full_x(self, x) -> List[float]:
+        """Get the full x for a given x of lower dimension"""
+        
+        if len(x) != len(self.minBound):
+            raise ValueError("Got x of length " + str(len(x)) + " but expected " + len(self.minBound))
+        
+        fullx = [None for i in range(self.full_dim)]
+        
+        j = 0
+        k = 0
+        for i in range(self.full_dim):
+            if self.fixed_flag[i]:
+                fullx[i] = self.fixed_arguments[j]
+                j += 1
+            else:
+                fullx[i] = x[k]
+                k += 1
+                
+        assert(j + k == self.full_dim)
+        assert(all(elem is not None for elem in fullx))
+        return fullx
