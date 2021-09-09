@@ -381,10 +381,24 @@ class constant_arguments():
     
     def fitness(self, x) -> List[float]:
         return self.problem.fitness(self.get_full_x(x))
+
+    def has_batch_fitness(self):
+    	return self.problem.has_batch_fitness()
+
+    def batch_fitness(self, dvs):
+        contiguous_x = []
+        if len(dvs) % self.get_nx() != 0:
+            raise ValueError("Expected multiple of " + str(self.get_nx()) + " but got " + str(len(dvs)))
+        num_dvs = int(len(dvs) / self.get_nx())
+        for i in range(num_dvs):
+            begin_index = i * self.get_nx()
+            end_index = (i+1) * self.get_nx()
+            contiguous_x.extend(get_full_x(dvs[begin_index:end_index]))
+        return self.problem.batch_fitness(contiguous_x)
     
     def get_full_x(self, x) -> List[float]:
         """Get the full x for a given x of lower dimension"""
-        
+
         if len(x) != len(self.minBound):
             raise ValueError("Got x of length " + str(len(x)) + " but expected " + len(self.minBound))
         
