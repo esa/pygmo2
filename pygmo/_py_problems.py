@@ -305,6 +305,7 @@ class constant_arguments():
            ValueError: if the number of fixed flags differs from the number of dimensions of the wrapped problem
            ValueError: if the number of true fixed flags differs from the length of fixed_arguments
            ValueError: if any of the fixed arguments violate the bounds of the wrapped problem
+           ValueError: if a problem with nix() > 0 is passed
            unspecified: any exception thrown by the constructor of :class:`~pygmo.problem` or the deep copy
               of *prob*
         """
@@ -339,6 +340,9 @@ class constant_arguments():
             raise ValueError(str(sum(fixed_flags)) + " positions marked as fixed, but " + str(len(fixed_arguments))
                              + " arguments supplied.")
 
+        if self._problem.get_nix() > 0:
+            raise ValueError("Mixed integer-problems not yet supported.")
+
         j = 0
         for i in range(dim):
             if fixed_flags[i]:
@@ -371,6 +375,9 @@ class constant_arguments():
     def get_nobj(self):
         return self._problem.get_nobj()
 
+    def get_nec(self):
+        return self._problem.get_nec()
+
     def get_nic(self):
         return self._problem.get_nic()
 
@@ -379,6 +386,9 @@ class constant_arguments():
 
     def get_nx(self):
         return len(self.minBound)
+
+    def get_nix(self):
+        return 0
 
     def fitness(self, x) -> List[float]:
         return self._problem.fitness(self.get_full_x(x))
