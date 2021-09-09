@@ -290,7 +290,7 @@ class constant_arguments():
 
     """
 
-    def __init__(self, prob, fixed_arguments: List[float], fixed_flag: List[bool]):
+    def __init__(self, prob, fixed_arguments: List[float], fixed_flags: List[bool]):
         """
         Args:
 
@@ -332,16 +332,16 @@ class constant_arguments():
         if len(maxBound) != dim:
             raise ValueError("Problem bounds inconsistent!")
 
-        if len(fixed_flag) != dim:
-            raise ValueError("Got " + str(len(fixed_flag)) + " boolean array for problem of dimension " + str(dim))
+        if len(fixed_flags) != dim:
+            raise ValueError("Got " + str(len(fixed_flags)) + " boolean array for problem of dimension " + str(dim))
 
-        if sum(fixed_flag) != len(fixed_arguments):
-            raise ValueError(str(sum(fixed_flag)) + " positions marked as fixed, but " + str(len(fixed_arguments))
+        if sum(fixed_flags) != len(fixed_arguments):
+            raise ValueError(str(sum(fixed_flags)) + " positions marked as fixed, but " + str(len(fixed_arguments))
                              + " arguments supplied.")
 
         j = 0
         for i in range(dim):
-            if fixed_flag[i]:
+            if fixed_flags[i]:
                 arg = fixed_arguments[j]
                 j += 1
 
@@ -352,19 +352,19 @@ class constant_arguments():
 
         self.problem = prob
         self.fixed_arguments = fixed_arguments
-        self.fixed_flag = fixed_flag
+        self.fixed_flags = fixed_flags
 
         self.minBound = []
         self.maxBound = []
 
         for i in range(dim):
-            if fixed_flag[i]:
+            if fixed_flags[i]:
                 pass
             else:
                 self.minBound.append(minBound[i])
                 self.maxBound.append(maxBound[i])
 
-        assert(len(self.minBound) + sum(fixed_flag) == dim)
+        assert(len(self.minBound) + sum(fixed_flags) == dim)
 
     def get_bounds(self):
         return (self.minBound, self.maxBound)
@@ -409,7 +409,7 @@ class constant_arguments():
         j = 0
         k = 0
         for i in range(self.full_dim):
-            if self.fixed_flag[i]:
+            if self.fixed_flags[i]:
                 fullx[i] = self.fixed_arguments[j]
                 j += 1
             else:
