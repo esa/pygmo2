@@ -2584,8 +2584,8 @@ class constant_arguments_problem_test_case(_ut.TestCase):
 
         # Default construction.
         c = cp(prob=None, fixed_arguments=[], fixed_flags=[False])
-        # self.assertTrue(isinstance(c.problem, problem))
-        self.assertTrue(c.problem.extract(null_problem) is not None)
+        self.assertTrue(isinstance(c._problem, problem))
+        self.assertTrue(c._problem.extract(null_problem) is not None)
 
         # C++ problem, test we forward properly the problem properties.
         rb = rosenbrock()

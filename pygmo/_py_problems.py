@@ -319,13 +319,13 @@ class constant_arguments():
             # with the other meta problems and with the constructor
             # from a UDP (which will end up making a deep copy of
             # the input object).
-            self.problem = deepcopy(prob)
+            self._problem = deepcopy(prob)
         else:
             # Otherwise, we attempt to create a problem from it. This will
             # work if prob is an exposed C++ problem or a Python UDP.
-            self.problem = problem(prob)
+            self._problem = problem(prob)
 
-        minBound, maxBound = self.problem.get_bounds()
+        minBound, maxBound = self._problem.get_bounds()
 
         dim = len(minBound)
         self.full_dim = dim
@@ -350,7 +350,7 @@ class constant_arguments():
                 if not arg <= maxBound[i]:
                     raise ValueError("Fixed argument " + str(arg) + " violates max bound " + str(maxBound[i]))
 
-        self.problem = prob
+        self._problem = prob
         self.fixed_arguments = fixed_arguments
         self.fixed_flags = fixed_flags
 
@@ -370,22 +370,22 @@ class constant_arguments():
         return (self.minBound, self.maxBound)
 
     def get_nobj(self):
-        return self.problem.get_nobj()
+        return self._problem.get_nobj()
 
     def get_nic(self):
-        return self.problem.get_nic()
+        return self._problem.get_nic()
 
     def get_nc(self):
-        return self.problem.get_nc()
+        return self._problem.get_nc()
 
     def get_nx(self):
         return len(self.minBound)
 
     def fitness(self, x) -> List[float]:
-        return self.problem.fitness(self.get_full_x(x))
+        return self._problem.fitness(self.get_full_x(x))
 
     def has_batch_fitness(self):
-        return self.problem.has_batch_fitness()
+        return self._problem.has_batch_fitness()
 
     def batch_fitness(self, dvs):
         contiguous_x = []
@@ -396,7 +396,7 @@ class constant_arguments():
             begin_index = i * self.get_nx()
             end_index = (i+1) * self.get_nx()
             contiguous_x.extend(self.get_full_x(dvs[begin_index:end_index]))
-        return self.problem.batch_fitness(contiguous_x)
+        return self._problem.batch_fitness(contiguous_x)
 
     def get_full_x(self, x) -> List[float]:
         """Get the full x for a given x of lower dimension"""
