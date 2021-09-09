@@ -411,7 +411,7 @@ class constant_arguments():
         """Get the full x for a given x of lower dimension"""
 
         if len(x) != len(self.minBound):
-            raise ValueError("Got x of length " + str(len(x)) + " but expected " + len(self.minBound))
+            raise ValueError("Got x of length " + str(len(x)) + " but expected " + str(len(self.minBound)))
 
         fullx = [None for i in range(self.full_dim)]
 
