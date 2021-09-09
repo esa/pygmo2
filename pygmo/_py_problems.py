@@ -325,7 +325,7 @@ class constant_arguments():
             # work if prob is an exposed C++ problem or a Python UDP.
             self.problem = problem(prob)
 
-        minBound, maxBound = prob.get_bounds()
+        minBound, maxBound = self.problem.get_bounds()
 
         dim = len(minBound)
         self.full_dim = dim
