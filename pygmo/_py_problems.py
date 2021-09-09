@@ -350,7 +350,6 @@ class constant_arguments():
                 if not arg <= maxBound[i]:
                     raise ValueError("Fixed argument " + str(arg) + " violates max bound " + str(maxBound[i]))
 
-        self._problem = prob
         self.fixed_arguments = fixed_arguments
         self.fixed_flags = fixed_flags
 
