@@ -2573,13 +2573,13 @@ class decorator_problem_test_case(_ut.TestCase):
         prob.batch_fitness([0] * 10)
         self.assertTrue(len(prob.extract(dp).dv_log) > 0)
 
-class fixed_arguments_problem_test_case(_ut.TestCase):
-    """Test case for the fixed_arguments meta-problem
+class constant_arguments_problem_test_case(_ut.TestCase):
+    """Test case for the constant_arguments meta-problem
 
     """
 
     def runTest(self):
-        from . import fixed_arguments as cp, problem
+        from . import constant_arguments as cp, problem
         from .core import null_problem, rosenbrock
 
         # Default construction.
@@ -3001,7 +3001,7 @@ def run_test_suite(level=0):
     suite.addTest(mbh_test_case())
     suite.addTest(cstrs_self_adaptive_test_case())
     suite.addTest(decorator_problem_test_case())
-    suite.addTest(fixed_arguments_problem_test_case())
+    suite.addTest(constant_arguments_problem_test_case())
     suite.addTest(wfg_test_case())
     try:
         from .core import nlopt
