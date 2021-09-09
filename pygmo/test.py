@@ -2633,7 +2633,7 @@ class constant_arguments_problem_test_case(_ut.TestCase):
         self.assertRaises(ValueError, lambda: c.fitness([0]))
 
         # Test the fitness consistency
-        self.assertEqual(c.fitness([0,0]), rosenbrock(dim=5).fitness([5,1,0,0,5]))
+        self.assertEqual(c.fitness([0,0]), problem(rosenbrock(dim=5)).fitness([5,1,0,0,5]))
 
         # Run an evolution in an mp_island of a wrapped problem.
         from . import archipelago, de, mp_island
