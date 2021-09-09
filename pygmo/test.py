@@ -3001,6 +3001,7 @@ def run_test_suite(level=0):
     suite.addTest(mbh_test_case())
     suite.addTest(cstrs_self_adaptive_test_case())
     suite.addTest(decorator_problem_test_case())
+    suite.addTest(fixed_arguments_problem_test_case())
     suite.addTest(wfg_test_case())
     try:
         from .core import nlopt
