@@ -281,7 +281,7 @@ class constant_arguments():
     of the original dimensions whether it is fixed or not:
 
     >>> from pygmo import constant_arguments, problem, rosenbrock
-    >>> cprob = problem(constant_arguments(rosenbrock(dim=3), fixed_arguments=[1], fixed_flag=[True, False, False]))
+    >>> cprob = problem(constant_arguments(rosenbrock(dim=3), fixed_arguments=[1], fixed_flags=[True, False, False]))
 
     We now see that the new problem has two dimensions, since the original problem had three and we fixed one:
 
