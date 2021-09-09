@@ -10,7 +10,7 @@
 # the docstring of its inner_problem property in the documentation
 # of the inner_problem property of decorator_problem.
 from .core import unconstrain as _unconstrain
-
+from typing import List
 
 def _with_decorator(f):
     # A decorator that will decorate the input method f of a decorator_problem
@@ -266,6 +266,7 @@ class decorator_problem(object):
         from copy import deepcopy
         return deepcopy(self._decors.get(fname))
 
+
 class constant_arguments():
     """Meta problem that sets some arguments of the original problem to constants
 
@@ -280,15 +281,15 @@ class constant_arguments():
     of the original dimensions whether it is fixed or not:
 
     >>> from pygmo import constant_arguments, problem, rosenbrock
-    >>> cprob = problem(constant_arguments(rosenbrock(dim=5), fixed_arguments=[1,1], fixed_flag=[True, False, False, True, False]))
-    
-    We now see that the new problem has three dimensions, since the original problem had five and we fixed two:
+    >>> cprob = problem(constant_arguments(rosenbrock(dim=3), fixed_arguments=[1], fixed_flag=[True, False, False]))
+
+    We now see that the new problem has two dimensions, since the original problem had three and we fixed one:
 
     >>> cprob.get_nx()
-    3
+    2
 
     """
-    
+
     def __init__(self, prob, fixed_arguments: List[float], fixed_flag: List[bool]):
         """
         Args:
@@ -323,9 +324,9 @@ class constant_arguments():
             # Otherwise, we attempt to create a problem from it. This will
             # work if prob is an exposed C++ problem or a Python UDP.
             self.problem = problem(prob)
-        
+
         minBound, maxBound = prob.get_bounds()
-        
+
         dim = len(minBound)
         self.full_dim = dim
         if len(maxBound) != dim:
@@ -333,10 +334,11 @@ class constant_arguments():
 
         if len(fixed_flag) != dim:
             raise ValueError("Got " + str(len(fixed_flag)) + " boolean array for problem of dimension " + str(dim))
-            
+
         if sum(fixed_flag) != len(fixed_arguments):
-            raise ValueError(str(sum(fixed_flag)) + " positions marked as fixed, but " + str(len(fixed_arguments)) + " arguments supplied.")
-            
+            raise ValueError(str(sum(fixed_flag)) + " positions marked as fixed, but " + str(len(fixed_arguments))
+                             + " arguments supplied.")
+
         j = 0
         for i in range(dim):
             if fixed_flag[i]:
@@ -347,43 +349,43 @@ class constant_arguments():
                     raise ValueError("Fixed argument " + str(arg) + " violates min bound " + str(minBound[i]))
                 if not arg <= maxBound[i]:
                     raise ValueError("Fixed argument " + str(arg) + " violates max bound " + str(maxBound[i]))
-        
+
         self.problem = prob
         self.fixed_arguments = fixed_arguments
         self.fixed_flag = fixed_flag
-        
+
         self.minBound = []
         self.maxBound = []
-        
+
         for i in range(dim):
             if fixed_flag[i]:
                 pass
             else:
                 self.minBound.append(minBound[i])
                 self.maxBound.append(maxBound[i])
-                
+
         assert(len(self.minBound) + sum(fixed_flag) == dim)
-        
+
     def get_bounds(self):
         return (self.minBound, self.maxBound)
-    
+
     def get_nobj(self):
         return self.problem.get_nobj()
-    
+
     def get_nic(self):
         return self.problem.get_nic()
-    
+
     def get_nc(self):
         return self.problem.get_nc()
 
     def get_nx(self):
         return len(self.minBound)
-    
+
     def fitness(self, x) -> List[float]:
         return self.problem.fitness(self.get_full_x(x))
 
     def has_batch_fitness(self):
-    	return self.problem.has_batch_fitness()
+        return self.problem.has_batch_fitness()
 
     def batch_fitness(self, dvs):
         contiguous_x = []
@@ -393,17 +395,17 @@ class constant_arguments():
         for i in range(num_dvs):
             begin_index = i * self.get_nx()
             end_index = (i+1) * self.get_nx()
-            contiguous_x.extend(get_full_x(dvs[begin_index:end_index]))
+            contiguous_x.extend(self.get_full_x(dvs[begin_index:end_index]))
         return self.problem.batch_fitness(contiguous_x)
-    
+
     def get_full_x(self, x) -> List[float]:
         """Get the full x for a given x of lower dimension"""
 
         if len(x) != len(self.minBound):
             raise ValueError("Got x of length " + str(len(x)) + " but expected " + len(self.minBound))
-        
+
         fullx = [None for i in range(self.full_dim)]
-        
+
         j = 0
         k = 0
         for i in range(self.full_dim):
@@ -413,7 +415,7 @@ class constant_arguments():
             else:
                 fullx[i] = x[k]
                 k += 1
-                
+
         assert(j + k == self.full_dim)
         assert(all(elem is not None for elem in fullx))
         return fullx
