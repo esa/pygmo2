@@ -217,6 +217,7 @@ Decompose                                                  :class:`pygmo.decompo
 Translate                                                  :class:`pygmo.translate`
 Unconstrain                                                :class:`pygmo.unconstrain`
 Decorator                                                  :class:`pygmo.decorator_problem`
+Constant Arguments                                         :class:`pygmo.constant_arguments`
 ========================================================== =========================================
 
 .. _available_islands:
