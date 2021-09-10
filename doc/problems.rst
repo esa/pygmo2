@@ -11,6 +11,9 @@ Problems implemented in Python
 .. autoclass:: pygmo.decorator_problem
    :members:
 
+.. autoclass:: pygmo.constant_arguments
+   :members:
+
 .. _problems_cpp:
 
 Problems exposed from C++

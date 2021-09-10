@@ -2574,6 +2574,98 @@ class decorator_problem_test_case(_ut.TestCase):
         self.assertTrue(len(prob.extract(dp).dv_log) > 0)
 
 
+class constant_arguments_problem_test_case(_ut.TestCase):
+    """Test case for the constant_arguments meta-problem
+
+    """
+
+    def runTest(self):
+        from . import constant_arguments as cp, problem
+        from .core import null_problem, rosenbrock
+
+        # Default construction.
+        c = cp(prob=None, fixed_arguments=[None])
+        self.assertTrue(isinstance(c._problem, problem))
+        self.assertTrue(c._problem.extract(null_problem) is not None)
+
+        # C++ problem, test we forward properly the problem properties.
+        rb = rosenbrock()
+        pr = problem(rb)
+        c = cp(prob=rb, fixed_arguments=[None, None])
+        self.assertEqual(type(c._problem.extract(rosenbrock)), rosenbrock)
+        self.assertTrue((pr.get_bounds()[0] == c.get_bounds()[0]).all())
+        self.assertTrue((pr.get_bounds()[1] == c.get_bounds()[1]).all())
+        self.assertEqual(pr.get_nec(), c.get_nec())
+        self.assertEqual(pr.get_nic(), c.get_nic())
+        self.assertEqual(pr.get_nix(), c.get_nix())
+        self.assertEqual(pr.get_nobj(), c.get_nobj())
+        # Check that we made a copy of rb on construction.
+        self.assertTrue(id(c._problem.extract(rosenbrock)) != id(rb))
+        # Try construction from a problem object.
+        c = cp(prob=pr, fixed_arguments=[None, None])
+        self.assertEqual(type(c._problem.extract(rosenbrock)), rosenbrock)
+        self.assertTrue((pr.get_bounds()[0] == c.get_bounds()[0]).all())
+        self.assertTrue((pr.get_bounds()[1] == c.get_bounds()[1]).all())
+        self.assertEqual(pr.get_nec(), c.get_nec())
+        self.assertEqual(pr.get_nic(), c.get_nic())
+        self.assertEqual(pr.get_nix(), c.get_nix())
+        self.assertEqual(pr.get_nobj(), c.get_nobj())
+        # Check that we made a copy of pr on construction.
+        self.assertTrue(id(c._problem) != id(pr))
+
+        # Check that lengths inconsistent with problem dimension are rejected
+        self.assertRaises(ValueError, lambda: cp(
+            prob=rb, fixed_arguments=[None]))
+
+        # Check that fixed arguments violating the bounds are rejected
+        self.assertRaises(ValueError, lambda: cp(
+            prob=rb, fixed_arguments=[15, 1]))
+
+        # Test the dimension
+        c = cp(prob=rosenbrock(dim=5), fixed_arguments=[5, 1, None, None, 5])
+        self.assertEqual(c.get_nx(), 2)
+
+        # Test that fitness with wrong size is rejected
+        self.assertRaises(ValueError, lambda: c.fitness([0, 0, 0]))
+        self.assertRaises(ValueError, lambda: c.fitness([0]))
+
+        # Test the fitness consistency
+        self.assertEqual(c.fitness([0, 0]), problem(rosenbrock(dim=5)).fitness([5, 1, 0, 0, 5]))
+
+        # Pythonic problem with batch_fitness method.
+        class p(object):
+
+            def get_bounds(self):
+                return ([0, 0, 0], [1, 1, 1])
+
+            def fitness(self, a):
+                return [42]
+
+            def batch_fitness(self, dvs):
+                if len(dvs) % 3 != 0:
+                    raise ValueError("Expected multiple of 3, but got " + str(len(dvs)))
+                return [42] * int(len(dvs) / 3)
+
+        # Test batch fitness
+        c = cp(prob=p(), fixed_arguments=[None, 0, None])
+        self.assertTrue(c.has_batch_fitness())
+
+        # Test that wrong fitness sizes are rejected
+        self.assertRaises(ValueError, lambda: c.batch_fitness([0, 0, 0]))
+
+        # Test batch fitness of correct size
+        self.assertEqual(len(c.batch_fitness([0, 0, 1, 1, 0, 0])), 3)
+        self.assertTrue(all(elem == 42 for elem in c.batch_fitness([0, 0, 1, 1, 0, 0])))
+
+        # Run an evolution in an mp_island of a wrapped problem.
+        from . import archipelago, de, mp_island
+
+        a = archipelago(5, algo=de(), prob=cp(rosenbrock(dim=5), fixed_arguments=[None, None, 0, None, None]),
+                        pop_size=10, udi=mp_island(), seed=5)
+        a.evolve()
+        a.wait_check()
+
+
 class wfg_test_case(_ut.TestCase):
     """Test case for the UDP wfg
 
@@ -2932,6 +3024,7 @@ def run_test_suite(level=0):
     suite.addTest(mbh_test_case())
     suite.addTest(cstrs_self_adaptive_test_case())
     suite.addTest(decorator_problem_test_case())
+    suite.addTest(constant_arguments_problem_test_case())
     suite.addTest(wfg_test_case())
     try:
         from .core import nlopt

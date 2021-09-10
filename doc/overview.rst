@@ -13,7 +13,7 @@ Overview
   single and multi-objective algorithms,
   wrappers for third-party solvers (e.g.,
   `NLopt <https://nlopt.readthedocs.io/en/latest/>`__,
-  `Ipopt <https://projects.coin-or.org/Ipopt>`__,
+  `Ipopt <https://coin-or.github.io/Ipopt/>`__,
   `SciPy <https://www.scipy.org/>`__, etc.).
 * Comprehensive support for coarse-grained
   parallelisation via the
@@ -217,6 +217,7 @@ Decompose                                                  :class:`pygmo.decompo
 Translate                                                  :class:`pygmo.translate`
 Unconstrain                                                :class:`pygmo.unconstrain`
 Decorator                                                  :class:`pygmo.decorator_problem`
+Constant Arguments                                         :class:`pygmo.constant_arguments`
 ========================================================== =========================================
 
 .. _available_islands:
