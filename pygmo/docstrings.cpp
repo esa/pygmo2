@@ -5856,7 +5856,7 @@ modifications:
 
 .. seealso::
 
-   https://projects.coin-or.org/Ipopt.
+   https://coin-or.github.io/Ipopt/.
 
 See also the docs of the C++ class :cpp:class:`pagmo::ipopt`.
 
@@ -5876,7 +5876,7 @@ Examples:
     ******************************************************************************
     This program contains Ipopt, a library for large-scale nonlinear optimization.
     Ipopt is released as open source code under the Eclipse Public License (EPL).
-            For more information visit http://projects.coin-or.org/Ipopt
+            For more information visit https://coin-or.github.io/Ipopt/
     ******************************************************************************
     <BLANKLINE>
     <BLANKLINE>
