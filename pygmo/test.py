@@ -2632,6 +2632,29 @@ class constant_arguments_problem_test_case(_ut.TestCase):
         # Test the fitness consistency
         self.assertEqual(c.fitness([0, 0]), problem(rosenbrock(dim=5)).fitness([5, 1, 0, 0, 5]))
 
+        # Pythonic problem with batch_fitness method.
+        class p(object):
+
+            def get_bounds(self):
+                return ([0, 0, 0], [1, 1, 1])
+
+            def fitness(self, a):
+                return [42]
+
+            def batch_fitness(self, dvs):
+                return [42] * (len(dvs) / 3)
+
+        # Test batch fitness
+        c = cp(prob=p(), fixed_arguments=[None, 0, None])
+        self.assertTrue(c.has_batch_fitness())
+
+        # Test that wrong fitness sizes are rejected
+        self.assertRaises(ValueError, lambda: c.batch_fitness([0, 0, 0]))
+
+        # Test batch fitness of correct size
+        self.assertEqual(len(c.batch_fitness([0, 0, 1, 1, 0, 0])), 3)
+        self.assertEqual(c.batch_fitness([0, 0, 1, 1, 0, 0]), [42, 42, 42])
+
         # Run an evolution in an mp_island of a wrapped problem.
         from . import archipelago, de, mp_island
 
