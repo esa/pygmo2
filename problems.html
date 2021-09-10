@@ -39,7 +39,7 @@
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -333,6 +333,56 @@ construction, <a class="reference external" href="https://docs.python.org/3/libr
 <dd class="field-even"><p><a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a></p>
 </dd>
 </dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pygmo.constant_arguments">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">constant_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_arguments</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.constant_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meta problem that sets some arguments of the original problem to constants</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.19.</span></p>
+</div>
+<p>If good values for some of the dimensions of a problem are known, this
+wrapper allows to reduce the dimensions of the search space and is an alternative
+to restricting a value using identical lower and upper bounds.</p>
+<p>We can construct an instance of this problem by passing the original problem,
+the list of fixed arguments and a list of boolean flags, denoting for each argument
+of the original dimensions whether it is fixed or not:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygmo</span> <span class="kn">import</span> <span class="n">constant_arguments</span><span class="p">,</span> <span class="n">problem</span><span class="p">,</span> <span class="n">rosenbrock</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cprob</span> <span class="o">=</span> <span class="n">problem</span><span class="p">(</span><span class="n">constant_arguments</span><span class="p">(</span><span class="n">rosenbrock</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">fixed_arguments</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>We now see that the new problem has two dimensions, since the original problem had three and we fixed one:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cprob</span><span class="o">.</span><span class="n">get_nx</span><span class="p">()</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – a <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> or a user-defined problem, either C++ or Python (if
+<em>prob</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a <a class="reference internal" href="#pygmo.null_problem" title="pygmo.null_problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">null_problem</span></code></a> will be used in its stead)</p></li>
+<li><p><strong>fixed_arguments</strong> – a list of values, one for each dimension of the wrapped problem.
+Each value should be either a float, if the argument should be fixed to this value,
+or None, if it should remain free</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the lengths of fixed_arguments differs from the number of dimensions of the wrapped problem</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if any of the fixed arguments violate the bounds of the wrapped problem</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if a problem with nix() &gt; 0 is passed</p></li>
+<li><p><strong>unspecified</strong> – any exception thrown by the constructor of <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> or the deep copy
+    of <em>prob</em></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygmo.constant_arguments.get_full_x">
+<span class="sig-name descname"><span class="pre">get_full_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pygmo.constant_arguments.get_full_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the full x for a given x of lower dimension</p>
 </dd></dl>
 
 </dd></dl>
