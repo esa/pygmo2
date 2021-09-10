@@ -341,7 +341,7 @@ class constant_arguments():
         self.minBound = []
         self.maxBound = []
 
-        for i in range(inner_dim) in fixed_arguments:
+        for i in range(inner_dim):
             arg = fixed_arguments[i]
 
             if arg is None:
