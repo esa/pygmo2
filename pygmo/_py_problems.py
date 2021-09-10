@@ -10,7 +10,7 @@
 # the docstring of its inner_problem property in the documentation
 # of the inner_problem property of decorator_problem.
 from .core import unconstrain as _unconstrain
-from typing import List
+from typing import List, Union
 
 def _with_decorator(f):
     # A decorator that will decorate the input method f of a decorator_problem
@@ -281,7 +281,7 @@ class constant_arguments():
     of the original dimensions whether it is fixed or not:
 
     >>> from pygmo import constant_arguments, problem, rosenbrock
-    >>> cprob = problem(constant_arguments(rosenbrock(dim=3), fixed_arguments=[1], fixed_flags=[True, False, False]))
+    >>> cprob = problem(constant_arguments(rosenbrock(dim=3), fixed_arguments=[1, None, None]))
 
     We now see that the new problem has two dimensions, since the original problem had three and we fixed one:
 
@@ -290,20 +290,19 @@ class constant_arguments():
 
     """
 
-    def __init__(self, prob, fixed_arguments: List[float], fixed_flags: List[bool]):
+    def __init__(self, prob, fixed_arguments: List[Union[float, None]]):
         """
         Args:
 
            prob: a :class:`~pygmo.problem` or a user-defined problem, either C++ or Python (if
               *prob* is :data:`None`, a :class:`~pygmo.null_problem` will be used in its stead)
-           fixed_arguments: a list of floats, one for each argument that should be fixed.
-           fixed_flag: a list of boolean values, one for each dimension of the wrapped problem.
-              The number of True values must be the same as the length of fixed_arguments.
+           fixed_arguments: a list of values, one for each dimension of the wrapped problem.
+               Each value should be either a float, if the argument should be fixed to this value,
+               or None, if it should remain free
 
         Raises:
 
-           ValueError: if the number of fixed flags differs from the number of dimensions of the wrapped problem
-           ValueError: if the number of true fixed flags differs from the length of fixed_arguments
+           ValueError: if the lengths of fixed_arguments differs from the number of dimensions of the wrapped problem
            ValueError: if any of the fixed arguments violate the bounds of the wrapped problem
            ValueError: if a problem with nix() > 0 is passed
            unspecified: any exception thrown by the constructor of :class:`~pygmo.problem` or the deep copy
@@ -328,46 +327,39 @@ class constant_arguments():
 
         minBound, maxBound = self._problem.get_bounds()
 
-        dim = len(minBound)
-        self.full_dim = dim
-        if len(maxBound) != dim:
+        inner_dim = len(minBound)
+        self.full_dim = inner_dim
+        if len(maxBound) != inner_dim:
             raise ValueError("Problem bounds inconsistent!")
 
-        if len(fixed_flags) != dim:
-            raise ValueError("Got " + str(len(fixed_flags)) + " boolean array for problem of dimension " + str(dim))
-
-        if sum(fixed_flags) != len(fixed_arguments):
-            raise ValueError(str(sum(fixed_flags)) + " positions marked as fixed, but " + str(len(fixed_arguments))
-                             + " arguments supplied.")
+        if len(fixed_arguments) != inner_dim:
+            raise ValueError("Got " + str(len(fixed_arguments)) + " argument array for problem of dimension " + str(inner_dim))
 
         if self._problem.get_nix() > 0:
             raise ValueError("Mixed integer-problems not yet supported.")
 
-        j = 0
-        for i in range(dim):
-            if fixed_flags[i]:
-                arg = fixed_arguments[j]
-                j += 1
+        self.minBound = []
+        self.maxBound = []
 
+        for i in range(inner_dim) in fixed_arguments:
+            arg = fixed_arguments[i]
+
+            if arg is None:
+                # free variable
+                self.minBound.append(minBound[i])
+                self.maxBound.append(maxBound[i])
+            else:
+                # fixed variable
                 if not arg >= minBound[i]:
                     raise ValueError("Fixed argument " + str(arg) + " violates min bound " + str(minBound[i]))
                 if not arg <= maxBound[i]:
                     raise ValueError("Fixed argument " + str(arg) + " violates max bound " + str(maxBound[i]))
 
-        self.fixed_arguments = fixed_arguments
-        self.fixed_flags = fixed_flags
+        # converting to internal format
+        self.fixed_arguments = [elem for elem in fixed_arguments if elem is not None]
+        self.fixed_flags = [elem is not None for elem in fixed_arguments]
 
-        self.minBound = []
-        self.maxBound = []
-
-        for i in range(dim):
-            if fixed_flags[i]:
-                pass
-            else:
-                self.minBound.append(minBound[i])
-                self.maxBound.append(maxBound[i])
-
-        assert(len(self.minBound) + sum(fixed_flags) == dim)
+        assert(len(self.minBound) + sum(self.fixed_flags) == inner_dim)
 
     def get_bounds(self):
         return (self.minBound, self.maxBound)
