@@ -2642,7 +2642,9 @@ class constant_arguments_problem_test_case(_ut.TestCase):
                 return [42]
 
             def batch_fitness(self, dvs):
-                return [42] * (len(dvs) / 3)
+                if len(dvs) % 3 != 0:
+                    raise ValueError("Expected multiple of 3, but got " + str(len(dvs)))
+                return [42] * int(len(dvs) / 3)
 
         # Test batch fitness
         c = cp(prob=p(), fixed_arguments=[None, 0, None])
