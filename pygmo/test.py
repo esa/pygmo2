@@ -2655,7 +2655,7 @@ class constant_arguments_problem_test_case(_ut.TestCase):
 
         # Test batch fitness of correct size
         self.assertEqual(len(c.batch_fitness([0, 0, 1, 1, 0, 0])), 3)
-        self.assertEqual(c.batch_fitness([0, 0, 1, 1, 0, 0]), [42, 42, 42])
+        self.assertTrue(all(elem == 42 for elem in c.batch_fitness([0, 0, 1, 1, 0, 0])))
 
         # Run an evolution in an mp_island of a wrapped problem.
         from . import archipelago, de, mp_island
