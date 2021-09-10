@@ -327,13 +327,10 @@ class constant_arguments():
 
         minBound, maxBound = self._problem.get_bounds()
 
-        inner_dim = len(minBound)
-        self.full_dim = inner_dim
-        if len(maxBound) != inner_dim:
-            raise ValueError("Problem bounds inconsistent!")
+        self.full_dim = self._problem.get_nx()
 
-        if len(fixed_arguments) != inner_dim:
-            raise ValueError("Got " + str(len(fixed_arguments)) + " argument array for problem of dimension " + str(inner_dim))
+        if len(fixed_arguments) != self.full_dim:
+            raise ValueError("Got {} argument array for problem of dimension {}".format(len(fixed_arguments), self.full_dim))
 
         if self._problem.get_nix() > 0:
             raise ValueError("Mixed integer-problems not yet supported.")
@@ -341,7 +338,7 @@ class constant_arguments():
         self.minBound = []
         self.maxBound = []
 
-        for i in range(inner_dim):
+        for i in range(self.full_dim):
             arg = fixed_arguments[i]
 
             if arg is None:
@@ -351,15 +348,15 @@ class constant_arguments():
             else:
                 # fixed variable
                 if not arg >= minBound[i]:
-                    raise ValueError("Fixed argument " + str(arg) + " violates min bound " + str(minBound[i]))
+                    raise ValueError("Fixed argument {} violates min bound {}".format(arg, minBound[i]))
                 if not arg <= maxBound[i]:
-                    raise ValueError("Fixed argument " + str(arg) + " violates max bound " + str(maxBound[i]))
+                    raise ValueError("Fixed argument {} violates max bound {}".format(arg, maxBound[i]))
 
         # converting to internal format
         self.fixed_arguments = [elem for elem in fixed_arguments if elem is not None]
         self.fixed_flags = [elem is not None for elem in fixed_arguments]
 
-        assert(len(self.minBound) + sum(self.fixed_flags) == inner_dim)
+        assert(len(self.minBound) + sum(self.fixed_flags) == self.full_dim)
 
     def get_bounds(self):
         return (self.minBound, self.maxBound)
@@ -391,8 +388,8 @@ class constant_arguments():
     def batch_fitness(self, dvs):
         contiguous_x = []
         if len(dvs) % self.get_nx() != 0:
-            raise ValueError("Expected multiple of " + str(self.get_nx()) + " but got " + str(len(dvs)))
-        num_dvs = int(len(dvs) / self.get_nx())
+            raise ValueError("Expected multiple of {} but got {}".format(self.get_nx(), len(dvs)))
+        num_dvs = len(dvs) // self.get_nx()
         for i in range(num_dvs):
             begin_index = i * self.get_nx()
             end_index = (i+1) * self.get_nx()
@@ -403,7 +400,7 @@ class constant_arguments():
         """Get the full x for a given x of lower dimension"""
 
         if len(x) != len(self.minBound):
-            raise ValueError("Got x of length " + str(len(x)) + " but expected " + str(len(self.minBound)))
+            raise ValueError("Got x of length {} but expected {}".format(len(x), self.get_nx()))
 
         fullx = [None for i in range(self.full_dim)]
 
