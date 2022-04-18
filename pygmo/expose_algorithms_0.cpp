@@ -206,6 +206,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         },
         moead_get_log_docstring().c_str());
     moead_.def("get_seed", &pagmo::moead::get_seed, generic_uda_get_seed_docstring().c_str());
+    moead_.def("set_bfe", &pagmo::moead::set_bfe, moead_set_bfe_docstring().c_str(), py::arg("b"));
 
 #if defined(PAGMO_WITH_EIGEN3)
     // CMA-ES
