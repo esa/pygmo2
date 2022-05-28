@@ -277,8 +277,8 @@ class constant_arguments():
     to restricting a value using identical lower and upper bounds.
 
     We can construct an instance of this problem by passing the original problem,
-    the list of fixed arguments and a list of boolean flags, denoting for each argument
-    of the original dimensions whether it is fixed or not:
+    and a list of containing one entry for each argument, either the fixed argument
+    for this dimension or None if the argument should remain free:
 
     >>> from pygmo import constant_arguments, problem, rosenbrock
     >>> cprob = problem(constant_arguments(rosenbrock(dim=3), fixed_arguments=[1, None, None]))
