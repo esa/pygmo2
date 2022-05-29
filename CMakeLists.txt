@@ -132,6 +132,7 @@ endif()
 # so that we can re-use it below.
 set (_PYGMO_MIN_PAGMO_VERSION 2.18.0)
 find_package(pagmo REQUIRED)
+message(STATUS "pagmo is:  ${pagmo_DIR}")
 if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
     message(FATAL_ERROR "The minimum pagmo version required by pygmo is ${_PYGMO_MIN_PAGMO_VERSION}, but version ${pagmo_VERSION} was found instead.")
 endif()

@@ -2376,23 +2376,6 @@ See also the docs of the relevant C++ method :cpp:func:`pagmo::sade::get_log()`.
 )";
 }
 
-std::string moead_set_bfe_docstring()
-{
-    return R"(set_bfe(b)
-
-Set the batch function evaluation scheme.
-
-This method will set the batch function evaluation scheme to be used for :class:`~pygmo.moead`.
-
-Args:
-    b (:class:`~pygmo.bfe`): the batch function evaluation object
-
-Raises:
-    unspecified: any exception thrown by the underlying C++ method
-
-)";
-}
-
 std::string nsga2_set_bfe_docstring()
 {
     return R"(set_bfe(b)
@@ -2805,6 +2788,91 @@ Examples:
     [(1, 0, 32.574745630075874, array([  1.90532430e-03,   2.65684834e+00])), ...
 
 See also the docs of the relevant C++ method :cpp:func:`pagmo::moead::get_log()`.
+
+)";
+}
+
+std::string moead_gen_set_bfe_docstring()
+{
+    return R"(set_bfe(b)
+
+Set the batch function evaluation scheme.
+
+This method will set the batch function evaluation scheme to be used for :class:`~pygmo.moead_gen`.
+
+Args:
+    b (:class:`~pygmo.bfe`): the batch function evaluation object
+
+Raises:
+    unspecified: any exception thrown by the underlying C++ method
+
+)";
+}
+
+std::string moead_gen_docstring()
+{
+    return R"(__init__(gen = 1, weight_generation = "grid", decomposition = "tchebycheff", neighbours = 20, CR = 1, F = 0.5, eta_m = 20, realb = 0.9, limit = 2, preserve_diversity = true, seed = random)
+
+Multi Objective Evolutionary Algorithms by Decomposition (the DE variant)
+
+Args:
+    gen (:class:`int`): number of generations
+    weight_generation (:class:`str`): method used to generate the weights, one of "grid", "low discrepancy" or "random"
+    decomposition (:class:`str`): method used to decompose the objectives, one of "tchebycheff", "weighted" or "bi"
+    neighbours (:class:`int`): size of the weight's neighborhood
+    CR (:class:`float`): crossover parameter in the Differential Evolution operator
+    F (:class:`float`): parameter for the Differential Evolution operator
+    eta_m (:class:`float`): distribution index used by the polynomial mutation
+    realb (:class:`float`): chance that the neighbourhood is considered at each generation, rather than the whole population (only if preserve_diversity is true)
+    limit (:class:`int`):  maximum number of copies reinserted in the population  (only if m_preserve_diversity is true)
+    preserve_diversity (:class:`bool`): when true activates diversity preservation mechanisms
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
+
+Raises:
+    OverflowError: if *gen*, *neighbours*, *seed* or *limit* are negative or greater than an implementation-defined value
+    ValueError: if either *decomposition* is not one of 'tchebycheff', 'weighted' or 'bi',
+      *weight_generation* is not one of 'random', 'low discrepancy' or 'grid',
+      *CR* or *F* or *realb* are not in [0.,1.] or *eta_m* is negative, if *neighbours* is not >=2
+
+See also the docs of the C++ class :cpp:class:`pagmo::moead_gen`.
+
+)";
+}
+
+std::string moead_gen_get_log_docstring()
+{
+    return R"(get_log()
+
+Returns a log containing relevant parameters recorded during the last call to ``evolve()``. The log frequency depends on the verbosity
+parameter (by default nothing is logged) which can be set calling the method :func:`~pygmo.algorithm.set_verbosity()` on an :class:`~pygmo.algorithm`
+constructed with a :class:`~pygmo.moead_gen`. A verbosity of ``N`` implies a log line each ``N`` generations.
+
+Returns:
+    :class:`list` of :class:`tuple`: at each logged epoch, the values ``Gen``, ``Fevals``, ``ADR``, ``ideal_point``, where:
+
+    * ``Gen`` (:class:`int`), generation number
+    * ``Fevals`` (:class:`int`), number of functions evaluation made
+    * ``ADF`` (:class:`float`), Average Decomposed Fitness, that is the average across all decomposed problem of the single objective decomposed fitness along the corresponding direction
+    * ``ideal_point`` (``array``), the ideal point of the current population (cropped to max 5 dimensions only in the screen output)
+
+Examples:
+    >>> from pygmo import *
+    >>> algo = algorithm(moead_gen(gen=500))
+    >>> algo.set_verbosity(100)
+    >>> prob = problem(zdt())
+    >>> pop = population(prob, 40)
+    >>> pop = algo.evolve(pop) # doctest: +SKIP
+    Gen:        Fevals:           ADF:        ideal1:        ideal2:
+      1              0        32.5747     0.00190532        2.65685
+    101           4000        5.67751    2.56736e-09       0.468789
+    201           8000        5.38297    2.56736e-09      0.0855025
+    301          12000        5.05509    9.76581e-10      0.0574796
+    401          16000        5.13126    9.76581e-10      0.0242256
+    >>> uda = algo.extract(moead_gen)
+    >>> uda.get_log() # doctest: +SKIP
+    [(1, 0, 32.574745630075874, array([  1.90532430e-03,   2.65684834e+00])), ...
+
+See also the docs of the relevant C++ method :cpp:func:`pagmo::moead_gen::get_log()`.
 
 )";
 }
