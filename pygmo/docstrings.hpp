@@ -103,6 +103,7 @@ std::string wfg_docstring();
 
 // user - algorithms
 std::string null_algorithm_docstring();
+std::string cmaes_set_bfe_docstring();
 std::string cmaes_docstring();
 std::string cmaes_get_log_docstring();
 std::string xnes_docstring();

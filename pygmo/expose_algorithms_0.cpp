@@ -220,6 +220,7 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                py::arg("force_bounds") = false, py::arg("seed"));
     expose_algo_log(cmaes_, cmaes_get_log_docstring().c_str());
     cmaes_.def("get_seed", &pagmo::cmaes::get_seed, generic_uda_get_seed_docstring().c_str());
+    cmaes_.def("set_bfe", &pagmo::cmaes::set_bfe, cmaes_set_bfe_docstring().c_str(), py::arg("b"));
 
     // xNES
     auto xnes_ = expose_algorithm<pagmo::xnes>(m, algo, a_module, "xnes", xnes_docstring().c_str());
