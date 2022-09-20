@@ -17,13 +17,13 @@ Changes
 ~~~~~~~
 
 - pygmo now requires pybind11 >= 2.10
-  (`#98 <https://github.com/esa/pygmo2/pull/98>`__).
+  (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
 
 Fix
 ~~~
 
 - Fix failing tests with recent versions of pybind11
-  (`#98 <https://github.com/esa/pygmo2/pull/98>`__).
+  (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
 
 2.18.0 (2021-08-03)
 -------------------
