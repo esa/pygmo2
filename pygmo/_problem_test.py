@@ -190,7 +190,7 @@ class problem_test_case(_ut.TestCase):
 
             def fitness(self, a):
                 return [42]
-        self.assertRaises(RuntimeError, lambda: problem(p()))
+        self.assertRaises(ValueError, lambda: problem(p()))
         # Bounds returned as numpy arrays.
 
         class p(object):
@@ -1036,7 +1036,7 @@ class problem_test_case(_ut.TestCase):
             def gradient_sparsity(self):
                 return [[0, 0], (0,)]
 
-        self.assertRaises(RuntimeError, lambda: problem(p()))
+        self.assertRaises(ValueError, lambda: problem(p()))
 
         class p(object):
 
@@ -1131,7 +1131,7 @@ class problem_test_case(_ut.TestCase):
             def gradient_sparsity(self):
                 return [[[0], 0], [0, 1]]
 
-        self.assertRaises(RuntimeError, lambda: problem(p()))
+        self.assertRaises(ValueError, lambda: problem(p()))
 
         class p(object):
 
