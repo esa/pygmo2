@@ -3,6 +3,28 @@
 Changelog
 =========
 
+2.19.0 (unreleased)
+-------------------
+
+New
+~~~
+
+- Added fixed arguments meta problem
+  (`#95 <https://github.com/esa/pygmo2/pull/95>`__,
+  `#87 <https://github.com/esa/pygmo2/pull/87>`__).
+
+Changes
+~~~~~~~
+
+- pygmo now requires pybind11 >= 2.10
+  (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
+
+Fix
+~~~
+
+- Fix failing tests with recent versions of pybind11
+  (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
+
 2.18.0 (2021-08-03)
 -------------------
 
