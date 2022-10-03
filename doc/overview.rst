@@ -177,7 +177,7 @@ Common Name                                                Docs of the python cl
 Ackley                                                     :class:`pygmo.ackley`                     S-U
 Golomb Ruler                                               :class:`pygmo.golomb_ruler`               S-C-I
 Griewank                                                   :class:`pygmo.griewank`                   S-U
-Hock Schittkowsky 71                                       :class:`pygmo.hock_schittkowsky_71`       S-C
+Hock schittkowski 71                                       :class:`pygmo.hock_schittkowski_71`       S-C
 Inventory                                                  :class:`pygmo.inventory`                  S-U-sto
 Lennard Jones                                              :class:`pygmo.lennard_jones`              S-U
 Luksan Vlcek 1                                             :class:`pygmo.luksan_vlcek1`              S-C

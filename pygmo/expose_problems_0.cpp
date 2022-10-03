@@ -22,7 +22,7 @@
 #include <pagmo/problems/decompose.hpp>
 #include <pagmo/problems/dtlz.hpp>
 #include <pagmo/problems/griewank.hpp>
-#include <pagmo/problems/hock_schittkowsky_71.hpp>
+#include <pagmo/problems/hock_schittkowski_71.hpp>
 #include <pagmo/problems/inventory.hpp>
 #include <pagmo/problems/lennard_jones.hpp>
 #include <pagmo/problems/null_problem.hpp>
@@ -111,12 +111,12 @@ void expose_problems_0(py::module &m, py::class_<pagmo::problem> &prob, py::modu
         py::init<pagmo::vector_double::size_type, pagmo::vector_double::size_type, pagmo::vector_double::size_type>(),
         py::arg("nobj") = 1, py::arg("nec") = 0, py::arg("nic") = 0);
 
-    // Hock-Schittkowsky 71
-    auto hs71 = expose_problem<pagmo::hock_schittkowsky_71>(m, prob, p_module, "hock_schittkowsky_71",
-                                                            "__init__()\n\nThe Hock-Schittkowsky 71 problem.\n\n"
-                                                            "See :cpp:class:`pagmo::hock_schittkowsky_71`.\n\n");
-    hs71.def("best_known", &best_known_wrapper<pagmo::hock_schittkowsky_71>,
-             problem_get_best_docstring("Hock-Schittkowsky 71").c_str());
+    // Hock-schittkowski 71
+    auto hs71 = expose_problem<pagmo::hock_schittkowski_71>(m, prob, p_module, "hock_schittkowski_71",
+                                                            "__init__()\n\nThe Hock-schittkowski 71 problem.\n\n"
+                                                            "See :cpp:class:`pagmo::hock_schittkowski_71`.\n\n");
+    hs71.def("best_known", &best_known_wrapper<pagmo::hock_schittkowski_71>,
+             problem_get_best_docstring("Hock-schittkowski 71").c_str());
 
     // Decompose meta-problem.
     auto decompose_ = expose_problem<pagmo::decompose>(m, prob, p_module, "decompose", decompose_docstring().c_str());
