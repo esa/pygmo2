@@ -1,0 +1,106 @@
+name: Build and upload to PyPI
+
+# Build on every branch push, tag push, and pull request change:
+# on: [push, pull_request]
+on: [pull_request]
+# Alternatively, to publish when a (published) GitHub Release is created, use the following:
+# on:
+#   push:
+#   pull_request:
+#   release:
+#     types:
+#       - published
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [ubuntu-20.04, windows-2019, macos-11]
+        os: [ubuntu-20.04]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.11.2
+        env:
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
+          CIBW_BEFORE_ALL: |-
+            yum install -y gcc tbb-devel eigen3-devel coin-or-Ipopt-devel boost169-devel boost169-graph boost169-serialization
+
+            # Newer version of NLopt-devel needed
+            git clone https://github.com/stevengj/nlopt.git
+            cd nlopt
+            mkdir build
+            cd build
+            cmake ..
+            make
+            make install
+            cd ..
+            cd ..
+
+            git clone https://github.com/esa/pagmo2.git
+            cd pagmo2
+            mkdir build
+            cd build
+            cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON \
+              -DBOOST_INCLUDEDIR=/usr/include/boost169 -DBOOST_LIBRARYDIR=/usr/lib64/boost169 \
+              -DPAGMO_WITH_EIGEN3=ON -DPAGMO_WITH_IPOPT=ON -DPAGMO_WITH_NLOPT=ON \
+              -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DPAGMO_ENABLE_IPO=ON -DPAGMO_INSTALL_LIBDIR=lib
+            make -j4 install VERBOSE=1
+            cd ..
+            cd ..
+
+            mkdir build
+            cd build
+
+            cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON \
+              -DBOOST_INCLUDEDIR=/usr/include/boost169 -DBOOST_LIBRARYDIR=/usr/lib64/boost169 \
+              -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DPYGMO_ENABLE_IPO=ON
+            make -j2 install VERBOSE=1
+        #    ...
+        # with:
+        #   package-dir: .
+        #   output-dir: wheelhouse
+        #   config-file: "{package}/pyproject.toml"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build sdist
+        run: pipx run build --sdist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*.tar.gz
+
+  upload_pypi:
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    # upload to PyPI on every tag starting with 'v'
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    # alternatively, to publish when a GitHub Release is created, use the following rule:
+    # if: github.event_name == 'release' && github.event.action == 'published'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          # unpacks default artifact into dist/
+          # if `name: artifact` is omitted, the action will create extra parent dir
+          name: artifact
+          path: dist
+
+      - uses: pypa/gh-action-pypi-publish@v1.5.0
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}
+          # To test
+          repository_url: https://test.pypi.org/legacy/
