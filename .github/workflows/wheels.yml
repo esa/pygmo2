@@ -28,7 +28,19 @@ jobs:
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
           CIBW_BEFORE_ALL: |-
-            yum install -y tbb-devel eigen3-devel coin-or-Ipopt-devel boost169-devel boost169-graph boost169-serialization
+            yum install -y eigen3-devel coin-or-Ipopt-devel boost169-devel boost169-graph boost169-serialization
+            
+            # Newer version of TBB needed
+            git clone https://github.com/oneapi-src/oneTBB.git
+            cd oneTBB
+            git checkout v2021.7.0
+            mkdir build
+            cd build
+            cmake -DCMAKE_CXX_FLAGS=-DTBB_ALLOCATOR_TRAITS_BROKEN ..
+            make -j4
+            make install
+            cd ..
+            cd ..
 
             # Newer version of NLopt-devel needed
             git clone https://github.com/stevengj/nlopt.git
