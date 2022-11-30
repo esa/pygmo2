@@ -23,7 +23,6 @@
 #include <pagmo/algorithms/de1220.hpp>
 #include <pagmo/algorithms/mbh.hpp>
 #include <pagmo/algorithms/moead.hpp>
-#include <pagmo/algorithms/moead_gen.hpp>
 #include <pagmo/config.hpp>
 #include <pagmo/population.hpp>
 #include <pagmo/rng.hpp>
@@ -207,32 +206,6 @@ void expose_algorithms_0(py::module &m, py::class_<pagmo::algorithm> &algo, py::
         },
         moead_get_log_docstring().c_str());
     moead_.def("get_seed", &pagmo::moead::get_seed, generic_uda_get_seed_docstring().c_str());
-
-    // Generational MOEA/D - DE
-    auto moead_gen_ = expose_algorithm<pagmo::moead_gen>(m, algo, a_module, "moead_gen", moead_gen_docstring().c_str());
-    moead_gen_.def(py::init<unsigned, std::string, std::string, unsigned, double, double, double, double, unsigned, bool>(),
-               py::arg("gen") = 1u, py::arg("weight_generation") = "grid", py::arg("decomposition") = "tchebycheff",
-               py::arg("neighbours") = 20u, py::arg("CR") = 1., py::arg("F") = 0.5, py::arg("eta_m") = 20,
-               py::arg("realb") = 0.9, py::arg("limit") = 2u, py::arg("preserve_diversity") = true);
-    moead_gen_.def(py::init<unsigned, std::string, std::string, unsigned, double, double, double, double, unsigned, bool,
-                        unsigned>(),
-               py::arg("gen") = 1u, py::arg("weight_generation") = "grid", py::arg("decomposition") = "tchebycheff",
-               py::arg("neighbours") = 20u, py::arg("CR") = 1., py::arg("F") = 0.5, py::arg("eta_m") = 20,
-               py::arg("realb") = 0.9, py::arg("limit") = 2u, py::arg("preserve_diversity") = true, py::arg("seed"));
-    // moead_gen needs an ad hoc exposition for the log as one entry is a vector (ideal_point)
-    moead_gen_.def(
-        "get_log",
-        [](const pagmo::moead_gen &a) -> py::list {
-            py::list retval;
-            for (const auto &t : a.get_log()) {
-                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t), std::get<2>(t),
-                                             vector_to_ndarr<py::array_t<double>>(std::get<3>(t))));
-            }
-            return retval;
-        },
-        moead_gen_get_log_docstring().c_str());
-    moead_gen_.def("get_seed", &pagmo::moead_gen::get_seed, generic_uda_get_seed_docstring().c_str());
-    moead_gen_.def("set_bfe", &pagmo::moead_gen::set_bfe, moead_gen_set_bfe_docstring().c_str(), py::arg("b"));
 
 #if defined(PAGMO_WITH_EIGEN3)
     // CMA-ES
