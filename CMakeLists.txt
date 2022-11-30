@@ -149,8 +149,8 @@ include(PygmoFindBoost)
 
 # pybind11.
 find_package(pybind11 REQUIRED)
-if(${pybind11_VERSION} VERSION_LESS "2.6")
-    message(FATAL_ERROR "pybind11 >= 2.6 is required, but version ${pybind11_VERSION} was found instead.")
+if(${pybind11_VERSION} VERSION_LESS "2.10")
+    message(FATAL_ERROR "pybind11 >= 2.10 is required, but version ${pybind11_VERSION} was found instead.")
 endif()
 
 # Configure the sphinx config file.

@@ -12,7 +12,7 @@ mkdir build
 cd build
 
 cmake `
-    -G "Visual Studio 15 2017 Win64" `
+    -G "Visual Studio 16 2019" -A x64 `
     -DCMAKE_PREFIX_PATH=C:\Miniconda\envs\pygmo `
     -DCMAKE_INSTALL_PREFIX=C:\Miniconda\envs\pygmo `
     -DBoost_NO_BOOST_CMAKE=ON `
@@ -29,7 +29,7 @@ cd ../
 mkdir build
 cd build
 cmake `
-    -G "Visual Studio 15 2017 Win64" `
+    -G "Visual Studio 16 2019" -A x64 `
     -DCMAKE_PREFIX_PATH=C:\Miniconda\envs\pygmo `
     -DCMAKE_INSTALL_PREFIX=C:\Miniconda\envs\pygmo `
     -DBoost_NO_BOOST_CMAKE=ON `
