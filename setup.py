@@ -4,7 +4,8 @@ from setuptools.dist import Distribution
 import sys
 
 NAME = 'pygmo'
-VERSION = '@pygmo_VERSION@'
+# NOTE: Copy-pasted from CMakeLists.txt
+VERSION = '2.18.0'
 DESCRIPTION = 'Parallel optimisation for Python'
 LONG_DESCRIPTION = 'A platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model.'
 URL = 'https://github.com/esa/pygmo2'
