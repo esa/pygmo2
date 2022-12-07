@@ -6,4 +6,4 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/__init__.py"
     "${CMAKE_CURRENT_BINARY_DIR}/__init__.py" COPYONLY)
 
 # Add the Python files.
-install(FILES __init__.py DESTINATION ${_PYGMO_INSTALL_DIR}/plotting)
+install(FILES __init__.py DESTINATION ./plotting)
