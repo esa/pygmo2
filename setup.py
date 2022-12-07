@@ -63,4 +63,10 @@ setup(name=NAME,
       package_data={'pygmo': ['core.pyd'] + \
                     DLL_LIST if os.name == 'nt' else ['core.so']},
       distclass=BinaryDistribution,
+      cmake_args=[
+        # FIXME: This path works for `pip install .` on Gitpod
+        # but fails for "python -m build" since the path is different
+        # "CMake-installed files must be within the project root"
+        "-DPYGMO_INSTALL_PATH=/workspace/pygmo2/_skbuild/linux-x86_64-3.10/cmake-install",
+      ]
 )
