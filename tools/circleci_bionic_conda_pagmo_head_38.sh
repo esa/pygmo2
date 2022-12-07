@@ -29,14 +29,8 @@ make -j4 install VERBOSE=1
 cd ..
 cd ..
 
-# Create the build dir and cd into it.
-mkdir build
-cd build
-
-# Build pygmo.
-cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DPYGMO_ENABLE_IPO=ON
-make -j2 install VERBOSE=1
-cd
+# Install pygmo.
+CMAKE_ARGS="-DCMAKE_BUILD_TYPE=Debug -DBoost_NO_BOOST_CMAKE=ON -DCMAKE_PREFIX_PATH=$deps_dir -DCMAKE_INSTALL_PREFIX=$deps_dir -DPYGMO_ENABLE_IPO=ON" pip install -v .
 
 # Run the test suite.
 python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
