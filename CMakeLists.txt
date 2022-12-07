@@ -137,7 +137,7 @@ if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
 endif()
 
 # python.
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 message(STATUS "Python3 interpreter: ${Python3_EXECUTABLE}")
 message(STATUS "Python3 installation directory: ${Python3_SITEARCH}")
 
