@@ -140,8 +140,6 @@ endif()
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 message(STATUS "Python3 interpreter: ${Python3_EXECUTABLE}")
 message(STATUS "Python3 installation directory: ${Python3_SITEARCH}")
-set(PYGMO_INSTALL_PATH "" CACHE STRING "pygmo module installation path")
-mark_as_advanced(PYGMO_INSTALL_PATH)
 
 # Boost setup.
 include(PygmoFindBoost)

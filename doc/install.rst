@@ -160,20 +160,12 @@ such as:
   defaults to ``Release``.
 * ``CMAKE_PREFIX_PATH``: additional paths that will be searched by CMake
   when looking for dependencies.
-* ``PYGMO_INSTALL_PATH``: the path into which the pygmo module
-  will be installed. If left empty (the default), pygmo will be installed
-  in the global modules directory of your Python installation.
 * ``PYGMO_ENABLE_IPO``: set this flag to ``ON`` to compile pygmo
   with link-time optimisations. Requires compiler support,
   defaults to ``OFF``.
 
 Please consult `CMake's documentation <https://cmake.org/cmake/help/latest/>`_
 for more details about CMake's variables and options.
-
-The ``PYGMO_INSTALL_PATH`` option is particularly important. If you
-want to install pygmo locally instead of globally (which is in general
-a good idea), you can set this variable to the output of
-``python -m site --user-site``.
 
 After configuring the build with CMake, we can then proceed to actually
 building pygmo:

@@ -94,15 +94,6 @@ if (PYGMO_ENABLE_IPO)
     unset(_PYGMO_IPO_OUTPUT)
 endif()
 
-# Installation setup.
-if(PYGMO_INSTALL_PATH STREQUAL "")
-    message(STATUS "pygmo will be installed in the default location: ${Python3_SITEARCH}")
-    set(_PYGMO_INSTALL_DIR "${Python3_SITEARCH}/pygmo")
-else()
-    message(STATUS "pygmo will be installed in the custom location: ${PYGMO_INSTALL_PATH}")
-    set(_PYGMO_INSTALL_DIR "${PYGMO_INSTALL_PATH}/pygmo")
-endif()
-
 # Add submodules directories
 add_subdirectory(plotting)
 
