@@ -122,12 +122,12 @@ add_subdirectory(plotting)
 
 # Install the core module.
 install(TARGETS core
-    RUNTIME DESTINATION .
-    LIBRARY DESTINATION .
+    RUNTIME DESTINATION pygmo
+    LIBRARY DESTINATION pygmo
 )
 
 # Install the Python files.
 install(FILES ${PYGMO_PYTHON_FILES} "${CMAKE_CURRENT_BINARY_DIR}/_version.py"
-    DESTINATION .)
+    DESTINATION pygmo)
 
 unset(_PYGMO_INSTALL_DIR)
