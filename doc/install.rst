@@ -141,20 +141,23 @@ version of pygmo via ``git``:
 We follow the usual PR-based development workflow, thus pygmo's ``master``
 branch is normally kept in a working state.
 
-After downloading and/or unpacking pygmo's
-source code, go to pygmo's
-source tree, create a ``build`` directory and ``cd`` into it. E.g.,
-on a Unix-like system:
+After downloading and/or unpacking pygmo's source code,
+install pygmo's source directory with ``pip``:
 
 .. code-block:: console
 
    $ cd /path/to/pygmo
-   $ mkdir build
-   $ cd build
+   $ pip install .
 
-Once you are in the ``build`` directory, you must configure your build
-using ``cmake``. There are various useful CMake variables you can set,
-such as:
+Advanced configuration
+^^^^^^^^^^^^^^^^^^^^^^
+
+pygmo uses `scikit-build <https://pypi.org/project/scikit-build/>`_
+as an interface to CMake, and it can receive CMake configuration options
+on the command line (see `the skbuild docs`_).
+There are various useful CMake variables you can set, such as:
+
+_`the skbuild docs`: https://scikit-build.readthedocs.io/en/latest/usage.html#cmake-configure-options
 
 * ``CMAKE_BUILD_TYPE``: the build type (``Release``, ``Debug``, etc.),
   defaults to ``Release``.
@@ -166,19 +169,6 @@ such as:
 
 Please consult `CMake's documentation <https://cmake.org/cmake/help/latest/>`_
 for more details about CMake's variables and options.
-
-After configuring the build with CMake, we can then proceed to actually
-building pygmo:
-
-.. code-block:: console
-
-   $ cmake --build .
-
-Finally, we can install pygmo with the command:
-
-.. code-block:: console
-
-   $ cmake  --build . --target install
 
 Verifying the installation
 --------------------------
