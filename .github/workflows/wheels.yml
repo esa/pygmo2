@@ -28,6 +28,11 @@ jobs:
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: astrojuanlu/manylinux2014_x86_64_pygmo2_deps:dev
           CIBW_ENVIRONMENT: CMAKE_ARGS="-DBOOST_INCLUDEDIR=/usr/include/boost169 -DBOOST_LIBRARYDIR=/usr/lib64/boost169"
+          # NOTE: For some reason, CMake does not pick up pybind11
+          # installed as PEP 518 build dependency from pyproject.toml
+          # despite being explicitly supported by scikit-build,
+          # see https://scikit-build.readthedocs.io/en/latest/usage.html#support-for-isolated-build
+          CIBW_BEFORE_BUILD: python -m pip install -v pybind11
         #    ...
         # with:
         #   package-dir: .

@@ -145,7 +145,7 @@ message(STATUS "Python3 installation directory: ${Python3_SITEARCH}")
 include(PygmoFindBoost)
 
 # pybind11.
-find_package(pybind11 REQUIRED)
+find_package(pybind11 REQUIRED HINTS "${Python3_SITELIB}")
 if(${pybind11_VERSION} VERSION_LESS "2.10")
     message(FATAL_ERROR "pybind11 >= 2.10 is required, but version ${pybind11_VERSION} was found instead.")
 endif()
