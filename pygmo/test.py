@@ -1650,6 +1650,22 @@ class moead_test_case(_ut.TestCase):
         log = uda.get_log()
 
 
+class moead_gen_test_case(_ut.TestCase):
+    """Test case for the UDA moead
+
+    """
+
+    def runTest(self):
+        from .core import moead_gen
+        uda = moead_gen()
+        uda = moead_gen(gen=1, weight_generation="grid", decomposition="tchebycheff",
+                    neighbours=20, CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True)
+        uda = moead_gen(gen=1, weight_generation="grid", decomposition="tchebycheff", neighbours=20,
+                    CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
 class sga_test_case(_ut.TestCase):
     """Test case for the UDA sga
 
@@ -2988,6 +3004,7 @@ def run_test_suite(level=0):
     suite.addTest(compass_search_test_case())
     suite.addTest(sa_test_case())
     suite.addTest(moead_test_case())
+    suite.addTest(moead_gen_test_case())
     suite.addTest(sga_test_case())
     suite.addTest(ihs_test_case())
     suite.addTest(population_test_case())
