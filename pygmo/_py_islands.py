@@ -176,7 +176,7 @@ class mp_island(object):
         # attempting a dumb fix from stackoverflow
         # https://stackoverflow.com/questions/25382455/python-notimplementederror-pool-objects-cannot-be-passed-between-processes
         self_dict = self.__dict__.copy()
-        del self_dict['pool']
+        del self_dict['_pool']
         return self_dict
 
     def __setstate__(self, state):
