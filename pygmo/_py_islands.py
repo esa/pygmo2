@@ -173,16 +173,17 @@ class mp_island(object):
         return self.__copy__()
 
     def __getstate__(self):
-        # For pickle/unpickle, we employ the construction
-        # argument, which will be used to re-init the class
-        # during unpickle.
-        return self._use_pool
+        # attempting a dumb fix from stackoverflow
+        # https://stackoverflow.com/questions/25382455/python-notimplementederror-pool-objects-cannot-be-passed-between-processes
+        self_dict = self.__dict__.copy()
+        del self_dict['pool']
+        return self_dict
 
     def __setstate__(self, state):
         # NOTE: we need to do a full init of the object,
         # in order to set the use_pool flag and, if necessary,
         # construct the _pid and _pid_lock objects.
-        self._init(state)
+        self.__dict__.update(state)
 
     def run_evolve(self, algo, pop):
         """Evolve population.
