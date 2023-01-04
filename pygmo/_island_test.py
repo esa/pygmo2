@@ -438,16 +438,7 @@ class mp_island_test_case(_ut.TestCase):
         from .core import island, de, rosenbrock
         from . import mp_island
         from copy import copy, deepcopy
-        has_dill = False
-        try:
-            import dill
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
+        from pickle import dumps, loads
         # Try shutting down a few times, to confirm that the second
         # and third shutdowns don't do anything.
         mp_island.shutdown_pool()

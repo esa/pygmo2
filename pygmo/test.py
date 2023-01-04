@@ -113,9 +113,9 @@ class core_test_case(_ut.TestCase):
             self.assertTrue(gsb() == dill)
 
             p = problem(_prob())
-            self.assertEqual(str(dill.loads(dill.dumps(p))), str(p))
+            self.assertEqual(str(pickle.loads(pickle.dumps(p))), str(p))
             isl = island(prob=p, algo=de(gen=500), size=20)
-            self.assertEqual(str(dill.loads(dill.dumps(isl))), str(isl))
+            self.assertEqual(str(pickle.loads(pickle.dumps(isl))), str(isl))
 
         # Reset to cloudpickle before exiting.
         ssb("cloudpickle")
@@ -1286,16 +1286,7 @@ class archipelago_test_case(_ut.TestCase):
 
     def run_pickle_tests(self):
         from . import archipelago, de, rosenbrock, mp_island, ring, migration_type, migrant_handling
-        has_dill = False
-        try:
-            import dill
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
+        from pickle import dumps, loads
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=10)
         self.assertEqual(repr(a), repr(loads(dumps(a))))
         a = archipelago(5, algo=de(), prob=_prob(),

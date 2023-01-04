@@ -12,19 +12,10 @@ from threading import Lock as _Lock
 def _evolve_func_mp_pool(ser_algo_pop):
     # The evolve function that is actually run from the separate processes
     # in mp_island (when using the pool).
-    has_dill = False
-    try:
-        import dill
-        has_dill = True
-    except ImportError:
-        pass
-    if has_dill:
-        from dill import dumps, loads
-    else:
-        from pickle import dumps, loads
-    algo, pop = loads(ser_algo_pop)
+    import pickle
+    algo, pop = pickle.loads(ser_algo_pop)
     new_pop = algo.evolve(pop)
-    return dumps((algo, new_pop))
+    return pickle.dumps((algo, new_pop))
 
 
 def _evolve_func_mp_pipe(conn, ser_algo_pop):
@@ -43,20 +34,11 @@ def _evolve_func_mp_pipe(conn, ser_algo_pop):
     # of a child process happens in a separate thread and Python disallows messing
     # with signal handlers from a thread different from the main one :(
     with _temp_disable_sigint():
-        has_dill = False
+        import pickle
         try:
-            import dill
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
-        try:
-            algo, pop = loads(ser_algo_pop)
+            algo, pop = pickle.loads(ser_algo_pop)
             new_pop = algo.evolve(pop)
-            conn.send(dumps((algo, new_pop)))
+            conn.send(pickle.dumps((algo, new_pop)))
         except Exception as e:
             conn.send(RuntimeError(
                 "An exception was raised in the evolution of a multiprocessing island. The full error message is:\n{}".format(e)))
@@ -173,17 +155,16 @@ class mp_island(object):
         return self.__copy__()
 
     def __getstate__(self):
-        # attempting a dumb fix from stackoverflow
-        # https://stackoverflow.com/questions/25382455/python-notimplementederror-pool-objects-cannot-be-passed-between-processes
-        self_dict = self.__dict__.copy()
-        del self_dict['_pool']
-        return self_dict
+        # For pickle/unpickle, we employ the construction
+        # argument, which will be used to re-init the class
+        # during unpickle.
+        return self._use_pool
 
     def __setstate__(self, state):
         # NOTE: we need to do a full init of the object,
         # in order to set the use_pool flag and, if necessary,
         # construct the _pid and _pid_lock objects.
-        self.__dict__.update(state)
+        self._init(state)
 
     def run_evolve(self, algo, pop):
         """Evolve population.
@@ -218,17 +199,8 @@ class mp_island(object):
         # that if there are serialization errors, we catch them early here rather
         # than failing in the bootstrap phase of the remote process, which
         # can lead to hangups.
-        has_dill = False
-        try:
-            import dill
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
-        ser_algo_pop = dumps((algo, pop))
+        import pickle
+        ser_algo_pop = pickle.dumps((algo, pop))
 
         if self._use_pool:
             with mp_island._pool_lock:
@@ -244,7 +216,7 @@ class mp_island(object):
             # NOTE: there might be a bug in need of a workaround lurking in here:
             # http://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
             # Just keep it in mind.
-            return loads(res.get())
+            return pickle.loads(res.get())
         else:
             from ._mp_utils import _get_spawn_context
 
@@ -270,7 +242,7 @@ class mp_island(object):
                     self._pid = None
             if isinstance(res, RuntimeError):
                 raise res
-            return loads(res)
+            return pickle.loads(res)
 
     @property
     def pid(self):
@@ -457,19 +429,10 @@ class mp_island(object):
 def _evolve_func_ipy(ser_algo_pop):
     # The evolve function that is actually run from the separate processes
     # in ipyparallel_island.
-    has_dill = False
-    try:
-        import dill
-        has_dill = True
-    except ImportError:
-        pass
-    if has_dill:
-        from dill import dumps, loads
-    else:
-        from pickle import dumps, loads
-    algo, pop = loads(ser_algo_pop)
+    import pickle
+    algo, pop = pickle.loads(ser_algo_pop)
     new_pop = algo.evolve(pop)
-    return dumps((algo, new_pop))
+    return pickle.dumps((algo, new_pop))
 
 
 class ipyparallel_island(object):
@@ -595,19 +558,10 @@ class ipyparallel_island(object):
         # NOTE: as in the mp_island, we pre-serialize
         # the algo and pop, so that we can catch
         # serialization errors early.
+        import pickle
         from ._ipyparallel_utils import _make_ipyparallel_view
-        has_dill = False
-        try:
-            import dill
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
 
-        ser_algo_pop = dumps((algo, pop))
+        ser_algo_pop = pickle.dumps((algo, pop))
         with ipyparallel_island._view_lock:
             if ipyparallel_island._view is None:
                 ipyparallel_island._view = _make_ipyparallel_view(
@@ -615,7 +569,7 @@ class ipyparallel_island(object):
             ret = ipyparallel_island._view.apply_async(
                 _evolve_func_ipy, ser_algo_pop)
 
-        return loads(ret.get())
+        return pickle.loads(ret.get())
 
     def get_name(self):
         """Island's name.

@@ -14,7 +14,7 @@ wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge
 export deps_dir=$HOME/local
 export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
-conda create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt boost-cpp tbb tbb-devel python=3.8 numpy cloudpickle networkx dill numba pybind11 scipy
+conda create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt boost-cpp tbb tbb-devel python=3.8 numpy cloudpickle networkx dill<0.3.6 numba pybind11 scipy
 source activate $deps_dir
 
 # Install pagmo.
