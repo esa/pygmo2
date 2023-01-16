@@ -82,5 +82,5 @@ export PYGMO_RELEASE_VERSION=`echo "${GITHUB_REF}"|grep -E 'v[0-9]+\.[0-9]+.*'|c
 if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
 	echo "Release build detected, uploading to PyPi."
 	/opt/python/${PYTHON_DIR}/bin/pip install twine
-	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa /pygmo2/build/wheel/dist2/pygmo*
+	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*
 fi
