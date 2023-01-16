@@ -35,11 +35,11 @@ jobs:
 #        name: Build and test
 #        command: bash ./tools/circleci_ubuntu_arm64.sh
 #
-#workflows:
-#  version: 2.1
-#  all_builds:
-#    jobs:
-#    - bionic_conda_pagmo_head_38
+workflows:
+  version: 2.1
+  all_builds:
+    jobs:
+    - bionic_conda_pagmo_head_38
 #    - bionic_conda_pagmo_head_39
 #    - bionic_conda_pagmo_head_310
 #    - ubuntu_arm64
