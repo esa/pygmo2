@@ -7,7 +7,7 @@ set -x
 set -e
 
 # This pin is used only for release versions
-PAGMO_LATEST="2.16.1"
+PAGMO_LATEST="2.18.0"
 
 # 1 - We read for what python wheels have to be built
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
