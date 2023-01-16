@@ -7,21 +7,19 @@ set -x
 set -e
 
 PAGMO_LATEST="2.16.1"
-PYBIND11_VERSION="2.6.1"
 
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
-elif [[ ${PYGMO_BUILD_TYPE} == *37* ]]; then
-	PYTHON_DIR="cp37-cp37m"
-elif [[ ${PYGMO_BUILD_TYPE} == *36* ]]; then
-	PYTHON_DIR="cp36-cp36m"
+elif [[ ${PYGMO_BUILD_TYPE} == *39* ]]; then
+	PYTHON_DIR="cp39-cp39"
+elif [[ ${PYGMO_BUILD_TYPE} == *310* ]]; then
+	PYTHON_DIR="cp310-cp310"
+elif [[ ${PYGMO_BUILD_TYPE} == *311* ]]; then
+	PYTHON_DIR="cp311-cp311"
 else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1
 fi
-
-cd
-cd install
 
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
@@ -29,19 +27,9 @@ cd install
 /opt/python/${PYTHON_DIR}/bin/pip install dill networkx ipyparallel scipy
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 
-# Install git (-y avoids a user prompt)
-yum -y install git
-
-# Install pybind11
-curl -L https://github.com/pybind/pybind11/archive/v${PYBIND11_VERSION}.tar.gz > v${PYBIND11_VERSION}
-tar xvf v${PYBIND11_VERSION} > /dev/null 2>&1
-cd pybind11-${PYBIND11_VERSION}
-mkdir build
-cd build
-cmake ../ -DPYBIND11_TEST=OFF > /dev/null
-make install > /dev/null 2>&1
-cd ..
-cd ..
+# In the pagmo2/manylinux228_x86_64_with_deps:latest image in dockerhub
+# the working directory is /root/install, we will install pagmo there
+cd /root/install
 
 # Install pagmo
 if [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
@@ -64,7 +52,6 @@ cmake -DBoost_NO_BOOST_CMAKE=ON \
 	-DPAGMO_ENABLE_IPO=ON \
 	-DCMAKE_BUILD_TYPE=Release ../;
 make -j4 install
-
 
 # pygmo
 cd /pygmo2
