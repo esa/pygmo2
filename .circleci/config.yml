@@ -2,11 +2,11 @@ version: 2.1
 
 jobs:
   bionic_conda_pagmo_head_38:
-    docker:
+   docker:
    - image: circleci/buildpack-deps:bionic
-    steps:
-    - checkout
-    - run:
+   steps:
+   - checkout
+   - run:
         name: Build and test
         command: bash ./tools/circleci_bionic_conda_pagmo_head_38.sh
   bionic_conda_pagmo_head_310:

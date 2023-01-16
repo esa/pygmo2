@@ -8,7 +8,6 @@ set -e
 
 # Report on the environrnt variables used for this build
 echo "PYGMO_BUILD_TYPE: ${PYGMO_BUILD_TYPE}"
-echo "PAGMO_VERSION: ${PAGMO_VERSION}"
 echo "GITHUB_REF: ${GITHUB_REF}"
 echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
 
@@ -39,14 +38,9 @@ echo "PYTHON_DIR: ${PYTHON_DIR}"
 cd /root/install
 
 # Install pagmo
-if [[ ${PAGMO_VERSION} != "" ]]; then
-	curl -L https://github.com/esa/pagmo2/archive/v${PAGMO_VERSION}.tar.gz > v${PAGMO_VERSION}
-	tar xvf v${PAGMO_VERSION} > /dev/null 2>&1
-	cd pagmo2-${PAGMO_VERSION}
-else
-	git clone https://github.com/esa/pagmo2.git
-	cd pagmo2
-fi
+git clone https://github.com/esa/pagmo2.git
+cd pagmo2
+
 mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \

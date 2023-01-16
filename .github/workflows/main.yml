@@ -21,7 +21,6 @@ jobs:
       image: pagmo2/manylinux228_x86_64_with_deps:latest
       env: 
         PYGMO_BUILD_TYPE: "Python311"
-        PAGMO_VERSION: "2.18.0"
      steps:
        - uses: actions/checkout@v2
        - name: Build
@@ -32,7 +31,6 @@ jobs:
       image: pagmo2/manylinux228_x86_64_with_deps:latest
       env: 
         PYGMO_BUILD_TYPE: "Python310"
-        PAGMO_VERSION: "2.18.0"
      steps:
        - uses: actions/checkout@v2
        - name: Build
@@ -43,7 +41,6 @@ jobs:
       image: pagmo2/manylinux228_x86_64_with_deps:latest
       env: 
         PYGMO_BUILD_TYPE: "Python39"
-        PAGMO_VERSION: "2.18.0"
      steps:
        - uses: actions/checkout@v2
        - name: Build
@@ -54,51 +51,6 @@ jobs:
       image: pagmo2/manylinux228_x86_64_with_deps:latest
       env: 
         PYGMO_BUILD_TYPE: "Python38"
-        PAGMO_VERSION: "2.18.0"
-     steps:
-       - uses: actions/checkout@v2
-       - name: Build
-         run: bash tools/gha_manylinux.sh
-  manylinux228-py311-HEAD:
-     runs-on: ubuntu-latest
-     container:
-      image: pagmo2/manylinux228_x86_64_with_deps:latest
-      env: 
-        PYGMO_BUILD_TYPE: "Python311"
-        PAGMO_VERSION: "" # When empty, builds pagmo2 from head
-     steps:
-       - uses: actions/checkout@v2
-       - name: Build
-         run: bash tools/gha_manylinux.sh
-  manylinux228-py310-HEAD:
-     runs-on: ubuntu-latest
-     container:
-      image: pagmo2/manylinux228_x86_64_with_deps:latest
-      env: 
-        PYGMO_BUILD_TYPE: "Python310"
-        PAGMO_VERSION: "" # When empty, builds pagmo2 from head
-     steps:
-       - uses: actions/checkout@v2
-       - name: Build
-         run: bash tools/gha_manylinux.sh
-  manylinux228-py39-HEAD:
-     runs-on: ubuntu-latest
-     container:
-      image: pagmo2/manylinux228_x86_64_with_deps:latest
-      env: 
-        PYGMO_BUILD_TYPE: "Python39"
-        PAGMO_VERSION: "" # When empty, builds pagmo2 from head
-     steps:
-       - uses: actions/checkout@v2
-       - name: Build
-         run: bash tools/gha_manylinux.sh
-  manylinux228-py38-HEAD:
-     runs-on: ubuntu-latest
-     container:
-      image: pagmo2/manylinux228_x86_64_with_deps:latest
-      env: 
-        PYGMO_BUILD_TYPE: "Python38"
-        PAGMO_VERSION: "" # When empty, builds pagmo2 from head
      steps:
        - uses: actions/checkout@v2
        - name: Build
