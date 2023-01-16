@@ -29,21 +29,13 @@ CLASSIFIERS = [
 ]
 KEYWORDS = 'science math physics optimization ai evolutionary-computing parallel-computing metaheuristics'
 INSTALL_REQUIRES = ['numpy', 'cloudpickle']
-PLATFORMS = ['Unix', 'Windows', 'OSX']
+PLATFORMS = ['Unix']
 
 
 class BinaryDistribution(Distribution):
 
     def has_ext_modules(foo):
         return True
-
-
-# Setup the list of external dlls.
-if os.name == 'nt':
-    mingw_wheel_libs = 'mingw_wheel_libs_python{}{}.txt'.format(
-        sys.version_info[0], sys.version_info[1])
-    l = open(mingw_wheel_libs, 'r').readlines()
-    DLL_LIST = [os.path.basename(_[:-1]) for _ in l]
 
 setup(name=NAME,
       version=VERSION,
@@ -59,6 +51,5 @@ setup(name=NAME,
       install_requires=INSTALL_REQUIRES,
       packages=['pygmo', 'pygmo.plotting'],
       # Include pre-compiled extension
-      package_data={'pygmo': ['core.pyd'] + \
-                    DLL_LIST if os.name == 'nt' else ['core.so']},
+      package_data={'pygmo': [f for f in os.listdir("pygmo/") if f.endswith('.so')]},
       distclass=BinaryDistribution)
