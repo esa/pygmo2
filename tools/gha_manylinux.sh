@@ -6,6 +6,12 @@ set -x
 # Exit on error.
 set -e
 
+# Report on the environrnt variables used for this build
+echo "PYGMO_BUILD_TYPE: ${PYGMO_BUILD_TYPE}"
+echo "PAGMO_VERSION: ${PAGMO_VERSION}"
+echo "GITHUB_REF: ${GITHUB_REF}"
+echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+
 # 1 - We read for what python wheels have to be built
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
@@ -19,6 +25,9 @@ else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1
 fi
+
+# Report the inferred directory whwere python is found
+echo "PYTHON_DIR: ${PYTHON_DIR}"
 
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
@@ -70,10 +79,12 @@ auditwheel repair dist/pygmo* -w ./dist2
 cd /
 /opt/python/${PYTHON_DIR}/bin/pip install ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
+sleep 20
+
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
-export PYGMO_RELEASE_VERSION=`echo "${TRAVIS_TAG}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
+export PYGMO_RELEASE_VERSION=`echo "${GITHUB_REF}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
 if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
 	echo "Release build detected, uploading to PyPi."
 	/opt/python/${PYTHON_DIR}/bin/pip install twine

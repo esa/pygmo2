@@ -20,8 +20,8 @@ jobs:
      container:
       image: pagmo2/manylinux228_x86_64_with_deps:latest
       env: 
-        PYGMO_BUILD_TYPE: "Python39"
-        PAGMO_VERSION: ""
+        PYGMO_BUILD_TYPE: "Python38"
+        PAGMO_VERSION: "" # When empty, builds pagmo2 from head
      steps:
        - uses: actions/checkout@v2
        - name: Build
