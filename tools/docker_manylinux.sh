@@ -45,7 +45,7 @@ elif [[ ${PYGMO_RELEASE} == "false" ]]; then
 	git clone https://github.com/esa/pagmo2.git
 	cd pagmo2
 else
-	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
+	echo "Invalid build type: ${PYGMO_RELEASE}"
 	exit 1
 fi
 mkdir build
@@ -59,13 +59,13 @@ cmake -DBoost_NO_BOOST_CMAKE=ON \
 make -j4 install
 
 # pygmo
-cd /pygmo2
+cd ${GITHUB_WORKSPACE}/pygmo2
 mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DPYGMO_ENABLE_IPO=ON \
-	-DPYTHON_EXECUTABLE=/opt/python/${PYTHON_DIR}/bin/python ../;
+	-DPython3_EXECUTABLE=/opt/python/${PYTHON_DIR}/bin/python ../;
 make -j2 install
 
 # Making the wheel and installing it
