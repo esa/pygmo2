@@ -49,7 +49,7 @@ cmake -DBoost_NO_BOOST_CMAKE=ON \
 make -j4 install
 
 # pygmo
-cd ${GITHUB_WORKSPACE}/pygmo2
+cd ${GITHUB_WORKSPACE}
 mkdir build
 cd build
 cmake -DBoost_NO_BOOST_CMAKE=ON \
@@ -68,7 +68,7 @@ cp -r ../pygmo ./
 auditwheel repair dist/pygmo* -w ./dist2
 # Try to install it and run the tests.
 cd /
-/opt/python/${PYTHON_DIR}/bin/pip install ${GITHUB_WORKSPACE}/pygmo2/build/wheel/dist2/pygmo*
+/opt/python/${PYTHON_DIR}/bin/pip install ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
