@@ -21,6 +21,7 @@ jobs:
       image: pagmo2/manylinux228_x86_64_with_deps:latest
       env: 
         PYGMO_BUILD_TYPE: "Python39"
+        PAGMO_VERSION: ""
      steps:
        - uses: actions/checkout@v2
        - name: Build

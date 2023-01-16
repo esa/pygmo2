@@ -6,9 +6,6 @@ set -x
 # Exit on error.
 set -e
 
-# This pin is used only for release versions
-PAGMO_LATEST="2.18.0"
-
 # 1 - We read for what python wheels have to be built
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
@@ -33,16 +30,13 @@ fi
 cd /root/install
 
 # Install pagmo
-if [[ ${PYGMO_RELEASE} == "true" ]]; then
-	curl -L https://github.com/esa/pagmo2/archive/v${PAGMO_LATEST}.tar.gz > v${PAGMO_LATEST}
-	tar xvf v${PAGMO_LATEST} > /dev/null 2>&1
-	cd pagmo2-${PAGMO_LATEST}
-elif [[ ${PYGMO_RELEASE} == "false" ]]; then
+if [[ ${PAGMO_VERSION} != "" ]]; then
+	curl -L https://github.com/esa/pagmo2/archive/v${PAGMO_VERSION}.tar.gz > v${PAGMO_VERSION}
+	tar xvf v${PAGMO_VERSION} > /dev/null 2>&1
+	cd pagmo2-${PAGMO_VERSION}
+else
 	git clone https://github.com/esa/pagmo2.git
 	cd pagmo2
-else
-	echo "Invalid build type: ${PYGMO_RELEASE}"
-	exit 1
 fi
 mkdir build
 cd build
@@ -80,7 +74,7 @@ cd /
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
 export PYGMO_RELEASE_VERSION=`echo "${TRAVIS_TAG}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
-if [[ "${PYGMO_RELEASE_VERSION}" != "" ]] && [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
+if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
 	echo "Release build detected, uploading to PyPi."
 	/opt/python/${PYTHON_DIR}/bin/pip install twine
 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa /pygmo2/build/wheel/dist2/pygmo*
