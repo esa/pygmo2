@@ -15,51 +15,57 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  macos-10_15-py310:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py310.sh
-  macos-10_15-py38:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py38.sh
-  macos-10_15-py39:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py39.sh
-  windows-2019-py38:
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v2
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          auto-update-conda: true
-          python-version: 3.8
-          channels: conda-forge
-          channel-priority: strict
-      - name: Build
-        run: .\tools\gha_windows.ps1
-        shell: powershell
-  windows-2019-py39:
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v2
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          auto-update-conda: true
-          python-version: 3.9
-          channels: conda-forge
-          channel-priority: strict
-      - name: Build
-        run: .\tools\gha_windows.ps1
-        shell: powershell
+  manylinux228-py38:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: PYGMO_BUILD_TYPE="Python39"
+
+  #macos-10_15-py310:
+  #  runs-on: macos-10.15
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Build
+  #      run: bash tools/gha_macos-10.15-py310.sh
+  #macos-10_15-py38:
+  #  runs-on: macos-10.15
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Build
+  #      run: bash tools/gha_macos-10.15-py38.sh
+  #macos-10_15-py39:
+  #  runs-on: macos-10.15
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Build
+  #      run: bash tools/gha_macos-10.15-py39.sh
+  #windows-2019-py38:
+  #  runs-on: windows-2019
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Add msbuild to PATH
+  #      uses: microsoft/setup-msbuild@v1.0.2
+  #    - uses: conda-incubator/setup-miniconda@v2
+  #      with:
+  #        auto-update-conda: true
+  #        python-version: 3.8
+  #        channels: conda-forge
+  #        channel-priority: strict
+  #    - name: Build
+  #      run: .\tools\gha_windows.ps1
+  #      shell: powershell
+  #windows-2019-py39:
+  #  runs-on: windows-2019
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Add msbuild to PATH
+  #      uses: microsoft/setup-msbuild@v1.0.2
+  #    - uses: conda-incubator/setup-miniconda@v2
+  #      with:
+  #        auto-update-conda: true
+  #        python-version: 3.9
+  #        channels: conda-forge
+  #        channel-priority: strict
+  #    - name: Build
+  #      run: .\tools\gha_windows.ps1
+  #      shell: powershell
