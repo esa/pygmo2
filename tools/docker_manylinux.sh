@@ -22,10 +22,6 @@ else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1
 fi
-# We detect if this is a release build
-# This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
-# It is defined in the github CI manylinux file.
-export PYGMO_RELEASE=${PYGMO_RELEASE}
 
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
@@ -72,7 +68,7 @@ make -j2 install
 cd wheel
 # Copy the installed pygmo files, wherever they might be in /usr/local,
 # into the current dir.
-cp -a `find /usr/local/lib -type d -iname 'pygmo'` ./
+cp -r ../pygmo ./
 # Create the wheel and repair it.
 /opt/python/${PYTHON_DIR}/bin/python setup.py bdist_wheel
 auditwheel repair dist/pygmo* -w ./dist2
