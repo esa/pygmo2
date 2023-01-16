@@ -26,7 +26,7 @@ fi
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
-/opt/python/${PYTHON_DIR}/bin/pip install dill networkx ipyparallel scipy
+/opt/python/${PYTHON_DIR}/bin/pip install dill=0.3.5.1 networkx ipyparallel scipy
 
 # In the pagmo2/manylinux228_x86_64_with_deps:latest image in dockerhub
 # the working directory is /root/install, we will install pagmo there
@@ -74,7 +74,7 @@ cp -r ../pygmo ./
 auditwheel repair dist/pygmo* -w ./dist2
 # Try to install it and run the tests.
 cd /
-/opt/python/${PYTHON_DIR}/bin/pip install /pygmo2/build/wheel/dist2/pygmo*
+/opt/python/${PYTHON_DIR}/bin/pip install ${GITHUB_WORKSPACE}/pygmo2/build/wheel/dist2/pygmo*
 /opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
