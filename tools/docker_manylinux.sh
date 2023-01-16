@@ -6,8 +6,10 @@ set -x
 # Exit on error.
 set -e
 
+# This pin is used only for release versions
 PAGMO_LATEST="2.16.1"
 
+# 1 - We read for what python wheels have to be built
 if [[ ${PYGMO_BUILD_TYPE} == *38* ]]; then
 	PYTHON_DIR="cp38-cp38"
 elif [[ ${PYGMO_BUILD_TYPE} == *39* ]]; then
@@ -20,23 +22,26 @@ else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1
 fi
+# We detect if this is a release build
+# This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
+# It is defined in the github CI manylinux file.
+export PYGMO_RELEASE=${PYGMO_RELEASE}
 
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
 /opt/python/${PYTHON_DIR}/bin/pip install dill networkx ipyparallel scipy
-/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 
 # In the pagmo2/manylinux228_x86_64_with_deps:latest image in dockerhub
 # the working directory is /root/install, we will install pagmo there
 cd /root/install
 
 # Install pagmo
-if [[ ${PYGMO_BUILD_TYPE} == *latest ]]; then
+if [[ ${PYGMO_RELEASE} == "true" ]]; then
 	curl -L https://github.com/esa/pagmo2/archive/v${PAGMO_LATEST}.tar.gz > v${PAGMO_LATEST}
 	tar xvf v${PAGMO_LATEST} > /dev/null 2>&1
 	cd pagmo2-${PAGMO_LATEST}
-elif [[ ${PYGMO_BUILD_TYPE} == *head ]]; then
+elif [[ ${PYGMO_RELEASE} == "false" ]]; then
 	git clone https://github.com/esa/pagmo2.git
 	cd pagmo2
 else
@@ -74,6 +79,7 @@ auditwheel repair dist/pygmo* -w ./dist2
 # Try to install it and run the tests.
 cd /
 /opt/python/${PYTHON_DIR}/bin/pip install /pygmo2/build/wheel/dist2/pygmo*
+/opt/python/${PYTHON_DIR}/bin/ipcluster start --daemonize=True
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
