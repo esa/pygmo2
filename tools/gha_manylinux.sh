@@ -20,6 +20,8 @@ elif [[ ${PYGMO_BUILD_TYPE} == *310* ]]; then
 	PYTHON_DIR="cp310-cp310"
 elif [[ ${PYGMO_BUILD_TYPE} == *311* ]]; then
 	PYTHON_DIR="cp311-cp311"
+elif [[ ${PYGMO_BUILD_TYPE} == *311* ]]; then
+	PYTHON_DIR="cp312-cp312"
 else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
 	exit 1

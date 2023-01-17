@@ -742,7 +742,7 @@ Raises:
       type conversion errors, mismatched function signatures, etc.)
 
 Examples:
-    >>> from pygmo import problem, hock_schittkowski_71 as hs71
+    >>> from pygmo import problem, hock_schittkowsky_71 as hs71
     >>> prob = problem(hs71())
     >>> prob.c_tol
     array([0., 0.])
@@ -2243,7 +2243,7 @@ Examples:
     >>> from pygmo import *
     >>> algo = algorithm(compass_search(max_fevals = 500))
     >>> algo.set_verbosity(1)
-    >>> prob = problem(hock_schittkowski_71())
+    >>> prob = problem(hock_schittkowsky_71())
     >>> pop = population(prob, 1)
     >>> pop = algo.evolve(pop) # doctest: +SKIP
     Fevals:          Best:      Violated:    Viol. Norm:         Range:
@@ -5641,7 +5641,7 @@ Examples:
     >>> from pygmo import *
     >>> algo = algorithm(ihs(20000))
     >>> algo.set_verbosity(2000)
-    >>> prob = problem(hock_schittkowski_71())
+    >>> prob = problem(hock_schittkowsky_71())
     >>> prob.c_tol = [1e-1]*2
     >>> pop = population(prob, 20)
     >>> pop = algo.evolve(pop) # doctest: +SKIP

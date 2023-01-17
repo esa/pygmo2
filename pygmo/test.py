@@ -2222,17 +2222,17 @@ class unconstrain_test_case(_ut.TestCase):
     """
 
     def runTest(self):
-        from .core import hock_schittkowski_71, unconstrain, null_problem, problem, translate
+        from .core import hock_schittkowsky_71, unconstrain, null_problem, problem, translate
         from numpy import array
 
         d = unconstrain()
         self.assertFalse(d.inner_problem.extract(null_problem) is None)
-        d = unconstrain(prob=hock_schittkowski_71(),
+        d = unconstrain(prob=hock_schittkowsky_71(),
                         method="weighted", weights=[1., 1.])
         self.assertTrue(problem(d).is_(unconstrain))
         self.assertFalse(problem(d).extract(unconstrain) is None)
-        self.assertTrue(d.inner_problem.is_(hock_schittkowski_71))
-        self.assertFalse(d.inner_problem.extract(hock_schittkowski_71) is None)
+        self.assertTrue(d.inner_problem.is_(hock_schittkowsky_71))
+        self.assertFalse(d.inner_problem.extract(hock_schittkowsky_71) is None)
 
         class p(object):
 

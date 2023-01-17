@@ -431,7 +431,7 @@ class algorithm_test_case(_ut.TestCase):
             ackley,
             algorithm,
             golomb_ruler,
-            hock_schittkowski_71,
+            hock_schittkowsky_71,
             luksan_vlcek1,
             minlp_rastrigin,
             population,
@@ -512,7 +512,7 @@ class algorithm_test_case(_ut.TestCase):
 
         # testing constraints with gradients and Hessians
         methods = ["trust-constr", None]
-        prob = problem(hock_schittkowski_71())
+        prob = problem(hock_schittkowsky_71())
         pop = population(prob=prob, size=1, seed=0)
         init = pop.champion_f
 

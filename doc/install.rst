@@ -75,7 +75,7 @@ An even better idea is to make use of Python's
 `virtual environments <https://virtualenv.pypa.io/en/latest/>`__.
 
 The pip packages for pygmo are maintained by the core development team,
-and they are regularly updated when new pygmo versions are released.
+and they are updated when new pygmo versions are released.
 
 .. warning::
 

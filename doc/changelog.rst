@@ -19,11 +19,17 @@ Changes
 - pygmo now requires pybind11 >= 2.10
   (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
 
+- pygmo now requires cmake >= 3.18.0
+  (`#104 <https://github.com/esa/pygmo2/pull/117>`__).
+
 Fix
 ~~~
 
 - Fix failing tests with recent versions of pybind11
   (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
+
+- Fix linux wheels creation and upload to PyPi
+  (`#104 <https://github.com/esa/pygmo2/pull/117>`__).
 
 2.18.0 (2021-08-03)
 -------------------
