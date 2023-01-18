@@ -10,7 +10,8 @@ set -e
 echo "PYGMO_BUILD_TYPE: ${PYGMO_BUILD_TYPE}"
 echo "GITHUB_REF: ${GITHUB_REF}"
 echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-cd ${GITHUB_WORKSPACE}
+# No idea why but this following line seems to be necessary (added: 18/01/2023)
+git config --global --add safe.directory ${GITHUB_WORKSPACE}
 BRANCH_NAME=`git rev-parse --abbrev-ref HEAD`
 echo "BRANCH_NAME: ${BRANCH_NAME}"
 
