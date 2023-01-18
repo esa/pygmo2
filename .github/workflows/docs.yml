@@ -27,6 +27,6 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-        folder: doc/_build/html # The folder the action should deploy.
+          folder: doc/_build/html # The folder the action should deploy.
 
           
