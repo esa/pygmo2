@@ -26,7 +26,7 @@ jobs:
       - name: Upload to github pages 🚀
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
-          with:
-            folder: doc/_build/html # The folder the action should deploy.
+        with:
+        folder: doc/_build/html # The folder the action should deploy.
 
           
