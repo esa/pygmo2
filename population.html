@@ -1,226 +1,600 @@
 
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Population class &mdash; pygmo 2.18.0 documentation</title>
-  
 
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  
-  
+    <title>Population class &#8212; pygmo 2.19.0 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="_static/logo_favico.ico"/>
-  
-
-  
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Island class" href="island.html" />
-    <link rel="prev" title="Problem class" href="problem.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
-   
-  <div class="wy-grid-for-nav">
+    <link rel="prev" title="Problem class" href="problem.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
     
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
 
-          
-            <a href="index.html" class="icon icon-home"> pygmo
-          
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
 
-          
-          </a>
+    
+    <div class="container-fluid" id="banner"></div>
 
-          
-            
-            
-              <div class="version">
-                2.18.0
-              </div>
-            
-          
+    
 
+    <div class="container-xl">
+      <div class="row">
           
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Capabilities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="api_reference.html">API reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="api_reference.html#core-classes">Core classes</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="algorithm.html">Algorithm class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="problem.html">Problem class</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Population class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="island.html">Island class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="archipelago.html">Archipelago class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bfe.html">Batch fitness evaluator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="topology.html">Topology</a></li>
-<li class="toctree-l3"><a class="reference internal" href="r_policy.html">Replacement policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="s_policy.html">Selection policy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="misc.html">Miscellanea</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="api_reference.html#implemented-user-defined-classes">Implemented user-defined classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_reference.html#utilities">Utilities</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known issues</a></li>
-</ul>
-
-            
-          
-        </div>
-        
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
       
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">pygmo</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="api_reference.html">API reference</a> &raquo;</li>
-        
-      <li>Population class</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-          
-            <a href="_sources/population.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
+      
+      
+      <h1 class="site-logo" id="site-title">pygmo 2.19.0 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="install.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="overview.html">
+   Capabilities
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="tutorials/tutorials.html">
+   Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/using_problem.html">
+     Use of the class
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       problem
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/using_algorithm.html">
+     Use of the class
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       algorithm
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/using_population.html">
+     Use of the class
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       population
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/using_island.html">
+     Use of the class
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       island
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/using_archipelago.html">
+     Use of the class
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       archipelago
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/evolving_a_population.html">
+     Evolving a population
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/coding_udp_simple.html">
+     Coding a simple User Defined Problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/coding_udp_constrained.html">
+     Coding a User Defined Problem with constraints (NLP)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/coding_udp_minlp.html">
+     Coding a User Defined Problem with an integer part (MINLP)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/coding_udp_multi_objective.html">
+     Coding a User Defined Problem with multiple objectives
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/udp_meta_decorator.html">
+     Using the decorator meta-problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/coding_udi.html">
+     Coding a User Defined Island
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/nlopt_basics.html">
+     A first tutorial on the use of NLopt solvers
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/moo.html">
+     Basic Multi-Objective Functionalities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/moo_moead.html">
+     Using pygmo’s
+     <code class="xref py py-class docutils literal notranslate">
+      <span class="pre">
+       moead
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/hypervolume.html">
+     Getting started with hypervolumes
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/hypervolume_advanced.html">
+     Advanced hypervolume computation and analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/hypervolume_approx.html">
+     Approximating the hypervolume
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/cec2006_gaco_benchmark.html">
+     Benchmarking Extended Ant Colony Optimization on CEC2006 problems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/cec2013_comp.html">
+     Participating to the CEC2013 Competition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/solving_schwefel_20.html">
+     Solving the 20 dimensional Schwefel problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/cmaes_vs_xnes.html">
+     Comparing algorithms: the case of xNES and CMA-ES
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/zdt3_maco_benchmark.html">
+     Benchmarking Multi-Objective Hypervolume-based Ant Colony Optimization on ZDT3 problem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="tutorials/nspso_tutorial_zdt1_2.html">
+     Benchmarking Nondominated Sorting Particle Swarm Optimizer (NSPSO) on ZDT1 and ZDT2 problems
+    </a>
+   </li>
   </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="api_reference.html">
+   API reference
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="algorithm.html">
+     Algorithm class
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="problem.html">
+     Problem class
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Population class
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="island.html">
+     Island class
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="archipelago.html">
+     Archipelago class
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bfe.html">
+     Batch fitness evaluator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="topology.html">
+     Topology
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="r_policy.html">
+     Replacement policy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="s_policy.html">
+     Selection policy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="misc.html">
+     Miscellanea
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="problems.html">
+     List of problems
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="algorithms.html">
+     List of algorithms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="islands.html">
+     List of islands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bfes.html">
+     List of batch evaluators
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="topologies.html">
+     List of topologies
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="r_policies.html">
+     List of replacement policies
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="s_policies.html">
+     List of selection policies
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generic_utils.html">
+     Generic optimization utilities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mo_utils.html">
+     Multi-objective optimization utilities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="con_utils.html">
+     Constrained optimization utilities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="gh_utils.html">
+     Gradient and Hessians utilities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="hv_utils.html">
+     Hypervolume utilities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="genetic_op_utils.html">
+     Generic optimization utilities
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plotting.html">
+     Plotting utilities
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="credits.html">
+   Credits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="changelog.html">
+   Changelog
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="known_issues.html">
+   Known issues
+  </a>
+ </li>
+</ul>
 
-  
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
   
-<style>
-/* CSS overrides for sphinx_rtd_theme */
 
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
 
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
+</label>
 
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
 
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<div class="section" id="population-class">
-<h1>Population class<a class="headerlink" href="#population-class" title="Permalink to this headline">¶</a></h1>
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/esa/pygmo2"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/esa/pygmo2/issues/new?title=Issue%20on%20page%20%2Fpopulation.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/population.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Population class</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="population-class">
+<h1>Population class<a class="headerlink" href="#population-class" title="Permalink to this headline">#</a></h1>
 <img alt="_images/pop_no_text.png" src="_images/pop_no_text.png" />
 <dl class="py class">
 <dt class="sig sig-object py" id="pygmo.population">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population" title="Permalink to this definition">#</a></dt>
 <dd><p>The population class.</p>
 <p>This class represents a population of individuals, i.e., potential candidate solutions to a given problem. In pygmo an
 individual is determined:</p>
@@ -234,25 +608,25 @@ equality constraints and inequality constraints if present.</p></li>
 is called <em>champion</em> and its decision vector and fitness vector are automatically kept updated. The <em>champion</em> is not necessarily
 an individual currently in the population. The <em>champion</em> is only defined and accessible via the population interface if the
 <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> currently contained in the <a class="reference internal" href="#pygmo.population" title="pygmo.population"><code class="xref py py-class docutils literal notranslate"><span class="pre">population</span></code></a> is single objective.</p>
-<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/population.html#_CPPv4N5pagmo10populationE" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:population</span></code></a>.</p>
+<p>See also the docs of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/population.html#_CPPv4N5pagmo10populationE" title="(in pagmo v2.18.0)"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pagmo::population</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prob</strong> – a user-defined problem (either Python or C++), or an instance of <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a>
-(if <em>prob</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a default-constructed <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> will be used
+(if <em>prob</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a default-constructed <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> will be used
 in its stead)</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of individuals</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of individuals</p></li>
 <li><p><strong>b</strong> – a user-defined batch fitness evaluator (either Python or C++), or an instance of <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>
-(if <em>b</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, the evaluation of the population’s individuals will be performed
+(if <em>b</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, the evaluation of the population’s individuals will be performed
 in sequential mode)</p></li>
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the random seed (if <em>seed</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a randomly-generated value will be used
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the random seed (if <em>seed</em> is <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>, a randomly-generated value will be used
 in its stead)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – if <em>size</em> is not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <em>seed</em> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> and not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.9)"><strong>OverflowError</strong></a> – is <em>size</em> or <em>seed</em> are negative</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>size</em> is not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> or <em>seed</em> is not <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> and not an <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OverflowError" title="(in Python v3.11)"><strong>OverflowError</strong></a> – is <em>size</em> or <em>seed</em> are negative</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by the invoked C++ constructors, by the constructor of
     <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a>, or the constructor of <a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>, or by failures at
     the intersection between C++ and
@@ -262,7 +636,7 @@ in its stead)</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.best_idx">
-<span class="sig-name descname"><span class="pre">best_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">self.problem.c_tol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.best_idx" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">best_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">self.problem.c_tol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.best_idx" title="Permalink to this definition">#</a></dt>
 <dd><p>Index of the best individual.</p>
 <p>If the problem is single-objective and unconstrained, the best is simply the individual with the smallest fitness. If the problem
 is, instead, single objective, but with constraints, the best will be defined using the criteria specified in <a class="reference internal" href="con_utils.html#pygmo.sort_population_con" title="pygmo.sort_population_con"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_con()</span></code></a>.
@@ -270,19 +644,19 @@ If the problem is multi-objective one single best is not well defined. In this c
 individuals by calling the <a class="reference internal" href="mo_utils.html#pygmo.sort_population_mo" title="pygmo.sort_population_mo"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_mo()</span></code></a> function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
+<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints. By default, the
 <a class="reference internal" href="problem.html#pygmo.problem.c_tol" title="pygmo.problem.c_tol"><code class="xref py py-attr docutils literal notranslate"><span class="pre">c_tol</span></code></a> attribute from the population’s problem is used.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the index of the best individual</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a best individual is not well defined, or if the population is empty</p></li>
-<li><p><strong>unspecified</strong> – any exception thrown by <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/constrained.html#_CPPv4N5pagmo19sort_population_conERKNSt6vectorI13vector_doubleEEN13vector_double9size_typeEd" title="(in pagmo v2.18.0)"><code class="docutils literal notranslate"><span class="pre">:sort_population_con()</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a best individual is not well defined, or if the population is empty</p></li>
+<li><p><strong>unspecified</strong> – any exception thrown by <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/utils/constrained.html#_CPPv4N5pagmo19sort_population_conERKNSt6vectorI13vector_doubleEEN13vector_double9size_typeEd" title="(in pagmo v2.18.0)"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">pagmo::sort_population_con()</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -290,9 +664,9 @@ individuals by calling the <a class="reference internal" href="mo_utils.html#pyg
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pygmo.population.champion_f">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">champion_f</span></span><a class="headerlink" href="#pygmo.population.champion_f" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">champion_f</span></span><a class="headerlink" href="#pygmo.population.champion_f" title="Permalink to this definition">#</a></dt>
 <dd><p>Champion’s fitness vector.</p>
-<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the fitness vector of the population’s champion.</p>
+<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the fitness vector of the population’s champion.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the problem is stochastic, the champion is the individual that had the lowest fitness for
@@ -308,7 +682,7 @@ fitness.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -318,9 +692,9 @@ fitness.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pygmo.population.champion_x">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">champion_x</span></span><a class="headerlink" href="#pygmo.population.champion_x" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">champion_x</span></span><a class="headerlink" href="#pygmo.population.champion_x" title="Permalink to this definition">#</a></dt>
 <dd><p>Champion’s decision vector.</p>
-<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the decision vector of the population’s champion.</p>
+<p>This read-only property contains an array of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> representing the decision vector of the population’s champion.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the problem is stochastic the champion is the individual that had the lowest fitness for
@@ -336,7 +710,7 @@ fitness.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the current problem is not single objective</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -346,7 +720,7 @@ fitness.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.get_ID">
-<span class="sig-name descname"><span class="pre">get_ID</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_ID" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_ID</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_ID" title="Permalink to this definition">#</a></dt>
 <dd><p>This method will return the IDs of the individuals as a 1D NumPy array.</p>
 <p>Each element of the returned array represents the ID of the individual at the corresponding position in the
 population.</p>
@@ -366,7 +740,7 @@ population.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.get_f">
-<span class="sig-name descname"><span class="pre">get_f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_f" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_f</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_f" title="Permalink to this definition">#</a></dt>
 <dd><p>This method will return the fitness vectors of the individuals as a 2D NumPy array.</p>
 <p>Each row of the returned array represents the fitness vector of the individual at the corresponding position in the
 population.</p>
@@ -386,21 +760,21 @@ population.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.get_seed">
-<span class="sig-name descname"><span class="pre">get_seed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_seed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_seed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_seed" title="Permalink to this definition">#</a></dt>
 <dd><p>This method will return the random seed of the population.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>the random seed of the population</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.get_x">
-<span class="sig-name descname"><span class="pre">get_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_x" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.get_x" title="Permalink to this definition">#</a></dt>
 <dd><p>This method will return the chromosomes of the individuals as a 2D NumPy array.</p>
 <p>Each row of the returned array represents the chromosome of the individual at the corresponding position in the
 population.</p>
@@ -420,7 +794,7 @@ population.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pygmo.population.problem">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">problem</span></span><a class="headerlink" href="#pygmo.population.problem" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">problem</span></span><a class="headerlink" href="#pygmo.population.problem" title="Permalink to this definition">#</a></dt>
 <dd><p>Population’s problem.</p>
 <p>This read-only property gives direct access to the <a class="reference internal" href="problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> stored within the population.</p>
 <dl class="field-list simple">
@@ -435,7 +809,7 @@ population.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.push_back">
-<span class="sig-name descname"><span class="pre">push_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.push_back" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">push_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.push_back" title="Permalink to this definition">#</a></dt>
 <dd><p>Adds one decision vector (chromosome) to the population.</p>
 <p>This method will append a new chromosome <em>x</em> to the population, creating a new unique identifier for the newly born individual
 and, if <em>f</em> is not provided, evaluating its fitness. If <em>f</em> is provided, the fitness of the new individual will be set to <em>f</em>.
@@ -447,7 +821,7 @@ It is the user’s responsibility to ensure that <em>f</em> actually corresponds
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the dimensions of <em>x</em> or <em>f</em> (if provided) are incompatible with the population’s problem</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the dimensions of <em>x</em> or <em>f</em> (if provided) are incompatible with the population’s problem</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="problem.html#pygmo.problem.fitness" title="pygmo.problem.fitness"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.problem.fitness()</span></code></a> or by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
 </ul>
@@ -457,14 +831,14 @@ It is the user’s responsibility to ensure that <em>f</em> actually corresponds
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.random_decision_vector">
-<span class="sig-name descname"><span class="pre">random_decision_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.random_decision_vector" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">random_decision_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.random_decision_vector" title="Permalink to this definition">#</a></dt>
 <dd><p>This method will create a random decision vector within the problem’s bounds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>a random decision vector within the problem’s bounds</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="generic_utils.html#pygmo.random_decision_vector" title="pygmo.random_decision_vector"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.random_decision_vector()</span></code></a></p>
@@ -474,7 +848,7 @@ It is the user’s responsibility to ensure that <em>f</em> actually corresponds
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.set_x">
-<span class="sig-name descname"><span class="pre">set_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.set_x" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.set_x" title="Permalink to this definition">#</a></dt>
 <dd><p>Sets the <span class="math notranslate nohighlight">\(i\)</span>-th individual decision vector.</p>
 <p>Sets the chromosome of the <span class="math notranslate nohighlight">\(i\)</span>-th individual to the value <em>x</em> and changes its fitness accordingly. The
 individual’s ID remains the same.</p>
@@ -485,13 +859,13 @@ individual’s ID remains the same.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – a decision vector (chromosome)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> has the wrong dimensions (i.e., the dimension is
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> has the wrong dimensions (i.e., the dimension is
     inconsistent with the problem’s properties)</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
@@ -502,7 +876,7 @@ individual’s ID remains the same.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.set_xf">
-<span class="sig-name descname"><span class="pre">set_xf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.set_xf" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_xf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.set_xf" title="Permalink to this definition">#</a></dt>
 <dd><p>Sets the <span class="math notranslate nohighlight">\(i\)</span>-th individual decision vector, and fitness.</p>
 <p>Sets simultaneously the <span class="math notranslate nohighlight">\(i\)</span>-th individual decision vector and fitness thus avoiding to trigger a fitness function evaluation.</p>
 <div class="admonition note">
@@ -512,14 +886,14 @@ individual’s ID remains the same.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – individual’s index in the population</p></li>
 <li><p><strong>x</strong> (<em>array-like object</em>) – a decision vector (chromosome)</p></li>
 <li><p><strong>f</strong> (<em>array-like object</em>) – a fitness vector</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> or <em>f</em> have the wrong dimensions (i.e., their dimensions are
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> is invalid, or if <em>x</em> or <em>f</em> have the wrong dimensions (i.e., their dimensions are
     inconsistent with the problem’s properties)</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failures at the intersection between C++ and
     Python (e.g., type conversion errors, mismatched function signatures, etc.)</p></li>
@@ -530,7 +904,7 @@ individual’s ID remains the same.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygmo.population.worst_idx">
-<span class="sig-name descname"><span class="pre">worst_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.worst_idx" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">worst_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.population.worst_idx" title="Permalink to this definition">#</a></dt>
 <dd><p>Index of the worst individual.</p>
 <p>If the problem is single-objective and unconstrained, the worst is simply the individual with the largest fitness. If the problem
 is, instead, single objective, but with constraints, the worst will be defined using the criteria specified in <a class="reference internal" href="con_utils.html#pygmo.sort_population_con" title="pygmo.sort_population_con"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_con()</span></code></a>.
@@ -538,17 +912,17 @@ If the problem is multi-objective one single worst is not well defined. In this 
 individuals by calling the <a class="reference internal" href="mo_utils.html#pygmo.sort_population_mo" title="pygmo.sort_population_mo"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_mo()</span></code></a> function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints</p>
+<dd class="field-odd"><p><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> or array-like object) – scalar tolerance or vector of tolerances to be applied to each constraints</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the index of the worst individual</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a worst individual is not well defined, or if the population is empty</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the problem is multiobjective and thus a worst individual is not well defined, or if the population is empty</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="con_utils.html#pygmo.sort_population_con" title="pygmo.sort_population_con"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.sort_population_con()</span></code></a></p></li>
 </ul>
 </dd>
@@ -557,54 +931,53 @@ individuals by calling the <a class="reference internal" href="mo_utils.html#pyg
 
 </dd></dl>
 
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="problem.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Problem class</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="island.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Island class</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By pagmo development team<br/>
+  
+      &copy; Copyright 2021, pagmo development team.<br/>
+</p>
+        </footer>
+    </div>
+    
 </div>
 
 
-           </div>
-           
-          </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="island.html" class="btn btn-neutral float-right" title="Island class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="problem.html" class="btn btn-neutral float-left" title="Problem class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, pagmo development team.
-
-    </p>
-  </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
-        </div>
       </div>
-
-    </section>
-
-  </div>
+    </div>
   
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
 
-  
-  
-    
-   
-
-</body>
+  </body>
 </html>
