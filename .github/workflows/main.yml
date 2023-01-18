@@ -84,7 +84,7 @@ jobs:
       - name: Build
         run: .\tools\gha_windows.ps1
         shell: powershell
-build-and-deploydocs:
+  build-and-deploydocs:
     if: ${{ github.event_name }} == 'push'
     runs-on: ubuntu-latest
     steps:
