@@ -24,7 +24,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
      steps:
-       - uses: actions/checkout@v3.1.0
+       - uses: actions/checkout@v2
        - name: Build
          run: bash tools/gha_manylinux.sh
   manylinux228-py310:
@@ -36,7 +36,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
      steps:
-       - uses: actions/checkout@v3.1.0
+       - uses: actions/checkout@v2
        - name: Build
          run: bash tools/gha_manylinux.sh
   manylinux228-py39:
@@ -48,7 +48,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
      steps:
-       - uses: actions/checkout@v3.1.0
+       - uses: actions/checkout@v2
        - name: Build
          run: bash tools/gha_manylinux.sh
   manylinux228-py38:
@@ -60,19 +60,19 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
      steps:
-       - uses: actions/checkout@v3.1.0
+       - uses: actions/checkout@v2
        - name: Build
          run: bash tools/gha_manylinux.sh
   macos-10_15-py310:
     runs-on: macos-10.15
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v2
       - name: Build
         run: bash tools/gha_macos-10.15-py310.sh
   windows-2019-py311:
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v2
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - uses: conda-incubator/setup-miniconda@v2
