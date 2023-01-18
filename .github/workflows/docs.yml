@@ -15,16 +15,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  builddocs:
-    if: ${{ github.event_name  }} == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
-        run: bash tools/gha_deploydocs.sh
-
-  deploydocs:
-    if: ${{ github.event_name  }} == 'push'
+  build-and-deploydocs:
+    if: ${{ github.event_name }} == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -32,6 +24,7 @@ jobs:
         run: bash tools/gha_deploydocs.sh
 
       - name: Upload to github pages 🚀
+        if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: doc/_build/html # The folder the action should deploy.

@@ -16,7 +16,8 @@ export PATH="$HOME/miniconda/bin:$PATH"
 bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge
 conda config --set channel_priority strict
-conda create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.10 numpy cloudpickle networkx dill=0.3.5.1 numba pybind11 sphinx=4.5.0 myst-nb sphinx-book-theme scipy
+conda install mamba
+mamba create -y -q -p $deps_dir c-compiler cxx-compiler cmake eigen nlopt ipopt boost-cpp tbb tbb-devel python=3.10 numpy cloudpickle networkx dill=0.3.5.1 numba pybind11 sphinx=4.5.0 myst-nb sphinx-book-theme scipy
 source activate $deps_dir
 
 # Install pagmo.
