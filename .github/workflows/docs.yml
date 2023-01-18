@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Documentation Build
+name: Build Docs
 
 # Controls when the workflow will run
 on:
@@ -19,9 +19,7 @@ jobs:
     if: ${{ github.event_name  }} == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
       - uses: actions/checkout@v2
-
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: bash tools/gha_deploydocs.sh
 
@@ -29,9 +27,7 @@ jobs:
     if: ${{ github.event_name  }} == 'push'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
       - uses: actions/checkout@v2
-
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: bash tools/gha_deploydocs.sh
 
