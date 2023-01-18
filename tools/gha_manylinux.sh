@@ -23,7 +23,7 @@ elif [[ ${PYGMO_BUILD_TYPE} == *310* ]]; then
 	PYTHON_DIR="cp310-cp310"
 elif [[ ${PYGMO_BUILD_TYPE} == *311* ]]; then
 	PYTHON_DIR="cp311-cp311"
-elif [[ ${PYGMO_BUILD_TYPE} == *311* ]]; then
+elif [[ ${PYGMO_BUILD_TYPE} == *312* ]]; then
 	PYTHON_DIR="cp312-cp312"
 else
 	echo "Invalid build type: ${PYGMO_BUILD_TYPE}"
@@ -85,11 +85,10 @@ cd ${GITHUB_WORKSPACE}
 git archive --format=tar.gz --prefix=my-repo/ -o ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo2-${PYGMO_RELEASE_VERSION}.tar.gz ${BRANCH_NAME}
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
-export PYGMO_RELEASE_VERSION=`echo "${GITHUB_REF}"|grep -E 'v[0-9]+\.[0-9]+.*'|cut -c 2-`
 if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
 	echo "Release build detected, creating the source code archive."
 	cd ${GITHUB_WORKSPACE}
-	git archive --format=tar.gz --prefix=my-repo/ -o ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo2-${PYGMO_RELEASE_VERSION}.tar.gz ${BRANCH_NAME}
+	git archive --format=tar.gz --prefix=my-repo/ -o ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo-${PYGMO_RELEASE_VERSION}.tar.gz ${BRANCH_NAME}
 	echo "... uploading all to PyPi."
 	/opt/python/${PYTHON_DIR}/bin/pip install twine
 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*

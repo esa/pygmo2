@@ -92,6 +92,11 @@ and they are updated when new pygmo versions are released.
 
 .. note::
 
+   Any bug reported against the pip build and not reproduced with other installation methods
+   (e.g., conda package, installation from source) will be automatically closed as invalid.
+
+.. note::
+
    Due to a lack of manpower, we are currently unable to provide
    pip packages for Windows or OSX. If you are willing to help us
    out, please get in contact with us on the
