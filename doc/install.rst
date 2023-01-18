@@ -75,7 +75,7 @@ An even better idea is to make use of Python's
 `virtual environments <https://virtualenv.pypa.io/en/latest/>`__.
 
 The pip packages for pygmo are maintained by the core development team,
-and they are regularly updated when new pygmo versions are released.
+and they are updated when new pygmo versions are released.
 
 .. warning::
 
@@ -89,6 +89,11 @@ and they are regularly updated when new pygmo versions are released.
    versions of the same C++ library might end up being loaded at the
    same time, leading to crashes and erratic runtime behaviour.
    The conda packages do not suffer from this issue.
+
+.. note::
+
+   Any bug reported against the pip build and not reproduced with other installation methods
+   (e.g., conda package, installation from source) will be automatically closed as invalid.
 
 .. note::
 

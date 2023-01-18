@@ -15,25 +15,61 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  manylinux228-py311:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python311"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  manylinux228-py310:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python310"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  manylinux228-py39:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python39"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  manylinux228-py38:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python38"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
   macos-10_15-py310:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
       - name: Build
         run: bash tools/gha_macos-10.15-py310.sh
-  macos-10_15-py38:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py38.sh
-  macos-10_15-py39:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py39.sh
-  windows-2019-py38:
+  windows-2019-py311:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
@@ -42,24 +78,23 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          python-version: 3.8
+          python-version: 3.11
           channels: conda-forge
           channel-priority: strict
       - name: Build
         run: .\tools\gha_windows.ps1
         shell: powershell
-  windows-2019-py39:
-    runs-on: windows-2019
+  build-and-deploydocs:
+    if: ${{ github.event_name }} == 'push'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: bash tools/gha_deploydocs.sh
+      - name: Upload to github pages 🚀
+        if: ${{ github.event_name == 'push' }}
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          auto-update-conda: true
-          python-version: 3.9
-          channels: conda-forge
-          channel-priority: strict
-      - name: Build
-        run: .\tools\gha_windows.ps1
-        shell: powershell
+          folder: doc/_build/html # The folder the action should deploy.
+
+  
