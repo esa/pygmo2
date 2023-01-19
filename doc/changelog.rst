@@ -3,7 +3,7 @@
 Changelog
 =========
 
-2.19.0 (unreleased)
+2.19.0 (2023-01-19)
 -------------------
 
 New
@@ -12,6 +12,9 @@ New
 - Added fixed arguments meta problem
   (`#95 <https://github.com/esa/pygmo2/pull/95>`__,
   `#87 <https://github.com/esa/pygmo2/pull/87>`__).
+
+- Added a generational version of MOEA-D with batch fitness evaluation support.
+  (`#112 <https://github.com/esa/pygmo2/pull/112>`__).
 
 Changes
 ~~~~~~~
