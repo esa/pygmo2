@@ -2,7 +2,7 @@ pygmo
 =====
 
 [![Build Status](https://img.shields.io/circleci/project/github/esa/pygmo2/master.svg?style=for-the-badge)](https://circleci.com/gh/esa/pygmo2)
-[![Build Status](https://img.shields.io/github/workflow/status/esa/pygmo2/CI?style=for-the-badge)](https://github.com/esa/pygmo2/actions?query=workflow%3A%22CI%22)
+[![Build Status]([https://img.shields.io/github/workflow/status/esa/pygmo2/CI?style=for-the-badge](https://img.shields.io/github/actions/workflow/status/esa/pygmo2/main.yml?branch=master&style=for-the-badge))](https://github.com/esa/pygmo2/actions?query=workflow%3A%22CI%22)
 <!-- [![Build Status](https://img.shields.io/travis/esa/pygmo2/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.com/esa/pygmo2) -->
 
 [![Anaconda-Server Badge](https://img.shields.io/conda/vn/conda-forge/pygmo.svg?style=for-the-badge)](https://anaconda.org/conda-forge/pygmo)
