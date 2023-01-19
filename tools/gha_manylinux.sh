@@ -83,14 +83,14 @@ cd /
 sleep 20
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
-cd ${GITHUB_WORKSPACE}
-git archive --format=tar.gz --prefix=my-repo/ -o ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo2-${PYGMO_RELEASE_VERSION}.tar.gz ${BRANCH_NAME}
-
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
 if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
 	echo "Release build detected, creating the source code archive."
 	cd ${GITHUB_WORKSPACE}
-	git archive --format=tar.gz --prefix=my-repo/ -o ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo-${PYGMO_RELEASE_VERSION}.tar.gz ${BRANCH_NAME}
+	TARBALL_NAME=${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo-${PYGMO_RELEASE_VERSION}.tar
+	git archive --format=tar --prefix=pygmo2/ -o ${TARBALL_NAME} ${BRANCH_NAME}
+	tar -rf ${TARBALL_NAME} --transform "s,^build/wheel/pygmo.egg-info,pygmo2," build/wheel/pygmo.egg-info/PKG-INFO
+	gzip -9 ${TARBALL_NAME}
 	echo "... uploading all to PyPi."
 	/opt/python/${PYTHON_DIR}/bin/pip install twine
 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*
