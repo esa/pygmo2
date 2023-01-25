@@ -69,28 +69,29 @@ and multi-objective problems into single-objective ones.
 
 Heuristic Global Optimization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-========================================================== ========================================= =========================
-Common Name                                                Docs of the python class                  Capabilities
-========================================================== ========================================= =========================
-Extended Ant Colony Optimization (GACO)                    :class:`pygmo.gaco`                       S-CU-I
-Differential Evolution (DE)                                :class:`pygmo.de`                         S-U
-Self-adaptive DE (jDE and iDE)                             :class:`pygmo.sade`                       S-U
-Self-adaptive DE (de_1220 aka pDE)                         :class:`pygmo.de1220`                     S-U
-Grey wolf optimizer (GWO)                                  :class:`pygmo.gwo`                        S-U
-Improved Harmony Search                                    :class:`pygmo.ihs`                        SM-CU-I
-Particle Swarm Optimization (PSO)                          :class:`pygmo.pso`                        S-U
-Particle Swarm Optimization Generational (GPSO)            :class:`pygmo.pso_gen`                    S-U-sto
-(N+1)-ES Simple Evolutionary Algorithm                     :class:`pygmo.sea`                        S-U-sto
-Simple Genetic Algorithm                                   :class:`pygmo.sga`                        S-U-I-sto
-Corana's Simulated Annealing (SA)                          :class:`pygmo.simulated_annealing`        S-U
-Artificial Bee Colony (ABC)                                :class:`pygmo.bee_colony`                 S-U
-Covariance Matrix Adaptation Evo. Strategy (CMA-ES)        :class:`pygmo.cmaes`                      S-U-sto
-Exponential Evolution Strategies (xNES)                    :class:`pygmo.xnes`                       S-U-sto
-Non-dominated Sorting GA (NSGA2)                           :class:`pygmo.nsga2`                      M-U-I
-Multi-objective EA vith Decomposition (MOEA/D)             :class:`pygmo.moead`                      M-U
-Multi-objective Hypervolume-based ACO (MHACO)              :class:`pygmo.maco`                       M-U-I
-Non-dominated Sorting PSO (NSPSO)                          :class:`pygmo.nspso`                      M-U
-========================================================== ========================================= =========================
+============================================================ ========================================= =========================
+Common Name                                                  Docs of the python class                  Capabilities
+============================================================ ========================================= =========================
+Extended Ant Colony Optimization (GACO)                      :class:`pygmo.gaco`                       S-CU-I
+Differential Evolution (DE)                                  :class:`pygmo.de`                         S-U
+Self-adaptive DE (jDE and iDE)                               :class:`pygmo.sade`                       S-U
+Self-adaptive DE (de_1220 aka pDE)                           :class:`pygmo.de1220`                     S-U
+Grey wolf optimizer (GWO)                                    :class:`pygmo.gwo`                        S-U
+Improved Harmony Search                                      :class:`pygmo.ihs`                        SM-CU-I
+Particle Swarm Optimization (PSO)                            :class:`pygmo.pso`                        S-U
+Particle Swarm Optimization Generational (GPSO)              :class:`pygmo.pso_gen`                    S-U-sto
+(N+1)-ES Simple Evolutionary Algorithm                       :class:`pygmo.sea`                        S-U-sto
+Simple Genetic Algorithm                                     :class:`pygmo.sga`                        S-U-I-sto
+Corana's Simulated Annealing (SA)                            :class:`pygmo.simulated_annealing`        S-U
+Artificial Bee Colony (ABC)                                  :class:`pygmo.bee_colony`                 S-U
+Covariance Matrix Adaptation Evo. Strategy (CMA-ES)          :class:`pygmo.cmaes`                      S-U-sto
+Exponential Evolution Strategies (xNES)                      :class:`pygmo.xnes`                       S-U-sto
+Non-dominated Sorting GA (NSGA2)                             :class:`pygmo.nsga2`                      M-U-I
+Multi-objective EA vith Decomposition (MOEA/D)               :class:`pygmo.moead`                      M-U
+Multi-objective EA vith Decomposition Generational (GMOEA/D) :class:`pygmo.moead_gen`                  M-U
+Multi-objective Hypervolume-based ACO (MHACO)                :class:`pygmo.maco`                       M-U-I
+Non-dominated Sorting PSO (NSPSO)                            :class:`pygmo.nspso`                      M-U
+============================================================ ========================================= =========================
 
 Local optimization
 ^^^^^^^^^^^^^^^^^^
