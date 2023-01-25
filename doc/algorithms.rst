@@ -74,6 +74,11 @@ Algorithms exposed from C++
 
 -------------------------------------------------------------
 
+.. autoclass:: pygmo.moead_gen
+   :members:
+
+-------------------------------------------------------------
+
 .. autoclass:: pygmo.compass_search
    :members:
 

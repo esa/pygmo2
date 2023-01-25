@@ -75,7 +75,7 @@ An even better idea is to make use of Python's
 `virtual environments <https://virtualenv.pypa.io/en/latest/>`__.
 
 The pip packages for pygmo are maintained by the core development team,
-and they are regularly updated when new pygmo versions are released.
+and they are updated when new pygmo versions are released.
 
 .. warning::
 
@@ -89,6 +89,11 @@ and they are regularly updated when new pygmo versions are released.
    versions of the same C++ library might end up being loaded at the
    same time, leading to crashes and erratic runtime behaviour.
    The conda packages do not suffer from this issue.
+
+.. note::
+
+   Any bug reported against the pip build and not reproduced with other installation methods
+   (e.g., conda package, installation from source) will be automatically closed as invalid.
 
 .. note::
 
@@ -124,9 +129,9 @@ In order to install pygmo from source, you will need:
   Clang or MSVC should do),
 * a `Python <https://www.python.org/>`__ installation,
 * `pybind11 <https://github.com/pybind/pybind11>`__ (version >= 2.10),
-* the `pagmo C++ library <https://esa.github.io/pagmo2/>`__,
+* the `pagmo C++ library <https://esa.github.io/pagmo2/>`__, (version >=2.19)
 * the `Boost libraries <https://www.boost.org/>`__,
-* `CMake <https://cmake.org/>`__, version 3.17 or later.
+* `CMake <https://cmake.org/>`__, version 3.18 or later.
 
 After making sure the dependencies are installed on your system, you can
 download the pygmo source code from the
