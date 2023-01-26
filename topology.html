@@ -651,7 +651,7 @@ and thus they need to provide a certain degree of thread safety. Specifically, t
 <code class="docutils literal notranslate"><span class="pre">get_connections()</span></code> method of the UDT might be invoked concurrently with
 any other method of the UDT interface. It is up to the
 authors of user-defined topologies to ensure that this safety requirement is satisfied.</p>
-<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topology.html#_CPPv4N5pagmo8topologyE" title="(in pagmo v2.18.0)"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pagmo::topology</span></code></a>.</p>
+<p>This class is the Python counterpart of the C++ class <a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topology.html#_CPPv4N5pagmo8topologyE" title="(in pagmo v2.19.0)"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pagmo::topology</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>udt</strong> – a user-defined topology, either C++ or Python</p>
@@ -687,7 +687,7 @@ of <em>t</em> (which must be a <a class="reference external" href="https://docs.
 <ul class="simple">
 <li><p>if the type of the UDT is <em>t</em>, then a reference to the UDT will be returned
 (this mirrors the behaviour of the corresponding C++ method
-<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topology.html#_CPPv4I0ENK5pagmo8topology7extractEPK1Tv" title="(in pagmo v2.18.0)"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">pagmo::topology::extract()</span></code></a>),</p></li>
+<a class="reference external" href="https://esa.github.io/pagmo2/docs/cpp/topology.html#_CPPv4I0ENK5pagmo8topology7extractEPK1Tv" title="(in pagmo v2.19.0)"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">pagmo::topology::extract()</span></code></a>),</p></li>
 <li><p>if <em>t</em> is <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> and the UDT is a Python object (as opposed to an
 <a class="reference internal" href="topologies.html#topologies-cpp"><span class="std std-ref">exposed C++ topology</span></a>), then a reference to the
 UDT will be returned (this allows to extract a Python UDT without knowing its type),</p></li>
