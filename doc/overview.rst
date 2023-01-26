@@ -87,8 +87,8 @@ Artificial Bee Colony (ABC)                                  :class:`pygmo.bee_c
 Covariance Matrix Adaptation Evo. Strategy (CMA-ES)          :class:`pygmo.cmaes`                      S-U-sto
 Exponential Evolution Strategies (xNES)                      :class:`pygmo.xnes`                       S-U-sto
 Non-dominated Sorting GA (NSGA2)                             :class:`pygmo.nsga2`                      M-U-I
-Multi-objective EA vith Decomposition (MOEA/D)               :class:`pygmo.moead`                      M-U
-Multi-objective EA vith Decomposition Generational (GMOEA/D) :class:`pygmo.moead_gen`                  M-U
+Multi-objective EA with Decomposition (MOEA/D)               :class:`pygmo.moead`                      M-U
+Multi-objective EA with Decomposition Generational (GMOEA/D) :class:`pygmo.moead_gen`                  M-U
 Multi-objective Hypervolume-based ACO (MHACO)                :class:`pygmo.maco`                       M-U-I
 Non-dominated Sorting PSO (NSPSO)                            :class:`pygmo.nspso`                      M-U
 ============================================================ ========================================= =========================
