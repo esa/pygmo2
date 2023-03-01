@@ -663,7 +663,7 @@ as a mixed integer non linear programming (MINLP) problem.</p>
 <p>Note how we need to specify explicitly the number of inequality constraints and the integer problem
 dimension (as pygmo otherwise by default assumes 0 for both). Note also that the bounds (for the integer part)
 must be integers, otherwise pygmo will complain. There is no need, for this case, to also specify explicitly the number of objectives
-as by default pygmo assumes single objective optimization. The full documenation on the UDP optional methods can be
+as by default pygmo assumes single objective optimization. The full documentation on the UDP optional methods can be
 found in the <a class="reference internal" href="../problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> docs.</p>
 <p>We still have to write the fitness function, as that is a mandatory method (together with <code class="docutils literal notranslate"><span class="pre">get_bounds()</span></code>) for all UDPs. Constructing a <a class="reference internal" href="../problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> with
 an incomplete UDP will fail. In pygmo the fitness encapsulates both the objectives and the constraints in the mandatory order
@@ -781,7 +781,7 @@ possible cases we thus fix the box bounds on the last two variables. In case <sp
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The solution strategy above is, in general, flawed in assuming the best solution of the relaxed problem is close to the
-the full MINLP problem solution. More sophisticated techniques would instead search the combinatorial part more exhaustvely.
+the full MINLP problem solution. More sophisticated techniques would instead search the combinatorial part more exhaustively.
 We used here this approach only to show how simple is, in pygmo, to define and solve the relaxed problem and
 to then feedback the optimal decision vector into a MINLP solution strategy.</p>
 </div>

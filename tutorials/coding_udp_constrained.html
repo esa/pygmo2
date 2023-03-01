@@ -670,7 +670,7 @@ in the taxonomy of optimization problems, can be categorized as a non linear pro
 </div>
 <p>Note how we need to specify both the number of equality constraints and the number of inequality constraints (as pygmo by default assumes
 0 for both). There is no need to specify the number of objectives as by default pygmo assumes single objective optimization.
-The full documenation on the UDP specification can be found in the <a class="reference internal" href="../problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> docs.</p>
+The full documentation on the UDP specification can be found in the <a class="reference internal" href="../problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">pygmo.problem</span></code></a> docs.</p>
 <p>We still have to write the fitness function as that is a mandatory method (together with <code class="docutils literal notranslate"><span class="pre">get_bounds()</span></code>) for all UDPs. Constructing a <a class="reference internal" href="../problem.html#pygmo.problem" title="pygmo.problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">problem</span></code></a> with
 an incomplete UDP will fail. In pygmo the fitness includes both the objectives and the constraints according to the described order [obj,ec,ic]. All equality constraints
 are in the form <span class="math notranslate nohighlight">\(g(x) = 0\)</span>, while inequalities <span class="math notranslate nohighlight">\(g(x) &lt;= 0\)</span> as documented in <a class="reference internal" href="../problem.html#pygmo.problem.fitness" title="pygmo.problem.fitness"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.problem.fitness()</span></code></a>.</p>
@@ -728,7 +728,7 @@ are in the form <span class="math notranslate nohighlight">\(g(x) = 0\)</span>, 
 <p>All seems in order. The dimensions are corresponding to what we wanted, the gradient is detected etc.</p>
 <section id="solving-your-constrained-udp">
 <h2>Solving your constrained UDP<a class="headerlink" href="#solving-your-constrained-udp" title="Permalink to this headline">#</a></h2>
-<p>So we now have a UDP with constraints and a numerical gradient. Let’s solve it. Many different startegies can be deployed
+<p>So we now have a UDP with constraints and a numerical gradient. Let’s solve it. Many different strategies can be deployed
 and we here will just try two a) using the augmented lagrangian method b) using monotonic basin hopping.
 Consider the following script:</p>
 <div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#METHOD A</span>

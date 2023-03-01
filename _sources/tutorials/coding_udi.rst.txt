@@ -24,7 +24,7 @@ the :class:`~pygmo.population` ``pop``.
     ...     def get_name(self):
     ...         return "It's my island!"
 
-We have also included above the optional method ``get_name(self)`` that will be used by various ``__repr__(self)`` to provide humar readable information
+We have also included above the optional method ``get_name(self)`` that will be used by various ``__repr__(self)`` to provide human readable information
 on some pygmo classes. The above UDI can then be used to construct a :class:`~pygmo.island` (similarly to how UDP can be used to construct :class:`~pygmo.problem`, etc..).
 
 .. doctest::
