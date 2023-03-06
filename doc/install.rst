@@ -8,7 +8,7 @@ pygmo has the following **mandatory** runtime dependencies:
 
 * `Python <https://www.python.org/>`__ 3.4 or later (Python 2.x is
   **not** supported),
-* the `pagmo C++ library <https://esa.github.io/pagmo2/>`__, version 2.18 or later,
+* the `pagmo C++ library <https://esa.github.io/pagmo2/>`__, version 2.19 or later,
 * the `Boost serialization library <https://www.boost.org/doc/libs/release/libs/serialization/doc/index.html>`__,
   version 1.60 or later,
 * `NumPy <https://numpy.org/>`__,
