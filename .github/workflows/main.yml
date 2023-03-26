@@ -21,7 +21,72 @@ jobs:
        - uses: actions/checkout@v2
        - uses: dbhi/qus/action@main
        - name: Build
-         run: docker run --env PYGMO_BUILD_TYPE=Python311 --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} --workdir ${GITHUB_WORKSPACE} --platform linux/arm64 ccrutchf/manylinux228_x86_64_with_deps:latest bash tools/gha_manylinux.sh
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python311 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            ccrutchf/manylinux228_x86_64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  arm64-manylinux228-py310:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python310 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            ccrutchf/manylinux228_x86_64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  arm64-manylinux228-py39:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python39 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            ccrutchf/manylinux228_x86_64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  arm64-manylinux228-py38:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python38 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            ccrutchf/manylinux228_x86_64_with_deps:latest \
+            bash tools/gha_manylinux.sh
   amd64-manylinux228-py311:
      runs-on: ubuntu-latest
      container:
