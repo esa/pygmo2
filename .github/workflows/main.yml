@@ -168,5 +168,3 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: doc/_build/html # The folder the action should deploy.
-
-  
