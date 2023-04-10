@@ -29,6 +29,7 @@ jobs:
           docker run \
             --env PYGMO_BUILD_TYPE=Python311 \
             --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
             --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
             --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
             --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
@@ -47,6 +48,7 @@ jobs:
           docker run \
             --env PYGMO_BUILD_TYPE=Python310 \
             --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
             --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
             --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
             --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
@@ -65,6 +67,7 @@ jobs:
           docker run \
             --env PYGMO_BUILD_TYPE=Python39 \
             --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
             --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
             --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
             --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
@@ -83,6 +86,7 @@ jobs:
           docker run \
             --env PYGMO_BUILD_TYPE=Python38 \
             --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
             --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
             --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
             --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
