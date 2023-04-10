@@ -32,8 +32,19 @@ else
 	exit 1
 fi
 
-# Report the inferred directory whwere python is found
+# Report the inferred directory where python is found
 echo "PYTHON_DIR: ${PYTHON_DIR}"
+
+# The pagmo version to be used for releases.
+export PAGMO_VERSION_RELEASE="2.19.0"
+
+# Check if this is a release build.
+if [[ "${GITHUB_REF}" == "refs/tags/v"* ]]; then
+    echo "Tag build detected"
+	export PYGMO_RELEASE_BUILD="yes"
+else
+	echo "Non-tag build detected"
+fi
 
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
@@ -45,8 +56,14 @@ echo "PYTHON_DIR: ${PYTHON_DIR}"
 cd /root/install
 
 # Install pagmo
-git clone https://github.com/esa/pagmo2.git
-cd pagmo2
+if [[ "${PYGMO_RELEASE_BUILD}" == "yes" ]]; then
+	curl -L -o pagmo2.tar.gz https://github.com/esa/pagmo2/archive/refs/tags/v${PAGMO_VERSION_RELEASE}.tar.gz
+	tar xzf pagmo2.tar.gz
+	cd pagmo2-${PAGMO_VERSION_RELEASE}
+else
+	git clone https://github.com/esa/pagmo2.git
+	cd pagmo2
+fi
 
 mkdir build
 cd build
@@ -84,14 +101,23 @@ sleep 20
 /opt/python/${PYTHON_DIR}/bin/python -c "import pygmo; pygmo.test.run_test_suite(1); pygmo.mp_island.shutdown_pool(); pygmo.mp_bfe.shutdown_pool()"
 
 # Upload to pypi. This variable will contain something if this is a tagged build (vx.y.z), otherwise it will be empty.
-if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
-	echo "Release build detected, creating the source code archive."
-	cd ${GITHUB_WORKSPACE}
-	TARBALL_NAME=${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo-${PYGMO_RELEASE_VERSION}.tar
-	git archive --format=tar --prefix=pygmo2/ -o ${TARBALL_NAME} ${BRANCH_NAME}
-	tar -rf ${TARBALL_NAME} --transform "s,^build/wheel/pygmo.egg-info,pygmo2," build/wheel/pygmo.egg-info/PKG-INFO
-	gzip -9 ${TARBALL_NAME}
-	echo "... uploading all to PyPi."
+# if [[ "${PYGMO_RELEASE_VERSION}" != "" ]]; then
+# 	echo "Release build detected, creating the source code archive."
+# 	cd ${GITHUB_WORKSPACE}
+# 	TARBALL_NAME=${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo-${PYGMO_RELEASE_VERSION}.tar
+# 	git archive --format=tar --prefix=pygmo2/ -o ${TARBALL_NAME} ${BRANCH_NAME}
+# 	tar -rf ${TARBALL_NAME} --transform "s,^build/wheel/pygmo.egg-info,pygmo2," build/wheel/pygmo.egg-info/PKG-INFO
+# 	gzip -9 ${TARBALL_NAME}
+# 	echo "... uploading all to PyPi."
+# 	/opt/python/${PYTHON_DIR}/bin/pip install twine
+# 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*
+# fi
+
+# Upload to PyPI.
+if [[ "${PYGMO_RELEASE_BUILD}" == "yes" ]]; then
 	/opt/python/${PYTHON_DIR}/bin/pip install twine
 	/opt/python/${PYTHON_DIR}/bin/twine upload -u ci4esa ${GITHUB_WORKSPACE}/build/wheel/dist2/pygmo*
 fi
+
+set +e
+set +x
