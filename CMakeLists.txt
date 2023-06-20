@@ -1,6 +1,6 @@
 # NOTE: FindPython3 supported since CMake 3.12.0, but we use
-# options that appear in 3.17.
-cmake_minimum_required(VERSION 3.17.0)
+# options that appear in 3.18.
+cmake_minimum_required(VERSION 3.18.0)
 
 # Set default build type to "Release".
 # NOTE: this should be done before the project command since the latter can set
@@ -11,7 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
 	FORCE)
 endif()
 
-project(pygmo VERSION 2.18.0 LANGUAGES CXX C)
+project(pygmo VERSION 2.19.5 LANGUAGES CXX C)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/yacma")
 
@@ -130,14 +130,14 @@ endif()
 # pagmo.
 # NOTE: put the minimum version in a variable
 # so that we can re-use it below.
-set (_PYGMO_MIN_PAGMO_VERSION 2.18.0)
+set (_PYGMO_MIN_PAGMO_VERSION 2.19.0)
 find_package(pagmo REQUIRED)
 if(${pagmo_VERSION} VERSION_LESS ${_PYGMO_MIN_PAGMO_VERSION})
     message(FATAL_ERROR "The minimum pagmo version required by pygmo is ${_PYGMO_MIN_PAGMO_VERSION}, but version ${pagmo_VERSION} was found instead.")
 endif()
 
 # python.
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 message(STATUS "Python3 interpreter: ${Python3_EXECUTABLE}")
 message(STATUS "Python3 installation directory: ${Python3_SITEARCH}")
 set(PYGMO_INSTALL_PATH "" CACHE STRING "pygmo module installation path")
@@ -148,8 +148,8 @@ include(PygmoFindBoost)
 
 # pybind11.
 find_package(pybind11 REQUIRED)
-if(${pybind11_VERSION} VERSION_LESS "2.6")
-    message(FATAL_ERROR "pybind11 >= 2.6 is required, but version ${pybind11_VERSION} was found instead.")
+if(${pybind11_VERSION} VERSION_LESS "2.10")
+    message(FATAL_ERROR "pybind11 >= 2.10 is required, but version ${pybind11_VERSION} was found instead.")
 endif()
 
 # Configure the sphinx config file.

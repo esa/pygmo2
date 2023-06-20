@@ -99,7 +99,7 @@ Problems exposed from C++
 
 -------------------------------------------------------------
 
-.. autoclass:: pygmo.hock_schittkowsky_71
+.. autoclass:: pygmo.hock_schittkowski_71
    :members:
 
 -------------------------------------------------------------

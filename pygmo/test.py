@@ -113,9 +113,9 @@ class core_test_case(_ut.TestCase):
             self.assertTrue(gsb() == dill)
 
             p = problem(_prob())
-            self.assertEqual(str(pickle.loads(pickle.dumps(p))), str(p))
+            self.assertEqual(str(dill.loads(dill.dumps(p))), str(p))
             isl = island(prob=p, algo=de(gen=500), size=20)
-            self.assertEqual(str(pickle.loads(pickle.dumps(isl))), str(isl))
+            self.assertEqual(str(dill.loads(dill.dumps(isl))), str(isl))
 
         # Reset to cloudpickle before exiting.
         ssb("cloudpickle")
@@ -1286,7 +1286,16 @@ class archipelago_test_case(_ut.TestCase):
 
     def run_pickle_tests(self):
         from . import archipelago, de, rosenbrock, mp_island, ring, migration_type, migrant_handling
-        from pickle import dumps, loads
+        has_dill = False
+        try:
+            import dill
+            has_dill = True
+        except ImportError:
+            pass
+        if has_dill:
+            from dill import dumps, loads
+        else:
+            from pickle import dumps, loads
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=10)
         self.assertEqual(repr(a), repr(loads(dumps(a))))
         a = archipelago(5, algo=de(), prob=_prob(),
@@ -1645,6 +1654,22 @@ class moead_test_case(_ut.TestCase):
         uda = moead(gen=1, weight_generation="grid", decomposition="tchebycheff",
                     neighbours=20, CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True)
         uda = moead(gen=1, weight_generation="grid", decomposition="tchebycheff", neighbours=20,
+                    CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True, seed=32)
+        self.assertEqual(uda.get_seed(), 32)
+        log = uda.get_log()
+
+
+class moead_gen_test_case(_ut.TestCase):
+    """Test case for the UDA moead
+
+    """
+
+    def runTest(self):
+        from .core import moead_gen
+        uda = moead_gen()
+        uda = moead_gen(gen=1, weight_generation="grid", decomposition="tchebycheff",
+                    neighbours=20, CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True)
+        uda = moead_gen(gen=1, weight_generation="grid", decomposition="tchebycheff", neighbours=20,
                     CR=1, F=0.5, eta_m=20, realb=0.9, limit=2, preserve_diversity=True, seed=32)
         self.assertEqual(uda.get_seed(), 32)
         log = uda.get_log()
@@ -2222,17 +2247,17 @@ class unconstrain_test_case(_ut.TestCase):
     """
 
     def runTest(self):
-        from .core import hock_schittkowsky_71, unconstrain, null_problem, problem, translate
+        from .core import hock_schittkowski_71, unconstrain, null_problem, problem, translate
         from numpy import array
 
         d = unconstrain()
         self.assertFalse(d.inner_problem.extract(null_problem) is None)
-        d = unconstrain(prob=hock_schittkowsky_71(),
+        d = unconstrain(prob=hock_schittkowski_71(),
                         method="weighted", weights=[1., 1.])
         self.assertTrue(problem(d).is_(unconstrain))
         self.assertFalse(problem(d).extract(unconstrain) is None)
-        self.assertTrue(d.inner_problem.is_(hock_schittkowsky_71))
-        self.assertFalse(d.inner_problem.extract(hock_schittkowsky_71) is None)
+        self.assertTrue(d.inner_problem.is_(hock_schittkowski_71))
+        self.assertFalse(d.inner_problem.extract(hock_schittkowski_71) is None)
 
         class p(object):
 
@@ -2988,6 +3013,7 @@ def run_test_suite(level=0):
     suite.addTest(compass_search_test_case())
     suite.addTest(sa_test_case())
     suite.addTest(moead_test_case())
+    suite.addTest(moead_gen_test_case())
     suite.addTest(sga_test_case())
     suite.addTest(ihs_test_case())
     suite.addTest(population_test_case())

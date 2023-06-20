@@ -3,6 +3,37 @@
 Changelog
 =========
 
+2.19.0 (2023-01-19)
+-------------------
+
+New
+~~~
+
+- Added fixed arguments meta problem
+  (`#95 <https://github.com/esa/pygmo2/pull/95>`__,
+  `#87 <https://github.com/esa/pygmo2/pull/87>`__).
+
+- Added a generational version of MOEA-D with batch fitness evaluation support.
+  (`#112 <https://github.com/esa/pygmo2/pull/112>`__).
+
+Changes
+~~~~~~~
+
+- pygmo now requires pybind11 >= 2.10
+  (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
+
+- pygmo now requires cmake >= 3.18.0
+  (`#117 <https://github.com/esa/pygmo2/pull/117>`__).
+
+Fix
+~~~
+
+- Fix failing tests with recent versions of pybind11
+  (`#104 <https://github.com/esa/pygmo2/pull/104>`__).
+
+- Fix linux wheels creation and upload to PyPi
+  (`#117 <https://github.com/esa/pygmo2/pull/117>`__).
+
 2.18.0 (2021-08-03)
 -------------------
 

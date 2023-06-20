@@ -44,7 +44,7 @@ Neglecting, for the time being the fitness, the basic structure for the UDP to h
 Note how we need to specify explicitly the number of inequality constraints and the integer problem
 dimension (as pygmo otherwise by default assumes 0 for both). Note also that the bounds (for the integer part)
 must be integers, otherwise pygmo will complain. There is no need, for this case, to also specify explicitly the number of objectives
-as by default pygmo assumes single objective optimization. The full documenation on the UDP optional methods can be
+as by default pygmo assumes single objective optimization. The full documentation on the UDP optional methods can be
 found in the :class:`pygmo.problem` docs.
 
 We still have to write the fitness function, as that is a mandatory method (together with ``get_bounds()``) for all UDPs. Constructing a :class:`~pygmo.problem` with
@@ -172,6 +172,6 @@ We found a feasible solution! Note that in the other 3 cases no feasible solutio
 
 .. note::
    The solution strategy above is, in general, flawed in assuming the best solution of the relaxed problem is close to the
-   the full MINLP problem solution. More sophisticated techniques would instead search the combinatorial part more exhaustvely.
+   the full MINLP problem solution. More sophisticated techniques would instead search the combinatorial part more exhaustively.
    We used here this approach only to show how simple is, in pygmo, to define and solve the relaxed problem and
    to then feedback the optimal decision vector into a MINLP solution strategy. 

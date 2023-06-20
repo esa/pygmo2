@@ -4,37 +4,152 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches:
+      - master
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  macos-10_15-py37:
+  arm64-manylinux228-py311:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python311 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            pagmo2/manylinux228_aarch64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  arm64-manylinux228-py310:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python310 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            pagmo2/manylinux228_aarch64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  arm64-manylinux228-py39:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python39 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            pagmo2/manylinux228_aarch64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  arm64-manylinux228-py38:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
+       - uses: dbhi/qus/action@main
+       - name: Build
+         # Use Docker Command Directly to take more control over the platform
+         run: >
+          docker run \
+            --env PYGMO_BUILD_TYPE=Python38 \
+            --env GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+            --env GITHUB_REF=${GITHUB_REF} \
+            --env TWINE_USERNAME=${{ secrets.TWINE_USERNAME }} \
+            --env TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} \
+            --volume ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+            --workdir ${GITHUB_WORKSPACE} \
+            --platform linux/arm64 \
+            pagmo2/manylinux228_aarch64_with_deps:latest \
+            bash tools/gha_manylinux.sh
+  amd64-manylinux228-py311:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python311"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  amd64-manylinux228-py310:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python310"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  amd64-manylinux228-py39:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python39"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  amd64-manylinux228-py38:
+     runs-on: ubuntu-latest
+     container:
+      image: pagmo2/manylinux228_x86_64_with_deps:latest
+      env: 
+        PYGMO_BUILD_TYPE: "Python38"
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+     steps:
+       - uses: actions/checkout@v2
+       - name: Build
+         run: bash tools/gha_manylinux.sh
+  macos-10_15-py310:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: bash tools/gha_macos-10.15-py37.sh
-  macos-10_15-py38:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py38.sh
-  macos-10_15-py39:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bash tools/gha_macos-10.15-py39.sh
-  windows-2016-py37:
-    runs-on: windows-2016
+        run: bash tools/gha_macos-10.15-py310.sh
+  windows-2019-py311:
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
       - name: Add msbuild to PATH
@@ -42,39 +157,21 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          python-version: 3.7
+          python-version: 3.11
           channels: conda-forge
           channel-priority: strict
       - name: Build
-        run: .\tools\gha_windows-2016.ps1
+        run: .\tools\gha_windows.ps1
         shell: powershell
-  windows-2016-py38:
-    runs-on: windows-2016
+  build-and-deploydocs:
+    if: ${{ github.event_name }} == 'push'
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Install and Build 🔧 
+        run: bash tools/gha_deploydocs.sh
+      - name: Upload to github pages 🚀
+        if: ${{ github.event_name == 'push' }}
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          auto-update-conda: true
-          python-version: 3.8
-          channels: conda-forge
-          channel-priority: strict
-      - name: Build
-        run: .\tools\gha_windows-2016.ps1
-        shell: powershell
-  windows-2016-py39:
-    runs-on: windows-2016
-    steps:
-      - uses: actions/checkout@v2
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          auto-update-conda: true
-          python-version: 3.9
-          channels: conda-forge
-          channel-priority: strict
-      - name: Build
-        run: .\tools\gha_windows-2016.ps1
-        shell: powershell
+          folder: doc/_build/html # The folder the action should deploy.

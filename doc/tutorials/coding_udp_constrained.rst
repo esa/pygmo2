@@ -43,7 +43,7 @@ Neglecting for the time being the fitness, the basic structure for the UDP to ha
 
 Note how we need to specify both the number of equality constraints and the number of inequality constraints (as pygmo by default assumes
 0 for both). There is no need to specify the number of objectives as by default pygmo assumes single objective optimization.
-The full documenation on the UDP specification can be found in the :class:`pygmo.problem` docs.
+The full documentation on the UDP specification can be found in the :class:`pygmo.problem` docs.
 
 We still have to write the fitness function as that is a mandatory method (together with ``get_bounds()``) for all UDPs. Constructing a :class:`~pygmo.problem` with
 an incomplete UDP will fail. In pygmo the fitness includes both the objectives and the constraints according to the described order [obj,ec,ic]. All equality constraints
@@ -109,7 +109,7 @@ All seems in order. The dimensions are corresponding to what we wanted, the grad
 Solving your constrained UDP
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-So we now have a UDP with constraints and a numerical gradient. Let's solve it. Many different startegies can be deployed
+So we now have a UDP with constraints and a numerical gradient. Let's solve it. Many different strategies can be deployed
 and we here will just try two a) using the augmented lagrangian method b) using monotonic basin hopping.
 Consider the following script:
 
