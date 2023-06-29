@@ -2579,7 +2579,7 @@ std::string maco_set_bfe_docstring()
 
 Set the batch function evaluation scheme.
 
-This method will set the batch function evaluation scheme to be used for :class:`~pygmo.nsga2`.
+This method will set the batch function evaluation scheme to be used for :class:`~pygmo.maco`.
 
 Args:
     b (:class:`~pygmo.bfe`): the batch function evaluation object
@@ -2873,6 +2873,23 @@ Examples:
     [(1, 0, 32.574745630075874, array([  1.90532430e-03,   2.65684834e+00])), ...
 
 See also the docs of the relevant C++ method :cpp:func:`pagmo::moead_gen::get_log()`.
+
+)";
+}
+
+std::string cmaes_set_bfe_docstring()
+{
+    return R"(set_bfe(b)
+
+Set the batch function evaluation scheme.
+
+This method will set the batch function evaluation scheme to be used for :class:`~pygmo.cmaes`.
+
+Args:
+    b (:class:`~pygmo.bfe`): the batch function evaluation object
+
+Raises:
+    unspecified: any exception thrown by the underlying C++ method
 
 )";
 }
