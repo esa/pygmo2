@@ -400,7 +400,7 @@ document.write(`
 <dl class="py class">
 <dt class="sig sig-object py" id="pygmo.scipy_optimize">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygmo.</span></span><span class="sig-name descname"><span class="pre">scipy_optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">args=(),</span> <span class="pre">method:</span> <span class="pre">typing.Optional[str]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">tol:</span> <span class="pre">typing.Optional[float]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">callback:</span> <span class="pre">typing.Optional[typing.Callable[[typing.Any],</span> <span class="pre">typing.Any]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">options:</span> <span class="pre">typing.Optional[typing.MutableMapping[str,</span> <span class="pre">typing.Any]]</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">selection:</span> <span class="pre">pygmo.core.s_policy</span> <span class="pre">=</span> <span class="pre">Selection</span> <span class="pre">policy</span> <span class="pre">name:</span> <span class="pre">Select</span> <span class="pre">best</span> <span class="pre">	C++</span> <span class="pre">class</span> <span class="pre">name:</span> <span class="pre">pagmo::select_best</span>&#160; <span class="pre">Extra</span> <span class="pre">info:</span> <span class="pre">	Absolute</span> <span class="pre">migration</span> <span class="pre">rate:</span> <span class="pre">1</span> </em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.scipy_optimize" title="Permalink to this definition">#</a></dt>
-<dd><p>This class is a user defined algorithm (UDA) providing a wrapper around the function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.10.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>.</p>
+<dd><p>This class is a user defined algorithm (UDA) providing a wrapper around the function <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a>.</p>
 <p>This wraps several well-known local optimization algorithms:</p>
 <blockquote>
 <div><ul class="simple">
@@ -440,7 +440,7 @@ Constraints are only supported by methods COBYLA, SLSQP and trust-constr.</p>
 </pre></div>
 </div>
 <p>The constructor initializes a wrapper instance for a specific algorithm.
-Construction arguments are those options of <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.10.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> that are not problem-specific.
+Construction arguments are those options of <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.optimize.minimize()</span></code></a> that are not problem-specific.
 Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
 are deduced from the problem in the population given to the evolve function.</p>
 <dl class="field-list simple">
@@ -736,7 +736,7 @@ constructed with a <a class="reference internal" href="#pygmo.maco" title="pygmo
 <dt class="sig sig-object py" id="pygmo.maco.set_bfe">
 <span class="sig-name descname"><span class="pre">set_bfe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.maco.set_bfe" title="Permalink to this definition">#</a></dt>
 <dd><p>Set the batch function evaluation scheme.</p>
-<p>This method will set the batch function evaluation scheme to be used for <a class="reference internal" href="#pygmo.nsga2" title="pygmo.nsga2"><code class="xref py py-class docutils literal notranslate"><span class="pre">nsga2</span></code></a>.</p>
+<p>This method will set the batch function evaluation scheme to be used for <a class="reference internal" href="#pygmo.maco" title="pygmo.maco"><code class="xref py py-class docutils literal notranslate"><span class="pre">maco</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>b</strong> (<a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>) – the batch function evaluation object</p>
@@ -1609,6 +1609,21 @@ constructed with a <a class="reference internal" href="#pygmo.cmaes" title="pygm
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygmo.cmaes.set_bfe">
+<span class="sig-name descname"><span class="pre">set_bfe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygmo.cmaes.set_bfe" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the batch function evaluation scheme.</p>
+<p>This method will set the batch function evaluation scheme to be used for <a class="reference internal" href="#pygmo.cmaes" title="pygmo.cmaes"><code class="xref py py-class docutils literal notranslate"><span class="pre">cmaes</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> (<a class="reference internal" href="bfe.html#pygmo.bfe" title="pygmo.bfe"><code class="xref py py-class docutils literal notranslate"><span class="pre">bfe</span></code></a>) – the batch function evaluation object</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>unspecified</strong> – any exception thrown by the underlying C++ method</p>
 </dd>
 </dl>
 </dd></dl>

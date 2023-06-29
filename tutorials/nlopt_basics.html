@@ -517,9 +517,9 @@ an example:</p>
   File <span class="nb">&quot;&lt;doctest default[3]&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
 <span class="w">    </span><span class="n">pop</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
 <span class="gr">ValueError</span><span class="w">:</span>
-<span class="go">function: operator()</span>
-<span class="go">where: /home/user/Documents/pagmo2/include/pagmo/algorithms/nlopt.hpp, 259</span>
-<span class="go">what: during an optimization with the NLopt algorithm &#39;slsqp&#39; a fitness gradient was requested, but the optimisation problem &#39;&lt;class &#39;my_udp&#39;&gt;&#39; does not provide it</span>
+<span class="x">function: operator()</span>
+<span class="x">where: /home/user/Documents/pagmo2/include/pagmo/algorithms/nlopt.hpp, 259</span>
+<span class="x">what: during an optimization with the NLopt algorithm &#39;slsqp&#39; a fitness gradient was requested, but the optimisation problem &#39;&lt;class &#39;my_udp&#39;&gt;&#39; does not provide it</span>
 </pre></div>
 </div>
 <p>Bummer! How can I possibly provide a gradient for such a difficult expression of the fitness? Clearly making the derivatives here is not an option :)

@@ -523,7 +523,7 @@ method to have the main process explicitly wait for all islands to be finished.<
 <span class="go">array([ 0.00541601, -0.08208163, -0.00541601]),</span>
 <span class="go">array([ -6.95677113e-05,  -7.42268924e-05,   6.95677113e-05]),</span>
 <span class="go">array([ 0.00335729,  0.00684969, -0.00335729]),</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 </pre></div>
 </div>
 <p>Different islands produce different results, in this case, as the various populations and algorithms where
@@ -576,31 +576,31 @@ here we will overlap with part of that tutorial, exploring exceptions thrown in 
 starts at 0 fitness evaluations to then hit the 300 fevals triggering the <code class="docutils literal notranslate"><span class="pre">raise</span></code> statement).
 We do not know at this stage what happened exactly as the exception is thrown on a separate thread/process and thus its hidden from our main
 scope. To inspect what happened we can write:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; archi.wait_check() 
-RuntimeError                              Traceback (most recent call last)
-&lt;ipython-input-22-d8562cc51573&gt; in &lt;module&gt;()
-----&gt; 1 archi.wait_check()
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">archi</span><span class="o">.</span><span class="n">wait_check</span><span class="p">()</span> 
+<span class="go">RuntimeError                              Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-22-d8562cc51573&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 archi.wait_check()</span>
 
-RuntimeError: The asynchronous evolution of a pythonic island of type &#39;Multiprocessing island&#39; raised an error:
-multiprocessing.pool.RemoteTraceback:
-&quot;&quot;&quot;
-Traceback (most recent call last):
-File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/multiprocessing/pool.py&quot;, line 119, in worker
-    result = (True, func(*args, **kwds))
-File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/site-packages/pygmo/_py_islands.py&quot;, line 40, in _evolve_func
-    return algo.evolve(pop)
-File &quot;&lt;ipython-input-19-f5ede4c63180&gt;&quot;, line 6, in fitness
-RuntimeError: No active exception to reraise
-&quot;&quot;&quot;
+<span class="go">RuntimeError: The asynchronous evolution of a pythonic island of type &#39;Multiprocessing island&#39; raised an error:</span>
+<span class="go">multiprocessing.pool.RemoteTraceback:</span>
+<span class="go">&quot;&quot;&quot;</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/multiprocessing/pool.py&quot;, line 119, in worker</span>
+<span class="gr">    result = (True, func(*args, **kwds))</span>
+<span class="gr">File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/site-packages/pygmo/_py_islands.py&quot;, line 40, in _evolve_func</span>
+<span class="gr">    return algo.evolve(pop)</span>
+<span class="gr">File &quot;&lt;ipython-input-19-f5ede4c63180&gt;&quot;, line 6, in fitness</span>
+<span class="gr">RuntimeError</span>: <span class="n">No active exception to reraise</span>
+<span class="x">&quot;&quot;&quot;</span>
 
-The above exception was the direct cause of the following exception:
+<span class="gt">The above exception was the direct cause of the following exception:</span>
 
-Traceback (most recent call last):
-File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/site-packages/pygmo/_py_islands.py&quot;, line 128, in run_evolve
-    return res.get()
-File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/multiprocessing/pool.py&quot;, line 608, in get
-    raise self._value
-RuntimeError: No active exception to reraise
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/site-packages/pygmo/_py_islands.py&quot;, line 128, in run_evolve</span>
+<span class="gr">    return res.get()</span>
+<span class="gr">File &quot;/home/dario/miniconda3/envs/pagmo/lib/python3.6/multiprocessing/pool.py&quot;, line 608, in get</span>
+<span class="gr">    raise self._value</span>
+<span class="gr">RuntimeError</span>: <span class="n">No active exception to reraise</span>
 </pre></div>
 </div>
 <p>which will rethrow the first encountered exception and reset all the island states to <code class="docutils literal notranslate"><span class="pre">idle</span></code>.</p>

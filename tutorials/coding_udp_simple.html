@@ -523,7 +523,7 @@ that it is somehow malformed are high. Let’s see some common mistakes.</p>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pg</span><span class="o">.</span><span class="n">problem</span><span class="p">(</span><span class="n">sphere_function</span><span class="p">())</span> 
 <span class="go">NotImplementedError                       Traceback (most recent call last)</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">NotImplementedError: the mandatory &#39;get_bounds()&#39; method has not been detected in the user-defined Python problem</span>
 <span class="go">&#39;&lt;sphere_function object at 0x1108cad68&gt;&#39; of type &#39;&lt;class &#39;sphere_function&#39;&gt;&#39;: the method is either not present or not callable</span>
 </pre></div>
@@ -541,7 +541,7 @@ be revealed only when calling the malformed method:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">problem</span><span class="p">(</span><span class="n">sphere_function</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">prob</span><span class="o">.</span><span class="n">fitness</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span> 
 <span class="go">AttributeError                            Traceback (most recent call last)</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">AttributeError: &#39;numpy.float64&#39; object has no attribute &#39;__iter__&#39;</span>
 </pre></div>
 </div>
