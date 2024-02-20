@@ -2,7 +2,7 @@
 # Powershell script
 # Install conda environment
 conda config --set always_yes yes
-conda create --name pygmo cmake eigen nlopt ipopt boost-cpp tbb tbb-devel numpy cloudpickle networkx dill=0.3.5.1 numba pybind11 scipy
+conda create --name pygmo cmake eigen nlopt ipopt boost-cpp tbb tbb-devel numpy cloudpickle networkx numba pybind11 scipy
 conda activate pygmo
 
 # Install pagmo.

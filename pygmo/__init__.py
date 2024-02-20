@@ -746,8 +746,7 @@ def set_serialization_backend(name):
     The valid backends are:
 
     * ``'pickle'`` (i.e., the standard Python :mod:`pickle` module),
-    * ``'cloudpickle'``,
-    * ``'dill'`` (from the `dill <https://pypi.org/project/dill/>`__ library).
+    * ``'cloudpickle'``.
 
     .. warning::
 
@@ -760,8 +759,7 @@ def set_serialization_backend(name):
 
     Raises:
         TypeError: if *name* is not a :class:`str`
-        ValueError: if *name* is not one of ``['pickle', 'cloudpickle', 'dill']``
-        ImportError: if *name* is ``'dill'`` but the dill module is not installed
+        ValueError: if *name* is not one of ``['pickle', 'cloudpickle']``
 
     """
     if not isinstance(name, str):
@@ -777,18 +775,9 @@ def set_serialization_backend(name):
         _serialization_backend = pickle
     elif name == "cloudpickle":
         _serialization_backend = _cloudpickle
-    elif name == "dill":
-        try:
-            import dill
-
-            _serialization_backend = dill
-        except ImportError:
-            raise ImportError(
-                "The 'dill' serialization backend was specified, but the dill module is not installed."
-            )
     else:
         raise ValueError(
-            "The serialization backend '{}' is not valid. The valid backends are: ['pickle', 'cloudpickle', 'dill']".format(
+            "The serialization backend '{}' is not valid. The valid backends are: ['pickle', 'cloudpickle']".format(
                 name
             )
         )

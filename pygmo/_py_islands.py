@@ -12,17 +12,8 @@ from threading import Lock as _Lock
 def _evolve_func_mp_pool(ser_algo_pop):
     # The evolve function that is actually run from the separate processes
     # in mp_island (when using the pool).
-    has_dill = False
-    try:
-        import dill
+    from pickle import dumps, loads
 
-        has_dill = True
-    except ImportError:
-        pass
-    if has_dill:
-        from dill import dumps, loads
-    else:
-        from pickle import dumps, loads
     algo, pop = loads(ser_algo_pop)
     new_pop = algo.evolve(pop)
     return dumps((algo, new_pop))
@@ -44,17 +35,8 @@ def _evolve_func_mp_pipe(conn, ser_algo_pop):
     # of a child process happens in a separate thread and Python disallows messing
     # with signal handlers from a thread different from the main one :(
     with _temp_disable_sigint():
-        has_dill = False
-        try:
-            import dill
+        from pickle import dumps, loads
 
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
         try:
             algo, pop = loads(ser_algo_pop)
             new_pop = algo.evolve(pop)
@@ -227,17 +209,8 @@ class mp_island(object):
         # that if there are serialization errors, we catch them early here rather
         # than failing in the bootstrap phase of the remote process, which
         # can lead to hangups.
-        has_dill = False
-        try:
-            import dill
+        from pickle import dumps, loads
 
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
         ser_algo_pop = dumps((algo, pop))
 
         if self._use_pool:
@@ -470,17 +443,8 @@ class mp_island(object):
 def _evolve_func_ipy(ser_algo_pop):
     # The evolve function that is actually run from the separate processes
     # in ipyparallel_island.
-    has_dill = False
-    try:
-        import dill
+    from pickle import dumps, loads
 
-        has_dill = True
-    except ImportError:
-        pass
-    if has_dill:
-        from dill import dumps, loads
-    else:
-        from pickle import dumps, loads
     algo, pop = loads(ser_algo_pop)
     new_pop = algo.evolve(pop)
     return dumps((algo, new_pop))
@@ -613,17 +577,7 @@ class ipyparallel_island(object):
         # serialization errors early.
         from ._ipyparallel_utils import _make_ipyparallel_view
 
-        has_dill = False
-        try:
-            import dill
-
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
+        from pickle import dumps, loads
 
         ser_algo_pop = dumps((algo, pop))
         with ipyparallel_island._view_lock:

@@ -69,14 +69,6 @@ class core_test_case(_ut.TestCase):
         from . import set_serialization_backend as ssb, get_serialization_backend as gsb
         from . import problem, island, de
 
-        has_dill = False
-        try:
-            import dill
-
-            has_dill = True
-        except ImportError:
-            pass
-
         # Default s11n backend.
         self.assertTrue(gsb() == clpickle)
 
@@ -93,18 +85,9 @@ class core_test_case(_ut.TestCase):
             ssb("hello")
         err = cm.exception
         self.assertEqual(
-            "The serialization backend 'hello' is not valid. The valid backends are: ['pickle', 'cloudpickle', 'dill']",
+            "The serialization backend 'hello' is not valid. The valid backends are: ['pickle', 'cloudpickle']",
             str(err),
         )
-
-        if not has_dill:
-            with self.assertRaises(ImportError) as cm:
-                ssb("dill")
-            err = cm.exception
-            self.assertEqual(
-                "The 'dill' serialization backend was specified, but the dill module is not installed.",
-                str(err),
-            )
 
         ssb("pickle")
         self.assertTrue(gsb() == pickle)
@@ -114,16 +97,6 @@ class core_test_case(_ut.TestCase):
         self.assertEqual(str(pickle.loads(pickle.dumps(p))), str(p))
         isl = island(prob=p, algo=de(gen=500), size=20)
         self.assertEqual(str(pickle.loads(pickle.dumps(isl))), str(isl))
-
-        # Try with dill as well, if available.
-        if has_dill:
-            ssb("dill")
-            self.assertTrue(gsb() == dill)
-
-            p = problem(_prob())
-            self.assertEqual(str(dill.loads(dill.dumps(p))), str(p))
-            isl = island(prob=p, algo=de(gen=500), size=20)
-            self.assertEqual(str(dill.loads(dill.dumps(isl))), str(isl))
 
         # Reset to cloudpickle before exiting.
         ssb("cloudpickle")
@@ -1495,17 +1468,8 @@ class archipelago_test_case(_ut.TestCase):
             migrant_handling,
         )
 
-        has_dill = False
-        try:
-            import dill
+        from pickle import dumps, loads
 
-            has_dill = True
-        except ImportError:
-            pass
-        if has_dill:
-            from dill import dumps, loads
-        else:
-            from pickle import dumps, loads
         a = archipelago(5, algo=de(), prob=rosenbrock(), pop_size=10)
         self.assertEqual(repr(a), repr(loads(dumps(a))))
         a = archipelago(5, algo=de(), prob=_prob(), pop_size=10, udi=mp_island())
