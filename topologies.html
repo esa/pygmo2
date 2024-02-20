@@ -416,14 +416,14 @@ which each node connects to both the previous and the following nodes).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the desired number of vertices</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the weight of the edges</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the desired number of vertices</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the weight of the edges</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>n</em> is negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>n</em> is negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
 </dl>
@@ -435,15 +435,15 @@ which each node connects to both the previous and the following nodes).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edge’s weight</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edge’s weight</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are already adjacent, or
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are already adjacent, or
     if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
@@ -466,20 +466,20 @@ which each node connects to both the previous and the following nodes).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> if <em>i</em> and <em>j</em> are adjacent, <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> otherwise</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> if <em>i</em> and <em>j</em> are adjacent, <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> otherwise</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices</p></li>
 </ul>
 </dd>
 </dl>
@@ -495,20 +495,20 @@ which each node connects to both the previous and the following nodes).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the source vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the destination vertex index</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the source vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the destination vertex index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the weight of the edge connecting <em>i</em> to <em>j</em></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if either <em>i</em> or <em>j</em> are not smaller than the number of vertices, or
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if either <em>i</em> or <em>j</em> are not smaller than the number of vertices, or
     <em>i</em> and <em>j</em> are not adjacent</p></li>
 </ul>
 </dd>
@@ -523,7 +523,7 @@ which each node connects to both the previous and the following nodes).</p>
 <dd class="field-odd"><p>the weight <em>w</em> used in the construction of this topology</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -536,7 +536,7 @@ which each node connects to both the previous and the following nodes).</p>
 <dd class="field-odd"><p>the number of vertices in the topology</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -549,14 +549,14 @@ which each node connects to both the previous and the following nodes).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, or <em>i</em> and <em>j</em> are not adjacent</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, or <em>i</em> and <em>j</em> are not adjacent</p></li>
 </ul>
 </dd>
 </dl>
@@ -568,10 +568,10 @@ which each node connects to both the previous and the following nodes).</p>
 <dd><p>This method will set the weights of all edges in the topology to <em>w</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edges’ weight</p>
+<dd class="field-odd"><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edges’ weight</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p>
 </dd>
 </dl>
 </dd></dl>
@@ -584,15 +584,15 @@ which each node connects to both the previous and the following nodes).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the desired weight</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the desired weight</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are not adjacent, or
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are not adjacent, or
     if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
@@ -613,14 +613,14 @@ at construction, and it will be the same for all the edges in the topology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the desired number of vertices</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the weight of the edges</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the desired number of vertices</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the weight of the edges</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>n</em> is negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>n</em> is negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
 </dl>
@@ -632,7 +632,7 @@ at construction, and it will be the same for all the edges in the topology.</p>
 <dd class="field-odd"><p>the weight <em>w</em> used in the construction of this topology</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -645,7 +645,7 @@ at construction, and it will be the same for all the edges in the topology.</p>
 <dd class="field-odd"><p>the number of vertices in the topology</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -663,15 +663,15 @@ of this class can be constructed from either:</p>
 <ul class="simple">
 <li><p>a <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">topology</span></code></a>,</p></li>
 <li><p>another UDT,</p></li>
-<li><p>a <a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>,</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>.</p></li>
+<li><p>a <a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>,</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a>.</p></li>
 </ul>
-<p>Construction from <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> will initialise a topology
+<p>Construction from <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> will initialise a topology
 without vertices or edges.</p>
-<p>Construction from a <a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a> will initialise
+<p>Construction from a <a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a> will initialise
 a topology whose vertices and edges are described by the
 input graph. All the edges of the input graph must have
-a <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> attribute called <code class="docutils literal notranslate"><span class="pre">weight</span></code> whose value
+a <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> attribute called <code class="docutils literal notranslate"><span class="pre">weight</span></code> whose value
 is in the <span class="math notranslate nohighlight">\(\left[0 , 1\right]\)</span> range.</p>
 <p>When <em>t</em> is a <a class="reference internal" href="topology.html#pygmo.topology" title="pygmo.topology"><code class="xref py py-class docutils literal notranslate"><span class="pre">topology</span></code></a> or a UDT,
 the constructor will attempt to fetch the NetworkX
@@ -686,7 +686,7 @@ paragraph.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if the edges of the input <a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if the edges of the input <a class="reference external" href="https://networkx.org/documentation/stable/reference/classes/digraph.html#networkx.DiGraph" title="(in NetworkX v3.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">networkx.DiGraph</span></code></a>
     do not all have a <code class="docutils literal notranslate"><span class="pre">weight</span></code> attribute, or if any edge weight
     is outside the <span class="math notranslate nohighlight">\(\left[ 0, 1 \right]\)</span> range</p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by <a class="reference internal" href="topology.html#pygmo.topology.to_networkx" title="pygmo.topology.to_networkx"><code class="xref py py-func docutils literal notranslate"><span class="pre">pygmo.topology.to_networkx()</span></code></a>, or by
@@ -702,15 +702,15 @@ paragraph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edge’s weight</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edge’s weight</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are already adjacent, or
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are already adjacent, or
     if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>
@@ -733,20 +733,20 @@ paragraph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> if <em>i</em> and <em>j</em> are adjacent, <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> otherwise</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">True</span></code></a> if <em>i</em> and <em>j</em> are adjacent, <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">False</span></code></a> otherwise</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices</p></li>
 </ul>
 </dd>
 </dl>
@@ -762,20 +762,20 @@ paragraph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the source vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the destination vertex index</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the source vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the destination vertex index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the weight of the edge connecting <em>i</em> to <em>j</em></p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if either <em>i</em> or <em>j</em> are not smaller than the number of vertices, or
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if either <em>i</em> or <em>j</em> are not smaller than the number of vertices, or
     <em>i</em> and <em>j</em> are not adjacent</p></li>
 </ul>
 </dd>
@@ -790,7 +790,7 @@ paragraph.</p>
 <dd class="field-odd"><p>the number of vertices in the topology</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -803,14 +803,14 @@ paragraph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, or <em>i</em> and <em>j</em> are not adjacent</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, or <em>i</em> and <em>j</em> are not adjacent</p></li>
 </ul>
 </dd>
 </dl>
@@ -822,10 +822,10 @@ paragraph.</p>
 <dd><p>This method will set the weights of all edges in the topology to <em>w</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edges’ weight</p>
+<dd class="field-odd"><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the edges’ weight</p>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p>
 </dd>
 </dl>
 </dd></dl>
@@ -838,15 +838,15 @@ paragraph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the desired weight</p></li>
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the first vertex index</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the second vertex index</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – the desired weight</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are not adjacent, or
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.12)"><strong>TypeError</strong></a> – if <em>i</em> or <em>j</em> are negative or too large</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>i</em> or <em>j</em> are not smaller than the number of vertices, <em>i</em> and <em>j</em> are not adjacent, or
     if <em>w</em> is not in the <span class="math notranslate nohighlight">\(\left[0, 1\right]\)</span> range</p></li>
 </ul>
 </dd>

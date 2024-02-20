@@ -395,21 +395,21 @@ will be crossovered with a probability of 0.5.</p>
 <li><p><strong>parent1</strong> (<em>array-like object</em>) – a first chromosome</p></li>
 <li><p><strong>parent2</strong> (<em>array-like object</em>) – a second chromosome</p></li>
 <li><p><strong>bounds</strong> (<em>2-D array-like object</em>) – problem bounds</p></li>
-<li><p><strong>nix</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the integer dimension of the chromosome</p></li>
-<li><p><strong>p_cr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – crossover probability</p></li>
-<li><p><strong>eta_c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – crossover distribution index</p></li>
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – seed used by the internal random number generator</p></li>
+<li><p><strong>nix</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the integer dimension of the chromosome</p></li>
+<li><p><strong>p_cr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – crossover probability</p></li>
+<li><p><strong>eta_c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – crossover distribution index</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – seed used by the internal random number generator</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: containing the two crossovered chromosomes</p>
+<dd class="field-even"><p>of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: containing the two crossovered chromosomes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>bounds</em> <em>parent1</em> <em>parent2</em> are not of equal length, if lower bounds are not less
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>bounds</em> <em>parent1</em> <em>parent2</em> are not of equal length, if lower bounds are not less
     or equal to the upper bounds, if the <em>nix</em> is larger than the parent size or if infinite values are
     detected in <em>bounds</em>, <em>p_cr</em> or <em>eta_c</em></p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failiures at the intersection between C++ and Python (e.g.,
@@ -431,21 +431,21 @@ and a uniform mutation on the remaining integer part.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dv</strong> (<em>array-like object</em>) – the chromosome</p></li>
 <li><p><strong>bounds</strong> (<em>2-D array-like object</em>) – problem bounds</p></li>
-<li><p><strong>nix</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the integer dimension of the chromosome</p></li>
-<li><p><strong>p_m</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – mutation probability</p></li>
-<li><p><strong>eta_m</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – mutation distribution index</p></li>
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – seed used by the internal random number generator</p></li>
+<li><p><strong>nix</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the integer dimension of the chromosome</p></li>
+<li><p><strong>p_m</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – mutation probability</p></li>
+<li><p><strong>eta_m</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>) – mutation distribution index</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – seed used by the internal random number generator</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: containing the two crossovered chromosomes</p>
+<dd class="field-even"><p>of <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>: containing the two crossovered chromosomes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – if <em>bounds</em> and <em>dv</em> are not of equal length, if lower bounds are not less
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <em>bounds</em> and <em>dv</em> are not of equal length, if lower bounds are not less
     or equal to the upper bounds, if the <em>nix</em> is larger than the parent size or if infinite values are
     detected in <em>bounds</em>, <em>p_m</em> or <em>eta_m</em></p></li>
 <li><p><strong>unspecified</strong> – any exception thrown by failiures at the intersection between C++ and Python (e.g.,
