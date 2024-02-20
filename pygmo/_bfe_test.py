@@ -224,8 +224,8 @@ class bfe_test_case(_ut.TestCase):
                 return ([1] * nf) * ndvs
 
         bf = bfe(tb())
-        self.assert_(bf.get_name() != "")
-        self.assert_(bf.get_extra_info() == "")
+        self.assertTrue(bf.get_name() != "")
+        self.assertTrue(bf.get_extra_info() == "")
 
         class tb(object):
             def __call__(self, p, dvs):

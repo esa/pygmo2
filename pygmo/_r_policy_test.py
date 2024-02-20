@@ -350,7 +350,7 @@ class r_policy_test_case(_ut.TestCase):
         self.assertTrue(sys.getrefcount(t) == rc)
         self.assertTrue(tr_pol.get_n() == 1)
         tr_pol.set_n(12)
-        self.assert_(t.extract(tr_policy).get_n() == 12)
+        self.assertTrue(t.extract(tr_policy).get_n() == 12)
 
         # Check that we can extract Python UDTs also via Python's object type.
         t = r_policy(tr_policy())

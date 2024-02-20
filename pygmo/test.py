@@ -56,8 +56,8 @@ class core_test_case(_ut.TestCase):
         self.assertEqual(callable(1), _callable(1))
         self.assertEqual(callable(lambda _: None), _callable(lambda _: None))
         l = [1, 2, 3, ["abc"]]
-        self.assert_(id(l) != id(_deepcopy(l)))
-        self.assert_(id(l[3]) != id(_deepcopy(l)[3]))
+        self.assertTrue(id(l) != id(_deepcopy(l)))
+        self.assertTrue(id(l[3]) != id(_deepcopy(l)[3]))
 
         # Run the tests for the selection of the serialization backend.
         self.run_s11n_test()

@@ -241,7 +241,7 @@ class topology_test_case(_ut.TestCase):
         self.assertTrue(sys.getrefcount(t) == rc)
         self.assertTrue(ttopo.get_n() == 1)
         ttopo.set_n(12)
-        self.assert_(t.extract(ttopology).get_n() == 12)
+        self.assertTrue(t.extract(ttopology).get_n() == 12)
 
         # Check that we can extract Python UDTs also via Python's object type.
         t = topology(ttopology())

@@ -285,7 +285,7 @@ class s_policy_test_case(_ut.TestCase):
         self.assertTrue(sys.getrefcount(t) == rc)
         self.assertTrue(ts_pol.get_n() == 1)
         ts_pol.set_n(12)
-        self.assert_(t.extract(ts_policy).get_n() == 12)
+        self.assertTrue(t.extract(ts_policy).get_n() == 12)
 
         # Check that we can extract Python UDTs also via Python's object type.
         t = s_policy(ts_policy())
