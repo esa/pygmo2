@@ -19,9 +19,7 @@ class _topo(object):
 
 
 class topology_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.topology` class.
-
-    """
+    """Test case for the :class:`~pygmo.topology` class."""
 
     def runTest(self):
         self.run_basic_tests()
@@ -34,6 +32,7 @@ class topology_test_case(_ut.TestCase):
         # Tests for minimal topology, and mandatory methods.
         from numpy import ndarray, dtype
         from .core import topology, ring, unconnected
+
         # Def construction.
         t = topology()
         self.assertTrue(t.extract(unconnected) is not None)
@@ -41,20 +40,21 @@ class topology_test_case(_ut.TestCase):
 
         # First a few non-topos.
         self.assertRaises(NotImplementedError, lambda: topology(1))
-        self.assertRaises(NotImplementedError,
-                          lambda: topology("hello world"))
+        self.assertRaises(NotImplementedError, lambda: topology("hello world"))
         self.assertRaises(NotImplementedError, lambda: topology([]))
         self.assertRaises(TypeError, lambda: topology(int))
         # Some topologies missing methods, wrong arity, etc.
 
         class nt0(object):
             pass
+
         self.assertRaises(NotImplementedError, lambda: topology(nt0()))
 
         class nt1(object):
 
             get_connections = 45
             push_back = 45
+
         self.assertRaises(NotImplementedError, lambda: topology(nt1()))
 
         # The minimal good citizen.
@@ -98,9 +98,9 @@ class topology_test_case(_ut.TestCase):
         # and it will not be a reference the outside object.
         self.assertEqual(len(glob), 0)
         self.assertEqual(len(topo.extract(t).g), 4)
-        self.assertEqual(topo.extract(t).g, [2]*4)
+        self.assertEqual(topo.extract(t).g, [2] * 4)
         self.assertTrue(topo.push_back() is None)
-        self.assertEqual(topo.extract(t).g, [2]*4 + [1])
+        self.assertEqual(topo.extract(t).g, [2] * 4 + [1])
 
         topo = topology(ring())
         self.assertTrue(topo.get_extra_info() != "")
@@ -119,6 +119,7 @@ class topology_test_case(_ut.TestCase):
 
             def get_connections(self, n):
                 return []
+
         topo = topology(t())
         self.assertRaises(RuntimeError, lambda: topo.get_connections(0))
 
@@ -129,6 +130,7 @@ class topology_test_case(_ut.TestCase):
 
             def get_connections(self, n):
                 return [1]
+
         topo = topology(t())
         self.assertRaises(ValueError, lambda: topo.get_connections(0))
 
@@ -139,6 +141,7 @@ class topology_test_case(_ut.TestCase):
 
             def get_connections(self, n):
                 return [1, 2, 3]
+
         topo = topology(t())
         self.assertRaises(ValueError, lambda: topo.get_connections(0))
 
@@ -148,13 +151,15 @@ class topology_test_case(_ut.TestCase):
                 pass
 
             def get_connections(self, n):
-                return [[1, 2, 3], [.5]]
+                return [[1, 2, 3], [0.5]]
+
         topo = topology(t())
         with self.assertRaises(ValueError) as cm:
             topo.get_connections(0)
         err = cm.exception
         self.assertTrue(
-            "while the vector of migration probabilities has a size of" in str(err))
+            "while the vector of migration probabilities has a size of" in str(err)
+        )
 
         class t(object):
 
@@ -162,13 +167,13 @@ class topology_test_case(_ut.TestCase):
                 pass
 
             def get_connections(self, n):
-                return [[1, 2, 3], [.5, .6, 1.4]]
+                return [[1, 2, 3], [0.5, 0.6, 1.4]]
+
         topo = topology(t())
         with self.assertRaises(ValueError) as cm:
             topo.get_connections(0)
         err = cm.exception
-        self.assertTrue(
-            "An invalid migration probability of " in str(err))
+        self.assertTrue("An invalid migration probability of " in str(err))
 
         class t(object):
 
@@ -176,20 +181,22 @@ class topology_test_case(_ut.TestCase):
                 pass
 
             def get_connections(self, n):
-                return [[1, 2, 3], [.5, .6, float("inf")]]
+                return [[1, 2, 3], [0.5, 0.6, float("inf")]]
+
         topo = topology(t())
         with self.assertRaises(ValueError) as cm:
             topo.get_connections(0)
         err = cm.exception
-        self.assertTrue(
-            "An invalid non-finite migration probability of " in str(err))
+        self.assertTrue("An invalid non-finite migration probability of " in str(err))
 
         # Test that construction from another pygmo.topology fails.
         with self.assertRaises(TypeError) as cm:
             topology(topo)
         err = cm.exception
         self.assertTrue(
-            "a pygmo.topology cannot be used as a UDT for another pygmo.topology (if you need to copy a topology please use the standard Python copy()/deepcopy() functions)" in str(err))
+            "a pygmo.topology cannot be used as a UDT for another pygmo.topology (if you need to copy a topology please use the standard Python copy()/deepcopy() functions)"
+            in str(err)
+        )
 
     def run_extract_tests(self):
         from .core import topology, _test_topology, ring
@@ -234,7 +241,7 @@ class topology_test_case(_ut.TestCase):
         self.assertTrue(sys.getrefcount(t) == rc)
         self.assertTrue(ttopo.get_n() == 1)
         ttopo.set_n(12)
-        self.assert_(t.extract(ttopology).get_n() == 12)
+        self.assertTrue(t.extract(ttopology).get_n() == 12)
 
         # Check that we can extract Python UDTs also via Python's object type.
         t = topology(ttopology())
@@ -258,8 +265,8 @@ class topology_test_case(_ut.TestCase):
                 pass
 
         topo = topology(t())
-        self.assertTrue(topo.get_name() != '')
-        self.assertTrue(topo.get_extra_info() == '')
+        self.assertTrue(topo.get_name() != "")
+        self.assertTrue(topo.get_extra_info() == "")
 
         class t(object):
 
@@ -270,11 +277,11 @@ class topology_test_case(_ut.TestCase):
                 pass
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
         topo = topology(t())
-        self.assertTrue(topo.get_name() == 'pippo')
-        self.assertTrue(topo.get_extra_info() == '')
+        self.assertTrue(topo.get_name() == "pippo")
+        self.assertTrue(topo.get_extra_info() == "")
 
         class t(object):
 
@@ -285,11 +292,11 @@ class topology_test_case(_ut.TestCase):
                 pass
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         topo = topology(t())
-        self.assertTrue(topo.get_name() != '')
-        self.assertTrue(topo.get_extra_info() == 'pluto')
+        self.assertTrue(topo.get_name() != "")
+        self.assertTrue(topo.get_extra_info() == "pluto")
 
         class t(object):
 
@@ -300,18 +307,19 @@ class topology_test_case(_ut.TestCase):
                 pass
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         topo = topology(t())
-        self.assertTrue(topo.get_name() == 'pippo')
-        self.assertTrue(topo.get_extra_info() == 'pluto')
+        self.assertTrue(topo.get_name() == "pippo")
+        self.assertTrue(topo.get_extra_info() == "pluto")
 
     def run_pickle_tests(self):
         from .core import topology, ring
         from pickle import dumps, loads
+
         t_ = topology(ring())
         t = loads(dumps(t_))
         self.assertEqual(repr(t), repr(t_))
@@ -331,7 +339,7 @@ class topology_test_case(_ut.TestCase):
             return
 
         g = nx.DiGraph()
-        g.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+        g.add_weighted_edges_from([(0, 1, 0.5), (1, 2, 1.0)])
 
         # Good implementation.
         class t:
@@ -344,16 +352,15 @@ class topology_test_case(_ut.TestCase):
 
             def to_networkx(self):
                 ret = nx.DiGraph()
-                ret.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+                ret.add_weighted_edges_from([(0, 1, 0.5), (1, 2, 1.0)])
                 return ret
 
-        self.assertTrue(nx.is_isomorphic(
-            topology(t()).to_networkx(), g))
+        self.assertTrue(nx.is_isomorphic(topology(t()).to_networkx(), g))
 
         # Graph with isolated nodes, and nodes not numbered
         # sequentially.
         g = nx.DiGraph()
-        g.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+        g.add_weighted_edges_from([(0, 1, 0.5), (1, 2, 1.0)])
         g.add_node(3)
         g.add_node(4)
 
@@ -367,15 +374,13 @@ class topology_test_case(_ut.TestCase):
 
             def to_networkx(self):
                 ret = nx.DiGraph()
-                ret.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+                ret.add_weighted_edges_from([(0, 1, 0.5), (1, 2, 1.0)])
                 ret.add_node(7)
                 ret.add_node(8)
                 return ret
 
-        self.assertTrue(nx.is_isomorphic(
-            topology(t()).to_networkx(), g))
-        self.assertEqual(
-            list(topology(t()).to_networkx().nodes), [0, 1, 2, 3, 4])
+        self.assertTrue(nx.is_isomorphic(topology(t()).to_networkx(), g))
+        self.assertEqual(list(topology(t()).to_networkx().nodes), [0, 1, 2, 3, 4])
 
         # Nodes attributes stripped away.
         class t:
@@ -388,7 +393,7 @@ class topology_test_case(_ut.TestCase):
 
             def to_networkx(self):
                 ret = nx.DiGraph()
-                ret.add_weighted_edges_from([(0, 1, .5), (1, 2, 1.)])
+                ret.add_weighted_edges_from([(0, 1, 0.5), (1, 2, 1.0)])
                 ret.add_node(7, size=10)
                 ret.add_node(8, weight=20)
                 return ret
@@ -410,8 +415,8 @@ class topology_test_case(_ut.TestCase):
 
             def to_networkx(self):
                 ret = nx.DiGraph()
-                ret.add_edge(0, 1, size=56, weight=.5)
-                ret.add_edge(1, 2, color='blue', weight=1)
+                ret.add_edge(0, 1, size=56, weight=0.5)
+                ret.add_edge(1, 2, color="blue", weight=1)
                 ret.add_node(7, size=10)
                 ret.add_node(8, weight=20)
                 return ret
@@ -421,8 +426,8 @@ class topology_test_case(_ut.TestCase):
         self.assertEqual(list(tmp.nodes), [0, 1, 2, 3, 4])
         self.assertEqual(tmp[3], {})
         self.assertEqual(tmp[4], {})
-        self.assertEqual(tmp.edges[0, 1], {'weight': .5})
-        self.assertEqual(tmp.edges[1, 2], {'weight': 1.})
+        self.assertEqual(tmp.edges[0, 1], {"weight": 0.5})
+        self.assertEqual(tmp.edges[1, 2], {"weight": 1.0})
 
         # Error handling.
         # No method.
@@ -438,7 +443,9 @@ class topology_test_case(_ut.TestCase):
             topology(t()).to_networkx()
         err = cm.exception
         self.assertTrue(
-            "the to_networkx() conversion method has been invoked in the user-defined Python topology" in str(err))
+            "the to_networkx() conversion method has been invoked in the user-defined Python topology"
+            in str(err)
+        )
 
         # Wrong return type.
         class t:
@@ -456,7 +463,9 @@ class topology_test_case(_ut.TestCase):
             topology(t()).to_networkx()
         err = cm.exception
         self.assertTrue(
-            "in order to construct a pagmo::bgl_graph_t object a NetworX DiGraph is needed, but an" in str(err))
+            "in order to construct a pagmo::bgl_graph_t object a NetworX DiGraph is needed, but an"
+            in str(err)
+        )
 
         # Weightless edges.
         class t:
@@ -475,5 +484,4 @@ class topology_test_case(_ut.TestCase):
         with self.assertRaises(ValueError) as cm:
             topology(t()).to_networkx()
         err = cm.exception
-        self.assertTrue(
-            "without a 'weight' attribute was encountered" in str(err))
+        self.assertTrue("without a 'weight' attribute was encountered" in str(err))

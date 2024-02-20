@@ -49,7 +49,7 @@ fi
 # Python mandatory deps.
 /opt/python/${PYTHON_DIR}/bin/pip install cloudpickle numpy
 # Python optional deps.
-/opt/python/${PYTHON_DIR}/bin/pip install dill==0.3.5.1 networkx ipyparallel scipy
+/opt/python/${PYTHON_DIR}/bin/pip install networkx ipyparallel scipy
 
 # In the pagmo2/manylinux228_x86_64_with_deps:latest image in dockerhub
 # the working directory is /root/install, we will install pagmo there

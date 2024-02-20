@@ -15,9 +15,7 @@ class _algo(object):
 
 
 class algorithm_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.algorithm` class.
-
-    """
+    """Test case for the :class:`~pygmo.algorithm` class."""
 
     def runTest(self):
         self.run_basic_tests()
@@ -41,8 +39,7 @@ class algorithm_test_case(_ut.TestCase):
 
         # First a few non-algos.
         self.assertRaises(NotImplementedError, lambda: algorithm(1))
-        self.assertRaises(NotImplementedError,
-                          lambda: algorithm("hello world"))
+        self.assertRaises(NotImplementedError, lambda: algorithm("hello world"))
         self.assertRaises(NotImplementedError, lambda: algorithm([]))
         self.assertRaises(TypeError, lambda: algorithm(int))
         # Some algorithms missing methods, wrong arity, etc.
@@ -107,8 +104,9 @@ class algorithm_test_case(_ut.TestCase):
         self.assertTrue(algo.is_(de))
         algo.set_seed(123)
         algo.set_verbosity(0)
-        self.assertTrue(isinstance(algo.evolve(
-            population(null_problem(), 5)), population))
+        self.assertTrue(
+            isinstance(algo.evolve(population(null_problem(), 5)), population)
+        )
         # Wrong retval for evolve().
 
         class a(object):
@@ -117,15 +115,18 @@ class algorithm_test_case(_ut.TestCase):
                 return 3
 
         algo = algorithm(a())
-        self.assertRaises(RuntimeError, lambda: algo.evolve(
-            population(null_problem(), 5)))
+        self.assertRaises(
+            RuntimeError, lambda: algo.evolve(population(null_problem(), 5))
+        )
 
         # Test that construction from another pygmo.algorithm fails.
         with self.assertRaises(TypeError) as cm:
             algorithm(algo)
         err = cm.exception
         self.assertTrue(
-            "a pygmo.algorithm cannot be used as a UDA for another pygmo.algorithm (if you need to copy an algorithm please use the standard Python copy()/deepcopy() functions)" in str(err))
+            "a pygmo.algorithm cannot be used as a UDA for another pygmo.algorithm (if you need to copy an algorithm please use the standard Python copy()/deepcopy() functions)"
+            in str(err)
+        )
 
     def run_extract_tests(self):
         from .core import algorithm, _test_algorithm, mbh, de
@@ -212,8 +213,7 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
         self.assertTrue(not algorithm(a()).has_set_seed())
-        self.assertRaises(NotImplementedError,
-                          lambda: algorithm(a()).set_seed(12))
+        self.assertRaises(NotImplementedError, lambda: algorithm(a()).set_seed(12))
 
         class a(object):
 
@@ -224,8 +224,7 @@ class algorithm_test_case(_ut.TestCase):
                 return True
 
         self.assertTrue(not algorithm(a()).has_set_seed())
-        self.assertRaises(NotImplementedError,
-                          lambda: algorithm(a()).set_seed(12))
+        self.assertRaises(NotImplementedError, lambda: algorithm(a()).set_seed(12))
 
         class a(object):
 
@@ -276,8 +275,7 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
         self.assertTrue(not algorithm(a()).has_set_verbosity())
-        self.assertRaises(NotImplementedError,
-                          lambda: algorithm(a()).set_verbosity(12))
+        self.assertRaises(NotImplementedError, lambda: algorithm(a()).set_verbosity(12))
 
         class a(object):
 
@@ -288,8 +286,7 @@ class algorithm_test_case(_ut.TestCase):
                 return True
 
         self.assertTrue(not algorithm(a()).has_set_verbosity())
-        self.assertRaises(NotImplementedError,
-                          lambda: algorithm(a()).set_verbosity(12))
+        self.assertRaises(NotImplementedError, lambda: algorithm(a()).set_verbosity(12))
 
         class a(object):
 
@@ -340,8 +337,8 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
         algo = algorithm(a())
-        self.assertTrue(algo.get_name() != '')
-        self.assertTrue(algo.get_extra_info() == '')
+        self.assertTrue(algo.get_name() != "")
+        self.assertTrue(algo.get_extra_info() == "")
 
         class a(object):
 
@@ -349,11 +346,11 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
         algo = algorithm(a())
-        self.assertTrue(algo.get_name() == 'pippo')
-        self.assertTrue(algo.get_extra_info() == '')
+        self.assertTrue(algo.get_name() == "pippo")
+        self.assertTrue(algo.get_extra_info() == "")
 
         class a(object):
 
@@ -361,11 +358,11 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         algo = algorithm(a())
-        self.assertTrue(algo.get_name() != '')
-        self.assertTrue(algo.get_extra_info() == 'pluto')
+        self.assertTrue(algo.get_name() != "")
+        self.assertTrue(algo.get_extra_info() == "pluto")
 
         class a(object):
 
@@ -373,14 +370,14 @@ class algorithm_test_case(_ut.TestCase):
                 return pop
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         algo = algorithm(a())
-        self.assertTrue(algo.get_name() == 'pippo')
-        self.assertTrue(algo.get_extra_info() == 'pluto')
+        self.assertTrue(algo.get_name() == "pippo")
+        self.assertTrue(algo.get_extra_info() == "pluto")
 
     def run_thread_safety_tests(self):
         from .core import algorithm, de, _tu_test_algorithm, mbh
@@ -393,14 +390,19 @@ class algorithm_test_case(_ut.TestCase):
 
         self.assertTrue(algorithm(a()).get_thread_safety() == ts.none)
         self.assertTrue(algorithm(de()).get_thread_safety() == ts.basic)
+        self.assertTrue(algorithm(_tu_test_algorithm()).get_thread_safety() == ts.none)
         self.assertTrue(
-            algorithm(_tu_test_algorithm()).get_thread_safety() == ts.none)
+            algorithm(
+                mbh(_tu_test_algorithm(), stop=5, perturb=0.4)
+            ).get_thread_safety()
+            == ts.none
+        )
         self.assertTrue(
-            algorithm(mbh(_tu_test_algorithm(), stop=5, perturb=.4)).get_thread_safety() == ts.none)
+            algorithm(mbh(a(), stop=5, perturb=0.4)).get_thread_safety() == ts.none
+        )
         self.assertTrue(
-            algorithm(mbh(a(), stop=5, perturb=.4)).get_thread_safety() == ts.none)
-        self.assertTrue(
-            algorithm(mbh(de(), stop=5, perturb=.4)).get_thread_safety() == ts.basic)
+            algorithm(mbh(de(), stop=5, perturb=0.4)).get_thread_safety() == ts.basic
+        )
 
     def run_pickle_tests(self):
         from .core import algorithm, de, mbh
@@ -576,8 +578,7 @@ class algorithm_test_case(_ut.TestCase):
         # testing invalid selection policy
         prob = problem(luksan_vlcek1(10))
         pop = population(prob=prob, size=10, seed=0)
-        scp = algorithm(scipy_optimize(
-            selection=s_policy(select_best(rate=2))))
+        scp = algorithm(scipy_optimize(selection=s_policy(select_best(rate=2))))
         self.assertRaises(ValueError, lambda: scp.evolve(pop))
 
         # testing callback
@@ -621,8 +622,7 @@ class algorithm_test_case(_ut.TestCase):
 
         # testing hessian wrapper generator
         prob = problem(rastrigin(10))
-        f = scipy_optimize._fitness_wrapper(
-            prob)._generate_hessian_sparsity_wrapper(0)
+        f = scipy_optimize._fitness_wrapper(prob)._generate_hessian_sparsity_wrapper(0)
         hessian = f(array([0] * prob.get_nx()))
         self.assertEqual(len(hessian), prob.get_nx())
         self.assertEqual(len(hessian[0]), prob.get_nx())
@@ -630,6 +630,7 @@ class algorithm_test_case(_ut.TestCase):
         # testing invalid index for hessian wrapper
         self.assertRaises(
             ValueError,
-            lambda: scipy_optimize._fitness_wrapper(prob)
-            ._generate_hessian_sparsity_wrapper(5),
+            lambda: scipy_optimize._fitness_wrapper(
+                prob
+            )._generate_hessian_sparsity_wrapper(5),
         )

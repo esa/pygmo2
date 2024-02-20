@@ -18,7 +18,7 @@ def _get_spawn_context():
 
     import multiprocessing as mp
 
-    return mp.get_context('spawn')
+    return mp.get_context("spawn")
 
 
 class _temp_disable_sigint(object):
@@ -26,12 +26,14 @@ class _temp_disable_sigint(object):
 
     def __enter__(self):
         import signal
+
         # Store the previous sigint handler and assign the new sig handler
         # (i.e., ignore SIGINT).
         self._prev_signal = signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     def __exit__(self, type, value, traceback):
         import signal
+
         # Restore the previous sighandler.
         signal.signal(signal.SIGINT, self._prev_signal)
 
@@ -49,7 +51,8 @@ def _make_pool(processes):
 
     if processes is not None and processes <= 0:
         raise ValueError(
-            "The 'processes' argument, if not None, must be strictly positive")
+            "The 'processes' argument, if not None, must be strictly positive"
+        )
 
     # Get the context for spawning the process.
     mp_ctx = _get_spawn_context()

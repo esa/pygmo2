@@ -76,8 +76,7 @@ class scipy_optimize:
         def _update_gradient_cache(self, x, *args, **kwargs) -> None:
             if self.last_gradient_x is None or not all(self.last_gradient_x == x):
                 self.last_gradient_x = x.copy()
-                self.last_gradient_result = self.problem.gradient(
-                    x, *args, **kwargs)
+                self.last_gradient_result = self.problem.gradient(x, *args, **kwargs)
 
         def get_fitness_func(self):
             if self.problem.get_nc() == 0:
@@ -172,9 +171,7 @@ class scipy_optimize:
             sparsity_pattern = self.problem.gradient_sparsity()
             func = self.get_gradient_func()
             dim: int = len(self.problem.get_bounds()[0])
-            invert_sign: bool = (
-                idx >= self.problem.get_nobj() + self.problem.get_nec()
-            )
+            invert_sign: bool = idx >= self.problem.get_nobj() + self.problem.get_nec()
 
             if idx < 0 or idx >= self.problem.get_nf():
                 raise ValueError(
@@ -282,9 +279,7 @@ class scipy_optimize:
             sparsity_pattern = self.problem.hessians_sparsity()[idx]
             func = self.problem.hessians
             dim: int = len(self.problem.get_bounds()[0])
-            invert_sign: bool = (
-                idx >= self.problem.get_nobj() + self.problem.get_nec()
-            )
+            invert_sign: bool = idx >= self.problem.get_nobj() + self.problem.get_nec()
             shape: typing.Tuple[int, int] = (dim, dim)
 
             def wrapper(*args, **kwargs) -> numpy.ndarray:
@@ -327,30 +322,28 @@ class scipy_optimize:
         args=(),
         method: str = None,
         tol: float = None,
-        callback: typing.Optional[typing.Callable[[
-            typing.Any], typing.Any]] = None,
-        options: typing.Optional[typing.MutableMapping[str,
-                                                       typing.Any]] = None,
+        callback: typing.Optional[typing.Callable[[typing.Any], typing.Any]] = None,
+        options: typing.Optional[typing.MutableMapping[str, typing.Any]] = None,
         selection: s_policy = s_policy(select_best(rate=1)),
     ) -> None:
         """
-            The constructor initializes a wrapper instance for a specific algorithm.
-            Construction arguments are those options of :func:`scipy.optimize.minimize` that are not problem-specific.
-            Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
-            are deduced from the problem in the population given to the evolve function.
+        The constructor initializes a wrapper instance for a specific algorithm.
+        Construction arguments are those options of :func:`scipy.optimize.minimize` that are not problem-specific.
+        Problem-specific options, for example the bounds, constraints and the existence of a gradient and hessian,
+        are deduced from the problem in the population given to the evolve function.
 
-            Args:
+        Args:
 
-                args: optional - extra arguments for fitness callable
-                method: optional - string specifying the method to be used by scipy. From scipy docs: "If not given, chosen to be one of BFGS, L-BFGS-B, SLSQP, depending if the problem has constraints or bounds."
-                tol: optional - tolerance for termination
-                callback: optional - callable that is called in each iteration, independent from the fitness function
-                options: optional - dict of solver-specific options
-                selection: optional - s_policy to select candidate for local optimization
+            args: optional - extra arguments for fitness callable
+            method: optional - string specifying the method to be used by scipy. From scipy docs: "If not given, chosen to be one of BFGS, L-BFGS-B, SLSQP, depending if the problem has constraints or bounds."
+            tol: optional - tolerance for termination
+            callback: optional - callable that is called in each iteration, independent from the fitness function
+            options: optional - dict of solver-specific options
+            selection: optional - s_policy to select candidate for local optimization
 
-            Raises:
+        Raises:
 
-                ValueError: If method is not one of Nelder-Mead Powell, CG, BFGS, Newton-CG, L-BFGS-B, TNC, COBYLA, SLSQP, trust-constr, dogleg, trust-ncg, trust-exact, trust-krylov or None.
+            ValueError: If method is not one of Nelder-Mead Powell, CG, BFGS, Newton-CG, L-BFGS-B, TNC, COBYLA, SLSQP, trust-constr, dogleg, trust-ncg, trust-exact, trust-krylov or None.
 
         """
 
@@ -507,10 +500,10 @@ class scipy_optimize:
 
                     if problem.has_gradient():
                         # extract gradient of constraint
-                        constraint[
-                            "jac"
-                        ] = fitness_wrapper._generate_gradient_sparsity_wrapper(
-                            problem.get_nobj() + i
+                        constraint["jac"] = (
+                            fitness_wrapper._generate_gradient_sparsity_wrapper(
+                                problem.get_nobj() + i
+                            )
                         )
 
                     constraints.append(constraint)
@@ -540,8 +533,7 @@ class scipy_optimize:
                         ub = 0
                     else:
                         # Inequality constraint
-                        func = fitness_wrapper.get_neq_func(
-                            i - problem.get_nec())
+                        func = fitness_wrapper.get_neq_func(i - problem.get_nec())
                         ub = float("inf")
 
                     # Constructing the actual constraint objects. All constraints in pygmo are treated as nonlinear.
@@ -549,8 +541,7 @@ class scipy_optimize:
                         conGrad = fitness_wrapper._generate_gradient_sparsity_wrapper(
                             problem.get_nobj() + i,
                         )
-                        constraint = NonlinearConstraint(
-                            func, 0, ub, jac=conGrad)
+                        constraint = NonlinearConstraint(func, 0, ub, jac=conGrad)
                     else:
                         constraint = NonlinearConstraint(func, 0, 0)
 

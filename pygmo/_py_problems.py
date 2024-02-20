@@ -12,6 +12,7 @@
 from .core import unconstrain as _unconstrain
 from typing import List, Union
 
+
 def _with_decorator(f):
     # A decorator that will decorate the input method f of a decorator_problem
     # with one of the decorators stored inside the problem itself, in the _decors
@@ -25,6 +26,7 @@ def _with_decorator(f):
             return f(self, *args, **kwds)
         else:
             return dec(f)(self, *args, **kwds)
+
     return wrapper
 
 
@@ -35,6 +37,7 @@ def _add_doc(value):
     def _doc(func):
         func.__doc__ = value
         return func
+
     return _doc
 
 
@@ -108,6 +111,7 @@ class decorator_problem(object):
         from . import problem, null_problem
         from warnings import warn
         from copy import deepcopy
+
         if prob is None:
             prob = null_problem()
         if type(prob) == problem:
@@ -127,11 +131,16 @@ class decorator_problem(object):
                 if not callable(kwargs[k]):
                     raise TypeError(
                         "Cannot register the decorator for the '{}' method: the supplied object "
-                        "'{}' is not callable.".format(k[:-10], kwargs[k]))
+                        "'{}' is not callable.".format(k[:-10], kwargs[k])
+                    )
                 self._decors[k[:-10]] = deepcopy(kwargs[k])
             else:
-                warn("A keyword argument without the '_decorator' suffix, '{}', was used in the "
-                     "construction of a decorator problem. This keyword argument will be ignored.".format(k))
+                warn(
+                    "A keyword argument without the '_decorator' suffix, '{}', was used in the "
+                    "construction of a decorator problem. This keyword argument will be ignored.".format(
+                        k
+                    )
+                )
 
     @_with_decorator
     def fitness(self, dv):
@@ -217,9 +226,8 @@ class decorator_problem(object):
         else:
             retval += "\tRegistered decorators:\n"
             for i, k in enumerate(self._decors):
-                retval += "\t\t" + k + \
-                    (",\n" if i < len(self._decors) - 1 else "")
-            retval += '\n'
+                retval += "\t\t" + k + (",\n" if i < len(self._decors) - 1 else "")
+            retval += "\n"
         return retval
 
     @property
@@ -262,12 +270,16 @@ class decorator_problem(object):
         """
         if not isinstance(fname, str):
             raise TypeError(
-                "The input parameter 'fname' must be a string, but it is of type '{}' instead.".format(type(fname)))
+                "The input parameter 'fname' must be a string, but it is of type '{}' instead.".format(
+                    type(fname)
+                )
+            )
         from copy import deepcopy
+
         return deepcopy(self._decors.get(fname))
 
 
-class constant_arguments():
+class constant_arguments:
     """Meta problem that sets some arguments of the original problem to constants
 
     .. versionadded:: 2.19
@@ -311,6 +323,7 @@ class constant_arguments():
 
         from . import problem, null_problem
         from copy import deepcopy
+
         if prob is None:
             prob = null_problem()
         if type(prob) == problem:
@@ -330,7 +343,11 @@ class constant_arguments():
         self.full_dim = self._problem.get_nx()
 
         if len(fixed_arguments) != self.full_dim:
-            raise ValueError("Got {} argument array for problem of dimension {}".format(len(fixed_arguments), self.full_dim))
+            raise ValueError(
+                "Got {} argument array for problem of dimension {}".format(
+                    len(fixed_arguments), self.full_dim
+                )
+            )
 
         if self._problem.get_nix() > 0:
             raise ValueError("Mixed integer-problems not yet supported.")
@@ -348,15 +365,23 @@ class constant_arguments():
             else:
                 # fixed variable
                 if not arg >= minBound[i]:
-                    raise ValueError("Fixed argument {} violates min bound {}".format(arg, minBound[i]))
+                    raise ValueError(
+                        "Fixed argument {} violates min bound {}".format(
+                            arg, minBound[i]
+                        )
+                    )
                 if not arg <= maxBound[i]:
-                    raise ValueError("Fixed argument {} violates max bound {}".format(arg, maxBound[i]))
+                    raise ValueError(
+                        "Fixed argument {} violates max bound {}".format(
+                            arg, maxBound[i]
+                        )
+                    )
 
         # converting to internal format
         self.fixed_arguments = [elem for elem in fixed_arguments if elem is not None]
         self.fixed_flags = [elem is not None for elem in fixed_arguments]
 
-        assert(len(self.minBound) + sum(self.fixed_flags) == self.full_dim)
+        assert len(self.minBound) + sum(self.fixed_flags) == self.full_dim
 
     def get_bounds(self):
         return (self.minBound, self.maxBound)
@@ -388,11 +413,13 @@ class constant_arguments():
     def batch_fitness(self, dvs):
         contiguous_x = []
         if len(dvs) % self.get_nx() != 0:
-            raise ValueError("Expected multiple of {} but got {}".format(self.get_nx(), len(dvs)))
+            raise ValueError(
+                "Expected multiple of {} but got {}".format(self.get_nx(), len(dvs))
+            )
         num_dvs = len(dvs) // self.get_nx()
         for i in range(num_dvs):
             begin_index = i * self.get_nx()
-            end_index = (i+1) * self.get_nx()
+            end_index = (i + 1) * self.get_nx()
             contiguous_x.extend(self.get_full_x(dvs[begin_index:end_index]))
         return self._problem.batch_fitness(contiguous_x)
 
@@ -400,7 +427,9 @@ class constant_arguments():
         """Get the full x for a given x of lower dimension"""
 
         if len(x) != len(self.minBound):
-            raise ValueError("Got x of length {} but expected {}".format(len(x), self.get_nx()))
+            raise ValueError(
+                "Got x of length {} but expected {}".format(len(x), self.get_nx())
+            )
 
         fullx = [None for i in range(self.full_dim)]
 
@@ -414,6 +443,6 @@ class constant_arguments():
                 fullx[i] = x[k]
                 k += 1
 
-        assert(j + k == self.full_dim)
-        assert(all(elem is not None for elem in fullx))
+        assert j + k == self.full_dim
+        assert all(elem is not None for elem in fullx)
         return fullx

@@ -7,8 +7,10 @@
 # with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from ._check_deps import *
+
 # Version setup.
 from ._version import __version__
+
 # We import the sub-modules into the root namespace
 from .core import *
 from .plotting import *
@@ -16,20 +18,27 @@ from ._py_islands import *
 from ._py_problems import *
 from ._py_bfes import *
 from ._py_algorithms import *
+
 # Patch the problem class.
 from . import _patch_problem
+
 # Patch the algorithm class.
 from . import _patch_algorithm
+
 # Patch the bfe class.
 from . import _patch_bfe
+
 # Patch the island class.
 from . import _patch_island
+
 # Patch the policies.
 from . import _patch_r_policy
 from . import _patch_s_policy
+
 # Patch the topology.
 from . import _patch_topology
 import cloudpickle as _cloudpickle
+
 # Explicitly import the test submodule
 from . import test
 import atexit as _atexit
@@ -69,7 +78,7 @@ __original_translate_init = translate.__init__
 # of the syntax translate(udp, translation) for all udps
 
 
-def _translate_init(self, prob=None, translation=[0.]):
+def _translate_init(self, prob=None, translation=[0.0]):
     """
     Args:
         prob: a user-defined problem (either Python or C++), or an instance of :class:`~pygmo.problem`
@@ -109,13 +118,20 @@ __original_decompose_init = decompose.__init__
 # of the syntax decompose(udp, ..., ) for all udps
 
 
-def _decompose_init(self, prob=None, weight=[0.5, 0.5], z=[0., 0.], method='weighted', adapt_ideal=False):
+def _decompose_init(
+    self,
+    prob=None,
+    weight=[0.5, 0.5],
+    z=[0.0, 0.0],
+    method="weighted",
+    adapt_ideal=False,
+):
     """
     Args:
         prob: a user-defined problem (either Python or C++), or an instance of :class:`~pygmo.problem`
             (if *prob* is :data:`None`, a :class:`~pygmo.null_problem` will be used in its stead)
-        weight (array-like object): the vector of weights :math:`\\boldsymbol \lambda`
-        z (array-like object): the reference point :math:`\mathbf z^*`
+        weight (array-like object): the vector of weights :math:`\\boldsymbol \\lambda`
+        z (array-like object): the reference point :math:`\\mathbf z^*`
         method (str): a string containing the decomposition method chosen
         adapt_ideal (bool): when :data:`True`, the reference point is adapted at each fitness evaluation
             to be the ideal point
@@ -273,6 +289,7 @@ def _population_init(self, prob=None, size=0, b=None, seed=None):
 
     """
     from .core import _random_device_next
+
     # Check input params.
     if not isinstance(size, int):
         raise TypeError("the 'size' parameter must be an integer")
@@ -296,8 +313,9 @@ def _population_init(self, prob=None, size=0, b=None, seed=None):
         __original_population_init(self, prob, size, seed)
     else:
         # A bfe was specified. Same as above with the problem.
-        __original_population_init(self, prob, b if type(
-            b) == bfe else bfe(b), size, seed)
+        __original_population_init(
+            self, prob, b if type(b) == bfe else bfe(b), size, seed
+        )
 
 
 setattr(population, "__init__", _population_init)
@@ -334,56 +352,63 @@ def _island_init(self, **kwargs):
         return
 
     # If we are not dealing with a def ctor, we always need the algo argument.
-    if not 'algo' in kwargs:
+    if not "algo" in kwargs:
         raise KeyError(
             "the mandatory 'algo' parameter is missing from the list of arguments "
-            "of the island constructor")
-    algo = kwargs.pop('algo')
+            "of the island constructor"
+        )
+    algo = kwargs.pop("algo")
     algo = algo if type(algo) == algorithm else algorithm(algo)
 
     # Population setup. We either need an input pop, or the prob and size,
     # plus optionally seed and b.
-    if 'pop' in kwargs and ('prob' in kwargs or 'size' in kwargs or 'seed' in kwargs or 'b' in kwargs):
+    if "pop" in kwargs and (
+        "prob" in kwargs or "size" in kwargs or "seed" in kwargs or "b" in kwargs
+    ):
         raise KeyError(
             "if the 'pop' argument is provided, the 'prob', 'size', 'seed' and 'b' "
-            "arguments must not be provided")
-    elif 'pop' in kwargs:
-        pop = kwargs.pop('pop')
-    elif 'prob' in kwargs and 'size' in kwargs:
-        pop = population(prob=kwargs.pop('prob'),
-                         size=kwargs.pop('size'), seed=kwargs.pop('seed') if 'seed' in kwargs else None,
-                         b=kwargs.pop('b') if 'b' in kwargs else None)
+            "arguments must not be provided"
+        )
+    elif "pop" in kwargs:
+        pop = kwargs.pop("pop")
+    elif "prob" in kwargs and "size" in kwargs:
+        pop = population(
+            prob=kwargs.pop("prob"),
+            size=kwargs.pop("size"),
+            seed=kwargs.pop("seed") if "seed" in kwargs else None,
+            b=kwargs.pop("b") if "b" in kwargs else None,
+        )
     else:
         raise KeyError(
             "unable to construct a population from the arguments of "
             "the island constructor: you must either pass a population "
             "('pop') or a set of arguments that can be used to build one "
-            "('prob', 'size' and, optionally, 'seed' and 'b')")
+            "('prob', 'size' and, optionally, 'seed' and 'b')"
+        )
 
     # UDI, if any.
-    if 'udi' in kwargs:
-        args = [kwargs.pop('udi'), algo, pop]
+    if "udi" in kwargs:
+        args = [kwargs.pop("udi"), algo, pop]
     else:
         args = [algo, pop]
 
     # Replace/selection policies, if any.
-    if 'r_pol' in kwargs:
-        r_pol = kwargs.pop('r_pol')
+    if "r_pol" in kwargs:
+        r_pol = kwargs.pop("r_pol")
         r_pol = r_pol if type(r_pol) == r_policy else r_policy(r_pol)
         args.append(r_pol)
     else:
         args.append(r_policy())
 
-    if 's_pol' in kwargs:
-        s_pol = kwargs.pop('s_pol')
+    if "s_pol" in kwargs:
+        s_pol = kwargs.pop("s_pol")
         s_pol = s_pol if type(s_pol) == s_policy else s_policy(s_pol)
         args.append(s_pol)
     else:
         args.append(s_policy())
 
     if len(kwargs) != 0:
-        raise KeyError(
-            'unrecognised keyword arguments: {}'.format(list(kwargs.keys())))
+        raise KeyError("unrecognised keyword arguments: {}".format(list(kwargs.keys())))
 
     __original_island_init(self, *args)
 
@@ -417,6 +442,7 @@ def _mbh_init(self, algo=None, stop=5, perturb=1e-2, seed=None):
 
     """
     import numbers
+
     if algo is None:
         # Use the compass search algo for default init.
         algo = compass_search()
@@ -538,32 +564,35 @@ def _archi_init(self, n=0, t=topology(), **kwargs):
         raise TypeError("the 'n' parameter must be an integer")
     if n < 0:
         raise ValueError(
-            "the 'n' parameter must be non-negative, but it is {} instead".format(n))
+            "the 'n' parameter must be non-negative, but it is {} instead".format(n)
+        )
 
     # Replace the 'pop_size' kw arg with just 'size', for later use in the
     # island ctor.
 
-    if 'size' in kwargs:
+    if "size" in kwargs:
         raise KeyError(
-            "the 'size' argument cannot appear among the named arguments of the archipelago constructor")
+            "the 'size' argument cannot appear among the named arguments of the archipelago constructor"
+        )
 
-    if 'pop_size' in kwargs:
+    if "pop_size" in kwargs:
         # Extract 'pop_size', replace with just 'size'.
-        ps_val = kwargs.pop('pop_size')
-        kwargs['size'] = ps_val
+        ps_val = kwargs.pop("pop_size")
+        kwargs["size"] = ps_val
 
     # Call the original init, which constructs an empty archi from a topology.
     t = t if type(t) == topology else topology(t)
     __original_archi_init(self, t)
 
-    if 'seed' in kwargs:
+    if "seed" in kwargs:
         # Special handling of the 'seed' argument.
         from random import Random
         from .core import _max_unsigned
+
         # Create a random engine with own state.
         RND = Random()
         # Get the seed from kwargs.
-        seed = kwargs.pop('seed')
+        seed = kwargs.pop("seed")
         if not isinstance(seed, int):
             raise TypeError("the 'seed' parameter must be an integer")
         # Seed the rng.
@@ -571,7 +600,7 @@ def _archi_init(self, n=0, t=topology(), **kwargs):
         u_max = _max_unsigned()
         # Push back the islands with different seed.
         for _ in range(n):
-            kwargs['seed'] = RND.randint(0, u_max)
+            kwargs["seed"] = RND.randint(0, u_max)
             self.push_back(**kwargs)
 
     else:
@@ -621,13 +650,22 @@ def _archi_push_back(self, *args, **kwargs):
     else:
         if len(args) != 1:
             raise ValueError(
-                "{} positional arguments were provided, but this method accepts only a single positional argument".format(len(args)))
+                "{} positional arguments were provided, but this method accepts only a single positional argument".format(
+                    len(args)
+                )
+            )
         if len(kwargs) != 0:
             raise ValueError(
-                "if a positional argument is passed to this method, then no keyword arguments must be passed, but {} keyword arguments were passed instead".format(len(kwargs)))
+                "if a positional argument is passed to this method, then no keyword arguments must be passed, but {} keyword arguments were passed instead".format(
+                    len(kwargs)
+                )
+            )
         if type(args[0]) != island:
             raise TypeError(
-                "the positional argument passed to this method must be an island, but the type of the argument is '{}' instead".format(type(args[0])))
+                "the positional argument passed to this method must be an island, but the type of the argument is '{}' instead".format(
+                    type(args[0])
+                )
+            )
         self._push_back(args[0])
 
 
@@ -708,8 +746,7 @@ def set_serialization_backend(name):
     The valid backends are:
 
     * ``'pickle'`` (i.e., the standard Python :mod:`pickle` module),
-    * ``'cloudpickle'``,
-    * ``'dill'`` (from the `dill <https://pypi.org/project/dill/>`__ library).
+    * ``'cloudpickle'``.
 
     .. warning::
 
@@ -722,29 +759,28 @@ def set_serialization_backend(name):
 
     Raises:
         TypeError: if *name* is not a :class:`str`
-        ValueError: if *name* is not one of ``['pickle', 'cloudpickle', 'dill']``
-        ImportError: if *name* is ``'dill'`` but the dill module is not installed
+        ValueError: if *name* is not one of ``['pickle', 'cloudpickle']``
 
     """
     if not isinstance(name, str):
         raise TypeError(
-            "The serialization backend must be specified as a string, but an object of type {} was provided instead".format(type(name)))
+            "The serialization backend must be specified as a string, but an object of type {} was provided instead".format(
+                type(name)
+            )
+        )
     global _serialization_backend
     if name == "pickle":
         import pickle
+
         _serialization_backend = pickle
     elif name == "cloudpickle":
         _serialization_backend = _cloudpickle
-    elif name == "dill":
-        try:
-            import dill
-            _serialization_backend = dill
-        except ImportError:
-            raise ImportError(
-                "The 'dill' serialization backend was specified, but the dill module is not installed.")
     else:
         raise ValueError(
-            "The serialization backend '{}' is not valid. The valid backends are: ['pickle', 'cloudpickle', 'dill']".format(name))
+            "The serialization backend '{}' is not valid. The valid backends are: ['pickle', 'cloudpickle']".format(
+                name
+            )
+        )
 
 
 def get_serialization_backend():

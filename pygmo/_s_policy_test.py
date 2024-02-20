@@ -16,9 +16,7 @@ class _s_pol(object):
 
 
 class s_policy_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.s_policy` class.
-
-    """
+    """Test case for the :class:`~pygmo.s_policy` class."""
 
     def runTest(self):
         self.run_basic_tests()
@@ -30,6 +28,7 @@ class s_policy_test_case(_ut.TestCase):
         # Tests for minimal s_policy, and mandatory methods.
         import numpy as np
         from .core import s_policy, select_best
+
         # Def construction.
         r = s_policy()
         self.assertTrue(r.extract(select_best) is not None)
@@ -43,11 +42,13 @@ class s_policy_test_case(_ut.TestCase):
 
         class nr0(object):
             pass
+
         self.assertRaises(NotImplementedError, lambda: s_policy(nr0()))
 
         class nr1(object):
 
             select = 45
+
         self.assertRaises(NotImplementedError, lambda: s_policy(nr1()))
 
         # The minimal good citizen.
@@ -77,14 +78,21 @@ class s_policy_test_case(_ut.TestCase):
         self.assertTrue(s_pol.is_(r))
 
         # Check the select method.
-        self.assertTrue(isinstance(s_pol.select(
-            ([], np.zeros((0, 2)), np.zeros((0, 2))), 1, 0, 1, 0, 0, []), tuple))
-        r_out = s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-                              [1.1], [2.2]]), 2, 0, 1, 0, 0, [])
+        self.assertTrue(
+            isinstance(
+                s_pol.select(
+                    ([], np.zeros((0, 2)), np.zeros((0, 2))), 1, 0, 1, 0, 0, []
+                ),
+                tuple,
+            )
+        )
+        r_out = s_pol.select(
+            ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+        )
         self.assertTrue(np.all(r_out[0] == np.array([1, 2])))
         self.assertTrue(r_out[1].dtype == np.dtype(float))
         self.assertTrue(r_out[2].dtype == np.dtype(float))
-        self.assertTrue(np.all(r_out[1] == np.array([[.1, .2], [.3, .4]])))
+        self.assertTrue(np.all(r_out[1] == np.array([[0.1, 0.2], [0.3, 0.4]])))
         self.assertTrue(np.all(r_out[2] == np.array([[1.1], [2.2]])))
         self.assertTrue(len(r_out) == 3)
         # Assert that r_inst was deep-copied into s_pol:
@@ -92,7 +100,7 @@ class s_policy_test_case(_ut.TestCase):
         # and it will not be a reference the outside object.
         self.assertEqual(len(glob), 0)
         self.assertEqual(len(s_pol.extract(r).g), 2)
-        self.assertEqual(s_pol.extract(r).g, [2]*2)
+        self.assertEqual(s_pol.extract(r).g, [2] * 2)
 
         s_pol = s_policy(select_best())
         self.assertTrue(s_pol.get_extra_info() != "")
@@ -107,78 +115,125 @@ class s_policy_test_case(_ut.TestCase):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return []
+
         s_pol = s_policy(r())
-        self.assertRaises(RuntimeError, lambda: s_pol.select(inds=([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), nx=2, nix=0, nobj=1, nec=0, nic=0, tol=[]))
+        self.assertRaises(
+            RuntimeError,
+            lambda: s_pol.select(
+                inds=([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                nx=2,
+                nix=0,
+                nobj=1,
+                nec=0,
+                nic=0,
+                tol=[],
+            ),
+        )
         # Try also flipping around the named argument.
-        self.assertRaises(RuntimeError, lambda: s_pol.select(nx=2, inds=([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), nec=0, nix=0, nobj=1, nic=0, tol=[]))
+        self.assertRaises(
+            RuntimeError,
+            lambda: s_pol.select(
+                nx=2,
+                inds=([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                nec=0,
+                nix=0,
+                nobj=1,
+                nic=0,
+                tol=[],
+            ),
+        )
 
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return [1]
+
         s_pol = s_policy(r())
-        self.assertRaises(ValueError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, []))
+        self.assertRaises(
+            ValueError,
+            lambda: s_pol.select(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+            ),
+        )
 
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return [1, 2]
+
         s_pol = s_policy(r())
-        self.assertRaises(ValueError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, []))
+        self.assertRaises(
+            ValueError,
+            lambda: s_pol.select(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+            ),
+        )
 
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return [1, 2, 3, 4]
+
         s_pol = s_policy(r())
-        self.assertRaises(ValueError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, []))
+        self.assertRaises(
+            ValueError,
+            lambda: s_pol.select(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+            ),
+        )
 
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return 1
+
         s_pol = s_policy(r())
-        self.assertRaises(TypeError, lambda: s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, []))
+        self.assertRaises(
+            TypeError,
+            lambda: s_pol.select(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+            ),
+        )
 
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return ([1], [], [])
+
         s_pol = s_policy(r())
         with self.assertRaises(ValueError) as cm:
-            s_pol.select(([1, 2], [[.1], [.3, .4]], [
-                [1.1], [2.2]]), 2, 0, 1, 0, 0, [])
+            s_pol.select(
+                ([1, 2], [[0.1], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+            )
         with self.assertRaises(ValueError) as cm:
-            s_pol.select(([1, 2], [[.1, .2]], [
-                [1.1], [2.2]]), 2, 0, 1, 0, 0, [])
+            s_pol.select(([1, 2], [[0.1, 0.2]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, [])
         with self.assertRaises(ValueError) as cm:
-            s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-                [1.1], [2.2]]), 2, 0, 1, 0, 0, [])
+            s_pol.select(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+            )
 
         # Test construction of array ID from list.
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
                 return ([1], [[1, 2]], [[1]])
+
         s_pol = s_policy(r())
-        ret = s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-                           [1.1], [2.2]]), 2, 0, 1, 0, 0, [])
+        ret = s_pol.select(
+            ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+        )
         self.assertEqual(ret[0][0], 1)
 
         # Test construction of array ID from array.
         class r(object):
 
             def select(self, inds, nx, nix, nobj, nec, nic, tol):
-                return (np.array([1], dtype='ulonglong'), [[1, 2]], [[1]])
+                return (np.array([1], dtype="ulonglong"), [[1, 2]], [[1]])
+
         s_pol = s_policy(r())
-        ret = s_pol.select(([1, 2], [[.1, .2], [.3, .4]], [
-                           [1.1], [2.2]]), 2, 0, 1, 0, 0, [])
+        ret = s_pol.select(
+            ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]), 2, 0, 1, 0, 0, []
+        )
         self.assertEqual(ret[0][0], 1)
 
         # Test that construction from another pygmo.s_policy fails.
@@ -186,7 +241,9 @@ class s_policy_test_case(_ut.TestCase):
             s_policy(s_pol)
         err = cm.exception
         self.assertTrue(
-            "a pygmo.s_policy cannot be used as a UDSP for another pygmo.s_policy (if you need to copy a selection policy please use the standard Python copy()/deepcopy() functions)" in str(err))
+            "a pygmo.s_policy cannot be used as a UDSP for another pygmo.s_policy (if you need to copy a selection policy please use the standard Python copy()/deepcopy() functions)"
+            in str(err)
+        )
 
     def run_extract_tests(self):
         from .core import s_policy, _test_s_policy, select_best
@@ -228,7 +285,7 @@ class s_policy_test_case(_ut.TestCase):
         self.assertTrue(sys.getrefcount(t) == rc)
         self.assertTrue(ts_pol.get_n() == 1)
         ts_pol.set_n(12)
-        self.assert_(t.extract(ts_policy).get_n() == 12)
+        self.assertTrue(t.extract(ts_policy).get_n() == 12)
 
         # Check that we can extract Python UDTs also via Python's object type.
         t = s_policy(ts_policy())
@@ -249,8 +306,8 @@ class s_policy_test_case(_ut.TestCase):
                 return inds
 
         s_pol = s_policy(t())
-        self.assertTrue(s_pol.get_name() != '')
-        self.assertTrue(s_pol.get_extra_info() == '')
+        self.assertTrue(s_pol.get_name() != "")
+        self.assertTrue(s_pol.get_extra_info() == "")
 
         class t(object):
 
@@ -258,11 +315,11 @@ class s_policy_test_case(_ut.TestCase):
                 return inds
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
         s_pol = s_policy(t())
-        self.assertTrue(s_pol.get_name() == 'pippo')
-        self.assertTrue(s_pol.get_extra_info() == '')
+        self.assertTrue(s_pol.get_name() == "pippo")
+        self.assertTrue(s_pol.get_extra_info() == "")
 
         class t(object):
 
@@ -270,11 +327,11 @@ class s_policy_test_case(_ut.TestCase):
                 return inds
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         s_pol = s_policy(t())
-        self.assertTrue(s_pol.get_name() != '')
-        self.assertTrue(s_pol.get_extra_info() == 'pluto')
+        self.assertTrue(s_pol.get_name() != "")
+        self.assertTrue(s_pol.get_extra_info() == "pluto")
 
         class t(object):
 
@@ -282,18 +339,19 @@ class s_policy_test_case(_ut.TestCase):
                 return inds
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         s_pol = s_policy(t())
-        self.assertTrue(s_pol.get_name() == 'pippo')
-        self.assertTrue(s_pol.get_extra_info() == 'pluto')
+        self.assertTrue(s_pol.get_name() == "pippo")
+        self.assertTrue(s_pol.get_extra_info() == "pluto")
 
     def run_pickle_tests(self):
         from .core import s_policy, select_best
         from pickle import dumps, loads
+
         t_ = s_policy(select_best())
         t = loads(dumps(t_))
         self.assertEqual(repr(t), repr(t_))

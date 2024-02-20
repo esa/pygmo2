@@ -106,6 +106,7 @@ def _bfe_call(self, prob, dvs):
 
     """
     from .core import problem
+
     if isinstance(prob, problem):
         return self._call_impl(prob, dvs)
     else:

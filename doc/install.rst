@@ -17,8 +17,6 @@ pygmo has the following **mandatory** runtime dependencies:
 Additionally, pygmo has the following **optional** runtime
 dependencies:
 
-* `dill <https://dill.readthedocs.io>`__, which can be used as an
-  alternative serialization backend,
 * `Matplotlib <https://matplotlib.org/>`__, which is used by a few
   plotting utilities,
 * `NetworkX <https://networkx.github.io/>`__, which is used for
