@@ -10,12 +10,14 @@ try:
     import numpy as _np
 except ImportError:
     raise ImportError(
-        "The 'numpy' module could not be imported. Please make sure that numpy has been correctly installed, since pygmo depends on it.")
-del(_np)
+        "The 'numpy' module could not be imported. Please make sure that numpy has been correctly installed, since pygmo depends on it."
+    )
+del _np
 
 try:
     import cloudpickle as _cp
 except ImportError:
     raise ImportError(
-        "The 'cloudpickle' module could not be imported. Please make sure that cloudpickle has been correctly installed, since pygmo depends on it.")
-del(_cp)
+        "The 'cloudpickle' module could not be imported. Please make sure that cloudpickle has been correctly installed, since pygmo depends on it."
+    )
+del _cp

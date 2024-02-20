@@ -51,10 +51,10 @@ class _prob(object):
         self.data = data
 
     def fitness(self, x):
-        return [0.]
+        return [0.0]
 
     def get_bounds(self):
-        return ([0.], [1.])
+        return ([0.0], [1.0])
 
 
 class _stateful_algo(object):
@@ -68,9 +68,7 @@ class _stateful_algo(object):
 
 
 class island_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.island` class.
-
-    """
+    """Test case for the :class:`~pygmo.island` class."""
 
     def runTest(self):
         self.run_basic_tests()
@@ -84,7 +82,24 @@ class island_test_case(_ut.TestCase):
         self.run_mo_sto_repr_bug()
 
     def run_basic_tests(self):
-        from .core import island, thread_island, null_algorithm, null_problem, de, rosenbrock, r_policy, s_policy, fair_replace, select_best, population, bfe, thread_bfe, default_bfe, problem
+        from .core import (
+            island,
+            thread_island,
+            null_algorithm,
+            null_problem,
+            de,
+            rosenbrock,
+            r_policy,
+            s_policy,
+            fair_replace,
+            select_best,
+            population,
+            bfe,
+            thread_bfe,
+            default_bfe,
+            problem,
+        )
+
         isl = island()
         self.assertTrue("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
@@ -100,23 +115,22 @@ class island_test_case(_ut.TestCase):
         self.assertTrue(isl.get_algorithm().is_(de))
         self.assertTrue(isl.get_population().problem.is_(rosenbrock))
         self.assertEqual(len(isl.get_population()), 10)
-        isl = island(prob=rosenbrock(), udi=thread_island(),
-                     size=11, algo=de(), seed=15)
+        isl = island(
+            prob=rosenbrock(), udi=thread_island(), size=11, algo=de(), seed=15
+        )
         self.assertTrue("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
         self.assertTrue(isl.get_algorithm().is_(de))
         self.assertTrue(isl.get_population().problem.is_(rosenbrock))
         self.assertEqual(len(isl.get_population()), 11)
         self.assertEqual(isl.get_population().get_seed(), 15)
-        isl = island(udi=thread_island(),
-                     algo=de(), pop=population())
+        isl = island(udi=thread_island(), algo=de(), pop=population())
         self.assertTrue("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
         self.assertTrue(isl.get_algorithm().is_(de))
         self.assertTrue(isl.get_population().problem.is_(null_problem))
         self.assertEqual(len(isl.get_population()), 0)
-        isl = island(prob=rosenbrock(), udi=_udi_01(),
-                     size=11, algo=de(), seed=15)
+        isl = island(prob=rosenbrock(), udi=_udi_01(), size=11, algo=de(), seed=15)
         self.assertTrue("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
         self.assertEqual(isl.get_name(), "udi_01")
@@ -124,8 +138,12 @@ class island_test_case(_ut.TestCase):
         self.assertTrue(isl.get_algorithm().is_(de))
         self.assertTrue(isl.get_population().problem.is_(rosenbrock))
         self.assertEqual(len(isl.get_population()), 11)
-        self.assertRaises(NotImplementedError, lambda: island(prob=rosenbrock(), udi=_udi_02(),
-                                                              size=11, algo=de(), seed=15))
+        self.assertRaises(
+            NotImplementedError,
+            lambda: island(
+                prob=rosenbrock(), udi=_udi_02(), size=11, algo=de(), seed=15
+            ),
+        )
 
         # Verify that the constructor copies the UDI instance.
         udi_01_inst = _udi_01()
@@ -153,22 +171,29 @@ class island_test_case(_ut.TestCase):
         self.assertEqual(len(glob), 0)
         self.assertEqual(len(isl.extract(loc_01).g), 10)
 
-        isl = island(prob=rosenbrock(), udi=_udi_03(),
-                     size=11, algo=de(), seed=15)
+        isl = island(prob=rosenbrock(), udi=_udi_03(), size=11, algo=de(), seed=15)
         isl.evolve()
         with self.assertRaises(RuntimeError) as cm:
             isl.wait_check()
         err = cm.exception
         self.assertTrue(
-            "the tuple returned by the 'run_evolve()' method of a user-defined island must have 2 elements, but instead it has 3 element(s)" in str(err))
+            "the tuple returned by the 'run_evolve()' method of a user-defined island must have 2 elements, but instead it has 3 element(s)"
+            in str(err)
+        )
 
         # Test that construction from another pygmo.island fails.
         with self.assertRaises(NotImplementedError) as cm:
             island(prob=rosenbrock(), udi=isl, size=11, algo=de(), seed=15)
 
         # Constructors with r/s_pol arguments.
-        isl = island(prob=rosenbrock(), udi=thread_island(),
-                     size=11, algo=de(), seed=15, r_pol=r_policy())
+        isl = island(
+            prob=rosenbrock(),
+            udi=thread_island(),
+            size=11,
+            algo=de(),
+            seed=15,
+            r_pol=r_policy(),
+        )
         self.assertTrue("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
         self.assertTrue(isl.get_algorithm().is_(de))
@@ -176,8 +201,14 @@ class island_test_case(_ut.TestCase):
         self.assertEqual(len(isl.get_population()), 11)
         self.assertEqual(isl.get_population().get_seed(), 15)
 
-        isl = island(prob=rosenbrock(), udi=thread_island(),
-                     size=11, algo=de(), seed=15, r_pol=_r_pol())
+        isl = island(
+            prob=rosenbrock(),
+            udi=thread_island(),
+            size=11,
+            algo=de(),
+            seed=15,
+            r_pol=_r_pol(),
+        )
         self.assertFalse("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
         self.assertTrue(isl.get_algorithm().is_(de))
@@ -185,8 +216,14 @@ class island_test_case(_ut.TestCase):
         self.assertEqual(len(isl.get_population()), 11)
         self.assertEqual(isl.get_population().get_seed(), 15)
 
-        isl = island(prob=rosenbrock(), udi=thread_island(),
-                     size=11, algo=de(), seed=15, s_pol=s_policy())
+        isl = island(
+            prob=rosenbrock(),
+            udi=thread_island(),
+            size=11,
+            algo=de(),
+            seed=15,
+            s_pol=s_policy(),
+        )
         self.assertTrue("Fair replace" in repr(isl))
         self.assertTrue("Select best" in repr(isl))
         self.assertTrue(isl.get_algorithm().is_(de))
@@ -194,8 +231,14 @@ class island_test_case(_ut.TestCase):
         self.assertEqual(len(isl.get_population()), 11)
         self.assertEqual(isl.get_population().get_seed(), 15)
 
-        isl = island(prob=rosenbrock(), udi=thread_island(),
-                     size=11, algo=de(), seed=15, s_pol=_s_pol())
+        isl = island(
+            prob=rosenbrock(),
+            udi=thread_island(),
+            size=11,
+            algo=de(),
+            seed=15,
+            s_pol=_s_pol(),
+        )
         self.assertTrue("Fair replace" in repr(isl))
         self.assertFalse("Select best" in repr(isl))
         self.assertTrue(isl.get_algorithm().is_(de))
@@ -204,8 +247,15 @@ class island_test_case(_ut.TestCase):
         self.assertEqual(isl.get_population().get_seed(), 15)
 
         # Test the r/s_policy getters.
-        isl = island(prob=rosenbrock(), udi=thread_island(),
-                     size=11, algo=de(), seed=15, r_pol=_r_pol(), s_pol=_s_pol())
+        isl = island(
+            prob=rosenbrock(),
+            udi=thread_island(),
+            size=11,
+            algo=de(),
+            seed=15,
+            r_pol=_r_pol(),
+            s_pol=_s_pol(),
+        )
 
         self.assertTrue(isl.get_r_policy().is_(_r_pol))
         self.assertTrue(isl.get_s_policy().is_(_s_pol))
@@ -255,6 +305,7 @@ class island_test_case(_ut.TestCase):
     def run_concurrent_access_tests(self):
         import threading as thr
         from .core import island, de, rosenbrock
+
         isl = island(algo=de(), prob=rosenbrock(), size=10)
 
         def thread_func():
@@ -271,6 +322,7 @@ class island_test_case(_ut.TestCase):
     def run_evolve_tests(self):
         from .core import island, de, rosenbrock
         from copy import deepcopy
+
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         isl.evolve(0)
         isl.wait_check()
@@ -287,6 +339,7 @@ class island_test_case(_ut.TestCase):
 
     def run_status_tests(self):
         from . import island, de, rosenbrock, evolve_status
+
         isl = island(algo=de(), prob=rosenbrock(), size=3)
         isl.evolve(20)
         isl.wait()
@@ -296,6 +349,7 @@ class island_test_case(_ut.TestCase):
 
     def run_get_busy_wait_tests(self):
         from . import island, de, rosenbrock, evolve_status
+
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         self.assertTrue(isl.status == evolve_status.idle)
         isl = island(algo=de(), prob=rosenbrock(), size=3)
@@ -306,6 +360,7 @@ class island_test_case(_ut.TestCase):
 
     def run_io_tests(self):
         from .core import island, de, rosenbrock
+
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         self.assertTrue(repr(isl) != "")
         self.assertTrue(isl.get_name() == "Thread island")
@@ -318,32 +373,42 @@ class island_test_case(_ut.TestCase):
     def run_serialization_tests(self):
         from .core import island, de, rosenbrock
         from pickle import dumps, loads
+
         isl = island(algo=de(), prob=rosenbrock(), size=25)
         tmp = repr(isl)
         isl = loads(dumps(isl))
         self.assertEqual(tmp, repr(isl))
 
         # Check with custom policies as well.
-        isl = island(algo=de(), prob=rosenbrock(), size=25,
-                     r_pol=_r_pol(), s_pol=_s_pol())
+        isl = island(
+            algo=de(), prob=rosenbrock(), size=25, r_pol=_r_pol(), s_pol=_s_pol()
+        )
         tmp = repr(isl)
         isl = loads(dumps(isl))
         self.assertEqual(tmp, repr(isl))
 
     def run_stateful_algo_tests(self):
         from .core import island, rosenbrock
+
         isl = island(algo=_stateful_algo(), prob=rosenbrock(), size=25)
         isl.evolve(20)
         isl.wait_check()
         self.assertTrue(isl.get_algorithm().extract(_stateful_algo)._n == 20)
 
     def run_extract_tests(self):
-        from .core import island, _test_island, null_problem, null_algorithm, thread_island
+        from .core import (
+            island,
+            _test_island,
+            null_problem,
+            null_algorithm,
+            thread_island,
+        )
         import sys
 
         # First we try with a C++ test island.
-        isl = island(udi=_test_island(), algo=null_algorithm(),
-                     prob=null_problem(), size=1)
+        isl = island(
+            udi=_test_island(), algo=null_algorithm(), prob=null_problem(), size=1
+        )
         # Verify the refcount of p is increased after extract().
         rc = sys.getrefcount(isl)
         tisl = isl.extract(_test_island)
@@ -374,8 +439,7 @@ class island_test_case(_ut.TestCase):
                 return algo, pop
 
         # Test with Python problem.
-        isl = island(udi=tisland(), algo=null_algorithm(),
-                     prob=null_problem(), size=1)
+        isl = island(udi=tisland(), algo=null_algorithm(), prob=null_problem(), size=1)
         rc = sys.getrefcount(isl)
         tisl = isl.extract(tisland)
         self.assertFalse(tisl is None)
@@ -392,14 +456,14 @@ class island_test_case(_ut.TestCase):
         self.assertFalse(isl.is_(_udi_01))
 
         # Check that we can extract Python UDIs also via Python's object type.
-        isl = island(udi=tisland(), algo=null_algorithm(),
-                     prob=null_problem(), size=1)
+        isl = island(udi=tisland(), algo=null_algorithm(), prob=null_problem(), size=1)
         self.assertTrue(not isl.extract(object) is None)
         # Check we are referring to the same object.
         self.assertEqual(id(isl.extract(object)), id(isl.extract(tisland)))
         # Check that it will not work with exposed C++ islands.
-        isl = island(udi=thread_island(), algo=null_algorithm(),
-                     prob=null_problem(), size=1)
+        isl = island(
+            udi=thread_island(), algo=null_algorithm(), prob=null_problem(), size=1
+        )
         self.assertTrue(isl.extract(object) is None)
         self.assertTrue(not isl.extract(thread_island) is None)
 
@@ -423,9 +487,7 @@ class island_test_case(_ut.TestCase):
 
 
 class mp_island_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.mp_island` class.
-
-    """
+    """Test case for the :class:`~pygmo.mp_island` class."""
 
     def __init__(self, level):
         _ut.TestCase.__init__(self)
@@ -438,9 +500,11 @@ class mp_island_test_case(_ut.TestCase):
         from .core import island, de, rosenbrock
         from . import mp_island
         from copy import copy, deepcopy
+
         has_dill = False
         try:
             import dill
+
             has_dill = True
         except ImportError:
             pass
@@ -463,7 +527,9 @@ class mp_island_test_case(_ut.TestCase):
             isl.extract(object).pid
         err = cm.exception
         self.assertTrue(
-            "The 'pid' property is available only when the island is configured to spawn" in str(err))
+            "The 'pid' property is available only when the island is configured to spawn"
+            in str(err)
+        )
 
         # Init a few times, to confirm that the second
         # and third inits don't do anything.
@@ -493,15 +559,18 @@ class mp_island_test_case(_ut.TestCase):
             isl.wait_check()
         err = cm.exception
         self.assertTrue(
-            "The multiprocessing island pool was stopped. Please restart it via mp_island.init_pool()." in str(err))
+            "The multiprocessing island pool was stopped. Please restart it via mp_island.init_pool()."
+            in str(err)
+        )
 
         # Verify that asking for the pool size triggers the creation of a new pool.
         self.assertTrue(mp_island.get_pool_size() > 0)
         mp_island.resize_pool(4)
 
         # Check the picklability of a problem storing a lambda.
-        isl = island(algo=de(), prob=_prob(
-            lambda x, y: x + y), size=25, udi=mp_island())
+        isl = island(
+            algo=de(), prob=_prob(lambda x, y: x + y), size=25, udi=mp_island()
+        )
         isl.evolve()
         isl.wait_check()
 
@@ -531,15 +600,17 @@ class mp_island_test_case(_ut.TestCase):
 
         # Tests when not using the pool.
         with self.assertRaises(TypeError) as cm:
-            island(algo=de(), prob=rosenbrock(),
-                   size=25, udi=mp_island(use_pool=None))
+            island(algo=de(), prob=rosenbrock(), size=25, udi=mp_island(use_pool=None))
         err = cm.exception
         self.assertTrue(
-            "The 'use_pool' parameter in the mp_island constructor must be a boolean" in str(err))
+            "The 'use_pool' parameter in the mp_island constructor must be a boolean"
+            in str(err)
+        )
 
         # Island properties, copy/deepcopy, pickle.
-        isl = island(algo=de(), prob=rosenbrock(), size=25,
-                     udi=mp_island(use_pool=False))
+        isl = island(
+            algo=de(), prob=rosenbrock(), size=25, udi=mp_island(use_pool=False)
+        )
         self.assertTrue("Using a process pool: no" in str(isl))
         self.assertFalse(isl.extract(object).use_pool)
         self.assertTrue(isl.extract(object).pid is None)
@@ -571,8 +642,12 @@ class mp_island_test_case(_ut.TestCase):
         self.assertTrue(isl.extract(object).pid is None)
 
         # Error transport when not using a pool.
-        isl = island(algo=de(), prob=_prob(
-            lambda x, y: x + y), size=2, udi=mp_island(use_pool=False))
+        isl = island(
+            algo=de(),
+            prob=_prob(lambda x, y: x + y),
+            size=2,
+            udi=mp_island(use_pool=False),
+        )
         isl.evolve()
         isl.wait()
         self.assertTrue("**error occurred**" in repr(isl))
@@ -580,7 +655,9 @@ class mp_island_test_case(_ut.TestCase):
             isl.wait_check()
         err = cm.exception
         self.assertTrue(
-            "An exception was raised in the evolution of a multiprocessing island. The full error message is:" in str(err))
+            "An exception was raised in the evolution of a multiprocessing island. The full error message is:"
+            in str(err)
+        )
         self.assertTrue(isl.extract(object).pid is None)
 
         if self._level == 0:
@@ -588,8 +665,12 @@ class mp_island_test_case(_ut.TestCase):
 
         # Check exception transport.
         for _ in range(1000):
-            isl = island(algo=de(), prob=_prob(
-                lambda x, y: x + y), size=2, udi=mp_island(use_pool=True))
+            isl = island(
+                algo=de(),
+                prob=_prob(lambda x, y: x + y),
+                size=2,
+                udi=mp_island(use_pool=True),
+            )
             isl.evolve()
             isl.wait()
             self.assertTrue("**error occurred**" in repr(isl))
@@ -597,9 +678,7 @@ class mp_island_test_case(_ut.TestCase):
 
 
 class ipyparallel_island_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.ipyparallel` class.
-
-    """
+    """Test case for the :class:`~pygmo.ipyparallel` class."""
 
     def __init__(self, level):
         _ut.TestCase.__init__(self)
@@ -624,17 +703,15 @@ class ipyparallel_island_test_case(_ut.TestCase):
         ipyparallel_island.shutdown_view()
         ipyparallel_island.shutdown_view()
 
-        to = .5
-        isl = island(algo=de(), prob=rosenbrock(),
-                     size=25, udi=ipyparallel_island())
+        to = 0.5
+        isl = island(algo=de(), prob=rosenbrock(), size=25, udi=ipyparallel_island())
         ipyparallel_island.shutdown_view()
         try:
             # Try with kwargs for the client.
-            ipyparallel_island.init_view(client_kwargs={'timeout': to})
+            ipyparallel_island.init_view(client_kwargs={"timeout": to})
         except OSError:
             return
-        isl = island(algo=de(), prob=rosenbrock(),
-                     size=25, udi=ipyparallel_island())
+        isl = island(algo=de(), prob=rosenbrock(), size=25, udi=ipyparallel_island())
         self.assertEqual(isl.get_name(), "Ipyparallel island")
         self.assertTrue(isl.get_extra_info() != "")
         ipyparallel_island.shutdown_view()
@@ -645,14 +722,15 @@ class ipyparallel_island_test_case(_ut.TestCase):
         isl.wait_check()
 
         # Try kwargs for the view.
-        ipyparallel_island.init_view(view_kwargs={'targets': [1]})
+        ipyparallel_island.init_view(view_kwargs={"targets": [1]})
         isl.evolve(20)
         isl.evolve(20)
         isl.wait_check()
 
         # Check the picklability of a problem storing a lambda.
-        isl = island(algo=de(), prob=_prob(lambda x, y: x + y),
-                     size=25, udi=ipyparallel_island())
+        isl = island(
+            algo=de(), prob=_prob(lambda x, y: x + y), size=25, udi=ipyparallel_island()
+        )
         isl.evolve()
         isl.wait_check()
 
@@ -691,10 +769,13 @@ class ipyparallel_island_test_case(_ut.TestCase):
 
         # Check exception transport.
         for _ in range(10):
-            isl = island(algo=de(), prob=_prob(
-                lambda x, y: x + y), size=2, udi=ipyparallel_island())
+            isl = island(
+                algo=de(),
+                prob=_prob(lambda x, y: x + y),
+                size=2,
+                udi=ipyparallel_island(),
+            )
             isl.evolve()
             isl.wait()
             self.assertTrue("**error occurred**" in repr(isl))
-            self.assertRaises(RuntimeError,
-                              lambda: isl.wait_check())
+            self.assertRaises(RuntimeError, lambda: isl.wait_check())

@@ -19,9 +19,7 @@ class _bf(object):
 
 
 class bfe_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.bfe` class.
-
-    """
+    """Test case for the :class:`~pygmo.bfe` class."""
 
     def runTest(self):
         self.run_basic_tests()
@@ -33,6 +31,7 @@ class bfe_test_case(_ut.TestCase):
     def run_basic_tests(self):
         # Tests for minimal bfe, and mandatory methods.
         from .core import bfe, default_bfe, thread_bfe, rosenbrock, problem
+
         # Def construction.
         b = bfe()
         self.assertTrue(b.extract(default_bfe) is not None)
@@ -77,10 +76,10 @@ class bfe_test_case(_ut.TestCase):
         self.assertTrue(bf.extract(int) is None)
 
         # Call operator.
-        self.assertTrue(all(bf(prob=rosenbrock(5), dvs=[5]*35) == [1]*7))
+        self.assertTrue(all(bf(prob=rosenbrock(5), dvs=[5] * 35) == [1] * 7))
         # A few more times.
-        self.assertTrue(all(bf(rosenbrock(5), [5]*35) == [1]*7))
-        self.assertTrue(all(bf(problem(rosenbrock(5)), [5]*35) == [1]*7))
+        self.assertTrue(all(bf(rosenbrock(5), [5] * 35) == [1] * 7))
+        self.assertTrue(all(bf(problem(rosenbrock(5)), [5] * 35) == [1] * 7))
 
         # Assert that b_inst was deep-copied into prob:
         # the instance in bf will have its own copy of glob
@@ -102,7 +101,7 @@ class bfe_test_case(_ut.TestCase):
                 # Return as numpy array.
                 return np.array(([1] * nf) * ndvs)
 
-        self.assertTrue(all(bfe(b())(prob=rosenbrock(5), dvs=[5]*35) == [1]*7))
+        self.assertTrue(all(bfe(b())(prob=rosenbrock(5), dvs=[5] * 35) == [1] * 7))
 
         class b(object):
 
@@ -114,7 +113,7 @@ class bfe_test_case(_ut.TestCase):
                 # Return as tuple.
                 return tuple(([1] * nf) * ndvs)
 
-        self.assertTrue(all(bfe(b())(prob=rosenbrock(5), dvs=[5]*35) == [1]*7))
+        self.assertTrue(all(bfe(b())(prob=rosenbrock(5), dvs=[5] * 35) == [1] * 7))
 
         # Try with a function.
         def b_func(p, dvs):
@@ -123,8 +122,7 @@ class bfe_test_case(_ut.TestCase):
             ndvs = len(dvs) // dim
             return ([1] * nf) * ndvs
 
-        self.assertTrue(
-            all(bfe(b_func)(prob=rosenbrock(5), dvs=[5]*35) == [1]*7))
+        self.assertTrue(all(bfe(b_func)(prob=rosenbrock(5), dvs=[5] * 35) == [1] * 7))
         self.assertTrue(bfe(b_func).is_(type(b_func)))
 
         # A few failure modes.
@@ -135,8 +133,9 @@ class bfe_test_case(_ut.TestCase):
             # Wrong size of the returned list.
             return ([1] * nf) * (ndvs + 1)
 
-        self.assertRaises(ValueError, lambda: bfe(
-            b_func)(prob=rosenbrock(5), dvs=[5]*35))
+        self.assertRaises(
+            ValueError, lambda: bfe(b_func)(prob=rosenbrock(5), dvs=[5] * 35)
+        )
 
         def b_func(p, dvs):
             dim = p.get_nx()
@@ -145,15 +144,18 @@ class bfe_test_case(_ut.TestCase):
             # Return non-iterable object.
             return 42
 
-        self.assertRaises(ValueError, lambda: bfe(
-            b_func)(prob=rosenbrock(5), dvs=[5]*35))
+        self.assertRaises(
+            ValueError, lambda: bfe(b_func)(prob=rosenbrock(5), dvs=[5] * 35)
+        )
 
         # Test that construction from another pygmo.bfe fails.
         with self.assertRaises(TypeError) as cm:
             bfe(bfe(b_func))
         err = cm.exception
         self.assertTrue(
-            "a pygmo.bfe cannot be used as a UDBFE for another pygmo.bfe (if you need to copy a bfe please use the standard Python copy()/deepcopy() functions)" in str(err))
+            "a pygmo.bfe cannot be used as a UDBFE for another pygmo.bfe (if you need to copy a bfe please use the standard Python copy()/deepcopy() functions)"
+            in str(err)
+        )
 
     def run_extract_tests(self):
         from .core import bfe, _test_bfe, thread_bfe
@@ -222,8 +224,8 @@ class bfe_test_case(_ut.TestCase):
                 return ([1] * nf) * ndvs
 
         bf = bfe(tb())
-        self.assert_(bf.get_name() != '')
-        self.assert_(bf.get_extra_info() == '')
+        self.assert_(bf.get_name() != "")
+        self.assert_(bf.get_extra_info() == "")
 
         class tb(object):
             def __call__(self, p, dvs):
@@ -234,11 +236,11 @@ class bfe_test_case(_ut.TestCase):
                 return ([1] * nf) * ndvs
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
         bf = bfe(tb())
-        self.assertTrue(bf.get_name() == 'pippo')
-        self.assertTrue(bf.get_extra_info() == '')
+        self.assertTrue(bf.get_name() == "pippo")
+        self.assertTrue(bf.get_extra_info() == "")
 
         class tb(object):
             def __call__(self, p, dvs):
@@ -249,11 +251,11 @@ class bfe_test_case(_ut.TestCase):
                 return ([1] * nf) * ndvs
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         bf = bfe(tb())
-        self.assertTrue(bf.get_name() != '')
-        self.assertTrue(bf.get_extra_info() == 'pluto')
+        self.assertTrue(bf.get_name() != "")
+        self.assertTrue(bf.get_extra_info() == "pluto")
 
         class tb(object):
             def __call__(self, p, dvs):
@@ -264,14 +266,14 @@ class bfe_test_case(_ut.TestCase):
                 return ([1] * nf) * ndvs
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         bf = bfe(tb())
-        self.assertTrue(bf.get_name() == 'pippo')
-        self.assertTrue(bf.get_extra_info() == 'pluto')
+        self.assertTrue(bf.get_name() == "pippo")
+        self.assertTrue(bf.get_extra_info() == "pluto")
 
     def run_thread_safety_tests(self):
         from .core import bfe, thread_bfe, _tu_test_bfe
@@ -286,14 +288,13 @@ class bfe_test_case(_ut.TestCase):
                 return ([1] * nf) * ndvs
 
         self.assertTrue(bfe(tb()).get_thread_safety() == ts.none)
-        self.assertTrue(
-            bfe(thread_bfe()).get_thread_safety() == ts.basic)
-        self.assertTrue(
-            bfe(_tu_test_bfe()).get_thread_safety() == ts.none)
+        self.assertTrue(bfe(thread_bfe()).get_thread_safety() == ts.basic)
+        self.assertTrue(bfe(_tu_test_bfe()).get_thread_safety() == ts.none)
 
     def run_pickle_test(self):
         from .core import bfe, thread_bfe
         from pickle import dumps, loads
+
         bf = bfe(thread_bfe())
         bf = loads(dumps(bf))
         self.assertEqual(repr(bf), repr(bfe(thread_bfe())))
@@ -306,12 +307,18 @@ class bfe_test_case(_ut.TestCase):
 
 
 class thread_bfe_test_case(_ut.TestCase):
-    """Test case for the thread_bfe UDBFE
-
-    """
+    """Test case for the thread_bfe UDBFE"""
 
     def runTest(self):
-        from .core import thread_bfe, bfe, member_bfe, rosenbrock, batch_random_decision_vector, problem
+        from .core import (
+            thread_bfe,
+            bfe,
+            member_bfe,
+            rosenbrock,
+            batch_random_decision_vector,
+            problem,
+        )
+
         udbfe = thread_bfe()
         b = bfe(udbfe=udbfe)
         self.assertTrue(b.is_(thread_bfe))
@@ -320,13 +327,12 @@ class thread_bfe_test_case(_ut.TestCase):
         prob = problem(rosenbrock(5))
         dvs = batch_random_decision_vector(prob, 6)
         fvs = b(prob, dvs)
-        fvs.shape = (6, )
+        fvs.shape = (6,)
         dvs.shape = (6, 5)
         for dv, fv in zip(dvs, fvs):
             self.assertTrue(fv == prob.fitness(dv))
 
-        self.assertTrue(
-            b.get_name() == "Multi-threaded batch fitness evaluator")
+        self.assertTrue(b.get_name() == "Multi-threaded batch fitness evaluator")
         self.assertTrue(b.get_extra_info() == "")
 
         class p(object):
@@ -337,7 +343,7 @@ class thread_bfe_test_case(_ut.TestCase):
                 return ([0], [1])
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
         prob = problem(p())
 
@@ -345,16 +351,24 @@ class thread_bfe_test_case(_ut.TestCase):
             b(prob, [0])
         err = cm.exception
         self.assertTrue(
-            "Cannot use a thread_bfe on the problem 'pippo', which does not provide the required level of thread safety" in str(err))
+            "Cannot use a thread_bfe on the problem 'pippo', which does not provide the required level of thread safety"
+            in str(err)
+        )
 
 
 class member_bfe_test_case(_ut.TestCase):
-    """Test case for the member_bfe UDBFE
-
-    """
+    """Test case for the member_bfe UDBFE"""
 
     def runTest(self):
-        from .core import thread_bfe, bfe, member_bfe, rosenbrock, batch_random_decision_vector, problem
+        from .core import (
+            thread_bfe,
+            bfe,
+            member_bfe,
+            rosenbrock,
+            batch_random_decision_vector,
+            problem,
+        )
+
         udbfe = member_bfe()
         b = bfe(udbfe=udbfe)
         self.assertFalse(b.is_(thread_bfe))
@@ -367,7 +381,9 @@ class member_bfe_test_case(_ut.TestCase):
             b(prob, dvs)
         err = cm.exception
         self.assertTrue(
-            "The batch_fitness() method has been invoked, but it is not implemented in a UDP of type 'Multidimensional Rosenbrock Function'" in str(err))
+            "The batch_fitness() method has been invoked, but it is not implemented in a UDP of type 'Multidimensional Rosenbrock Function'"
+            in str(err)
+        )
 
         class p(object):
             def fitness(self, x):
@@ -387,12 +403,16 @@ class member_bfe_test_case(_ut.TestCase):
 
 
 class mp_bfe_test_case(_ut.TestCase):
-    """Test case for the mp_bfe UDBFE
-
-    """
+    """Test case for the mp_bfe UDBFE"""
 
     def runTest(self):
-        from .core import thread_bfe, bfe, rosenbrock, batch_random_decision_vector, problem
+        from .core import (
+            thread_bfe,
+            bfe,
+            rosenbrock,
+            batch_random_decision_vector,
+            problem,
+        )
         from . import mp_bfe
 
         mp_bfe.shutdown_pool()
@@ -412,7 +432,7 @@ class mp_bfe_test_case(_ut.TestCase):
         dvs = batch_random_decision_vector(prob, 6)
         fvs = b(prob, dvs)
         self.assertEqual(prob.get_fevals(), 6)
-        fvs.shape = (6, )
+        fvs.shape = (6,)
         dvs.shape = (6, 5)
         for dv, fv in zip(dvs, fvs):
             self.assertTrue(fv == prob.fitness(dv))
@@ -437,7 +457,7 @@ class mp_bfe_test_case(_ut.TestCase):
         fvs = b(prob, dvs)
 
         for fv in fvs:
-            self.assertTrue(fv == 0.)
+            self.assertTrue(fv == 0.0)
 
         # Try different chunksize as well.
         udbfe = mp_bfe(chunksize=2)
@@ -446,7 +466,7 @@ class mp_bfe_test_case(_ut.TestCase):
         fvs = b(prob, dvs)
 
         for fv in fvs:
-            self.assertTrue(fv == 0.)
+            self.assertTrue(fv == 0.0)
 
         udbfe = mp_bfe(chunksize=None)
         b = bfe(udbfe=udbfe)
@@ -454,31 +474,37 @@ class mp_bfe_test_case(_ut.TestCase):
         fvs = b(prob, dvs)
 
         for fv in fvs:
-            self.assertTrue(fv == 0.)
+            self.assertTrue(fv == 0.0)
 
         # Error handling.
         with self.assertRaises(TypeError) as cm:
-            b = bfe(udbfe=mp_bfe(chunksize='pippo'))
+            b = bfe(udbfe=mp_bfe(chunksize="pippo"))
         err = cm.exception
         self.assertTrue(
-            "The 'chunksize' argument must be None or an int, but it is of type '{}' instead".format(str) in str(err))
+            "The 'chunksize' argument must be None or an int, but it is of type '{}' instead".format(
+                str
+            )
+            in str(err)
+        )
 
         with self.assertRaises(ValueError) as cm:
             b = bfe(udbfe=mp_bfe(chunksize=0))
         err = cm.exception
         self.assertTrue(
-            "The 'chunksize' parameter must be a positive integer, but its value is 0 instead" in str(err))
+            "The 'chunksize' parameter must be a positive integer, but its value is 0 instead"
+            in str(err)
+        )
 
         with self.assertRaises(ValueError) as cm:
             b = bfe(udbfe=mp_bfe(chunksize=-1))
         err = cm.exception
         self.assertTrue(
-            "The 'chunksize' parameter must be a positive integer, but its value is -1 instead" in str(err))
+            "The 'chunksize' parameter must be a positive integer, but its value is -1 instead"
+            in str(err)
+        )
 
-        self.assertEqual(
-            b.get_name(), "Multiprocessing batch fitness evaluator")
-        self.assertTrue(
-            "Number of processes in the pool" in b.get_extra_info())
+        self.assertEqual(b.get_name(), "Multiprocessing batch fitness evaluator")
+        self.assertTrue("Number of processes in the pool" in b.get_extra_info())
 
         # Test exception transport in the pool.
         class _bfe_throw_prob(object):
@@ -493,14 +519,11 @@ class mp_bfe_test_case(_ut.TestCase):
         with self.assertRaises(ValueError) as cm:
             b(prob, dvs)
         err = cm.exception
-        self.assertTrue(
-            "oh snap" in str(err))
+        self.assertTrue("oh snap" in str(err))
 
 
 class ipyparallel_bfe_test_case(_ut.TestCase):
-    """Test case for the ipyparallel_bfe UDBFE
-
-    """
+    """Test case for the ipyparallel_bfe UDBFE"""
 
     def runTest(self):
         try:
@@ -508,17 +531,23 @@ class ipyparallel_bfe_test_case(_ut.TestCase):
         except ImportError:
             return
 
-        from .core import thread_bfe, bfe, rosenbrock, batch_random_decision_vector, problem
+        from .core import (
+            thread_bfe,
+            bfe,
+            rosenbrock,
+            batch_random_decision_vector,
+            problem,
+        )
         from . import ipyparallel_bfe
 
         ipyparallel_bfe.shutdown_view()
         ipyparallel_bfe.shutdown_view()
         ipyparallel_bfe.shutdown_view()
 
-        to = .5
+        to = 0.5
         try:
             # Try with kwargs for the client.
-            ipyparallel_bfe.init_view(client_kwargs={'timeout': to})
+            ipyparallel_bfe.init_view(client_kwargs={"timeout": to})
         except OSError:
             return
 
@@ -531,7 +560,7 @@ class ipyparallel_bfe_test_case(_ut.TestCase):
         dvs = batch_random_decision_vector(prob, 6)
         fvs = b(prob, dvs)
         self.assertEqual(prob.get_fevals(), 6)
-        fvs.shape = (6, )
+        fvs.shape = (6,)
         dvs.shape = (6, 5)
         for dv, fv in zip(dvs, fvs):
             self.assertTrue(fv == prob.fitness(dv))
@@ -550,7 +579,7 @@ class ipyparallel_bfe_test_case(_ut.TestCase):
         fvs = b(prob, dvs)
 
         for fv in fvs:
-            self.assertTrue(fv == 0.)
+            self.assertTrue(fv == 0.0)
 
         ipyparallel_bfe.shutdown_view()
         ipyparallel_bfe.shutdown_view()
@@ -560,10 +589,10 @@ class ipyparallel_bfe_test_case(_ut.TestCase):
         fvs = b(prob, dvs)
 
         for fv in fvs:
-            self.assertTrue(fv == 0.)
+            self.assertTrue(fv == 0.0)
 
         self.assertEqual(b.get_name(), "Ipyparallel batch fitness evaluator")
-        self.assertTrue(b.get_extra_info() != '')
+        self.assertTrue(b.get_extra_info() != "")
 
         # Test exception transport.
         class _bfe_throw_prob(object):
@@ -578,17 +607,21 @@ class ipyparallel_bfe_test_case(_ut.TestCase):
         with self.assertRaises(ipyparallel.error.CompositeError) as cm:
             b(prob, dvs)
         err = cm.exception
-        self.assertTrue(
-            "oh snap" in str(err))
+        self.assertTrue("oh snap" in str(err))
 
 
 class default_bfe_test_case(_ut.TestCase):
-    """Test case for the default_bfe UDBFE
-
-    """
+    """Test case for the default_bfe UDBFE"""
 
     def runTest(self):
-        from .core import thread_bfe, bfe, default_bfe, rosenbrock, batch_random_decision_vector, problem
+        from .core import (
+            thread_bfe,
+            bfe,
+            default_bfe,
+            rosenbrock,
+            batch_random_decision_vector,
+            problem,
+        )
 
         udbfe = default_bfe()
         b = bfe(udbfe=udbfe)
@@ -598,7 +631,7 @@ class default_bfe_test_case(_ut.TestCase):
         prob = problem(rosenbrock(5))
         dvs = batch_random_decision_vector(prob, 6)
         fvs = b(prob, dvs)
-        fvs.shape = (6, )
+        fvs.shape = (6,)
         dvs.shape = (6, 5)
         for dv, fv in zip(dvs, fvs):
             self.assertTrue(fv == prob.fitness(dv))
@@ -615,7 +648,7 @@ class default_bfe_test_case(_ut.TestCase):
         fvs = b(prob, dvs)
 
         for fv in fvs:
-            self.assertTrue(fv == 0.)
+            self.assertTrue(fv == 0.0)
 
         class p(object):
             def fitness(self, x):

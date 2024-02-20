@@ -89,11 +89,17 @@ class mp_bfe(object):
         """
         if not chunksize is None and not isinstance(chunksize, int):
             raise TypeError(
-                "The 'chunksize' argument must be None or an int, but it is of type '{}' instead".format(type(chunksize)))
+                "The 'chunksize' argument must be None or an int, but it is of type '{}' instead".format(
+                    type(chunksize)
+                )
+            )
 
         if not chunksize is None and chunksize <= 0:
             raise ValueError(
-                "The 'chunksize' parameter must be a positive integer, but its value is {} instead".format(chunksize))
+                "The 'chunksize' parameter must be a positive integer, but its value is {} instead".format(
+                    chunksize
+                )
+            )
 
         # Init the process pool, if necessary.
         mp_bfe.init_pool()
@@ -162,12 +168,13 @@ class mp_bfe(object):
                 ret = mp_bfe._pool.map_async(_mp_ipy_bfe_func, async_args)
             else:
                 ret = mp_bfe._pool.map_async(
-                    _mp_ipy_bfe_func, async_args, chunksize=self._chunksize)
+                    _mp_ipy_bfe_func, async_args, chunksize=self._chunksize
+                )
 
         # Build the vector of fitness vectors as a 2D numpy array.
         fvs = np.array([pickle.loads(fv) for fv in ret.get()])
         # Reshape it so that it is 1D.
-        fvs.shape = (ndvs*nf,)
+        fvs.shape = (ndvs * nf,)
 
         return fvs
 
@@ -196,8 +203,7 @@ class mp_bfe(object):
            unspecified: any exception thrown by :func:`~pygmo.mp_bfe.get_pool_size()`
 
         """
-        return "\tNumber of processes in the pool: {}".format(
-            mp_bfe.get_pool_size())
+        return "\tNumber of processes in the pool: {}".format(mp_bfe.get_pool_size())
 
     @staticmethod
     def _init_pool_impl(processes):
@@ -276,8 +282,7 @@ class mp_bfe(object):
         if not isinstance(processes, int):
             raise TypeError("The 'processes' argument must be an int")
         if processes <= 0:
-            raise ValueError(
-                "The 'processes' argument must be strictly positive")
+            raise ValueError("The 'processes' argument must be strictly positive")
 
         with mp_bfe._pool_lock:
             # NOTE: this will either init a new pool
@@ -337,6 +342,7 @@ class ipyparallel_bfe(object):
        https://ipyparallel.readthedocs.io/en/latest/
 
     """
+
     # Static variables for the view.
     _view_lock = _Lock()
     _view = None
@@ -389,7 +395,8 @@ class ipyparallel_bfe(object):
             if ipyparallel_bfe._view is None:
                 # Create the new view.
                 ipyparallel_bfe._view = _make_ipyparallel_view(
-                    client_args, client_kwargs, view_args, view_kwargs)
+                    client_args, client_kwargs, view_args, view_kwargs
+                )
 
     @staticmethod
     def shutdown_view():
@@ -403,13 +410,14 @@ class ipyparallel_bfe(object):
 
         """
         import gc
+
         with ipyparallel_bfe._view_lock:
             if ipyparallel_bfe._view is None:
                 return
 
             old_view = ipyparallel_bfe._view
             ipyparallel_bfe._view = None
-            del(old_view)
+            del old_view
             gc.collect()
 
     def __call__(self, prob, dvs):
@@ -467,14 +475,13 @@ class ipyparallel_bfe(object):
 
         with ipyparallel_bfe._view_lock:
             if ipyparallel_bfe._view is None:
-                ipyparallel_bfe._view = _make_ipyparallel_view(
-                    [], {}, [], {})
+                ipyparallel_bfe._view = _make_ipyparallel_view([], {}, [], {})
             ret = ipyparallel_bfe._view.map_async(_mp_ipy_bfe_func, async_args)
 
         # Build the vector of fitness vectors as a 2D numpy array.
         fvs = np.array([pickle.loads(fv) for fv in ret.get()])
         # Reshape it so that it is 1D.
-        fvs.shape = (ndvs*nf,)
+        fvs.shape = (ndvs * nf,)
 
         return fvs
 
@@ -495,9 +502,12 @@ class ipyparallel_bfe(object):
 
         """
         from copy import deepcopy
+
         with ipyparallel_bfe._view_lock:
             if ipyparallel_bfe._view is None:
                 return "\tNo cluster view has been created yet"
             else:
                 d = deepcopy(ipyparallel_bfe._view.queue_status())
-        return "\tQueue status:\n\t\n\t" + "\n\t".join(["(" + str(k) + ", " + str(d[k]) + ")" for k in d])
+        return "\tQueue status:\n\t\n\t" + "\n\t".join(
+            ["(" + str(k) + ", " + str(d[k]) + ")" for k in d]
+        )

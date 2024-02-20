@@ -33,7 +33,7 @@ from ..core import dtlz
 # Plotting functions
 
 
-def plot_non_dominated_fronts(points, marker='o', comp=[0, 1], axes=None):
+def plot_non_dominated_fronts(points, marker="o", comp=[0, 1], axes=None):
     """
     Plots the nondominated fronts of a set of points. Makes use of :class:`~pygmo.fast_non_dominated_sorting` to
     compute the non dominated fronts.
@@ -62,9 +62,13 @@ def plot_non_dominated_fronts(points, marker='o', comp=[0, 1], axes=None):
     fronts, _, _, _ = fast_non_dominated_sorting(points)
 
     # We define the colors of the fronts (grayscale from black to white)
-    cl = list(zip(linspace(0.1, 0.9, len(fronts)),
-                  linspace(0.1, 0.9, len(fronts)),
-                  linspace(0.1, 0.9, len(fronts))))
+    cl = list(
+        zip(
+            linspace(0.1, 0.9, len(fronts)),
+            linspace(0.1, 0.9, len(fronts)),
+            linspace(0.1, 0.9, len(fronts)),
+        )
+    )
 
     if axes is None:
         axes = plt.axes()
@@ -72,8 +76,9 @@ def plot_non_dominated_fronts(points, marker='o', comp=[0, 1], axes=None):
     for ndr, front in enumerate(fronts):
         # We plot the points
         for idx in front:
-            axes.plot(points[idx][comp[0]], points[idx][
-                comp[1]], marker=marker, color=cl[ndr])
+            axes.plot(
+                points[idx][comp[0]], points[idx][comp[1]], marker=marker, color=cl[ndr]
+            )
         # We plot the fronts
         # Frist compute the points coordinates
         x = [points[idx][comp[0]] for idx in front]
@@ -82,8 +87,7 @@ def plot_non_dominated_fronts(points, marker='o', comp=[0, 1], axes=None):
         tmp = [(a, b) for a, b in zip(x, y)]
         tmp = sorted(tmp, key=lambda k: k[0])
         # Now plot using step
-        axes.step([c[0] for c in tmp], [c[1]
-                                        for c in tmp], color=cl[ndr], where='post')
+        axes.step([c[0] for c in tmp], [c[1] for c in tmp], color=cl[ndr], where="post")
 
     return axes
 
@@ -114,43 +118,46 @@ def _dtlz_plot(self, pop, az=40, comp=[0, 1, 2]):
     import matplotlib.pyplot as plt
     import numpy as np
 
-    if (pop.problem.get_name()[:-1] != "DTLZ"):
-        raise(ValueError, "The problem seems not to be from the DTLZ suite")
+    if pop.problem.get_name()[:-1] != "DTLZ":
+        raise (ValueError, "The problem seems not to be from the DTLZ suite")
 
-    if (len(comp) != 3):
-        raise(ValueError, "The kwarg *comp* needs to contain exactly 3 elements (ids for the x,y and z axis)")
+    if len(comp) != 3:
+        raise (
+            ValueError,
+            "The kwarg *comp* needs to contain exactly 3 elements (ids for the x,y and z axis)",
+        )
 
     # Create a new figure
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    ax = fig.add_subplot(111, projection="3d")
 
     # plot the points
     fit = np.transpose(pop.get_f())
     try:
-        ax.plot(fit[comp[0]], fit[comp[1]], fit[comp[2]], 'ro')
+        ax.plot(fit[comp[0]], fit[comp[1]], fit[comp[2]], "ro")
     except IndexError:
-        print('Error. Please choose correct fitness dimensions for printing!')
+        print("Error. Please choose correct fitness dimensions for printing!")
 
     # Plot pareto front for dtlz 1
-    if (pop.problem.get_name()[-1] in ["1"]):
+    if pop.problem.get_name()[-1] in ["1"]:
 
         X, Y = np.meshgrid(np.linspace(0, 0.5, 100), np.linspace(0, 0.5, 100))
-        Z = - X - Y + 0.5
+        Z = -X - Y + 0.5
         # remove points not in the simplex
         for i in range(100):
             for j in range(100):
                 if X[i, j] < 0 or Y[i, j] < 0 or Z[i, j] < 0:
-                    Z[i, j] = float('nan')
+                    Z[i, j] = float("nan")
 
-        ax.set_xlim(0, 1.)
-        ax.set_ylim(0, 1.)
-        ax.set_zlim(0, 1.)
+        ax.set_xlim(0, 1.0)
+        ax.set_ylim(0, 1.0)
+        ax.set_zlim(0, 1.0)
 
         ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
         plt.plot([0, 0.5], [0.5, 0], [0, 0])
 
     # Plot pareto fronts for dtlz 2,3,4
-    if (pop.problem.get_name()[-1] in ["2", "3", "4"]):
+    if pop.problem.get_name()[-1] in ["2", "3", "4"]:
         # plot the wireframe of the known optimal pareto front
         thetas = np.linspace(0, (np.pi / 2.0), 30)
         # gammas = np.linspace(-np.pi / 4, np.pi / 4, 30)

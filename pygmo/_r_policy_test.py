@@ -16,9 +16,7 @@ class _r_pol(object):
 
 
 class r_policy_test_case(_ut.TestCase):
-    """Test case for the :class:`~pygmo.r_policy` class.
-
-    """
+    """Test case for the :class:`~pygmo.r_policy` class."""
 
     def runTest(self):
         self.run_basic_tests()
@@ -30,6 +28,7 @@ class r_policy_test_case(_ut.TestCase):
         # Tests for minimal r_policy, and mandatory methods.
         import numpy as np
         from .core import r_policy, fair_replace
+
         # Def construction.
         r = r_policy()
         self.assertTrue(r.extract(fair_replace) is not None)
@@ -43,11 +42,13 @@ class r_policy_test_case(_ut.TestCase):
 
         class nr0(object):
             pass
+
         self.assertRaises(NotImplementedError, lambda: r_policy(nr0()))
 
         class nr1(object):
 
             replace = 45
+
         self.assertRaises(NotImplementedError, lambda: r_policy(nr1()))
 
         # The minimal good citizen.
@@ -77,14 +78,35 @@ class r_policy_test_case(_ut.TestCase):
         self.assertTrue(r_pol.is_(r))
 
         # Check the replace method.
-        self.assertTrue(isinstance(r_pol.replace(
-            ([], np.zeros((0, 2)), np.zeros((0, 2))), 1, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))), tuple))
-        r_out = r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
-                              [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2))))
+        self.assertTrue(
+            isinstance(
+                r_pol.replace(
+                    ([], np.zeros((0, 2)), np.zeros((0, 2))),
+                    1,
+                    0,
+                    1,
+                    0,
+                    0,
+                    [],
+                    ([], np.zeros((0, 2)), np.zeros((0, 2))),
+                ),
+                tuple,
+            )
+        )
+        r_out = r_pol.replace(
+            ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+            2,
+            0,
+            1,
+            0,
+            0,
+            [],
+            ([], np.zeros((0, 2)), np.zeros((0, 2))),
+        )
         self.assertTrue(np.all(r_out[0] == np.array([1, 2])))
         self.assertTrue(r_out[1].dtype == np.dtype(float))
         self.assertTrue(r_out[2].dtype == np.dtype(float))
-        self.assertTrue(np.all(r_out[1] == np.array([[.1, .2], [.3, .4]])))
+        self.assertTrue(np.all(r_out[1] == np.array([[0.1, 0.2], [0.3, 0.4]])))
         self.assertTrue(np.all(r_out[2] == np.array([[1.1], [2.2]])))
         self.assertTrue(len(r_out) == 3)
         # Assert that r_inst was deep-copied into r_pol:
@@ -92,7 +114,7 @@ class r_policy_test_case(_ut.TestCase):
         # and it will not be a reference the outside object.
         self.assertEqual(len(glob), 0)
         self.assertEqual(len(r_pol.extract(r).g), 2)
-        self.assertEqual(r_pol.extract(r).g, [2]*2)
+        self.assertEqual(r_pol.extract(r).g, [2] * 2)
 
         r_pol = r_policy(fair_replace())
         self.assertTrue(r_pol.get_extra_info() != "")
@@ -107,67 +129,164 @@ class r_policy_test_case(_ut.TestCase):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return []
+
         r_pol = r_policy(r())
-        self.assertRaises(RuntimeError, lambda: r_pol.replace(inds=([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), nx=2, nix=0, nobj=1, nec=0, nic=0, tol=[], mig=([], np.zeros((0, 2)), np.zeros((0, 2)))))
+        self.assertRaises(
+            RuntimeError,
+            lambda: r_pol.replace(
+                inds=([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                nx=2,
+                nix=0,
+                nobj=1,
+                nec=0,
+                nic=0,
+                tol=[],
+                mig=([], np.zeros((0, 2)), np.zeros((0, 2))),
+            ),
+        )
         # Try also flipping around the named argument.
-        self.assertRaises(RuntimeError, lambda: r_pol.replace(nx=2, inds=([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), nec=0, nix=0, nobj=1, nic=0, mig=([], np.zeros((0, 2)), np.zeros((0, 2))), tol=[]))
+        self.assertRaises(
+            RuntimeError,
+            lambda: r_pol.replace(
+                nx=2,
+                inds=([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                nec=0,
+                nix=0,
+                nobj=1,
+                nic=0,
+                mig=([], np.zeros((0, 2)), np.zeros((0, 2))),
+                tol=[],
+            ),
+        )
 
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return [1]
+
         r_pol = r_policy(r())
-        self.assertRaises(ValueError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))))
+        self.assertRaises(
+            ValueError,
+            lambda: r_pol.replace(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            ),
+        )
 
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return [1, 2]
+
         r_pol = r_policy(r())
-        self.assertRaises(ValueError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))))
+        self.assertRaises(
+            ValueError,
+            lambda: r_pol.replace(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            ),
+        )
 
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return [1, 2, 3, 4]
+
         r_pol = r_policy(r())
-        self.assertRaises(ValueError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))))
+        self.assertRaises(
+            ValueError,
+            lambda: r_pol.replace(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            ),
+        )
 
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return 1
+
         r_pol = r_policy(r())
-        self.assertRaises(TypeError, lambda: r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
-            [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2)))))
+        self.assertRaises(
+            TypeError,
+            lambda: r_pol.replace(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            ),
+        )
 
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return ([1], [], [])
+
         r_pol = r_policy(r())
         with self.assertRaises(ValueError) as cm:
-            r_pol.replace(([1, 2], [[.1], [.3, .4]], [
-                [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2))))
+            r_pol.replace(
+                ([1, 2], [[0.1], [0.3, 0.4]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            )
         with self.assertRaises(ValueError) as cm:
-            r_pol.replace(([1, 2], [[.1, .2]], [
-                [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2))))
+            r_pol.replace(
+                ([1, 2], [[0.1, 0.2]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            )
         with self.assertRaises(ValueError) as cm:
-            r_pol.replace(([1, 2], [[.1, .2], [.3, .4]], [
-                [1.1], [2.2]]), 2, 0, 1, 0, 0, [], ([], np.zeros((0, 2)), np.zeros((0, 2))))
+            r_pol.replace(
+                ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]]),
+                2,
+                0,
+                1,
+                0,
+                0,
+                [],
+                ([], np.zeros((0, 2)), np.zeros((0, 2))),
+            )
 
         # Test construction of array ID from list.
-        inds = ([1, 2], [[.1, .2], [.3, .4]], [[1.1], [2.2]])
+        inds = ([1, 2], [[0.1, 0.2], [0.3, 0.4]], [[1.1], [2.2]])
 
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
                 return ([1], [[1, 2]], [[1]])
+
         r_pol = r_policy(r())
         ret = r_pol.replace(inds, 2, 0, 1, 0, 0, [], inds)
         self.assertEqual(ret[0][0], 1)
@@ -176,7 +295,8 @@ class r_policy_test_case(_ut.TestCase):
         class r(object):
 
             def replace(self, inds, nx, nix, nobj, nec, nic, tol, mig):
-                return (np.array([1], dtype='ulonglong'), [[1, 2]], [[1]])
+                return (np.array([1], dtype="ulonglong"), [[1, 2]], [[1]])
+
         r_pol = r_policy(r())
         ret = r_pol.replace(inds, 2, 0, 1, 0, 0, [], inds)
         self.assertEqual(ret[0][0], 1)
@@ -186,7 +306,9 @@ class r_policy_test_case(_ut.TestCase):
             r_policy(r_pol)
         err = cm.exception
         self.assertTrue(
-            "a pygmo.r_policy cannot be used as a UDRP for another pygmo.r_policy (if you need to copy a replacement policy please use the standard Python copy()/deepcopy() functions)" in str(err))
+            "a pygmo.r_policy cannot be used as a UDRP for another pygmo.r_policy (if you need to copy a replacement policy please use the standard Python copy()/deepcopy() functions)"
+            in str(err)
+        )
 
     def run_extract_tests(self):
         from .core import r_policy, _test_r_policy, fair_replace
@@ -249,8 +371,8 @@ class r_policy_test_case(_ut.TestCase):
                 return inds
 
         r_pol = r_policy(t())
-        self.assertTrue(r_pol.get_name() != '')
-        self.assertTrue(r_pol.get_extra_info() == '')
+        self.assertTrue(r_pol.get_name() != "")
+        self.assertTrue(r_pol.get_extra_info() == "")
 
         class t(object):
 
@@ -258,11 +380,11 @@ class r_policy_test_case(_ut.TestCase):
                 return inds
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
         r_pol = r_policy(t())
-        self.assertTrue(r_pol.get_name() == 'pippo')
-        self.assertTrue(r_pol.get_extra_info() == '')
+        self.assertTrue(r_pol.get_name() == "pippo")
+        self.assertTrue(r_pol.get_extra_info() == "")
 
         class t(object):
 
@@ -270,11 +392,11 @@ class r_policy_test_case(_ut.TestCase):
                 return inds
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         r_pol = r_policy(t())
-        self.assertTrue(r_pol.get_name() != '')
-        self.assertTrue(r_pol.get_extra_info() == 'pluto')
+        self.assertTrue(r_pol.get_name() != "")
+        self.assertTrue(r_pol.get_extra_info() == "pluto")
 
         class t(object):
 
@@ -282,18 +404,19 @@ class r_policy_test_case(_ut.TestCase):
                 return inds
 
             def get_name(self):
-                return 'pippo'
+                return "pippo"
 
             def get_extra_info(self):
-                return 'pluto'
+                return "pluto"
 
         r_pol = r_policy(t())
-        self.assertTrue(r_pol.get_name() == 'pippo')
-        self.assertTrue(r_pol.get_extra_info() == 'pluto')
+        self.assertTrue(r_pol.get_name() == "pippo")
+        self.assertTrue(r_pol.get_extra_info() == "pluto")
 
     def run_pickle_tests(self):
         from .core import r_policy, fair_replace
         from pickle import dumps, loads
+
         t_ = r_policy(fair_replace())
         t = loads(dumps(t_))
         self.assertEqual(repr(t), repr(t_))

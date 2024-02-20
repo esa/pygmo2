@@ -15,6 +15,7 @@ def _evolve_func_mp_pool(ser_algo_pop):
     has_dill = False
     try:
         import dill
+
         has_dill = True
     except ImportError:
         pass
@@ -46,6 +47,7 @@ def _evolve_func_mp_pipe(conn, ser_algo_pop):
         has_dill = False
         try:
             import dill
+
             has_dill = True
         except ImportError:
             pass
@@ -58,8 +60,13 @@ def _evolve_func_mp_pipe(conn, ser_algo_pop):
             new_pop = algo.evolve(pop)
             conn.send(dumps((algo, new_pop)))
         except Exception as e:
-            conn.send(RuntimeError(
-                "An exception was raised in the evolution of a multiprocessing island. The full error message is:\n{}".format(e)))
+            conn.send(
+                RuntimeError(
+                    "An exception was raised in the evolution of a multiprocessing island. The full error message is:\n{}".format(
+                        e
+                    )
+                )
+            )
         finally:
             conn.close()
 
@@ -141,7 +148,10 @@ class mp_island(object):
         # because it's re-used in the pickling support.
         if not isinstance(use_pool, bool):
             raise TypeError(
-                "The 'use_pool' parameter in the mp_island constructor must be a boolean, but it is of type {} instead.".format(type(use_pool)))
+                "The 'use_pool' parameter in the mp_island constructor must be a boolean, but it is of type {} instead.".format(
+                    type(use_pool)
+                )
+            )
         self._use_pool = use_pool
         if self._use_pool:
             # Init the process pool, if necessary.
@@ -220,6 +230,7 @@ class mp_island(object):
         has_dill = False
         try:
             import dill
+
             has_dill = True
         except ImportError:
             pass
@@ -237,9 +248,9 @@ class mp_island(object):
                 # the pool while we are sending tasks to it.
                 if mp_island._pool is None:
                     raise RuntimeError(
-                        "The multiprocessing island pool was stopped. Please restart it via mp_island.init_pool().")
-                res = mp_island._pool.apply_async(
-                    _evolve_func_mp_pool, (ser_algo_pop,))
+                        "The multiprocessing island pool was stopped. Please restart it via mp_island.init_pool()."
+                    )
+                res = mp_island._pool.apply_async(_evolve_func_mp_pool, (ser_algo_pop,))
             # NOTE: there might be a bug in need of a workaround lurking in here:
             # http://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
             # Just keep it in mind.
@@ -251,8 +262,9 @@ class mp_island(object):
             mp_ctx = _get_spawn_context()
 
             parent_conn, child_conn = mp_ctx.Pipe(duplex=False)
-            p = mp_ctx.Process(target=_evolve_func_mp_pipe,
-                               args=(child_conn, ser_algo_pop))
+            p = mp_ctx.Process(
+                target=_evolve_func_mp_pipe, args=(child_conn, ser_algo_pop)
+            )
             p.start()
             with self._pid_lock:
                 self._pid = p.pid
@@ -288,7 +300,8 @@ class mp_island(object):
         """
         if self._use_pool:
             raise ValueError(
-                "The 'pid' property is available only when the island is configured to spawn new processes, but this mp_island is using a process pool instead.")
+                "The 'pid' property is available only when the island is configured to spawn new processes, but this mp_island is using a process pool instead."
+            )
         with self._pid_lock:
             pid = self._pid
         return pid
@@ -319,10 +332,12 @@ class mp_island(object):
 
         """
         retval = "\tUsing a process pool: {}\n".format(
-            "yes" if self._use_pool else "no")
+            "yes" if self._use_pool else "no"
+        )
         if self._use_pool:
             retval += "\tNumber of processes in the pool: {}".format(
-                mp_island.get_pool_size())
+                mp_island.get_pool_size()
+            )
         else:
             with self._pid_lock:
                 pid = self._pid
@@ -409,8 +424,7 @@ class mp_island(object):
         if not isinstance(processes, int):
             raise TypeError("The 'processes' argument must be an int")
         if processes <= 0:
-            raise ValueError(
-                "The 'processes' argument must be strictly positive")
+            raise ValueError("The 'processes' argument must be strictly positive")
 
         with mp_island._pool_lock:
             # NOTE: this will either init a new pool
@@ -459,6 +473,7 @@ def _evolve_func_ipy(ser_algo_pop):
     has_dill = False
     try:
         import dill
+
         has_dill = True
     except ImportError:
         pass
@@ -541,7 +556,8 @@ class ipyparallel_island(object):
             if ipyparallel_island._view is None:
                 # Create the new view.
                 ipyparallel_island._view = _make_ipyparallel_view(
-                    client_args, client_kwargs, view_args, view_kwargs)
+                    client_args, client_kwargs, view_args, view_kwargs
+                )
 
     @staticmethod
     def shutdown_view():
@@ -557,13 +573,14 @@ class ipyparallel_island(object):
 
         """
         import gc
+
         with ipyparallel_island._view_lock:
             if ipyparallel_island._view is None:
                 return
 
             old_view = ipyparallel_island._view
             ipyparallel_island._view = None
-            del(old_view)
+            del old_view
             gc.collect()
 
     def run_evolve(self, algo, pop):
@@ -595,9 +612,11 @@ class ipyparallel_island(object):
         # the algo and pop, so that we can catch
         # serialization errors early.
         from ._ipyparallel_utils import _make_ipyparallel_view
+
         has_dill = False
         try:
             import dill
+
             has_dill = True
         except ImportError:
             pass
@@ -609,10 +628,8 @@ class ipyparallel_island(object):
         ser_algo_pop = dumps((algo, pop))
         with ipyparallel_island._view_lock:
             if ipyparallel_island._view is None:
-                ipyparallel_island._view = _make_ipyparallel_view(
-                    [], {}, [], {})
-            ret = ipyparallel_island._view.apply_async(
-                _evolve_func_ipy, ser_algo_pop)
+                ipyparallel_island._view = _make_ipyparallel_view([], {}, [], {})
+            ret = ipyparallel_island._view.apply_async(_evolve_func_ipy, ser_algo_pop)
 
         return loads(ret.get())
 
@@ -633,9 +650,12 @@ class ipyparallel_island(object):
 
         """
         from copy import deepcopy
+
         with ipyparallel_island._view_lock:
             if ipyparallel_island._view is None:
                 return "\tNo cluster view has been created yet"
             else:
                 d = deepcopy(ipyparallel_island._view.queue_status())
-        return "\tQueue status:\n\t\n\t" + "\n\t".join(["(" + str(k) + ", " + str(d[k]) + ")" for k in d])
+        return "\tQueue status:\n\t\n\t" + "\n\t".join(
+            ["(" + str(k) + ", " + str(d[k]) + ")" for k in d]
+        )
