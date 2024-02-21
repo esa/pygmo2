@@ -3,6 +3,22 @@
 Changelog
 =========
 
+2.19.6 (2024-02-21)
+-------------------
+
+New
+~~~
+
+- Add batch fitness evaluation capabilities to the CMAES
+  algorithm
+  (`#139 <https://github.com/esa/pygmo2/pull/139>`__).
+
+Fix
+~~~
+
+- Fix the unit tests for Python 3.12
+  (`#150 <https://github.com/esa/pygmo2/pull/150>`__).
+
 2.19.0 (2023-01-19)
 -------------------
 
