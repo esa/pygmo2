@@ -390,7 +390,7 @@ class scipy_optimize:
 
     def evolve(self, population):
         """
-        Call scipy.optimize.minimize with a random member of the population as start value.
+        Call scipy.optimize.minimize with a member of the population as start value.
 
         The problem is extracted from the population and its fitness function gives the objective value for the optimization process.
 
@@ -614,3 +614,75 @@ class scipy_optimize:
         if level <= 0:
             if self.options is not None:
                 self.options.pop("disp", None)
+
+class bayesian_optimization:
+
+    def __init__(self, gen=1, random_state=0):
+        self.n_iter = gen
+        self.random_state = random_state # TODO: maybe randomize if not given?
+
+        try:
+            from bayes_opt import BayesianOptimization
+
+        except ImportError as e:
+            raise ImportError(
+                "from bayes_opt import BayesianOptimization raised an exception, please make sure BayesianOptimization is installed and reachable. Error: "
+                + str(e)
+            )
+
+    def evolve(self, population):
+        problem = population.problem
+
+        # check for multiobjective and constrained problems
+        if problem.get_nobj() > 1:
+            raise ValueError(
+                "Multiple objectives detected in "
+                + problem.get_name()
+                + " instance. The wrapped bayes_opt cannot deal with them"
+            )
+
+        if problem.get_nc() > 0:
+            raise ValueError(
+                "Constraints detected in "
+                + problem.get_name()
+                + " instance. The wrapped bayes_opt cannot deal with them"
+            )
+
+
+        # create bound dict
+        xdim = problem.get_nx()
+        bounds = problem.get_bounds()
+        bound_dict = {}
+        for i in range(xdim):
+            bound_dict["dim"+str(i)] = (bounds[0][i], bounds[1][i])
+
+        # create bound wrapper problem
+        def bound_wrapper(**kwargs):
+            x = [kwargs["dim"+str(i)] for i in range(xdim)]
+            return problem.fitness(x)[0]
+
+        # create Bayesian Optimization class
+        optimizer = BayesianOptimization(
+            f=bound_wrapper,
+            pbounds=bound_dict,
+            random_state=self.random_state,
+        )
+
+        # register previous points in the population
+        for i in range(len(population)):
+            optimizer.register(params = { "dim"+str(d) : population.get_x()[i][d] for d in range(xdim)}, target = population.get_f()[i][0])
+
+        # call BayesianOptimization
+        optimizer.maximize(
+            init_points=0,
+            n_iter=self.n_iter,
+        )
+
+        # get maximum
+        best_x = [optimizer.max["params"]["dim"+str(i)] for i in range(xdim)]
+        best_f = [optimizer.max["target"]]
+
+        # add to population
+        population.push_back(best_x, best_f)
+
+        return population
