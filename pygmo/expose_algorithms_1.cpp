@@ -19,6 +19,7 @@
 #include <pagmo/algorithms/maco.hpp>
 #include <pagmo/algorithms/moead_gen.hpp>
 #include <pagmo/algorithms/nsga2.hpp>
+#include <pagmo/algorithms/nsga3.hpp>
 #include <pagmo/algorithms/nspso.hpp>
 #include <pagmo/algorithms/null_algorithm.hpp>
 #include <pagmo/algorithms/pso.hpp>
@@ -70,6 +71,9 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
 
     nsga2_.def("get_seed", &pagmo::nsga2::get_seed, generic_uda_get_seed_docstring().c_str());
     nsga2_.def("set_bfe", &pagmo::nsga2::set_bfe, nsga2_set_bfe_docstring().c_str(), py::arg("b"));
+
+    // NSGA3
+    auto nsga3_ = expose_algorithm<pagmo::nsga3>(m, algo, a_module, "nsga3", nsga3_docstring().c_str());
 
     // GACO
     auto gaco_ = expose_algorithm<pagmo::gaco>(m, algo, a_module, "gaco", gaco_docstring().c_str());

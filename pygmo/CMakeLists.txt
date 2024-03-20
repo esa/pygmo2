@@ -77,9 +77,10 @@ Python3_add_library(core MODULE WITH_SOABI
 )
 
 target_link_libraries(core PRIVATE Pagmo::pagmo Boost::boost Boost::serialization)
+target_link_directories(core PRIVATE "/home/paul/work/UoM/wrg/code/moea/pagmo2/build")
 # NOTE: quench warnings from Boost when building the library.
 target_compile_definitions(core PRIVATE BOOST_ALLOW_DEPRECATED_HEADERS)
-target_include_directories(core SYSTEM PRIVATE "${pybind11_INCLUDE_DIR}")
+target_include_directories(core SYSTEM PRIVATE "${pybind11_INCLUDE_DIR}" "/home/paul/work/UoM/wrg/code/moea/pagmo2/include")
 target_compile_definitions(core PRIVATE "${pybind11_DEFINITIONS}")
 target_compile_options(core PRIVATE
     "$<$<CONFIG:Debug>:${PYGMO_CXX_FLAGS_DEBUG}>"
