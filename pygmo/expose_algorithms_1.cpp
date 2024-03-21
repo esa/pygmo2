@@ -74,6 +74,9 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
 
     // NSGA3
     auto nsga3_ = expose_algorithm<pagmo::nsga3>(m, algo, a_module, "nsga3", nsga3_docstring().c_str());
+    nsga3_.def(py::init<unsigned, double, double, double, double, size_t, unsigned, bool>(),
+               py::arg("gen") = 1u, py::arg("cr") = 1.0, py::arg("eta_cr") = 30.0, py::arg("mut") = 0.10,
+               py::arg("eta_mut") = 20.0, py::arg("divisions") = 12u, py::arg("seed"), py::arg("use_memory") );
 
     // GACO
     auto gaco_ = expose_algorithm<pagmo::gaco>(m, algo, a_module, "gaco", gaco_docstring().c_str());
