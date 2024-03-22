@@ -78,6 +78,20 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
                py::arg("gen") = 1u, py::arg("cr") = 1.0, py::arg("eta_cr") = 30.0, py::arg("mut") = 0.10,
                py::arg("eta_mut") = 20.0, py::arg("divisions") = 12u, py::arg("seed"), py::arg("use_memory") );
 
+    nsga3_.def(
+        "get_log",
+        [](const pagmo::nsga3 &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<2>(t))));
+            }
+            return retval;
+        },
+        nsga3_get_log_docstring().c_str());
+
+    nsga3_.def("get_seed", &pagmo::nsga3::get_seed, generic_uda_get_seed_docstring().c_str());
+
     // GACO
     auto gaco_ = expose_algorithm<pagmo::gaco>(m, algo, a_module, "gaco", gaco_docstring().c_str());
     gaco_.def(
