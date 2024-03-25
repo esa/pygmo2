@@ -1702,7 +1702,7 @@ class nsga3_test_case(_ut.TestCase):
         dtlz1_p92_g20_ideal  = [3.36287e-06, 8.54994e-06, 1.33931e-04]
         nsga3_seed = 32
 
-        # Test evolve population with DTLZ2 problem
+        # Test evolve population with DTLZ1 problem
         uda = nsga3(gen=20, cr=1.0, eta_cr=30.0, mut=0.10, eta_mut=20.0, divisions=12, seed=nsga3_seed, use_memory=False)
         udp = dtlz(prob_id=1, dim=10, fdim=3)
         pop = population(udp, size=92, seed=23)
