@@ -229,8 +229,10 @@ our fitness method into C code.
     >>> class jit_rosenbrock:
     ...     def __init__(self,dim):
     ...         self.dim = dim
-    ...     @jit
     ...     def fitness(self,x):
+    ...         return jit_rosenbrock._fitness(x)
+    ...     @jit
+    ...     def _fitness(x):
     ...         retval = np.zeros((1,))
     ...         for i in range(len(x) - 1):
     ...             retval[0] += 100.*(x[i + 1]-x[i]**2)**2+(1.-x[i])**2
