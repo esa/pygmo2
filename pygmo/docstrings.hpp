@@ -127,6 +127,8 @@ std::string moead_gen_get_log_docstring();
 std::string nsga2_set_bfe_docstring();
 std::string nsga2_docstring();
 std::string nsga2_get_log_docstring();
+std::string nsga3_docstring();
+std::string nsga3_get_log_docstring();
 std::string nspso_set_bfe_docstring();
 std::string nspso_docstring();
 std::string nspso_get_log_docstring();

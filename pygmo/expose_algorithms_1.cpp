@@ -19,6 +19,7 @@
 #include <pagmo/algorithms/maco.hpp>
 #include <pagmo/algorithms/moead_gen.hpp>
 #include <pagmo/algorithms/nsga2.hpp>
+#include <pagmo/algorithms/nsga3.hpp>
 #include <pagmo/algorithms/nspso.hpp>
 #include <pagmo/algorithms/null_algorithm.hpp>
 #include <pagmo/algorithms/pso.hpp>
@@ -70,6 +71,26 @@ void expose_algorithms_1(py::module &m, py::class_<pagmo::algorithm> &algo, py::
 
     nsga2_.def("get_seed", &pagmo::nsga2::get_seed, generic_uda_get_seed_docstring().c_str());
     nsga2_.def("set_bfe", &pagmo::nsga2::set_bfe, nsga2_set_bfe_docstring().c_str(), py::arg("b"));
+
+    // NSGA3
+    auto nsga3_ = expose_algorithm<pagmo::nsga3>(m, algo, a_module, "nsga3", nsga3_docstring().c_str());
+    nsga3_.def(py::init<unsigned, double, double, double, double, size_t, unsigned, bool>(),
+               py::arg("gen") = 1u, py::arg("cr") = 1.0, py::arg("eta_cr") = 30.0, py::arg("mut") = 0.10,
+               py::arg("eta_mut") = 20.0, py::arg("divisions") = 12u, py::arg("seed"), py::arg("use_memory") );
+
+    nsga3_.def(
+        "get_log",
+        [](const pagmo::nsga3 &a) -> py::list {
+            py::list retval;
+            for (const auto &t : a.get_log()) {
+                retval.append(py::make_tuple(std::get<0>(t), std::get<1>(t),
+                                             vector_to_ndarr<py::array_t<double>>(std::get<2>(t))));
+            }
+            return retval;
+        },
+        nsga3_get_log_docstring().c_str());
+
+    nsga3_.def("get_seed", &pagmo::nsga3::get_seed, generic_uda_get_seed_docstring().c_str());
 
     // GACO
     auto gaco_ = expose_algorithm<pagmo::gaco>(m, algo, a_module, "gaco", gaco_docstring().c_str());
