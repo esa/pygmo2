@@ -41,12 +41,12 @@ class scipy_optimize:
     >>> import pygmo as pg
     >>> prob = pg.problem(pg.rosenbrock(10))
     >>> pop = pg.population(prob=prob, size=1, seed=0)
-    >>> pop.champion_f[0]
-    929975.7994682974
+    >>> [pop.champion_f[0]] # doctest: +ELLIPSIS
+    ...929975.7994682974...
     >>> scp = pg.algorithm(pg.scipy_optimize(method="L-BFGS-B"))
     >>> result = scp.evolve(pop).champion_f
-    >>> result[0] # doctest: +ELLIPSIS
-    1.13770...
+    >>> [result[0]] # doctest: +ELLIPSIS
+    ...1.1377...
     >>> pop.problem.get_fevals()
     55
     >>> pop.problem.get_gevals()
