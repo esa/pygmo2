@@ -1,4 +1,4 @@
-set(_PYGMO_BOOST_MINIMUM_VERSION 1.60.0)
+set(_PYGMO_BOOST_MINIMUM_VERSION 1.83.0)
 find_package(Boost ${_PYGMO_BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS serialization)
 
 message(STATUS "Detected Boost version: ${Boost_VERSION}")

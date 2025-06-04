@@ -1690,6 +1690,47 @@ class nsga2_test_case(_ut.TestCase):
         log = uda.get_log()
 
 
+class nsga3_test_case(_ut.TestCase):
+    """Test case for the UDA NSGA-III"""
+
+    def runTest(self):
+        import numpy as np
+        from .core import algorithm, dtlz, ideal, nsga3, population
+        from pickle import loads, dumps
+        import random
+
+        nsga3_seed = 32
+
+        # Test evolve population with DTLZ1 problem
+        uda = nsga3(gen=20, cr=1.0, eta_cr=30.0, mut=0.10, eta_mut=20.0, divisions=4, seed=nsga3_seed, use_memory=False)
+        udp = dtlz(prob_id=1, dim=10, fdim=3)
+        pop = population(udp, size=92, seed=23)
+        alg = algorithm(uda)
+        alg.set_verbosity(2)  # Required for log test below
+        out = alg.evolve(pop)
+        g20_ideal = ideal(out.get_f())
+        np.less(g20_ideal, [0.1]*3)
+
+        # Test serialisation
+        self.assertEqual(str(alg), str(loads(dumps(alg))))
+
+        # Test get_seed()
+        self.assertEqual(uda.get_seed(), nsga3_seed)
+
+        # Test log retrieval
+        inst = alg.extract(nsga3)
+        rlog = inst.get_log()
+        self.assertTrue(isinstance(rlog, list))
+        self.assertEqual(len(rlog), 20)  # ngen
+        entry = random.choice(rlog)
+        self.assertTrue(isinstance(entry, tuple))
+        self.assertEqual(len(entry), 3)  # gen, fevals, ideal
+        self.assertTrue(isinstance(entry[0], int))
+        self.assertTrue(isinstance(entry[1], int))
+        self.assertTrue(isinstance(entry[2], np.ndarray))
+        self.assertEqual(entry[2].shape, (3,))  # nobjs
+
+
 class gaco_test_case(_ut.TestCase):
     """Test case for the UDA gaco"""
 
@@ -3435,6 +3476,7 @@ def run_test_suite(level=0):
     suite.addTest(lennard_jones_test_case())
     suite.addTest(de_test_case())
     suite.addTest(nsga2_test_case())
+    suite.addTest(nsga3_test_case())
     suite.addTest(gaco_test_case())
     suite.addTest(gwo_test_case())
     suite.addTest(de1220_test_case())

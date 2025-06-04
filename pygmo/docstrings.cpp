@@ -2453,6 +2453,9 @@ See also the docs of the relevant C++ method :cpp:func:`pagmo::nsga2::get_log`.
 )";
 }
 
+std::string nsga3_docstring(){ return R"(nsga3_docstring)"; }
+std::string nsga3_get_log_docstring(){ return R"(nsga3_get_log_docstring)"; }
+
 std::string gaco_set_bfe_docstring()
 {
     return R"(set_bfe(b)
