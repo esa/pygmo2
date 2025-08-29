@@ -663,6 +663,11 @@ class free_form_test_case(_ut.TestCase):
             from .core import free_form, topology, ring
         except ImportError:
             return
+        
+        try:
+            import networkx as nx
+        except ImportError:
+            raise _ut.case.SkipTest("networkx module could not be imported")
 
         # Default ctor.
         udt = free_form()
@@ -692,11 +697,6 @@ class free_form_test_case(_ut.TestCase):
         self.assertTrue(len(topo.get_connections(3)[0]) == 0)
         self.assertTrue(len(topo.get_connections(3)[1]) == 0)
         self.assertEqual(topo.get_name(), "Free form")
-
-        try:
-            import networkx as nx
-        except ImportError:
-            return
 
         # Constructor from a valid DiGraph.
         g = nx.DiGraph()
@@ -3429,6 +3429,7 @@ def run_test_suite(level=0):
     suite.addTest(thread_island_torture_test_case())
     suite.addTest(_problem_test.problem_test_case())
     suite.addTest(_algorithm_test.algorithm_test_case())
+    suite.addTest(_algorithm_test.algorithm_scipy_wrapper_tests())
     suite.addTest(_island_test.mp_island_test_case(level))
     suite.addTest(_island_test.ipyparallel_island_test_case(level))
     suite.addTest(golomb_ruler_test_case())

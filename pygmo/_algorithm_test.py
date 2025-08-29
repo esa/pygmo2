@@ -25,7 +25,6 @@ class algorithm_test_case(_ut.TestCase):
         self.run_name_info_tests()
         self.run_thread_safety_tests()
         self.run_pickle_tests()
-        self.run_scipy_wrapper_tests()
 
     def run_basic_tests(self):
         # Tests for minimal algorithm, and mandatory methods.
@@ -428,7 +427,16 @@ class algorithm_test_case(_ut.TestCase):
         self.assertTrue(a.is_(mbh))
         self.assertTrue(a.extract(mbh).inner_algorithm.is_(_algo))
 
-    def run_scipy_wrapper_tests(self):
+class algorithm_scipy_wrapper_tests(_ut.TestCase):
+    """Test case for the :class:`~pygmo.algorithm` class with the scipy.optimize wrapper."""
+
+    def runTest(self):
+        try:
+            import scipy.version as _sc
+        except ImportError:
+            raise _ut.case.SkipTest("scipy module could not be imported")
+        del _sc
+
         from . import (
             ackley,
             algorithm,
