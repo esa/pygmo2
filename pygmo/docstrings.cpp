@@ -258,7 +258,8 @@ std::string population_get_x_docstring()
 This method will return the chromosomes of the individuals as a 2D NumPy array.
 
 Each row of the returned array represents the chromosome of the individual at the corresponding position in the
-population.
+population. For mixed-integer problems, the continuous variables occupy the first :math:`n_{cx}` components of each
+chromosome and the integer variables occupy the last :math:`n_{ix}` components.
 
 Returns:
     2D NumPy float array: a deep copy of the chromosomes of the individuals
@@ -318,8 +319,10 @@ This class represents a generic *mathematical programming* or *evolutionary opti
    \end{array}
 
 where :math:`\mathbf x \in \mathbb R^{n_{cx}} \times  \mathbb Z^{n_{ix}}` is called *decision vector* or
-*chromosome*, and is made of :math:`n_{cx}` real numbers and :math:`n_{ix}` integers (all represented as doubles). The
-total problem dimension is then indicated with :math:`n_x = n_{cx} + n_{ix}`. :math:`\mathbf{lb}, \mathbf{ub} \in
+*chromosome*, and is made of :math:`n_{cx}` real numbers and :math:`n_{ix}` integers (all represented as doubles).
+The continuous variables occupy the first :math:`n_{cx}` components of the decision vector, while the integer
+variables occupy the last :math:`n_{ix}` components. The total problem dimension is then indicated with
+:math:`n_x = n_{cx} + n_{ix}`. :math:`\mathbf{lb}, \mathbf{ub} \in
 \mathbb R^{n_{cx}} \times  \mathbb Z^{n_{ix}}` are the *box-bounds*, :math:`\mathbf f: \mathbb R^{n_{cx}} \times
 \mathbb Z^{n_{ix}} \rightarrow \mathbb R^{n_{obj}}` define the *objectives*, :math:`\mathbf c_e:  \mathbb R^{n_{cx}}
 \times  \mathbb Z^{n_{ix}} \rightarrow \mathbb R^{n_{ec}}` are non linear *equality constraints*, and :math:`\mathbf
@@ -466,7 +469,9 @@ std::string problem_get_bounds_docstring()
 Box-bounds.
 
 This method will return the box-bounds :math:`(\mathbf{lb}, \mathbf{ub})` of the problem,
-as returned by the ``get_bounds()`` method of the UDP. Infinities in the bounds are allowed.
+as returned by the ``get_bounds()`` method of the UDP. Infinities in the bounds are allowed. For mixed-integer
+problems, both bounds vectors must list the continuous variables first and the integer variables last, matching the
+ordering of the decision vector.
 
 The ``get_bounds()`` method of the UDP must return the box-bounds as a tuple of 2 elements,
 the lower bounds vector and the upper bounds vector, which must be represented as iterable Python objects (e.g.,
@@ -626,7 +631,8 @@ std::string problem_get_nix_docstring()
 
 Integer dimension of the problem.
 
-This method will return :math:`n_{ix}`, the integer dimension of the problem.
+This method will return :math:`n_{ix}`, the integer dimension of the problem. The integer variables occupy the last
+:math:`n_{ix}` components of each decision vector and of the corresponding box-bounds.
 
 The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an :class:`int`.
 If the UDP does not implement the ``get_nix()`` method, a zero integer dimension will be assumed.
