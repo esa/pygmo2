@@ -2292,8 +2292,8 @@ Args:
     gen (:class:`int`): number of generations
     variant (:class:`int`): mutation variant (dafault variant is 2: /rand/1/exp)
     variant_adptv (:class:`int`): F and CR parameter adaptation scheme to be used (one of 1..2)
-    ftol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
-    xtol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    ftol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
     memory (:class:`bool`): when true the adapted parameters CR anf F are not reset between successive calls to the evolve method
     seed (:class:`int`): seed used by the internal random number generator (default is random)
 
@@ -2975,8 +2975,8 @@ Args:
     c1 (:class:`float`): learning rate for the rank-one update of the covariance matrix (by default is automatically assigned)
     cmu (:class:`float`): learning rate for the rank-mu  update of the covariance matrix (by default is automatically assigned)
     sigma0 (:class:`float`): initial step-size
-    ftol (:class:`float`): stopping criteria on the x tolerance
-    xtol (:class:`float`): stopping criteria on the f tolerance
+    ftol (:class:`float`): stopping criteria on the f tolerance
+    xtol (:class:`float`): stopping criteria on the x tolerance
     memory (:class:`bool`): when true the adapted parameters are not reset between successive calls to the evolve method
     force_bounds (:class:`bool`): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
     seed (:class:`int`): seed used by the internal random number generator (default is random)
@@ -3043,8 +3043,8 @@ Args:
     eta_sigma (:class:`float`): learning rate for step-size update (if -1 will be automatically selected)
     eta_b (:class:`float`): learning rate for the covariance matrix update (if -1 will be automatically selected)
     sigma0 (:class:`float`):  the initial search width will be sigma0 * (ub - lb) (if -1 will be automatically selected to be 1)
-    ftol (:class:`float`): stopping criteria on the x tolerance
-    xtol (:class:`float`): stopping criteria on the f tolerance
+    ftol (:class:`float`): stopping criteria on the f tolerance
+    xtol (:class:`float`): stopping criteria on the x tolerance
     memory (:class:`bool`): when true the adapted parameters are not reset between successive calls to the evolve method
     force_bounds (:class:`bool`): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
     seed (:class:`int`): seed used by the internal random number generator (default is random)
@@ -3110,8 +3110,8 @@ Args:
     gen (:class:`int`): number of generations
     allowed_variants (array-like object): allowed mutation variants, each one being a number in [1, 18]
     variant_adptv (:class:`int`): *F* and *CR* parameter adaptation scheme to be used (one of 1..2)
-    ftol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
-    xtol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    ftol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
     memory (:class:`bool`): when true the adapted parameters *CR* anf *F* are not reset between successive calls to the evolve method
     seed (:class:`int`): seed used by the internal random number generator (default is random)
 
