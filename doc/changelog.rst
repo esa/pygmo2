@@ -3,6 +3,18 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+Fix
+~~~
+
+- Document the security implications of pygmo's use of :mod:`pickle`/``cloudpickle`` for the
+  (de)serialization of user-defined problems, algorithms, islands, etc.: deserialising pygmo
+  objects from an untrusted source is equivalent to arbitrary code execution, exactly as with
+  the standard :mod:`pickle` module. No sandboxing or validation is (or can be) performed on
+  unpickled data.
+
 2.19.7 (2024-08-09)
 -------------------
 

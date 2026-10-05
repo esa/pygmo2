@@ -38,6 +38,17 @@ The DOI of the latest version of the software is available at [this link](https:
 
 The full documentation can be found [here](https://esa.github.io/pygmo2/).
 
+Security note
+-------------
+
+pygmo relies on Python's `pickle` module (and, by default, on
+[cloudpickle](https://github.com/cloudpipe/cloudpickle)) to (de)serialise user-defined problems,
+algorithms, islands, etc., including within `population`, `archipelago`, `problem`, `algorithm`,
+`bfe`, `island`, `r_policy`, `s_policy` and `topology` objects. As with the standard `pickle`
+module, **deserialising (unpickling) data is equivalent to arbitrary code execution**. Never
+unpickle, load archipelago/island checkpoints, or otherwise deserialise pygmo objects coming from
+an untrusted or unauthenticated source.
+
 Installation
 ------------
 

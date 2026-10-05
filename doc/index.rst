@@ -49,6 +49,17 @@ The DOI of the latest version of the software is available at
 
 pygmo is based on the `pagmo C++ library <https://github.com/esa/pagmo2>`__.
 
+.. warning::
+
+   pygmo uses Python's :mod:`pickle` module (and, by default, `cloudpickle
+   <https://github.com/cloudpipe/cloudpickle>`__) to (de)serialise user-defined problems,
+   algorithms, islands, etc. Exactly as with the standard :mod:`pickle` module, deserialising
+   (unpickling) data is equivalent to arbitrary code execution. Never unpickle, or otherwise
+   deserialise, pygmo objects (e.g., :class:`~pygmo.population`, :class:`~pygmo.archipelago`,
+   :class:`~pygmo.problem`, :class:`~pygmo.algorithm`, :class:`~pygmo.bfe`,
+   :class:`~pygmo.island`, :class:`~pygmo.r_policy`, :class:`~pygmo.s_policy`,
+   :class:`~pygmo.topology`) coming from an untrusted or unauthenticated source.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

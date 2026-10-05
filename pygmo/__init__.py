@@ -754,6 +754,13 @@ def set_serialization_backend(name):
        the serialization backend while concurrently setting/getting it from another thread,
        or while asynchronous evolutions/optimisations are ongoing.
 
+    .. warning::
+
+       Both ``'pickle'`` and ``'cloudpickle'`` are, exactly like the standard :mod:`pickle`
+       module, insecure against maliciously-constructed data: deserialising (unpickling) such
+       data can lead to arbitrary code execution. Never change this setting to accommodate, nor
+       otherwise deserialise, data coming from an untrusted or unauthenticated source.
+
     Args:
         name (str): the name of the desired backend
 
