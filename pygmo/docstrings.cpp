@@ -258,7 +258,7 @@ std::string population_get_x_docstring()
 This method will return the chromosomes of the individuals as a 2D NumPy array.
 
 Each row of the returned array represents the chromosome of the individual at the corresponding position in the
-population.
+population. In each row, the real-valued decision variables come first, followed by the integer decision variables.
 
 Returns:
     2D NumPy float array: a deep copy of the chromosomes of the individuals
@@ -467,6 +467,7 @@ Box-bounds.
 
 This method will return the box-bounds :math:`(\mathbf{lb}, \mathbf{ub})` of the problem,
 as returned by the ``get_bounds()`` method of the UDP. Infinities in the bounds are allowed.
+The real-valued decision variables come first, followed by the integer decision variables.
 
 The ``get_bounds()`` method of the UDP must return the box-bounds as a tuple of 2 elements,
 the lower bounds vector and the upper bounds vector, which must be represented as iterable Python objects (e.g.,
@@ -627,6 +628,8 @@ std::string problem_get_nix_docstring()
 Integer dimension of the problem.
 
 This method will return :math:`n_{ix}`, the integer dimension of the problem.
+The integer decision variables are the final :math:`n_{ix}` components of the decision vector; any real-valued
+decision variables come first.
 
 The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an :class:`int`.
 If the UDP does not implement the ``get_nix()`` method, a zero integer dimension will be assumed.
