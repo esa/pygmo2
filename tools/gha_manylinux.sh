@@ -57,7 +57,7 @@ fi
 echo "PYTHON_DIR: ${PYTHON_DIR}"
 
 # The pagmo release tag can be overridden from the workflow if needed.
-PAGMO_VERSION_RELEASE="${PAGMO_VERSION_RELEASE:-2.19.1}"
+PAGMO_VERSION_RELEASE="${PAGMO_VERSION_RELEASE:-2.20.0}"
 
 # Lightweight system diagnostics to help compare amd64 vs arm runs.
 echo "System diagnostics:"

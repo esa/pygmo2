@@ -258,7 +258,7 @@ std::string population_get_x_docstring()
 This method will return the chromosomes of the individuals as a 2D NumPy array.
 
 Each row of the returned array represents the chromosome of the individual at the corresponding position in the
-population.
+population. In each row, the real-valued decision variables come first, followed by the integer decision variables.
 
 Returns:
     2D NumPy float array: a deep copy of the chromosomes of the individuals
@@ -467,6 +467,7 @@ Box-bounds.
 
 This method will return the box-bounds :math:`(\mathbf{lb}, \mathbf{ub})` of the problem,
 as returned by the ``get_bounds()`` method of the UDP. Infinities in the bounds are allowed.
+The real-valued decision variables come first, followed by the integer decision variables.
 
 The ``get_bounds()`` method of the UDP must return the box-bounds as a tuple of 2 elements,
 the lower bounds vector and the upper bounds vector, which must be represented as iterable Python objects (e.g.,
@@ -627,6 +628,8 @@ std::string problem_get_nix_docstring()
 Integer dimension of the problem.
 
 This method will return :math:`n_{ix}`, the integer dimension of the problem.
+The integer decision variables are the final :math:`n_{ix}` components of the decision vector; any real-valued
+decision variables come first.
 
 The optional ``get_nix()`` method of the UDP must return the problem's integer dimension as an :class:`int`.
 If the UDP does not implement the ``get_nix()`` method, a zero integer dimension will be assumed.
@@ -2292,8 +2295,8 @@ Args:
     gen (:class:`int`): number of generations
     variant (:class:`int`): mutation variant (dafault variant is 2: /rand/1/exp)
     variant_adptv (:class:`int`): F and CR parameter adaptation scheme to be used (one of 1..2)
-    ftol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
-    xtol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    ftol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
     memory (:class:`bool`): when true the adapted parameters CR anf F are not reset between successive calls to the evolve method
     seed (:class:`int`): seed used by the internal random number generator (default is random)
 
@@ -2449,6 +2452,74 @@ Examples:
     [(1, 0, array([ 0.0033062 ,  2.44965599])), (21, 800, array([  2.75601086e-04 ...
 
 See also the docs of the relevant C++ method :cpp:func:`pagmo::nsga2::get_log`.
+
+)";
+}
+
+std::string nsga3_set_bfe_docstring()
+{
+    return R"(set_bfe(b)
+
+Set the batch function evaluation scheme.
+
+This method will set the batch function evaluation scheme to be used for :class:`~pygmo.nsga3`.
+
+Args:
+    b (:class:`~pygmo.bfe`): the batch function evaluation object
+
+Raises:
+    unspecified: any exception thrown by the underlying C++ method
+
+)";
+}
+
+std::string nsga3_docstring()
+{
+    return R"(__init__(gen = 1, cr = 1.0, eta_c = 30.0, mut = 0.10, eta_mut = 20.0, divisions = 12,
+         divisions_inner = 0, random_mating = True, seed = random, use_memory = False)
+
+Non-dominated Sorting Genetic Algorithm III (NSGA-III).
+
+Args:
+    gen (:class:`int`): number of generations
+    cr (:class:`float`): crossover probability
+    eta_c (:class:`float`): distribution index for crossover
+    mut (:class:`float`): mutation probability
+    eta_mut (:class:`float`): distribution index for mutation
+    divisions (:class:`int`): number of divisions in the outer reference-direction layer
+    divisions_inner (:class:`int`): number of divisions in the inner reference-direction layer (zero disables it)
+    random_mating (:class:`bool`): whether parents are selected randomly instead of by binary tournament
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
+    use_memory (:class:`bool`): whether ideal and extreme points are retained across generations
+
+Raises:
+    OverflowError: if *gen*, *divisions*, *divisions_inner*, or *seed* are negative or greater than an
+      implementation-defined value
+    ValueError: if *cr* or *mut* is not in [0,1], if *eta_c* or *eta_mut* is not in [1,100], if *divisions* is zero,
+      or if *divisions_inner* is greater than *divisions*
+
+See also the docs of the C++ class :cpp:class:`pagmo::nsga3`.
+
+)";
+}
+
+std::string nsga3_get_log_docstring()
+{
+    return R"(get_log()
+
+Returns a log containing relevant parameters recorded during the last call to ``evolve()``. The log frequency depends
+on the verbosity parameter (by default nothing is logged) which can be set calling :func:`~pygmo.algorithm.set_verbosity()`
+on an :class:`~pygmo.algorithm` constructed with a :class:`~pygmo.nsga3`. A verbosity of ``N`` implies a log line each
+``N`` generations.
+
+Returns:
+    :class:`list` of :class:`tuple`: at each logged generation, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
+
+    * ``Gen`` (:class:`int`): generation number
+    * ``Fevals`` (:class:`int`): number of fitness evaluations made
+    * ``ideal_point`` (1D numpy array): ideal point of the current population
+
+See also the docs of the relevant C++ method :cpp:func:`pagmo::nsga3::get_log`.
 
 )";
 }
@@ -2907,8 +2978,8 @@ Args:
     c1 (:class:`float`): learning rate for the rank-one update of the covariance matrix (by default is automatically assigned)
     cmu (:class:`float`): learning rate for the rank-mu  update of the covariance matrix (by default is automatically assigned)
     sigma0 (:class:`float`): initial step-size
-    ftol (:class:`float`): stopping criteria on the x tolerance
-    xtol (:class:`float`): stopping criteria on the f tolerance
+    ftol (:class:`float`): stopping criteria on the f tolerance
+    xtol (:class:`float`): stopping criteria on the x tolerance
     memory (:class:`bool`): when true the adapted parameters are not reset between successive calls to the evolve method
     force_bounds (:class:`bool`): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
     seed (:class:`int`): seed used by the internal random number generator (default is random)
@@ -2975,8 +3046,8 @@ Args:
     eta_sigma (:class:`float`): learning rate for step-size update (if -1 will be automatically selected)
     eta_b (:class:`float`): learning rate for the covariance matrix update (if -1 will be automatically selected)
     sigma0 (:class:`float`):  the initial search width will be sigma0 * (ub - lb) (if -1 will be automatically selected to be 1)
-    ftol (:class:`float`): stopping criteria on the x tolerance
-    xtol (:class:`float`): stopping criteria on the f tolerance
+    ftol (:class:`float`): stopping criteria on the f tolerance
+    xtol (:class:`float`): stopping criteria on the x tolerance
     memory (:class:`bool`): when true the adapted parameters are not reset between successive calls to the evolve method
     force_bounds (:class:`bool`): when true the box bounds are enforced. The fitness will never be called outside the bounds but the covariance matrix adaptation  mechanism will worsen
     seed (:class:`int`): seed used by the internal random number generator (default is random)
@@ -3042,8 +3113,8 @@ Args:
     gen (:class:`int`): number of generations
     allowed_variants (array-like object): allowed mutation variants, each one being a number in [1, 18]
     variant_adptv (:class:`int`): *F* and *CR* parameter adaptation scheme to be used (one of 1..2)
-    ftol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
-    xtol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    ftol (:class:`float`): stopping criteria on the f tolerance (default is 1e-6)
+    xtol (:class:`float`): stopping criteria on the x tolerance (default is 1e-6)
     memory (:class:`bool`): when true the adapted parameters *CR* anf *F* are not reset between successive calls to the evolve method
     seed (:class:`int`): seed used by the internal random number generator (default is random)
 

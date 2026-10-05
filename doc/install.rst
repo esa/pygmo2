@@ -206,6 +206,33 @@ Python session, run the following commands:
 If these commands execute without any error, then
 your pygmo installation is ready for use.
 
+Building the documentation
+--------------------------
+
+The documentation uses Sphinx, MyST-NB and the Sphinx Book Theme, without
+pinning Sphinx to an older release. Install their latest releases into the
+same Python environment in which you installed pygmo:
+
+.. code-block:: console
+
+   $ python -m pip install --upgrade sphinx myst-nb sphinx-book-theme
+
+Configure and install pygmo as described above first: CMake generates
+``doc/conf.py``, and Sphinx imports the installed pygmo package to build
+the API reference. Then, from the source tree:
+
+.. code-block:: console
+
+   $ cd doc
+   $ make html SPHINXOPTS="-W --keep-going"
+   $ make doctest
+   $ make linkcheck
+
+The HTML documentation is written to ``doc/_build/html``. The CI build
+uses unpinned documentation dependencies and treats HTML build warnings
+as errors. External link checks remain best-effort, since remote sites
+may be temporarily unavailable.
+
 Getting help
 ------------
 

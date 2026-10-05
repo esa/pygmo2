@@ -60,7 +60,9 @@ topo_inner<py::object>::topo_inner(const py::object &o)
 std::unique_ptr<topo_inner_base> topo_inner<py::object>::clone() const
 {
     // This will make a deep copy using the ctor above.
-    return std::make_unique<topo_inner>(m_value);
+    auto ptr = std::make_unique<topo_inner>(m_value);
+    ptr->m_fallback_vertices = m_fallback_vertices;
+    return ptr;
 }
 
 std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_connections(std::size_t n) const
@@ -121,9 +123,23 @@ std::pair<std::vector<std::size_t>, vector_double> topo_inner<py::object>::get_c
     }
 }
 
+std::size_t topo_inner<py::object>::num_vertices() const
+{
+    pygmo::gil_thread_ensurer gte;
+    try {
+        auto method = pygmo::callable_attribute(m_value, "num_vertices");
+        return method.is_none() ? m_fallback_vertices : py::cast<std::size_t>(method());
+    } catch (const py::error_already_set &eas) {
+        pygmo::handle_thread_py_exception("The num_vertices() method of a pythonic topology raised an error:\n", eas);
+    }
+}
+
 void topo_inner<py::object>::push_back()
 {
     m_value.attr("push_back")();
+    if (pygmo::callable_attribute(m_value, "num_vertices").is_none()) {
+        ++m_fallback_vertices;
+    }
 }
 
 std::string topo_inner<py::object>::get_name() const
@@ -168,12 +184,14 @@ template <typename Archive>
 void topo_inner<py::object>::save(Archive &ar, unsigned) const
 {
     pygmo::inner_class_save<topo_inner_base>(ar, *this);
+    ar << m_fallback_vertices;
 }
 
 template <typename Archive>
 void topo_inner<py::object>::load(Archive &ar, unsigned)
 {
     pygmo::inner_class_load<topo_inner_base>(ar, *this);
+    ar >> m_fallback_vertices;
 }
 
 } // namespace detail
