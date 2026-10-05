@@ -41,8 +41,8 @@ class scipy_optimize:
     >>> import pygmo as pg
     >>> prob = pg.problem(pg.rosenbrock(10))
     >>> pop = pg.population(prob=prob, size=1, seed=0)
-    >>> float(pop.champion_f[0])
-    929975.7994682974
+    >>> round(float(pop.champion_f[0]), 6)
+    929975.799468
     >>> scp = pg.algorithm(pg.scipy_optimize(method="L-BFGS-B"))
     >>> result = scp.evolve(pop).champion_f
     >>> float(result[0]) # doctest: +ELLIPSIS

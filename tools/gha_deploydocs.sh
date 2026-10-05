@@ -17,7 +17,7 @@ bash miniconda.sh -b -p $HOME/miniconda
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 conda install mamba
-mamba create -y -q -p $deps_dir c-compiler cxx-compiler cmake 'eigen' nlopt ipopt libboost-devel tbb tbb-devel python=3.13 numpy cloudpickle networkx numba pybind11 sphinx=4.5.0 myst-nb sphinx-book-theme scipy
+mamba create -y -q -p $deps_dir c-compiler cxx-compiler cmake 'eigen' nlopt ipopt libboost-devel tbb tbb-devel python=3.13 numpy cloudpickle networkx numba pybind11 sphinx myst-nb sphinx-book-theme scipy
 source activate $deps_dir
 
 # Install pagmo.
@@ -41,7 +41,7 @@ cd
 
 # Build the documentation.
 cd ${GITHUB_WORKSPACE}/doc
-make html
+make html SPHINXOPTS="-W --keep-going"
 if ! make linkcheck; then
 	echo "WARNING: Sphinx linkcheck reported broken links; continuing CI by request."
 fi
