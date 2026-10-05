@@ -12,7 +12,7 @@ Write-Host "Library prefix: $prefixLibrary"
 conda config --set always_yes yes
 conda config --add channels conda-forge
 conda config --set channel_priority strict
-conda install cmake "eigen<4" nlopt ipopt boost-cpp tbb tbb-devel numpy cloudpickle networkx numba pybind11 scipy
+conda install cmake "eigen" nlopt ipopt libboost-devel tbb tbb-devel numpy cloudpickle networkx numba pybind11 scipy
 
 # Install pagmo.
 git clone https://github.com/esa/pagmo2.git

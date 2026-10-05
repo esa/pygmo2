@@ -50,6 +50,7 @@ struct topo_inner<py::object> final : topo_inner_base, pygmo::common_base {
     std::unique_ptr<topo_inner_base> clone() const final;
     // Mandatory methods.
     std::pair<std::vector<std::size_t>, vector_double> get_connections(std::size_t) const final;
+    virtual std::size_t num_vertices() const final;
     void push_back() final;
     // Optional methods.
     std::string get_name() const final;
@@ -67,6 +68,7 @@ struct topo_inner<py::object> final : topo_inner_base, pygmo::common_base {
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
     py::object m_value;
+    std::size_t m_fallback_vertices = 0;
 };
 
 } // namespace detail

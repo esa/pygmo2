@@ -9,7 +9,7 @@ set -e
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 conda install -y -q \
-    c-compiler cxx-compiler cmake 'eigen<4' nlopt ipopt boost-cpp tbb tbb-devel \
+    c-compiler cxx-compiler cmake 'eigen' nlopt ipopt libboost-devel tbb tbb-devel \
     "python=${PYGMO_PYTHON_VERSION}" \
     numpy cloudpickle networkx numba pybind11 scipy
 
@@ -21,7 +21,7 @@ cd pagmo2
 mkdir build
 cd build
 cmake ../ \
-    -DCMAKE_BUILD_TYPE=Debug \
+    -DCMAKE_BUILD_TYPE=Release \
     -DBoost_NO_BOOST_CMAKE=ON \
     -DPAGMO_WITH_EIGEN3=ON \
     -DPAGMO_WITH_IPOPT=ON \
