@@ -1690,6 +1690,31 @@ class nsga2_test_case(_ut.TestCase):
         log = uda.get_log()
 
 
+class nsga3_test_case(_ut.TestCase):
+    """We test that the NSGA-III bindings expose construction, logging, and batch evaluation."""
+
+    def runTest(self):
+        from .core import nsga3, algorithm, population, zdt, bfe
+        from numpy import ndarray
+        from pickle import loads, dumps
+
+        uda = nsga3()
+        uda = nsga3(gen=2, cr=1.0, eta_c=30.0, mut=0.1, eta_mut=20.0, divisions=4, divisions_inner=0,
+                    random_mating=True, seed=0, use_memory=True)
+        self.assertEqual(uda.get_seed(), 0)
+        a = algorithm(uda)
+        self.assertEqual(str(a), str(loads(dumps(a))))
+
+        a.set_verbosity(1)
+        a.evolve(population(zdt(1), size=5, seed=0))
+        log = a.extract(nsga3).get_log()
+        self.assertEqual(len(log), 2)
+        self.assertIsInstance(log[0][2], ndarray)
+        self.assertEqual(log[0][2].shape, (2,))
+
+        uda.set_bfe(bfe())
+
+
 class gaco_test_case(_ut.TestCase):
     """Test case for the UDA gaco"""
 
@@ -3435,6 +3460,7 @@ def run_test_suite(level=0):
     suite.addTest(lennard_jones_test_case())
     suite.addTest(de_test_case())
     suite.addTest(nsga2_test_case())
+    suite.addTest(nsga3_test_case())
     suite.addTest(gaco_test_case())
     suite.addTest(gwo_test_case())
     suite.addTest(de1220_test_case())

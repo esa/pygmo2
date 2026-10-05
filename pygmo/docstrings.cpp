@@ -2453,6 +2453,74 @@ See also the docs of the relevant C++ method :cpp:func:`pagmo::nsga2::get_log`.
 )";
 }
 
+std::string nsga3_set_bfe_docstring()
+{
+    return R"(set_bfe(b)
+
+Set the batch function evaluation scheme.
+
+This method will set the batch function evaluation scheme to be used for :class:`~pygmo.nsga3`.
+
+Args:
+    b (:class:`~pygmo.bfe`): the batch function evaluation object
+
+Raises:
+    unspecified: any exception thrown by the underlying C++ method
+
+)";
+}
+
+std::string nsga3_docstring()
+{
+    return R"(__init__(gen = 1, cr = 1.0, eta_c = 30.0, mut = 0.10, eta_mut = 20.0, divisions = 12,
+         divisions_inner = 0, random_mating = True, seed = random, use_memory = False)
+
+Non-dominated Sorting Genetic Algorithm III (NSGA-III).
+
+Args:
+    gen (:class:`int`): number of generations
+    cr (:class:`float`): crossover probability
+    eta_c (:class:`float`): distribution index for crossover
+    mut (:class:`float`): mutation probability
+    eta_mut (:class:`float`): distribution index for mutation
+    divisions (:class:`int`): number of divisions in the outer reference-direction layer
+    divisions_inner (:class:`int`): number of divisions in the inner reference-direction layer (zero disables it)
+    random_mating (:class:`bool`): whether parents are selected randomly instead of by binary tournament
+    seed (:class:`int`): seed used by the internal random number generator (default is random)
+    use_memory (:class:`bool`): whether ideal and extreme points are retained across generations
+
+Raises:
+    OverflowError: if *gen*, *divisions*, *divisions_inner*, or *seed* are negative or greater than an
+      implementation-defined value
+    ValueError: if *cr* or *mut* is not in [0,1], if *eta_c* or *eta_mut* is not in [1,100], if *divisions* is zero,
+      or if *divisions_inner* is greater than *divisions*
+
+See also the docs of the C++ class :cpp:class:`pagmo::nsga3`.
+
+)";
+}
+
+std::string nsga3_get_log_docstring()
+{
+    return R"(get_log()
+
+Returns a log containing relevant parameters recorded during the last call to ``evolve()``. The log frequency depends
+on the verbosity parameter (by default nothing is logged) which can be set calling :func:`~pygmo.algorithm.set_verbosity()`
+on an :class:`~pygmo.algorithm` constructed with a :class:`~pygmo.nsga3`. A verbosity of ``N`` implies a log line each
+``N`` generations.
+
+Returns:
+    :class:`list` of :class:`tuple`: at each logged generation, the values ``Gen``, ``Fevals``, ``ideal_point``, where:
+
+    * ``Gen`` (:class:`int`): generation number
+    * ``Fevals`` (:class:`int`): number of fitness evaluations made
+    * ``ideal_point`` (1D numpy array): ideal point of the current population
+
+See also the docs of the relevant C++ method :cpp:func:`pagmo::nsga3::get_log`.
+
+)";
+}
+
 std::string gaco_set_bfe_docstring()
 {
     return R"(set_bfe(b)
